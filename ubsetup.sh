@@ -1435,18 +1435,26 @@ fi
 ##### Adding fonts.
 ########################################
 
+doBuildFontCache=false
 for key in "${!Fonts[@]}"
 do
-    downloadUrl=${Fonts["$key"]}
     fontFolder="$allFontsFolder/$key"
+    if [ -e "$fontFolder" ]; then
+        PRINTLOG "Font [$key] already exists: [$fontFolder]"
+        continue
+    fi
+    doBuildFontCache=true
+    downloadUrl=${Fonts["$key"]}
     PRINTLOG "Download and setup font [$key]: [$downloadUrl] -> [$fontFolder]"
     wget -O $key.zip $downloadUrl
     mkdir -p $fontFolder
     unzip -d $fontFolder $key.zip
     rm $key.zip
 done
-chmod -R --reference=/usr/share/fonts/opentype $allFontsFolder
-fc-cache -fv
+if [ "$doBuildFontCache" = true ]; then
+    chmod -R --reference=/usr/share/fonts/opentype $allFontsFolder
+    fc-cache -fv
+fi
 
 
 ########################################
