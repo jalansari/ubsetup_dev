@@ -9,7 +9,7 @@ declare -A DebPackages
 DebPackages=(
              ["code"]="https://go.microsoft.com/fwlink/?LinkID=760868;mscode.deb" # 760865 for insider edition
              ["vagrant"]="https://releases.hashicorp.com/vagrant/2.2.4/vagrant_2.2.4_x86_64.deb"
-             ["dropbox"]="https://www.dropbox.com/download?dl=packages/ubuntu/dropbox_2018.11.28_amd64.deb"
+             ["dropbox"]="https://www.dropbox.com/download?dl=packages/ubuntu/dropbox_2019.02.14_amd64.deb"
             )
 
 InstallDir="/usr/share"
@@ -24,7 +24,7 @@ FossilScmPkg="fossil-linux-x64-2.8.tar.gz"
 FossilScmUrl="https://www.fossil-scm.org/index.html/uv/$FossilScmPkg"
 FossilInstallDir="$InstallDir/fossilscm"
 
-GoLangPkg="go1.12.2.linux-amd64.tar.gz"
+GoLangPkg="go1.12.3.linux-amd64.tar.gz"
 GoLangUrl="https://dl.google.com/go/$GoLangPkg"
 GoPath="$UsrLocalDir/go"
 
