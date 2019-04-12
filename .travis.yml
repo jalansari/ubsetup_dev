@@ -1,7 +1,7 @@
 language: bash
 
 os: linux
-dist: bionic
+dist: xenial
 
 addons:
     apt:
