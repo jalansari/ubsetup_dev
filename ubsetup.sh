@@ -82,6 +82,8 @@ userOfThisScript=`id -u -n $SUDO_USER`
 groupOfUserOfThisScript=`id -g -n $SUDO_USER`
 userHomeDir=$( getent passwd "$userOfThisScript" | cut -d: -f6 )
 
+DevGroupName="adm" # This group applies to development tools where users need write access; e.g. so we can use npm install.  TODO - Maybe create a development specific group (don't reuse "adm").
+
 
 UserHomeBin="$userHomeDir/bin"
 TerminatorCfgDir="$userHomeDir/.config/terminator"
@@ -1013,7 +1015,7 @@ wgetAndUnpack "$FossilScmUrl" "$FossilScmPkg" "$FossilInstallDir" "$FossilInstal
 nodeJsDir="$NodeInstallDir/$NodeJsVer"
 wgetAndUnpack "$NodeJsUrl" "$NodeJsPkg" "$NodeInstallDir" "$nodeJsDir" \
     && updatePathGlobally "$nodeJsDir/bin"
-chgrp -R adm $nodeJsDir # Workaround to use the "adm" group to give write access to users, so we can use npm install.  TODO - Create a development group for all users created by this script.
+chgrp -R $DevGroupName $nodeJsDir
 
 wgetAndUnpack "$GoLangUrl" "$GoLangPkg" "$UsrLocalDir" "$GoPath"
 if [ $? = 0 ]; then
