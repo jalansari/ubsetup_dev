@@ -346,6 +346,7 @@ exec='/usr/bin/terminator'\n"
 TEXT_CinnamonDesktopIfGSettingsConfig="[org.cinnamon.desktop.wm.preferences]\n\
 theme='Mint-Y-Dark'\n\
 num-workspaces=$WorkspacesNumberOf\n\
+mouse-button-modifier='<Super>'\n\
 \n\
 [org.cinnamon.theme]\n\
 name='Mint-Y-Dark'\n\
