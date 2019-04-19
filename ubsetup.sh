@@ -115,6 +115,7 @@ REMOVE_COMP__LIST=(
                    "gnome-mahjongg"
                    "gnome-mines"
                    "gnome-sudoku"
+                   "aisleriot" # solitaire games
                    "shotwell"
                    "transmission-common"
                    "banshee"
