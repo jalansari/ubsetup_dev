@@ -59,7 +59,8 @@ WorkspacesNumberOf=1
 CinnamonPanelHeight="33"
 CinnamonPanelAutohide="false"
 CinnamonRememberRecentFiles="true"
-CinnamonBackgroundColor="#100300"
+
+DesktopBackgroundColor="#100300"
 
 LxPanelHeight="24"
 LxPanelColour="#758880"
@@ -310,13 +311,13 @@ size = $TerminatorWindowSize\n\
 TEXT_LocalBookmarks="file://$userHomeDir/Documents\n\
 file://$userHomeDir/Downloads\n"
 
-NemoShowHiddenFilesVal="false"
+FMShowHiddenFilesVal="false"
 if [ $FileManagerShowHidden == 1 ]; then
-    NemoShowHiddenFilesVal="true"
+    FMShowHiddenFilesVal="true"
 fi
 TEXT_NemoGSettingsConfig="[org.nemo.preferences]\n\
 default-folder-viewer='$FileManagerViewMode-view'\n\
-show-hidden-files=$NemoShowHiddenFilesVal\n\
+show-hidden-files=$FMShowHiddenFilesVal\n\
 show-image-thumbnails='never'\n\
 show-full-path-titles=true\n\
 quick-renames-with-pause-in-between=true\n\
@@ -384,7 +385,7 @@ remember-recent-files=$CinnamonRememberRecentFiles\n\
 [org.cinnamon.desktop.background]\n\
 color-shading-type='solid'\n\
 picture-options='none'\n\
-primary-color='$CinnamonBackgroundColor'\n\
+primary-color='$DesktopBackgroundColor'\n\
 \n\
 [org.cinnamon]\n\
 startup-animation=false\n\
@@ -1212,10 +1213,10 @@ fi
 checkDebPkgInstalled "nemo" # File manager, as used in LinuxMint.
 nemoinstalled=$?
 checkDebPkgInstalled "cinnamon" # Cinnamon desktop environment, as used one of the LinuxMint variants
-cinnamoninstalled=$?
+cinnamonInstalled=$?
 checkDebPkgInstalled "xed" # Text editor, as used in LinuxMint.
 xedinstalled=$?
-if [ $nemoinstalled == 0 ] || [ $cinnamoninstalled == 0 ] || [ $xedinstalled == 0 ]; then
+if [ $nemoinstalled == 0 ] || [ $cinnamonInstalled == 0 ] || [ $xedinstalled == 0 ]; then
     # Install dconf cli tools to set various cinnamon configurations.
     dconfcmdpkg="dconf-cli"
     PRINTLOG "INSTALLING [$dconfcmdpkg] for dconf configured components."
@@ -1237,7 +1238,7 @@ if [ $nemoinstalled == 0 ]; then
     RunGlibCompileSchemas=1
 fi
 
-if [ $cinnamoninstalled == 0 ]; then
+if [ $cinnamonInstalled == 0 ]; then
     PRINTLOG "Configuring Cinnamon."
 
     clockCfg="/usr/share/cinnamon/desklets/clock@cinnamon.org/settings-schema.json"
