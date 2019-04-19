@@ -416,6 +416,59 @@ scheme='oblivion'\n\
 [org.x.editor.preferences.ui]\n\
 minimap-visible=true\n"
 
+##### Ubuntu Configs ######
+
+TEXT_UbuntuPowerGSettingsConfig="[org.gnome.settings-daemon.plugins.power]\n\
+sleep-inactive-ac-timeout=3600\n\
+sleep-inactive-ac-type='nothing'\n"
+
+TEXT_UbuntuNightLightGSettingsConfig="[org.gnome.settings-daemon.plugins.color]\n\
+night-light-enabled=true\n\
+night-light-schedule-automatic=false\n\
+night-light-schedule-from=21.0\n\
+night-light-schedule-to=8.0\n"
+
+TEXT_UbuntuDesktopGSettingsConfig="[org.gnome.desktop.background]\n\
+picture-uri='file:////usr/share/gnome-control-center/pixmaps/noise-texture-light.png'
+color-shading-type='solid'\n\
+primary-color='$DesktopBackgroundColor'\n\
+picture-options='wallpaper'\n\
+secondary-color='$DesktopBackgroundColor'\n\
+\n\
+[org.gnome.desktop.screensaver]\n\
+picture-uri='file:////usr/share/gnome-control-center/pixmaps/noise-texture-light.png'
+color-shading-type='solid'\n\
+primary-color='#000000'\n\
+picture-options='wallpaper'\n\
+secondary-color='#000000'\n\
+\n\
+[org.gnome.shell]\n\
+app-picker-view=uint32 1\n\
+favorite-apps=[]\n"
+
+TEXT_nautilusGSettingsConfig="[org.gnome.nautilus.preferences]\n\
+default-folder-viewer='list-view'\n\
+\n\
+[org.gnome.nautilus.list-view]\n\
+default-visible-columns=['name', 'size', 'type', 'owner', 'group', 'permissions', 'date_modified']\n\
+default-column-order=['name', 'size', 'type', 'owner', 'group', 'permissions', 'date_modified', 'mime_type', 'where', 'date_modified_with_time', 'date_accessed', 'recency']\n\
+\n\
+[org.gtk.settings.file-chooser]\n\
+show-hidden=$FMShowHiddenFilesVal\n"
+
+TEXT_geditGSettingsConfig="[org.gnome.gedit.preferences.editor]\n\
+tabs-size=uint32 4\n\
+auto-indent=true\n\
+insert-spaces=true\n\
+display-line-numbers=true\n\
+bracket-matching=true\n\
+highlight-current-line=true\n\
+display-right-margin=true\n\
+display-overview-map=true\n\
+scheme='oblivion'\n\
+background-pattern='none'\n\
+wrap-last-split-mode='word'\n"
+
 ##### Lubuntu Configs ######
 
 TEXT_PCManFMCfg="[config]\n\
@@ -1343,8 +1396,63 @@ fi
 
 if [ $xedinstalled == 0 ]; then
     PRINTLOG "Configuring Xed."
-    XedGSettingsCfg="$GlibScemasDir/${GlibPriorityNum}_xed.gschema.override"
-    echo -e "$TEXT_XedGSettingsConfig" >> $XedGSettingsCfg
+    GSettingsCfg="$GlibScemasDir/${GlibPriorityNum}_xed.gschema.override"
+    echo -e "$TEXT_XedGSettingsConfig" >> $GSettingsCfg
+    RunGlibCompileSchemas=1
+fi
+
+
+checkDebPkgInstalled "nautilus" # Ubuntu file manager.
+nautilusPkgInstalled=$?
+checkDebPkgInstalled "ubuntu-desktop" # Ubuntu desktop.
+ubuntuInstalled=$?
+checkDebPkgInstalled "gedit" # Ubuntu text editor.
+geditPkgInstalled=$?
+
+if [ $geditPkgInstalled == 0 ]; then
+    PRINTLOG "Configuring gedit text editor."
+    GSettingsCfg="$GlibScemasDir/${GlibPriorityNum}_gedit.gschema.override"
+    echo -e "$TEXT_geditGSettingsConfig" >> $GSettingsCfg
+    RunGlibCompileSchemas=1
+fi
+
+if [ $nautilusPkgInstalled == 0 ]; then
+    PRINTLOG "Configuring nautilus file manager."
+    GSettingsCfg="$GlibScemasDir/${GlibPriorityNum}_nautilus.gschema.override"
+    echo -e "$TEXT_nautilusGSettingsConfig" >> $GSettingsCfg
+    RunGlibCompileSchemas=1
+fi
+
+if [ $ubuntuInstalled == 0 ]; then
+    launchersListStr=""
+    for applauncher in "${LIST_OF_LAUNCHERS[@]}"
+    do
+        # Create comma separated list.
+        if [ "$applauncher" == "filemanager" ]; then
+            launchersListStr+="'org.gnome.Nautilus.desktop', " # Ubuntu's filemanager.
+        else
+            launchersListStr+="'$applauncher.desktop', "
+        fi
+    done
+    # Remove the two last chars ', ' (to make sure last item in list is formatted correctly).
+    launchersListStr="${launchersListStr::-2}"
+
+    PRINTLOG "Updating favorite apps list to <$launchersListStr>"
+    # Replace all items in the panel "default" list.
+    TEXT_UbuntuDesktopGSettingsConfigWithLaunchers=$(sed -r 's|(favorite\-apps=\[).*(\])|\1'"$launchersListStr"'\2|;' <<< $TEXT_UbuntuDesktopGSettingsConfig)
+
+    PRINTLOG "Configuring Ubuntu desktop."
+    GSettingsCfg="$GlibScemasDir/${GlibPriorityNum}_ubuntudesktop.gschema.override"
+    echo -e "$TEXT_UbuntuDesktopGSettingsConfigWithLaunchers" >> $GSettingsCfg
+
+    PRINTLOG "Configuring Ubuntu night light."
+    GSettingsCfg="$GlibScemasDir/${GlibPriorityNum}_ubuntunightlight.gschema.override"
+    echo -e "$TEXT_UbuntuNightLightGSettingsConfig" >> $GSettingsCfg
+
+    PRINTLOG "Configuring Ubuntu power."
+    GSettingsCfg="$GlibScemasDir/${GlibPriorityNum}_ubuntupower.gschema.override"
+    echo -e "$TEXT_UbuntuPowerGSettingsConfig" >> $GSettingsCfg
+
     RunGlibCompileSchemas=1
 fi
 
