@@ -262,6 +262,8 @@ If no options are specified, default behaviour is to remove components\n\
 ##### Text files that are written as a whole.
 ########################################
 
+##### Cinnamon Configs ######
+
 TEXT_VimRC="set t_Co=256\n\
 hi Normal guifg=#E0E2E4 guibg=#293134\n\
 hi Normal ctermfg=195 ctermbg=233\n\
@@ -412,6 +414,8 @@ scheme='oblivion'\n\
 [org.x.editor.preferences.ui]\n\
 minimap-visible=true\n"
 
+##### Lubuntu Configs ######
+
 TEXT_PCManFMCfg="[config]\n\
 bm_open_method=0\n\
 \n\
@@ -438,6 +442,8 @@ sort=name;ascending;\n\
 toolbar=newtab;navigation;home;\n\
 show_statusbar=1\n\
 pathbar_mode_buttons=0\n"
+
+##### Application Configs ######
 
 TEXT_VlcRC="[qt4]\n\
 qt-privacy-ask=0\n\
