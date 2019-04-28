@@ -869,6 +869,11 @@ function installPythonPipPackages()
 #     $2 : Name of tarball package that will be downloaded.
 #     $3 : Location to which the tarball should be unpacked.
 #     $4 : Optional.  Path, which if exists, means nothing needs to be done.
+# Returns:
+#     0 Successfully downloaded and unpacked.
+#     1 The path $4 already exists.
+#     2 The downloaded file was not a valid archive.
+#     3 There was a problem downloading archive.
 function wgetAndUnpack()
 {   if [ -z "$1" ] || [ -z "$2" ] || [ -z "$3" ]; then
         return 2
@@ -880,8 +885,15 @@ function wgetAndUnpack()
     PRINTLOG "Downloading and unpacking <$2> to <$3>."
     mkdir -p "$3"
     wget "$1" -O "$TempFolderForDownloads/$2"
+    wgetStatus=$?
+    if [ $wgetStatus != 0 ]; then
+        PRINT_ERROR "Download error <$wgetStatus>."
+        return 3
+    fi
     tar -C "$3" -xf "$TempFolderForDownloads/$2"
+    tarStatus=$?
     rm "$TempFolderForDownloads/$2"
+    return $tarStatus
 }
 
 function launchAndKillAppAsUser()
@@ -1080,7 +1092,7 @@ wgetAndUnpack "$NodeJsUrl" "$NodeJsPkg" "$NodeInstallDir" "$nodeJsDir" \
 chgrp -R $DevGroupName $nodeJsDir
 
 wgetAndUnpack "$GoLangUrl" "$GoLangPkg" "$UsrLocalDir" "$GoPath"
-if [ $? = 0 ]; then
+if [ $? == 0 ]; then
     updatePathGlobally "$GoPath/bin"
 
     # TODO user workspace should be seperated when all configuration is seperated.

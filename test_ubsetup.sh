@@ -357,6 +357,111 @@ function test_wgetAndUnpack_testFileOrDirExitstsReturns1()
     rm -rf $testfileordir
 }
 
+# With test server
+
+TestServerDomain="http://localhost:8000"
+TestServerPID=""
+TestServerFolder="ubsetup_testserver_folder"
+WgetToDir="unpackpath"
+
+function runTestServer()
+{   mkdir -p $TestServerFolder
+    cd $TestServerFolder
+        python3 -m http.server > /dev/null &
+        TestServerPID=$!
+        psstatcmd="ps -o stat= $TestServerPID"
+        psstate=$( $psstatcmd )
+        # Wait untill process state is ready and waiting ("S") or could not be started (no state).
+        while [[ ! $psstate =~ ^S ]] && [[ ! -z $psstate ]]
+        do
+            # Waiting a little to allow state to initialise.
+            sleep 0.01
+            psstate=$( $psstatcmd )
+        done
+        assertFalse "Test Server could not be launched" "[ -z $psstate ]"
+        # A small Wait to make sure process is definitely initialised.
+        sleep 0.2
+    cd - > /dev/null
+}
+
+function cleanupAfterTestServerTesting()
+{   kill $TestServerPID
+    rm -rf $TestServerFolder
+    rm -rf $WgetToDir
+}
+
+function test_wgetAndUnpack_testGetInvalidUrl()
+{   runTestServer
+
+    expected=3
+
+    wgetAndUnpack "$TestServerDomain/InvalidUrl" "invalidUrlPckgDoesntMatter" "$WgetToDir" "pathDoesntMatter" > /dev/null 2>&1
+
+    returnedVal=$?
+    assertEquals $expected $returnedVal
+
+    cleanupAfterTestServerTesting
+}
+
+function test_wgetAndUnpack_testGetEmptyFile()
+{   runTestServer
+
+    aFileName="emptyFile"
+    touch "$TestServerFolder/$aFileName"
+    expected=2
+
+    wgetAndUnpack "$TestServerDomain/$aFileName" "emptyFileDownloaded" "$WgetToDir" "emptyFileDownloaded" > /dev/null 2>&1
+
+    returnedVal=$?
+    assertEquals $expected $returnedVal
+
+    cleanupAfterTestServerTesting
+}
+
+function test_wgetAndUnpack_testGetFileNotTarball()
+{   runTestServer
+
+    aFileName="plainTextFile"
+    echo "Some text!" > "$TestServerFolder/$aFileName"
+    expected=2
+
+    wgetAndUnpack "$TestServerDomain/$aFileName" "emptyFileDownloaded" "$WgetToDir" "emptyFileDownloaded" > /dev/null 2>&1
+
+    returnedVal=$?
+    assertEquals $expected $returnedVal
+
+    cleanupAfterTestServerTesting
+}
+
+function test_wgetAndUnpack_testGetTarball()
+{   runTestServer
+
+    aFileName1="plainTextFile1"
+    echo "Some text 1!" > $aFileName1
+    aFileName2="plainTextFile2"
+    echo "Some text 2!" > $aFileName2
+    tarbFileName="tarFile.tgz"
+    tar czf "$TestServerFolder/$tarbFileName" $aFileName1 $aFileName2
+    rm $aFileName1 $aFileName2
+    expected=0
+
+    wgetAndUnpack "$TestServerDomain/$tarbFileName" "$tarbFileName" "$WgetToDir" "pathShouldNotExists" > /dev/null 2>&1
+
+    returnedVal=$?
+    assertEquals $expected $returnedVal
+    assertTrue "Unpack folder not found" "[ -d $WgetToDir ]"
+    assertTrue "Unpacked file1 not found" "[ -f $WgetToDir/$aFileName1 ]"
+    assertTrue "Unpacked file2 not found" "[ -f $WgetToDir/$aFileName2 ]"
+
+    # While everything is setup, run a test for when path already exists.
+    expected=1
+    wgetAndUnpack "$TestServerDomain/$tarbFileName" "$tarbFileName" "$WgetToDir" "$WgetToDir/$aFileName1" > /dev/null 2>&1
+    returnedVal=$?
+    assertEquals $expected $returnedVal
+
+    cleanupAfterTestServerTesting
+}
+
 ################################################################################
 
 . ./ubsetup.sh -tt
