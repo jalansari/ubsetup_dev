@@ -1010,24 +1010,25 @@ if [ $RequestOptions == 0 ]; then
     RequestOptions=$OPT_REMOVE
 fi
 
-currentUserDesc=""
-
 PRINTLOG "Current user parameters:"
 PRINTLOG "    Username <$userOfThisScript>"
 PRINTLOG "    Group    <$groupOfUserOfThisScript>"
 PRINTLOG "    Home     <$userHomeDir>"
-if [ ! -z "$opt_userfullname" ]; then
-PRINTLOG "    FullName <$opt_userfullname>"
-currentUserDesc="$opt_userfullname;"
-fi
-if [ ! -z "$opt_useremail" ]; then
-PRINTLOG "    Email    <$opt_useremail>"
-if [ -z "$currentUserDesc" ]; then currentUserDesc=";"; fi
-currentUserDesc="$currentUserDesc$opt_useremail;"
-fi
 
-if [ ! -z "$currentUserDesc" ]; then
-    UserInfo[$currentUserNameKey]="$currentUserDesc"
+if [ ! -z "$opt_userfullname" ] || [ ! -z "$opt_useremail" ]; then
+    currentUserDescFromArray="${UserInfo[$currentUserNameKey]}"
+
+    if [ ! -z "$opt_userfullname" ]; then
+        PRINTLOG "    FullName <$opt_userfullname>"
+        currentUserDescFromArray=$( sed -r 's/([^;]*)(;.*)/'"$opt_userfullname"'\2/' <<< "$currentUserDescFromArray" )
+    fi
+    if [ ! -z "$opt_useremail" ]; then
+        PRINTLOG "    Email    <$opt_useremail>"
+        currentUserDescFromArray=$( sed -r 's/([^;]*;)([^;]*)(;.*)/\1'"$opt_useremail"'\3/' <<< "$currentUserDescFromArray" )
+    fi
+
+    PRINTLOG "    UserDesc <$currentUserDescFromArray>"
+    UserInfo[$currentUserNameKey]="$currentUserDescFromArray"
 fi
 
 if [ $TestMode == 1 ]; then
