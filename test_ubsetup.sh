@@ -327,6 +327,131 @@ function test_iterAssociativeArrAndCall_manyValArray()
 
 ################################################################################
 
+function test_addNewUser_NoUsername()
+{   usernameToAdd=""
+    groupName=""
+    expected=1
+
+    addNewUser $usernameToAdd "$groupName" ""
+    actualReturn=$?
+
+    assertEquals $expected $actualReturn
+}
+
+function test_addNewUser_UsernameAlreadyExists()
+{   userOfThisScript=`id -u -n $SUDO_USER`
+    usernameToAdd=$userOfThisScript
+    groupName=""
+    expected=2
+
+    addNewUser $usernameToAdd "$groupName" ""
+    actualReturn=$?
+
+    assertEquals $expected $actualReturn
+    # Test user details have not changed.
+}
+
+function test_addNewUser_NoGroup()
+{   userOfThisScript=`id -u -n $SUDO_USER`
+    usernameToAdd="$userOfThisScript.testuserNoGroup"
+    groupName=""
+    expected=3
+
+    addNewUser $usernameToAdd "$groupName" ""
+    actualReturn=$?
+
+    assertEquals $expected $actualReturn
+    id -u $usernameToAdd > /dev/null 2>&1
+    assertFalse "Test user must not be created" '[ $? == 0 ]'
+}
+
+function test_addNewUser_BadGECOS()
+{   userOfThisScript=`id -u -n $SUDO_USER`
+    usernameToAdd="$userOfThisScript.testuserBadGecos"
+    groupName="testgroup"
+    fullName="This:Name:Should:Be:Bad: for:GECOS"
+    expected=9
+
+    addNewUser $usernameToAdd "$groupName" "$fullName"
+    actualReturn=$?
+
+    assertEquals $expected $actualReturn
+    id -u $usernameToAdd > /dev/null 2>&1
+    assertFalse "Test user must not be created" '[ $? == 0 ]'
+}
+
+# function test_addNewUser_BadGroupName()
+# {
+# }
+
+# function test_addNewUser_ExistingGroupName()
+# {
+# }
+
+# function test_addNewUser_NewGroupName()
+# {
+# }
+
+function test_updateExistingUser_NoUsername()
+{   usernameToAdd=""
+    groupName=""
+    expected=1
+
+    updateExistingUser $usernameToAdd "$groupName" ""
+    actualReturn=$?
+
+    assertEquals $expected $actualReturn
+}
+
+function test_updateExistingUser_UsernameDoesNotExists()
+{   userOfThisScript=`id -u -n $SUDO_USER`
+    usernameToAdd="$userOfThisScript.testuserNotExist"
+    groupName=""
+    expected=2
+
+    updateExistingUser $usernameToAdd "$groupName" ""
+    actualReturn=$?
+
+    assertEquals $expected $actualReturn
+}
+
+function test_updateExistingUser_BadGECOS()
+{   userOfThisScript=`id -u -n $SUDO_USER`
+    usernameToAdd=$userOfThisScript
+    groupName=""
+    fullName="This:Name:Should:Be:Bad: for:GECOS"
+    expected=9
+
+    updateExistingUser $usernameToAdd "$groupName" "$fullName"
+    actualReturn=$?
+
+    assertEquals $expected $actualReturn
+    # Test user details have not changed.
+}
+
+function test_updateExistingUser_BadGroupName()
+{   userOfThisScript=`id -u -n $SUDO_USER`
+    usernameToAdd=$userOfThisScript
+    groupName="bad:group:name"
+    expected=8
+
+    updateExistingUser $usernameToAdd "$groupName" ""
+    actualReturn=$?
+
+    assertEquals $expected $actualReturn
+    # Test user details have not changed.
+}
+
+# function test_updateExistingUser_ExistingGroupName()
+# {
+# }
+
+# function test_updateExistingUser_NewGroupName()
+# {
+# }
+
+################################################################################
+
 function test_wgetAndUnpack_emptyStrReturns2()
 {   emptystr=""
     expected=2

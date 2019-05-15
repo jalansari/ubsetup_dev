@@ -952,6 +952,55 @@ function addUserGitConfig()
     # chmod 600 $sshUserPvtKey
 }
 
+# Add new user.
+# Parameters:
+#     $1 : New username.
+#     $2 : Main group.
+#     $3 : Full name.
+# Returns:
+#     0 Successfully added user.
+#     1 New username MUST be specified.
+#     2 Username already exists.
+#     3 Group MUST be specified.
+#     8 Unknown error, group could not be added.
+#     9 Unknown error, user could not be added.
+function addNewUser()
+{   test -z $1   && return 1
+    id -u $1 > /dev/null 2>&1
+    test $? == 0 && return 2
+    test -z "$2"   && return 3
+    adduser -gecos "$3,,," --disabled-password $1 > /dev/null 2>&1
+    test $? == 0 || return 9
+    grep -E "^$2:" /etc/group > /dev/null 2>&1
+    test $? == 0 || groupadd "$2" > /dev/null 2>&1
+    test $? == 0 || return 8
+    usermod -g $2 $1 > /dev/null
+}
+
+# Update an existing user.
+# Parameters:
+#     $1 : Username.
+#     $2 : Main group.
+#     $3 : Full name.
+# Returns:
+#     0 Successfully modified user.
+#     1 Username MUST be specified.
+#     2 Username MUST exists.
+#     8 Unknown error, group could not be added.
+function updateExistingUser()
+{   test -z $1   && return 1
+    id -u $1 > /dev/null 2>&1
+    test $? == 0 || return 2
+    if [ ! -z "$2" ]; then
+        grep -E "^$2:" /etc/group > /dev/null 2>&1
+        test $? == 0 || groupadd "$2" > /dev/null 2>&1
+        test $? == 0 || return 8
+        usermod -g $2 $1 > /dev/null 2>&1
+    fi
+    usermod -c "$3,,," $1 > /dev/null 2>&1
+    test $? == 0 || return 9
+}
+
 function usage()
 {   BadArg=$1
     if [ "$BadArg" != "" ]; then
@@ -1132,24 +1181,9 @@ if [ $? == 0 ]; then
 fi
 
 checkDebPkgInstalled "git"
-if [ $? == 0 ]; then
+gitInstalled=$?
+if [ $gitInstalled == 0 ]; then
     addSysGitConfig "$GitSysConfigFile" "$TEXT_GitCfg"
-    if [ -v UserInfo[@] ]; then
-        for usern in "${!UserInfo[@]}"
-        do
-            userInfoValues="${UserInfo[$usern]}"
-            IFS=';' read -ra userInfoArray <<< "$userInfoValues"
-            fullname="${userInfoArray[0]}"
-            email="${userInfoArray[1]}"
-            # sshkeyfile="${userInfoArray[2]}"
-            maingroup="${userInfoArray[3]}"
-            if [ "$usern" == "$currentUserNameKey" ]; then
-                usern=$userOfThisScript
-                maingroup=$groupOfUserOfThisScript
-            fi
-            addUserGitConfig "$usern" "$maingroup" "$fullname" "$email"
-        done
-    fi
 fi
 
 checkDebPkgInstalled "firefox"
@@ -1601,17 +1635,33 @@ if [ -v UserInfo[@] ]; then
         IFS=';' read -ra userInfoArray <<< "$userInfoValues"
         fullname="${userInfoArray[0]}"
         email="${userInfoArray[1]}"
-        sshkeyfile="${userInfoArray[2]}"
+        sshkeyfile="${userInfoArray[2]}" # TODO - do something with sshkeyfile
         maingroup="${userInfoArray[3]}"
+        test -z $maingroup && maingroup=$usern
+        isUserConfigured=false
         if [ "$usern" == "$currentUserNameKey" ]; then
             usern=$userOfThisScript
-            maingroup=$groupOfUserOfThisScript
             PRINTLOG "Updating current user : name <$fullname>, email <$email>, maingrp <$maingroup>, sshk <$sshkeyfile>"
-            # TODO - do something?
+            updateExistingUser "$usern" "$maingroup" "$fullname"
+            isUserConfigured=true
+            updateUserReturn=$?
+            if [ $updateUserReturn == 0 ]; then
+                isUserConfigured=true
+            else
+                PRINT_ERROR "Update user failed <$updateUserReturn>"
+            fi
         else
-            # TODO - create addNewUser function
             PRINTLOG "Adding new user : name <$fullname>, email <$email>, maingrp <$maingroup>, sshk <$sshkeyfile>"
-            # addNewUser "$usern" "$maingroup" "$fullname" "$email"
+            addNewUser "$usern" "$maingroup" "$fullname"
+            addUserReturn=$?
+            if [ $addUserReturn == 0 ]; then
+                isUserConfigured=true
+            else
+                PRINT_ERROR "Adding new user failed <$addUserReturn>"
+            fi
+        fi
+        if [ $gitInstalled == 0 ] && [ "$isUserConfigured" == true ]; then
+            addUserGitConfig "$usern" "$maingroup" "$fullname" "$email"
         fi
     done
 fi
