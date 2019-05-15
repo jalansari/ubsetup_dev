@@ -1583,7 +1583,7 @@ do
     unzip -d $fontFolder $key.zip
     rm $key.zip
 done
-if [ "$doBuildFontCache" = true ]; then
+if [ "$doBuildFontCache" == true ]; then
     chmod -R --reference=/usr/share/fonts/opentype $allFontsFolder
     fc-cache -fv
 fi
