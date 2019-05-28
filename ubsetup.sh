@@ -469,35 +469,6 @@ scheme='oblivion'\n\
 background-pattern='none'\n\
 wrap-last-split-mode='word'\n"
 
-##### Lubuntu Configs ######
-
-TEXT_PCManFMCfg="[config]\n\
-bm_open_method=0\n\
-\n\
-[volume]\n\
-mount_on_startup=1\n\
-mount_removable=1\n\
-autorun=1\n\
-\n\
-[ui]\n\
-always_show_tabs=0\n\
-max_tab_chars=32\n\
-win_width=798\n\
-win_height=547\n\
-splitter_pos=150\n\
-media_in_new_tab=0\n\
-desktop_folder_new_win=0\n\
-change_tab_on_drop=1\n\
-close_on_unmount=1\n\
-focus_previous=0\n\
-side_pane_mode=places\n\
-view_mode=$FileManagerViewMode\n\
-show_hidden=$FileManagerShowHidden\n\
-sort=name;ascending;\n\
-toolbar=newtab;navigation;home;\n\
-show_statusbar=1\n\
-pathbar_mode_buttons=0\n"
-
 ##### Application Configs ######
 
 TEXT_VlcRC="[qt4]\n\
@@ -1507,93 +1478,6 @@ fi
 if [ $RunGlibCompileSchemas ]; then
     PRINTLOG "GSettings compiling schemas."
     glib-compile-schemas "$GlibScemasDir/"
-fi
-
-
-########################################
-##### Writing configurations for Lubuntu.
-########################################
-
-checkDebPkgInstalled "leafpad"
-if [ $? == 0 ]; then
-    PRINTLOG "Configuring Leafpad editor."
-    LeafpadCfg="/usr/share/lubuntu/leafpad/leafpadrc"
-    sed -i -r '4 s/.*(\d+)$/Ubuntu Mono \1/' $LeafpadCfg
-    # Change second last line from "0" to "1", which means, show line numbers.
-    sed -i 'x; ${s/0/1/;p;x}; 1d' $LeafpadCfg
-    rm -rf "$userHomeDir/.config/leafpad/leafpadrc"
-fi
-
-checkDebPkgInstalled "lubuntu-core" # Use this to see if the environment is Lubuntu desktop 16.04-17.10.
-lubuntuCoreInstalled=$?
-checkDebPkgInstalled "lubuntu-gtk-core" # Use this to see if the environment is Lubuntu desktop 18.04.
-lubuntuGtkCoreInstalled=$?
-if [ $lubuntuCoreInstalled == 0 ] || [ $lubuntuGtkCoreInstalled == 0 ]; then
-    PRINTLOG "Configuring Lubuntu panel colour and size."
-    PanelCfg="/usr/share/lxpanel/profile/Lubuntu/panels/panel"
-    sed -i.bak -r 's/(height=).*/\1'"$LxPanelHeight"'/; s/(transparent=).*/\11/; s/(tintcolor=).*/\1'"$LxPanelColour"'/; s/(alpha=).*/\1255/; s/(iconsize=).*/\1'"$LxPanelHeight"'/;' $PanelCfg
-
-    PRINTLOG "Configuring Lubuntu panel launchers."
-    iconbarTypeName="launchtaskbar"
-    # Find the line number where the panel list (the first launch-bar) begins.
-    lineNumber=`grep -n -m 1 "^[[:space:]]*type[[:space:]]*=[[:space:]]*$iconbarTypeName" $PanelCfg | grep -o "^[0-9]*"`
-    # Get the first line of the list, and take the indent (spaces).
-    spaces=`sed -n "${lineNumber}p" $PanelCfg | sed -r 's/^([[:space:]]*).*/\1/;'`
-    launchbarCfg="\\${spaces}type=$iconbarTypeName\n"
-    launchbarCfg+="\\${spaces}Config {\n"
-    for applauncher in "${LIST_OF_LAUNCHERS[@]}"
-    do
-        if [ "$applauncher" == "filemanager" ]; then
-            applauncher="pcmanfm" # Lubuntu's filemanager.
-        fi
-        # Create the list, with each item indented, with a \ at the beginning to make sure sed (later) prints the space and doesn't ignore it as whitespace.
-        launchbarCfg+="\\${spaces}\\${spaces}Button {\n"
-        launchbarCfg+="\\${spaces}\\${spaces}\\${spaces}id=$applauncher.desktop\n"
-        launchbarCfg+="\\${spaces}\\${spaces}}\n"
-    done
-    launchbarCfg+="\\${spaces}}"
-    # PRINTLOG "Updating file <$PanelCfg> from line <$lineNumber>"
-    # Remove all items in the panel's first launch-bar; the first should be before the first spacer.
-    sed -i -r '/^[[:space:]]*type[[:space:]]*=[[:space:]]*'"$iconbarTypeName"'/,/^'"$spaces"'\}$/d' $PanelCfg
-    # Print the new list of launch-bar items at the line number (found above).
-    sed -i "${lineNumber}i$launchbarCfg" $PanelCfg
-
-    rm -rf "$userHomeDir/.config/lxpanel"
-
-    # Configure number of workspaces.
-    PRINTLOG "Configuring Lubuntu's number of workspaces."
-    LubWinMgrCfg="/usr/share/lubuntu/openbox/rc.xml"
-    sed -i -r '/<desktops>/,/<\/desktops>/{s|([[:digit:]]*<number>)[[:digit:]]+(</number>)|\1'"$WorkspacesNumberOf"'\2|};' $LubWinMgrCfg
-
-    rm -rf "$userHomeDir/.config/openbox"
-
-    PRINTLOG "Configuring Lubuntu desktop wallpaper."
-    LubuntuDesktopCfg="$userHomeDir/.config/pcmanfm/lubuntu/desktop-items-0.conf"
-    LubuntuDesktopCfgBak=`getAvailableFileName "$LubuntuDesktopCfg.bak"`
-    PRINTLOG "Backing up LubuntuDesktopCfg file to <$LubuntuDesktopCfgBak>"
-    cp $LubuntuDesktopCfg $LubuntuDesktopCfgBak
-    sed -r 's|^(wallpaper_mode=).*|\1color|; s|^(desktop_bg=).*|\1#172030|;' < $LubuntuDesktopCfg > $LubuntuDesktopCfg.new
-    mv $LubuntuDesktopCfg.new $LubuntuDesktopCfg
-fi
-
-checkDebPkgInstalled "pcmanfm" # Lubuntu file manager.
-if [ $? == 0 ]; then
-    PRINTLOG "Configuring PCManFM file manager."
-    PCManFMCfg="$userHomeDir/.config/pcmanfm/lubuntu/pcmanfm.conf"
-    if [[ -e $PCManFMCfg ]]; then
-        PCManFMCfgBak=`getAvailableFileName "$PCManFMCfg.bak"`
-        PRINTLOG "Backing up PCManFMCfg file to <$PCManFMCfgBak>"
-        cp $PCManFMCfg $PCManFMCfgBak
-        sed -r 's|^(view_mode=).*$|\1'"$FileManagerViewMode"'|; s|^(show_hidden=).*$|\1'"$FileManagerShowHidden"'|;' < $PCManFMCfg > $PCManFMCfg.new
-        # TODO sort=mtime;descending;
-        mv $PCManFMCfg.new $PCManFMCfg
-    else
-        PRINTLOG "WRITING PCManFM config: [$PCManFMCfg]"
-        echo -e "$TEXT_PCManFMCfg" > $PCManFMCfg
-        chown $userOfThisScript:$groupOfUserOfThisScript $PCManFMCfg
-    fi
-    LibFmCfg="$userHomeDir/.config/libfm/libfm.conf"
-    sed -i -r 's/(terminal=).*/\1terminator %s/;' $LibFmCfg
 fi
 
 
