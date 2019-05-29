@@ -24,7 +24,7 @@ FossilScmPkg="fossil-linux-x64-2.8.tar.gz"
 FossilScmUrl="https://www.fossil-scm.org/index.html/uv/$FossilScmPkg"
 FossilInstallDir="$InstallDir/fossilscm"
 
-GoLangPkg="go1.12.3.linux-amd64.tar.gz"
+GoLangPkg="go1.12.5.linux-amd64.tar.gz"
 GoLangUrl="https://dl.google.com/go/$GoLangPkg"
 GoPath="$UsrLocalDir/go"
 
