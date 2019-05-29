@@ -101,6 +101,8 @@ NumiNotifyWatches=524288
 # Time is needed between install requests, otherwise, errors occur because previous request may not be complete.
 SLEEP_AFTER_INSTALL_REQUEST="0.2"
 
+InstallTorDaemon=false
+
 
 ########################################
 ##### Lists of components.
@@ -241,10 +243,11 @@ TEXT_Usage="Usage $0 [-a] [-i] [-r] [-c] [-un] [-ue] [-h]\n\
 -h:  Show this very same helpful message.\n\
 \n\
 Requests:\n\
--r:  Remove unnecessary components.  (Default.)\n\
--i:  Install components and configs.\n\
--c:  Configure user environment.\n\
--a:  Same and i, r and c combined.\n\
+-r   : Remove unnecessary components.  (Default.)\n\
+-i   : Install components and configs.\n\
+-c   : Configure user environment.\n\
+-a   : Same and i, r and c combined.\n\
+--tor: Install Tor Daemon, which will be running and listening on port 9050.\n\
 \n\
 Configuration options:\n\
 -un: Username to be configured for the user running this script.\n\
@@ -1010,6 +1013,8 @@ while [ "$1" != "" ]; do
              ;;
         -tt ) return 0 # Return 0 is needed for testing.
              ;;
+        --tor ) InstallTorDaemon=true
+             ;;
         -un ) shift
              opt_userfullname="$1"
              ;;
@@ -1056,6 +1061,20 @@ if [ $TestMode == 1 ]; then
     PRINTLOG "=====Request Options========="
     printBinaryVal $RequestOptions
     exit
+fi
+
+if [ "$InstallTorDaemon" == true ]; then
+    ADD_APT_KEYS_LIST+=(
+                        "https://deb.torproject.org/torproject.org/A3C4F0F979CAA22CDBA8F512EE8CBC9E886DDD89.asc"
+                       )
+
+    DebSources["deb https://deb.torproject.org/torproject.org bionic main"]="/etc/apt/sources.list.d/tord.list"
+    DebSources["deb-src https://deb.torproject.org/torproject.org bionic main"]="/etc/apt/sources.list.d/tord.list"
+
+    INSTALL_COMP_LIST+=(
+                        "tor"
+                        "deb.torproject.org-keyring"
+                       )
 fi
 
 
