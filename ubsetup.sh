@@ -101,8 +101,6 @@ NumiNotifyWatches=524288
 # Time is needed between install requests, otherwise, errors occur because previous request may not be complete.
 SLEEP_AFTER_INSTALL_REQUEST="0.2"
 
-InstallTorDaemon=false
-
 
 ########################################
 ##### Lists of components.
@@ -238,9 +236,10 @@ LIST_OF_LAUNCHERS=(
 ##### Usage help text.
 ########################################
 
-TEXT_Usage="Usage $0 [-a] [-i] [-r] [-c] [-un] [-ue] [-h]\n\
+TEXT_Usage="\n\
+Usage $0 [-a] [-i] [-r] [-c] [--tor] [-un] [-ue] [-h]\n\
 \n\
--h:  Show this very same helpful message.\n\
+-h   : Show this very same helpful message.\n\
 \n\
 Requests:\n\
 -r   : Remove unnecessary components.  (Default.)\n\
@@ -250,13 +249,13 @@ Requests:\n\
 --tor: Install Tor Daemon, which will be running and listening on port 9050.\n\
 \n\
 Configuration options:\n\
--un: Username to be configured for the user running this script.\n\
--ue: Email to be configured for the user running this script.\n\
+-un  : Username to be configured for the user running this script.\n\
+-ue  : Email to be configured for the user running this script.\n\
 \n\
 Test options:\n\
--t:  Test mode; prints options and nothing else.\n\
--tt: Test script mode; does nothing, just allows loading into test\n\
-     script for running tests.\n\
+-t   : Test mode; prints options and nothing else.\n\
+-tt  : Test script mode; does nothing, just allows loading into test script\n\
+       for running tests.\n\
 \n\
 If no options are specified, default behaviour is to remove components\n\
 (i.e. same as using -r option alone).\n"
@@ -989,6 +988,8 @@ function usage()
 ##### and usage help.
 ########################################
 
+InstallTorDaemon=false
+
 RequestOptions=$((2#0000))
 TestMode=0
 
@@ -1060,6 +1061,7 @@ if [ $TestMode == 1 ]; then
     PRINTLOG "TEST MODE"
     PRINTLOG "=====Request Options========="
     printBinaryVal $RequestOptions
+    PRINTLOG "Tor Daemon Install: $InstallTorDaemon"
     exit
 fi
 
