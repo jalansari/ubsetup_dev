@@ -15,9 +15,9 @@ DebPackages=(
 InstallDir="/usr/share"
 UsrLocalDir="/usr/local"
 
-NodeJsVer="node-v10.15.3-linux-x64"
+NodeJsVer="node-v10.16.0-linux-x64"
 NodeJsPkg="$NodeJsVer.tar.xz"
-NodeJsUrl="https://nodejs.org/dist/v10.15.3/$NodeJsPkg"
+NodeJsUrl="https://nodejs.org/dist/v10.16.0/$NodeJsPkg"
 NodeInstallDir="$InstallDir/nodejs"
 
 FossilScmPkg="fossil-linux-x64-2.8.tar.gz"
