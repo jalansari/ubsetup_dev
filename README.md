@@ -17,6 +17,8 @@ ___
 
 * Most likely usage:
   * `./ubsetup.sh -a -un "<Full_Name>" -ue "<Email_Address>"`
+* Or, capture log to stdout and file:
+  * `./ubsetup.sh -a -un "<Full_Name>" -ue "<Email_Address>" | tee ubsetup.log`
 
 ___
 
