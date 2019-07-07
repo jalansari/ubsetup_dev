@@ -8,7 +8,7 @@
 declare -A DebPackages
 DebPackages=(
              ["code"]="https://go.microsoft.com/fwlink/?LinkID=760868;mscode.deb" # 760865 for insider edition
-             ["vagrant"]="https://releases.hashicorp.com/vagrant/2.2.4/vagrant_2.2.4_x86_64.deb"
+             ["vagrant"]="https://releases.hashicorp.com/vagrant/2.2.5/vagrant_2.2.5_x86_64.deb"
              ["dropbox"]="https://www.dropbox.com/download?dl=packages/ubuntu/dropbox_2019.02.14_amd64.deb"
             )
 
