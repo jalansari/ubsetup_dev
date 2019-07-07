@@ -34,6 +34,8 @@ TelegramPackageHttpURL="https://telegram.org/dl/desktop/linux"
 VeraCryptPkg="veracrypt-1.23-setup.tar.bz2"
 VeraCryptUrl="https://launchpad.net/veracrypt/trunk/1.23/+download/$VeraCryptPkg"
 
+DockerComposeUrl="https://github.com/docker/compose/releases/download/1.24.1/docker-compose-Linux-x86_64"
+
 
 declare -A Fonts
 Fonts=(
@@ -1161,6 +1163,10 @@ telegramBin="$telegramUnpackTo/Telegram/Telegram"
 wgetAndUnpack "$TelegramPackageHttpURL" "$TelegramPackage" "$telegramUnpackTo" "$telegramBin"
 chown -R $userOfThisScript:$groupOfUserOfThisScript "$telegramUnpackTo"
 
+test ! -z $DockerComposeUrl \
+    && wget $DockerComposeUrl -O /usr/local/bin/docker-compose \
+    && chmod +x /usr/local/bin/docker-compose
+
 
 ########################################
 ##### Writing configuration files.
@@ -1565,9 +1571,9 @@ if [ -v UserInfo[@] ]; then
                 PRINT_ERROR "Adding new user failed <$addUserReturn>"
             fi
         fi
-        if [ $gitInstalled == 0 ] && [ "$isUserConfigured" == true ]; then
-            addUserGitConfig "$usern" "$maingroup" "$fullname" "$email"
-        fi
+
+        [ $gitInstalled == 0 ] && [ "$isUserConfigured" == true ] \
+            && addUserGitConfig "$usern" "$maingroup" "$fullname" "$email"
     done
 fi
 
