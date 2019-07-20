@@ -239,25 +239,28 @@ LIST_OF_LAUNCHERS=(
 ########################################
 
 TEXT_Usage="\n\
-Usage $0 [-a] [-i] [-r] [-c] [--tor] [-un] [-ue] [-h]\n\
+Usage $0 [-a] [-i] [-r] [-c]\n\
+                [--tor] [--rabbit]\n\
+                [-un <Full Name>] [-ue <Email>] [-h]\n\
 \n\
 -h   : Show this very same helpful message.\n\
 \n\
 Requests:\n\
--r   : Remove unnecessary components.  (Default.)\n\
--i   : Install components and configs.\n\
--c   : Configure user environment.\n\
--a   : Same and i, r and c combined.\n\
---tor: Install Tor Daemon, which will be running and listening on port 9050.\n\
+-r       : Remove unnecessary components.  (Default.)\n\
+-i       : Install components and configs.\n\
+-c       : Configure user environment.\n\
+-a       : Same and i, r and c combined.\n\
+--tor    : Install Tor Daemon, which listens on port 9050.\n\
+--rabbit : Install RabbitMq, with it's Erlang dependency.\n\
 \n\
 Configuration options:\n\
--un  : Username to be configured for the user running this script.\n\
--ue  : Email to be configured for the user running this script.\n\
+-un      : Username to be configured for the user running this script.\n\
+-ue      : Email to be configured for the user running this script.\n\
 \n\
 Test options:\n\
--t   : Test mode; prints options and nothing else.\n\
--tt  : Test script mode; does nothing, just allows loading into test script\n\
-       for running tests.\n\
+-t       : Test mode; prints options and nothing else.\n\
+-tt      : Test script mode; does nothing, just allows loading into test script\n\
+           for running tests.\n\
 \n\
 If no options are specified, default behaviour is to remove components\n\
 (i.e. same as using -r option alone).\n"
@@ -991,6 +994,7 @@ function usage()
 ########################################
 
 InstallTorDaemon=false
+InstallRabbitMq=false
 
 RequestOptions=$((2#0000))
 TestMode=0
@@ -1015,6 +1019,8 @@ while [ "$1" != "" ]; do
         -t ) TestMode=1
              ;;
         -tt ) return 0 # Return 0 is needed for testing.
+             ;;
+        --rabbit ) InstallRabbitMq=true
              ;;
         --tor ) InstallTorDaemon=true
              ;;
@@ -1063,8 +1069,22 @@ if [ $TestMode == 1 ]; then
     PRINTLOG "TEST MODE"
     PRINTLOG "=====Request Options========="
     printBinaryVal $RequestOptions
+    PRINTLOG "RabbitMq Install  : $InstallRabbitMq"
     PRINTLOG "Tor Daemon Install: $InstallTorDaemon"
     exit
+fi
+
+if [ "$InstallRabbitMq" == true ]; then
+    ADD_APT_KEYS_LIST+=(
+                        "https://packages.erlang-solutions.com/ubuntu/erlang_solutions.asc"
+                        "https://dl.bintray.com/rabbitmq/Keys/rabbitmq-release-signing-key.asc"
+                       )
+    DebSources["deb https://packages.erlang-solutions.com/ubuntu bionic contrib"]="/etc/apt/sources.list.d/erlang.list"
+    DebSources["deb https://dl.bintray.com/rabbitmq/debian bionic main"]="/etc/apt/sources.list.d/bintray.rabbitmq.list"
+
+    INSTALL_COMP_LIST+=(
+                        "rabbitmq-server"
+                       )
 fi
 
 if [ "$InstallTorDaemon" == true ]; then
