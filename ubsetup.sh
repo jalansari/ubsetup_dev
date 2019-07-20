@@ -20,11 +20,11 @@ NodeJsPkg="$NodeJsVer.tar.xz"
 NodeJsUrl="https://nodejs.org/dist/v10.16.0/$NodeJsPkg"
 NodeInstallDir="$InstallDir/nodejs"
 
-FossilScmPkg="fossil-linux-x64-2.8.tar.gz"
+FossilScmPkg="fossil-linux-x64-2.9.tar.gz"
 FossilScmUrl="https://www.fossil-scm.org/index.html/uv/$FossilScmPkg"
 FossilInstallDir="$InstallDir/fossilscm"
 
-GoLangPkg="go1.12.6.linux-amd64.tar.gz"
+GoLangPkg="go1.12.7.linux-amd64.tar.gz"
 GoLangUrl="https://dl.google.com/go/$GoLangPkg"
 GoPath="$UsrLocalDir/go"
 
