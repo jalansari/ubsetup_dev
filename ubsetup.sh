@@ -15,9 +15,9 @@ DebPackages=(
 InstallDir="/usr/share"
 UsrLocalDir="/usr/local"
 
-NodeJsVer="node-v10.16.0-linux-x64"
+NodeJsVer="node-v10.16.2-linux-x64"
 NodeJsPkg="$NodeJsVer.tar.xz"
-NodeJsUrl="https://nodejs.org/dist/v10.16.0/$NodeJsPkg"
+NodeJsUrl="https://nodejs.org/dist/v10.16.2/$NodeJsPkg"
 NodeInstallDir="$InstallDir/nodejs"
 
 FossilScmPkg="fossil-linux-x64-2.9.tar.gz"
@@ -151,6 +151,10 @@ REMOVE_COMP__LIST=(
                    "gnome-disk-utility"
                   )
 
+# List of components to be installed prior to running apt update.
+P_UPDATE_INS_LIST=(
+                  )
+
 # List of components to be installed.
 INSTALL_COMP_LIST=(
                    "vim"
@@ -240,7 +244,7 @@ LIST_OF_LAUNCHERS=(
 
 TEXT_Usage="\n\
 Usage $0 [-a] [-i] [-r] [-c]\n\
-                [--tor] [--rabbit]\n\
+                [--docker] [--rabbit] [--tor]\n\
                 [-un <Full Name>] [-ue <Email>] [-h]\n\
 \n\
 -h   : Show this very same helpful message.\n\
@@ -250,8 +254,9 @@ Requests:\n\
 -i       : Install components and configs.\n\
 -c       : Configure user environment.\n\
 -a       : Same and i, r and c combined.\n\
---tor    : Install Tor Daemon, which listens on port 9050.\n\
+--docker : Install Docker Engine - Community.\n\
 --rabbit : Install RabbitMq, with it's Erlang dependency.\n\
+--tor    : Install Tor Daemon, which listens on port 9050.\n\
 \n\
 Configuration options:\n\
 -un      : Username to be configured for the user running this script.\n\
@@ -993,8 +998,9 @@ function usage()
 ##### and usage help.
 ########################################
 
-InstallTorDaemon=false
+InstallDocker=false
 InstallRabbitMq=false
+InstallTorDaemon=false
 
 RequestOptions=$((2#0000))
 TestMode=0
@@ -1019,6 +1025,8 @@ while [ "$1" != "" ]; do
         -t ) TestMode=1
              ;;
         -tt ) return 0 # Return 0 is needed for testing.
+             ;;
+        --docker ) InstallDocker=true
              ;;
         --rabbit ) InstallRabbitMq=true
              ;;
@@ -1069,9 +1077,38 @@ if [ $TestMode == 1 ]; then
     PRINTLOG "TEST MODE"
     PRINTLOG "=====Request Options========="
     printBinaryVal $RequestOptions
+    PRINTLOG "=====Environment Options====="
+    PRINTLOG "Docker Install    : $InstallDocker"
     PRINTLOG "RabbitMq Install  : $InstallRabbitMq"
     PRINTLOG "Tor Daemon Install: $InstallTorDaemon"
     exit
+fi
+
+
+########################################
+##### Build up list of components to be
+##### removed and added based on
+##### environment requested.
+########################################
+
+if [ "$InstallDocker" == true ]; then
+    ADD_APT_KEYS_LIST+=(
+                        "https://download.docker.com/linux/ubuntu/gpg"
+                       )
+    # $(lsb_release -cs) should give the codename, but on linuxmint, it will give the mint codename (e.g. tessa) and not the Ubuntu one.
+    DebSources["deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable"]="/etc/apt/sources.list.d/docker.list"
+    P_UPDATE_INS_LIST+=(
+                        # "ca-certificates" # Should already be installed
+                        # "curl" # Should already be installed
+                        "apt-transport-https"
+                        "gnupg-agent"
+                        "software-properties-common"
+                       )
+    INSTALL_COMP_LIST+=(
+                        "docker-ce"
+                        "docker-ce-cli"
+                        "containerd.io"
+                       )
 fi
 
 if [ "$InstallRabbitMq" == true ]; then
@@ -1120,6 +1157,9 @@ fi
 addAptKeys ADD_APT_KEYS_LIST[@]
 addDebSourcestoSourceLists "$(declare -p DebSources)"
 addAptRepos ADD_PPA_REPO_LIST[@]
+
+PRINTLOG "Pre-APT-Update Installs:"
+installAptPackages P_UPDATE_INS_LIST[@]
 
 PRINTLOG "APT Update:"
 apt-get update
