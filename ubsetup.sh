@@ -8,31 +8,31 @@
 declare -A DebPackages
 DebPackages=(
              ["code"]="https://go.microsoft.com/fwlink/?LinkID=760868;mscode.deb" # 760865 for insider edition
-             ["vagrant"]="https://releases.hashicorp.com/vagrant/2.2.5/vagrant_2.2.5_x86_64.deb"
+             ["vagrant"]="https://releases.hashicorp.com/vagrant/2.2.6/vagrant_2.2.6_x86_64.deb"
              ["dropbox"]="https://www.dropbox.com/download?dl=packages/ubuntu/dropbox_2019.02.14_amd64.deb"
             )
 
 InstallDir="/usr/share"
 UsrLocalDir="/usr/local"
 
-NodeJsVer="node-v10.16.3-linux-x64"
+NodeJsVer="node-v12.13.0-linux-x64"
 NodeJsPkg="$NodeJsVer.tar.xz"
-NodeJsUrl="https://nodejs.org/dist/v10.16.3/$NodeJsPkg"
+NodeJsUrl="https://nodejs.org/dist/v12.13.0/$NodeJsPkg"
 NodeInstallDir="$InstallDir/nodejs"
 
-FossilScmPkg="fossil-linux-x64-2.9.tar.gz"
+FossilScmPkg="fossil-linux-x64-2.10.tar.gz"
 FossilScmUrl="https://www.fossil-scm.org/index.html/uv/$FossilScmPkg"
 FossilInstallDir="$InstallDir/fossilscm"
 
-GoLangPkg="go1.12.9.linux-amd64.tar.gz"
+GoLangPkg="go1.13.4.linux-amd64.tar.gz"
 GoLangUrl="https://dl.google.com/go/$GoLangPkg"
 GoPath="$UsrLocalDir/go"
 
 TelegramPackage="telegram_linux.tar.xz"
 TelegramPackageHttpURL="https://telegram.org/dl/desktop/linux"
 
-VeraCryptPkg="veracrypt-1.23-setup.tar.bz2"
-VeraCryptUrl="https://launchpad.net/veracrypt/trunk/1.23/+download/$VeraCryptPkg"
+VeraCryptPkg="veracrypt-1.24-Hotfix1-setup.tar.bz2"
+VeraCryptUrl="https://launchpad.net/veracrypt/trunk/1.24-hotfix1/+download/$VeraCryptPkg"
 
 DockerComposeUrl="https://github.com/docker/compose/releases/download/1.24.1/docker-compose-Linux-x86_64"
 
