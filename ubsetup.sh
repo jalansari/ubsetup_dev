@@ -159,11 +159,24 @@ P_UPDATE_INS_LIST=(
 INSTALL_COMP_LIST=(
                    "vim"
                    "htop"
+                   "unzip"
+                   "git"
+                   "curl"
+                   "ssh"
+                   "python-pip" # Pip package management tools.
+                   "python3-pip"
+                  )
+
+INSTAL_PIP2n3_MAP=(
+                   "virtualenv"
+                  )
+
+# List of components to be installed.
+INSTALL_COMP_LIST_DESKTOP=(
                    "vlc"
                    "firefox"
                    "deluge"
                    "terminator"
-                   "unzip"
                    "unrar"
                    "p7zip-full"
                    "libreoffice"
@@ -182,24 +195,18 @@ INSTALL_COMP_LIST=(
                    "graphviz"
                    "wireshark"
                    "sqlitebrowser"
-                   "git"
                    "gitk"
                    "gitg"
-                   "curl"
                    "shunit2" # Shell script unit test framework.
                    "pv"
-                   "ssh"
                    "libpango1.0-0" # Needed by Dropbox installer.
                    "ipython"
                    "subsurface"
-                   "python-pip" # Pip package management tools.
-                   "python3-pip"
                    "python-tk" # Toolkit required for matplotlib graphics.
                    "python3-tk"
                   )
 
-INSTAL_PIP2n3_MAP=(
-                   "virtualenv"
+INSTAL_PIP2n3_MAP_DESKTOP=(
                    "setuptools" # Installs easy_install, and needed by pylint.
                    "pylint" # Used by VSCode's python extension.
                   )
@@ -1139,6 +1146,17 @@ if [ "$InstallTorDaemon" == true ]; then
 fi
 
 
+checkDebPkgInstalled "ubuntu-server"
+ubServerEnvironment=$?
+if [ $ubServerEnvironment == 0 ]; then
+    PRINTLOG "******************** Ubuntu SERVER"
+else
+    PRINTLOG "******************** Ubuntu DESKTOP"
+    INSTALL_COMP_LIST=( "${INSTALL_COMP_LIST[@]}" "${INSTALL_COMP_LIST_DESKTOP[@]}" )
+    INSTAL_PIP2n3_MAP=( "${INSTAL_PIP2n3_MAP[@]}" "${INSTAL_PIP2n3_MAP_DESKTOP[@]}" )
+fi
+
+
 ########################################
 ##### Applying un/installations.
 ########################################
@@ -1180,49 +1198,6 @@ installPythonPipPackages INSTAL_PIP2n3_MAP[@]
 ##### applications.
 ########################################
 
-PRINTLOG "Installing debian packages from web:"
-for key in "${!DebPackages[@]}"
-do
-    installDebPackageFromHttp ${DebPackages["$key"]} $key
-done
-
-fossilBin="fossil"
-wgetAndUnpack "$FossilScmUrl" "$FossilScmPkg" "$FossilInstallDir" "$FossilInstallDir/$fossilBin" \
-    && updatePathGlobally "$FossilInstallDir"
-
-nodeJsDir="$NodeInstallDir/$NodeJsVer"
-wgetAndUnpack "$NodeJsUrl" "$NodeJsPkg" "$NodeInstallDir" "$nodeJsDir" \
-    && updatePathGlobally "$nodeJsDir/bin"
-chgrp -R $DevGroupName $nodeJsDir
-
-wgetAndUnpack "$GoLangUrl" "$GoLangPkg" "$UsrLocalDir" "$GoPath"
-if [ $? == 0 ]; then
-    updatePathGlobally "$GoPath/bin"
-
-    # TODO user workspace should be seperated when all configuration is seperated.
-    PRINTLOG "Creating GoLang workspace for <$userOfThisScript>, which will be used to download any dependencies when building projects, such as modules from github."
-    mkdir -p $GoWorkspacePath
-    chown -R $userOfThisScript:$groupOfUserOfThisScript $GoWorkspacePath
-    PRINTLOG "    Go workspace <$GoWorkspacePath>"
-    grep "GOPATH=.*$GoWorkspacePath" $UserProfileFile > /dev/null 2>&1
-    if [ $? == 0 ]; then
-        PRINTLOG "GoLang workspace path already set in user's GOPATH variable."
-    else
-        echo "export GOPATH=$GoWorkspacePath" >> $UserProfileFile
-    fi
-fi
-
-VeraCryptBin="/usr/bin/veracrypt"
-veraCryptUnpackTo="$UnpackDirForIncompletePckgs/veracrypt"
-wgetAndUnpack "$VeraCryptUrl" "$VeraCryptPkg" "$veraCryptUnpackTo" "$VeraCryptBin" \
-    && chown -R $userOfThisScript:$groupOfUserOfThisScript "$veraCryptUnpackTo"
-# Looks like veracrypt cannot be auto installed, as user has to accept license conditions.
-
-telegramUnpackTo="$UnpackDirForIncompletePckgs"
-telegramBin="$telegramUnpackTo/Telegram/Telegram"
-wgetAndUnpack "$TelegramPackageHttpURL" "$TelegramPackage" "$telegramUnpackTo" "$telegramBin"
-chown -R $userOfThisScript:$groupOfUserOfThisScript "$telegramUnpackTo"
-
 if [ "$InstallDocker" == true ]; then
     test ! -z $DockerComposeUrl \
         && wget $DockerComposeUrl -O /usr/local/bin/docker-compose \
@@ -1233,6 +1208,51 @@ if [ "$InstallDocker" == true ]; then
     chmod a+x "$GitLabRunnerPath"
     useradd --comment 'GitLab Runner' --create-home gitlab-runner --shell /bin/bash
     gitlab-runner install --user=gitlab-runner --working-directory=/home/gitlab-runner
+fi
+
+fossilBin="fossil"
+wgetAndUnpack "$FossilScmUrl" "$FossilScmPkg" "$FossilInstallDir" "$FossilInstallDir/$fossilBin" \
+    && updatePathGlobally "$FossilInstallDir"
+
+nodeJsDir="$NodeInstallDir/$NodeJsVer"
+wgetAndUnpack "$NodeJsUrl" "$NodeJsPkg" "$NodeInstallDir" "$nodeJsDir" \
+    && updatePathGlobally "$nodeJsDir/bin"
+chgrp -R $DevGroupName $nodeJsDir
+
+if [ $ubServerEnvironment != 0 ]; then
+    PRINTLOG "Installing debian packages from web:"
+    for key in "${!DebPackages[@]}"
+    do
+        installDebPackageFromHttp ${DebPackages["$key"]} $key
+    done
+
+    wgetAndUnpack "$GoLangUrl" "$GoLangPkg" "$UsrLocalDir" "$GoPath"
+    if [ $? == 0 ]; then
+        updatePathGlobally "$GoPath/bin"
+
+        # TODO user workspace should be seperated when all configuration is seperated.
+        PRINTLOG "Creating GoLang workspace for <$userOfThisScript>, which will be used to download any dependencies when building projects, such as modules from github."
+        mkdir -p $GoWorkspacePath
+        chown -R $userOfThisScript:$groupOfUserOfThisScript $GoWorkspacePath
+        PRINTLOG "    Go workspace <$GoWorkspacePath>"
+        grep "GOPATH=.*$GoWorkspacePath" $UserProfileFile > /dev/null 2>&1
+        if [ $? == 0 ]; then
+            PRINTLOG "GoLang workspace path already set in user's GOPATH variable."
+        else
+            echo "export GOPATH=$GoWorkspacePath" >> $UserProfileFile
+        fi
+    fi
+
+    VeraCryptBin="/usr/bin/veracrypt"
+    veraCryptUnpackTo="$UnpackDirForIncompletePckgs/veracrypt"
+    wgetAndUnpack "$VeraCryptUrl" "$VeraCryptPkg" "$veraCryptUnpackTo" "$VeraCryptBin" \
+        && chown -R $userOfThisScript:$groupOfUserOfThisScript "$veraCryptUnpackTo"
+    # Looks like veracrypt cannot be auto installed, as user has to accept license conditions.
+
+    telegramUnpackTo="$UnpackDirForIncompletePckgs"
+    telegramBin="$telegramUnpackTo/Telegram/Telegram"
+    wgetAndUnpack "$TelegramPackageHttpURL" "$TelegramPackage" "$telegramUnpackTo" "$telegramBin"
+    chown -R $userOfThisScript:$groupOfUserOfThisScript "$telegramUnpackTo"
 fi
 
 
