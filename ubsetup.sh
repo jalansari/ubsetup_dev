@@ -222,6 +222,9 @@ ADD_APT_KEYS_LIST=(
 
 # List of PPA repositories to be added.
 ADD_PPA_REPO_LIST=(
+                  )
+
+ADD_PPA_REPO_LIST_DESKTOP=(
                    "ppa:subsurface/subsurface" # Needed to install subsurface dive computer application.
                   )
 
@@ -1154,6 +1157,7 @@ else
     PRINTLOG "******************** Ubuntu DESKTOP"
     INSTALL_COMP_LIST=( "${INSTALL_COMP_LIST[@]}" "${INSTALL_COMP_LIST_DESKTOP[@]}" )
     INSTAL_PIP2n3_MAP=( "${INSTAL_PIP2n3_MAP[@]}" "${INSTAL_PIP2n3_MAP_DESKTOP[@]}" )
+    ADD_PPA_REPO_LIST=( "${ADD_PPA_REPO_LIST[@]}" "${ADD_PPA_REPO_LIST_DESKTOP[@]}" )
 fi
 
 
