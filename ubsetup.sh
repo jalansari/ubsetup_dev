@@ -1223,9 +1223,17 @@ telegramBin="$telegramUnpackTo/Telegram/Telegram"
 wgetAndUnpack "$TelegramPackageHttpURL" "$TelegramPackage" "$telegramUnpackTo" "$telegramBin"
 chown -R $userOfThisScript:$groupOfUserOfThisScript "$telegramUnpackTo"
 
-test ! -z $DockerComposeUrl \
-    && wget $DockerComposeUrl -O /usr/local/bin/docker-compose \
-    && chmod +x /usr/local/bin/docker-compose
+if [ "$InstallDocker" == true ]; then
+    test ! -z $DockerComposeUrl \
+        && wget $DockerComposeUrl -O /usr/local/bin/docker-compose \
+        && chmod +x /usr/local/bin/docker-compose
+
+    GitLabRunnerPath="/usr/local/bin/gitlab-runner"
+    wget https://gitlab-runner-downloads.s3.amazonaws.com/latest/binaries/gitlab-runner-linux-amd64 -O "$GitLabRunnerPath"
+    chmod a+x "$GitLabRunnerPath"
+    useradd --comment 'GitLab Runner' --create-home gitlab-runner --shell /bin/bash
+    gitlab-runner install --user=gitlab-runner --working-directory=/home/gitlab-runner
+fi
 
 
 ########################################
