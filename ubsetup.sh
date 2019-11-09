@@ -1447,7 +1447,7 @@ if [ $nemoinstalled == 0 ] || [ $cinnamonInstalled == 0 ] || [ $xedinstalled == 
     fi
 fi
 
-RunGlibCompileSchemas=0
+RunGlibCompileSchemas=false
 GlibScemasDir="/usr/share/glib-2.0/schemas"
 GlibPriorityNum="zzz" # This should be a number, but distros are not using priority numbers, so we have to try being higher priority by using lexicographical ordering.
 
@@ -1455,7 +1455,7 @@ if [ $nemoinstalled == 0 ]; then
     PRINTLOG "Configuring Nemo file manager."
     NemoGSettingsCfg="$GlibScemasDir/${GlibPriorityNum}_nemo.gschema.override"
     echo -e "$TEXT_NemoGSettingsConfig" >> $NemoGSettingsCfg
-    RunGlibCompileSchemas=1
+    RunGlibCompileSchemas=true
 fi
 
 if [ $cinnamonInstalled == 0 ]; then
@@ -1550,14 +1550,14 @@ if [ $cinnamonInstalled == 0 ]; then
         echo -e "$TEXT_TermGSettingsConfigGnome" >> $TermGSettingsCfg
     fi
 
-    RunGlibCompileSchemas=1
+    RunGlibCompileSchemas=true
 fi
 
 if [ $xedinstalled == 0 ]; then
     PRINTLOG "Configuring Xed."
     GSettingsCfg="$GlibScemasDir/${GlibPriorityNum}_xed.gschema.override"
     echo -e "$TEXT_XedGSettingsConfig" >> $GSettingsCfg
-    RunGlibCompileSchemas=1
+    RunGlibCompileSchemas=true
 fi
 
 
@@ -1572,14 +1572,14 @@ if [ $geditPkgInstalled == 0 ]; then
     PRINTLOG "Configuring gedit text editor."
     GSettingsCfg="$GlibScemasDir/${GlibPriorityNum}_gedit.gschema.override"
     echo -e "$TEXT_geditGSettingsConfig" >> $GSettingsCfg
-    RunGlibCompileSchemas=1
+    RunGlibCompileSchemas=true
 fi
 
 if [ $nautilusPkgInstalled == 0 ]; then
     PRINTLOG "Configuring nautilus file manager."
     GSettingsCfg="$GlibScemasDir/${GlibPriorityNum}_nautilus.gschema.override"
     echo -e "$TEXT_nautilusGSettingsConfig" >> $GSettingsCfg
-    RunGlibCompileSchemas=1
+    RunGlibCompileSchemas=true
 fi
 
 if [ $ubuntuInstalled == 0 ]; then
@@ -1612,11 +1612,11 @@ if [ $ubuntuInstalled == 0 ]; then
     GSettingsCfg="$GlibScemasDir/${GlibPriorityNum}_ubuntupower.gschema.override"
     echo -e "$TEXT_UbuntuPowerGSettingsConfig" >> $GSettingsCfg
 
-    RunGlibCompileSchemas=1
+    RunGlibCompileSchemas=true
 fi
 
 
-if [ $RunGlibCompileSchemas ]; then
+if [ "$RunGlibCompileSchemas" == true ]; then
     PRINTLOG "GSettings compiling schemas."
     glib-compile-schemas "$GlibScemasDir/"
 fi
