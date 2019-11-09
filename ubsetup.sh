@@ -1,4 +1,5 @@
 #!/bin/bash
+# sudo ./ubsetup.sh -a --ruby 2.6.0 -un "ServerUser" -ue "user@setup.me" --docker | tee ubsetup.sh.log
 
 ########################################
 ##### Constants and variables used
@@ -254,8 +255,9 @@ LIST_OF_LAUNCHERS=(
 
 TEXT_Usage="\n\
 Usage $0 [-a] [-i] [-r] [-c]\n\
-                [--docker] [--rabbit] [--tor]\n\
-                [-un <Full Name>] [-ue <Email>] [-h]\n\
+      [--ruby] [--docker] [--rabbit] [--tor]\n\
+      [-un <Full Name>] [-ue <Email>]\n\
+      [-h]\n\
 \n\
 -h   : Show this very same helpful message.\n\
 \n\
@@ -264,17 +266,18 @@ Requests:\n\
 -i       : Install components and configs.\n\
 -c       : Configure user environment.\n\
 -a       : Same and i, r and c combined.\n\
+--ruby   : Intall RVM for Ruby installation.\n\
 --docker : Install Docker Engine - Community.\n\
 --rabbit : Install RabbitMq, with it's Erlang dependency.\n\
 --tor    : Install Tor Daemon, which listens on port 9050.\n\
 \n\
 Configuration options:\n\
--un      : Username to be configured for the user running this script.\n\
--ue      : Email to be configured for the user running this script.\n\
+-un      : Configure full name for the user running this script.\n\
+-ue      : Configure email for the user running this script.\n\
 \n\
 Test options:\n\
 -t       : Test mode; prints options and nothing else.\n\
--tt      : Test script mode; does nothing, just allows loading into test script\n\
+-tt      : Testing mode; does nothing, just allows loading into test script\n\
            for running tests.\n\
 \n\
 If no options are specified, default behaviour is to remove components\n\
@@ -1008,6 +1011,7 @@ function usage()
 ##### and usage help.
 ########################################
 
+InstallRuby=false
 InstallDocker=false
 InstallRabbitMq=false
 InstallTorDaemon=false
@@ -1035,6 +1039,8 @@ while [ "$1" != "" ]; do
         -t ) TestMode=1
              ;;
         -tt ) return 0 # Return 0 is needed for testing.
+             ;;
+        --ruby ) InstallRuby=true
              ;;
         --docker ) InstallDocker=true
              ;;
@@ -1088,6 +1094,7 @@ if [ $TestMode == 1 ]; then
     PRINTLOG "=====Request Options========="
     printBinaryVal $RequestOptions
     PRINTLOG "=====Environment Options====="
+    PRINTLOG "Ruby Install      : $InstallRuby"
     PRINTLOG "Docker Install    : $InstallDocker"
     PRINTLOG "RabbitMq Install  : $InstallRabbitMq"
     PRINTLOG "Tor Daemon Install: $InstallTorDaemon"
@@ -1100,6 +1107,23 @@ fi
 ##### removed and added based on
 ##### environment requested.
 ########################################
+
+if [ "$InstallRuby" == true ]; then
+    PRINTLOG "Downloading RVM verification keys."
+    gpg --keyserver hkp://pool.sks-keyservers.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 7D2BAF1CF37B13E2069D6956105BD0E739499BDB
+
+    ADD_PPA_REPO_LIST+=(
+                        "ppa:rael-gc/rvm"
+                       )
+    P_UPDATE_INS_LIST+=(
+                        "software-properties-common"
+                       )
+    INSTALL_COMP_LIST+=(
+                        "libgmp-dev"
+                        "libssl-dev"
+                        "rvm"
+                       )
+fi
 
 if [ "$InstallDocker" == true ]; then
     ADD_APT_KEYS_LIST+=(
@@ -1674,7 +1698,11 @@ fi
 ########################################
 
 PRINTLOG "******************************"
-PRINTLOG "Manual configs to be done:"
+PRINTLOG "Manual steps to complete system setup (after reboot):"
+PRINTLOG ""
+PRINTLOG "Extra installation steps:"
+PRINTLOG "  *  Ruby version install, ..."
+PRINTLOG "Additions to be applied:"
 PRINTLOG "  *  Firefox addons: AdBlock, noScript, ..."
 PRINTLOG "  *  VSCode Extensions: Code Spell Checker ..."
 PRINTLOG "Installations to be completed manually:"
