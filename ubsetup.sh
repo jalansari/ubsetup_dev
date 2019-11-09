@@ -1089,6 +1089,17 @@ if [ ! -z "$opt_userfullname" ] || [ ! -z "$opt_useremail" ]; then
     UserInfo[$currentUserNameKey]="$currentUserDescFromArray"
 fi
 
+checkDebPkgInstalled "ubuntu-server"
+ubServerEnvironment=$?
+if [ $ubServerEnvironment == 0 ]; then
+    PRINTLOG "******************** Ubuntu SERVER"
+else
+    PRINTLOG "******************** Ubuntu DESKTOP"
+    INSTALL_COMP_LIST=( "${INSTALL_COMP_LIST[@]}" "${INSTALL_COMP_LIST_DESKTOP[@]}" )
+    INSTAL_PIP2n3_MAP=( "${INSTAL_PIP2n3_MAP[@]}" "${INSTAL_PIP2n3_MAP_DESKTOP[@]}" )
+    ADD_PPA_REPO_LIST=( "${ADD_PPA_REPO_LIST[@]}" "${ADD_PPA_REPO_LIST_DESKTOP[@]}" )
+fi
+
 if [ $TestMode == 1 ]; then
     PRINTLOG "TEST MODE"
     PRINTLOG "=====Request Options========="
@@ -1170,18 +1181,6 @@ if [ "$InstallTorDaemon" == true ]; then
                         "tor"
                         "deb.torproject.org-keyring"
                        )
-fi
-
-
-checkDebPkgInstalled "ubuntu-server"
-ubServerEnvironment=$?
-if [ $ubServerEnvironment == 0 ]; then
-    PRINTLOG "******************** Ubuntu SERVER"
-else
-    PRINTLOG "******************** Ubuntu DESKTOP"
-    INSTALL_COMP_LIST=( "${INSTALL_COMP_LIST[@]}" "${INSTALL_COMP_LIST_DESKTOP[@]}" )
-    INSTAL_PIP2n3_MAP=( "${INSTAL_PIP2n3_MAP[@]}" "${INSTAL_PIP2n3_MAP_DESKTOP[@]}" )
-    ADD_PPA_REPO_LIST=( "${ADD_PPA_REPO_LIST[@]}" "${ADD_PPA_REPO_LIST_DESKTOP[@]}" )
 fi
 
 
