@@ -1257,6 +1257,28 @@ if [ $ubServerEnvironment != 0 ]; then
     telegramBin="$telegramUnpackTo/Telegram/Telegram"
     wgetAndUnpack "$TelegramPackageHttpURL" "$TelegramPackage" "$telegramUnpackTo" "$telegramBin"
     chown -R $userOfThisScript:$groupOfUserOfThisScript "$telegramUnpackTo"
+
+    PRINTLOG "Installing fonts."
+    doBuildFontCache=false
+    for key in "${!Fonts[@]}"
+    do
+        fontFolder="$allFontsFolder/$key"
+        if [ -e "$fontFolder" ]; then
+            PRINTLOG "Font [$key] already exists: [$fontFolder]"
+            continue
+        fi
+        doBuildFontCache=true
+        downloadUrl=${Fonts["$key"]}
+        PRINTLOG "Download and setup font [$key]: [$downloadUrl] -> [$fontFolder]"
+        wget -O $key.zip $downloadUrl
+        mkdir -p $fontFolder
+        unzip -d $fontFolder $key.zip
+        rm $key.zip
+    done
+    if [ "$doBuildFontCache" == true ]; then
+        chmod -R --reference=/usr/share/fonts/opentype $allFontsFolder
+        fc-cache -fv
+    fi
 fi
 
 
@@ -1597,32 +1619,6 @@ fi
 if [ $RunGlibCompileSchemas ]; then
     PRINTLOG "GSettings compiling schemas."
     glib-compile-schemas "$GlibScemasDir/"
-fi
-
-
-########################################
-##### Adding fonts.
-########################################
-
-doBuildFontCache=false
-for key in "${!Fonts[@]}"
-do
-    fontFolder="$allFontsFolder/$key"
-    if [ -e "$fontFolder" ]; then
-        PRINTLOG "Font [$key] already exists: [$fontFolder]"
-        continue
-    fi
-    doBuildFontCache=true
-    downloadUrl=${Fonts["$key"]}
-    PRINTLOG "Download and setup font [$key]: [$downloadUrl] -> [$fontFolder]"
-    wget -O $key.zip $downloadUrl
-    mkdir -p $fontFolder
-    unzip -d $fontFolder $key.zip
-    rm $key.zip
-done
-if [ "$doBuildFontCache" == true ]; then
-    chmod -R --reference=/usr/share/fonts/opentype $allFontsFolder
-    fc-cache -fv
 fi
 
 
