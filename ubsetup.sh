@@ -1,5 +1,5 @@
 #!/bin/bash
-# sudo ./ubsetup.sh -a --ruby 2.6.0 -un "ServerUser" -ue "user@setup.me" --docker | tee ubsetup.sh.log
+# sudo ./ubsetup.sh -a --ruby -un "ServerUser" -ue "user@setup.me" --docker | tee ubsetup.sh.log
 
 ########################################
 ##### Constants and variables used
