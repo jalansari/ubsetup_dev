@@ -16,9 +16,9 @@ DebPackages=(
 InstallDir="/usr/share"
 UsrLocalDir="/usr/local"
 
-NodeJsVer="node-v12.13.0-linux-x64"
+NodeJsVer="node-v12.13.1-linux-x64"
 NodeJsPkg="$NodeJsVer.tar.xz"
-NodeJsUrl="https://nodejs.org/dist/v12.13.0/$NodeJsPkg"
+NodeJsUrl="https://nodejs.org/dist/v12.13.1/$NodeJsPkg"
 NodeInstallDir="$InstallDir/nodejs"
 
 FossilScmPkg="fossil-linux-x64-2.10.tar.gz"
@@ -35,7 +35,7 @@ TelegramPackageHttpURL="https://telegram.org/dl/desktop/linux"
 VeraCryptPkg="veracrypt-1.24-Hotfix1-setup.tar.bz2"
 VeraCryptUrl="https://launchpad.net/veracrypt/trunk/1.24-hotfix1/+download/$VeraCryptPkg"
 
-DockerComposeUrl="https://github.com/docker/compose/releases/download/1.24.1/docker-compose-Linux-x86_64"
+DockerComposeUrl="https://github.com/docker/compose/releases/download/1.25.0/docker-compose-Linux-x86_64"
 
 
 declare -A Fonts
