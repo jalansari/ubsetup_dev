@@ -683,18 +683,20 @@ function getAvailableFileName()
 
 function updatePathInFile()
 {   newPath=$1
-    file=$2
-    if [ ! -f $file ]; then
-        return 1
+    file="$2"
+    if [ ! -f "$file" ]; then
+        return 9
     fi
     FOUND=0
-    grep '^\s*PATH=.*'$newPath'' $file > /dev/null 2>&1
+    # Paths may contain $ sign to reference other variables, therefore, ensure $ signs are escaped.
+    searchStrEscDollar=$( echo "$newPath" | sed -r 's|\$|\\$|g;' )
+    grep -E "^(export)?\s*PATH=.*$searchStrEscDollar" "$file" > /dev/null 2>&1
     if [ $? != $FOUND ]; then
-        grep '^\s*PATH=.*' $file > /dev/null 2>&1
+        grep -E '^(export)?\s*PATH=.*' "$file" > /dev/null 2>&1
         if [ $? == $FOUND ]; then
-            sed -r -i 's|^(\s*PATH="?)(.*"?)$|\1'$newPath':\2|;' $file > /dev/null 2>&1
+            sed -r -i 's|^((export)?\s*PATH=.*)$|\1:'"$newPath"':|;' "$file" > /dev/null 2>&1
         else
-            echo "PATH=$newPath:\$PATH" >> $file
+            echo "PATH=\$PATH:$newPath" >> "$file"
         fi
     fi
 }
@@ -1685,6 +1687,9 @@ if [ -v UserInfo[@] ]; then
 
         [ $gitInstalled == 0 ] && [ "$isUserConfigured" == true ] \
             && addUserGitConfig "$usern" "$maingroup" "$fullname" "$email"
+
+        [ "$InstallDocker" = true ] \
+            && usermod -a -G docker $usern # Required to allow users ability to use docker service.
     done
 fi
 

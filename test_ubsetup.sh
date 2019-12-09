@@ -11,69 +11,69 @@ function runPrintBinValTest()
 function test_printBinaryVal_zero()
 {   binvalue=2#00000000
     expected=2#00000000
-    expPrint=`echo -e "Bin: 0b0\nHex: 0x00000000\nOct: 0o00000000000"`
+    expPrint=$( echo -e "Bin: 0b0\nHex: 0x00000000\nOct: 0o00000000000" )
     runPrintBinValTest $binvalue $expected "$expPrint"
 }
 
 function test_printBinaryVal_one()
 {   binvalue=2#00000001
     expected=2#00000000
-    expPrint=`echo -e "Bin: 0b1\nHex: 0x00000001\nOct: 0o00000000001"`
+    expPrint=$( echo -e "Bin: 0b1\nHex: 0x00000001\nOct: 0o00000000001" )
     runPrintBinValTest $binvalue $expected "$expPrint"
 }
 
 function test_printBinaryVal_five()
 {   binvalue=2#00000101
     expected=2#00000100
-    expPrint=`echo -e "Bin: 0b101\nHex: 0x00000005\nOct: 0o00000000005"`
+    expPrint=$( echo -e "Bin: 0b101\nHex: 0x00000005\nOct: 0o00000000005" )
     runPrintBinValTest $binvalue $expected "$expPrint"
 }
 
 function test_printBinaryVal_singleBitInMiddle()
 {   binvalue=2#00100000
     expected=2#00000000
-    expPrint=`echo -e "Bin: 0b100000\nHex: 0x00000020\nOct: 0o00000000040"`
+    expPrint=$( echo -e "Bin: 0b100000\nHex: 0x00000020\nOct: 0o00000000040" )
     runPrintBinValTest $binvalue $expected "$expPrint"
 }
 
 function test_printBinaryVal_twoBitsInMiddle()
 {   binvalue=2#00101000
     expected=2#00100000
-    expPrint=`echo -e "Bin: 0b101000\nHex: 0x00000028\nOct: 0o00000000050"`
+    expPrint=$( echo -e "Bin: 0b101000\nHex: 0x00000028\nOct: 0o00000000050" )
     runPrintBinValTest $binvalue $expected "$expPrint"
 }
 
 function test_printBinaryVal_arbitraryNumbers()
 {   binvalue=15680
     expected=15616
-    expPrint=`echo -e "Bin: 0b11110101000000\nHex: 0x00003D40\nOct: 0o00000036500"`
+    expPrint=$( echo -e "Bin: 0b11110101000000\nHex: 0x00003D40\nOct: 0o00000036500" )
     runPrintBinValTest $binvalue $expected "$expPrint"
 
     binvalue=2#0010000000101100
     expected=2#0010000000101000
-    expPrint=`echo -e "Bin: 0b10000000101100\nHex: 0x0000202C\nOct: 0o00000020054"`
+    expPrint=$( echo -e "Bin: 0b10000000101100\nHex: 0x0000202C\nOct: 0o00000020054" )
     runPrintBinValTest $binvalue $expected "$expPrint"
 
     binvalue=0x156fe
     expected=0x156fc
-    expPrint=`echo -e "Bin: 0b10101011011111110\nHex: 0x000156FE\nOct: 0o00000253376"`
+    expPrint=$( echo -e "Bin: 0b10101011011111110\nHex: 0x000156FE\nOct: 0o00000253376" )
     runPrintBinValTest $binvalue $expected "$expPrint"
 }
 
 function test_printBinaryVal_biggestNumbers()
 {   binvalue=2#11111111111111111111111111111111
     expected=2#11111111111111111111111111111110
-    expPrint=`echo -e "Bin: 0b11111111111111111111111111111111\nHex: 0xFFFFFFFF\nOct: 0o37777777777"`
+    expPrint=$( echo -e "Bin: 0b11111111111111111111111111111111\nHex: 0xFFFFFFFF\nOct: 0o37777777777" )
     runPrintBinValTest $binvalue $expected "$expPrint"
 
     binvalue=2#10000000000000000000000000000000
     expected=2#00000000000000000000000000000000
-    expPrint=`echo -e "Bin: 0b10000000000000000000000000000000\nHex: 0x80000000\nOct: 0o20000000000"`
+    expPrint=$( echo -e "Bin: 0b10000000000000000000000000000000\nHex: 0x80000000\nOct: 0o20000000000" )
     runPrintBinValTest $binvalue $expected "$expPrint"
 
     binvalue=2#11000000000000000000000000000000
     expected=2#10000000000000000000000000000000
-    expPrint=`echo -e "Bin: 0b11000000000000000000000000000000\nHex: 0xC0000000\nOct: 0o30000000000"`
+    expPrint=$( echo -e "Bin: 0b11000000000000000000000000000000\nHex: 0xC0000000\nOct: 0o30000000000" )
     runPrintBinValTest $binvalue $expected "$expPrint"
 }
 
@@ -97,7 +97,7 @@ newFileNameGenerated=""
 function runGetAvailableFNTest()
 {   req=$1
     exp=$2
-    ret=`getAvailableFileName "$req"`
+    ret=$( getAvailableFileName "$req" )
     newFileNameGenerated=$ret
     assertEquals "$exp" "$ret"
 }
@@ -198,7 +198,7 @@ function test_updatePathInFile_updatePathWithAdditionalValue()
 
     runUpdatePathTest $additionalValue $testfile $expectedRet
 
-    grepForStrAndDelFile "^  PATH=$additionalValue:sometext:\$PATH$" "$testfile" 0
+    grepForStrAndDelFile "^  PATH=sometext:\$PATH:$additionalValue:$" "$testfile" 0
 }
 
 function test_updatePathInFile_noPathUpdateValueAlreadyExists()
@@ -207,9 +207,9 @@ function test_updatePathInFile_noPathUpdateValueAlreadyExists()
     expectedRet=0
     echo -e "text\n\n  PATH=sometext:\$PATH:$additionalValue:more\nevenmore" > $testfile
 
-    runUpdatePathTest $additionalValue $testfile $expectedRet
+    runUpdatePathTest "$additionalValue" $testfile $expectedRet
 
-    grepForStrAndDelFile "^  PATH=sometext:\$PATH:$additionalValue:more$" "$testfile" 0
+    grepForStrAndDelFile "^  PATH=sometext:\$PATH:$additionalValue:more$" $testfile 0
 }
 
 function test_updatePathInFile_addPathToFile()
@@ -220,24 +220,24 @@ function test_updatePathInFile_addPathToFile()
 
     runUpdatePathTest $additionalValue $testfile $expectedRet
 
-    grepForStrAndDelFile "^PATH=$additionalValue:\$PATH$" "$testfile" 0
+    grepForStrAndDelFile "^PATH=\$PATH:$additionalValue$" "$testfile" 0
 }
 
-function test_updatePathInFile_fileDoesNotExistRet1()
+function test_updatePathInFile_fileDoesNotExistRet9()
 {   testfile="profiletestfile"
     rm $testfile > /dev/null 2>&1
     additionalValue="\$NewPath"
-    expectedRet=1
+    expectedRet=9
 
     runUpdatePathTest $additionalValue $testfile $expectedRet
 }
 
-function test_updatePathInFile_fileIsActuallyDirRet1()
+function test_updatePathInFile_fileIsActuallyDirRet9()
 {   testfile="profiletestfile"
     rm -rf $testfile > /dev/null 2>&1
     mkdir -p $testfile
     additionalValue="\$NewPath"
-    expectedRet=1
+    expectedRet=9
 
     runUpdatePathTest $additionalValue $testfile $expectedRet
     rm -rf $testfile
@@ -339,7 +339,7 @@ function test_addNewUser_NoUsername()
 }
 
 function test_addNewUser_UsernameAlreadyExists()
-{   userOfThisScript=`id -u -n $SUDO_USER`
+{   userOfThisScript=$( id -u -n $SUDO_USER )
     usernameToAdd=$userOfThisScript
     groupName=""
     expected=2
@@ -352,7 +352,7 @@ function test_addNewUser_UsernameAlreadyExists()
 }
 
 function test_addNewUser_NoGroup()
-{   userOfThisScript=`id -u -n $SUDO_USER`
+{   userOfThisScript=$( id -u -n $SUDO_USER )
     usernameToAdd="$userOfThisScript.testuserNoGroup"
     groupName=""
     expected=3
@@ -366,7 +366,7 @@ function test_addNewUser_NoGroup()
 }
 
 function test_addNewUser_BadGECOS()
-{   userOfThisScript=`id -u -n $SUDO_USER`
+{   userOfThisScript=$( id -u -n $SUDO_USER )
     usernameToAdd="$userOfThisScript.testuserBadGecos"
     groupName="testgroup"
     fullName="This:Name:Should:Be:Bad: for:GECOS"
@@ -404,7 +404,7 @@ function test_updateExistingUser_NoUsername()
 }
 
 function test_updateExistingUser_UsernameDoesNotExists()
-{   userOfThisScript=`id -u -n $SUDO_USER`
+{   userOfThisScript=$( id -u -n $SUDO_USER )
     usernameToAdd="$userOfThisScript.testuserNotExist"
     groupName=""
     expected=2
@@ -416,7 +416,7 @@ function test_updateExistingUser_UsernameDoesNotExists()
 }
 
 function test_updateExistingUser_BadGECOS()
-{   userOfThisScript=`id -u -n $SUDO_USER`
+{   userOfThisScript=$( id -u -n $SUDO_USER )
     usernameToAdd=$userOfThisScript
     groupName=""
     fullName="This:Name:Should:Be:Bad: for:GECOS"
@@ -430,7 +430,7 @@ function test_updateExistingUser_BadGECOS()
 }
 
 function test_updateExistingUser_BadGroupName()
-{   userOfThisScript=`id -u -n $SUDO_USER`
+{   userOfThisScript=$( id -u -n $SUDO_USER )
     usernameToAdd=$userOfThisScript
     groupName="bad:group:name"
     expected=8
