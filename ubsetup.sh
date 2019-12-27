@@ -256,7 +256,7 @@ LIST_OF_LAUNCHERS=(
 
 TEXT_Usage="\n\
 Usage $0 [-a] [-i] [-r] [-c]\n\
-      [--ruby] [--docker] [--rabbit] [--tor]\n\
+      [--ruby | --rubyv <version>] [--docker] [--rabbit] [--tor]\n\
       [-un <Full Name>] [-ue <Email>]\n\
       [-h]\n\
 \n\
@@ -267,7 +267,8 @@ Requests:\n\
 -i       : Install components and configs.\n\
 -c       : Configure user environment.\n\
 -a       : Same and i, r and c combined.\n\
---ruby   : Intall RVM for Ruby installation.\n\
+--ruby   : Intall RVM for Ruby installation.  (Not required if using '--rubyv').\n\
+--rubyv  : Intall RVM, AND install a specific Ruby version.\n\
 --docker : Install Docker Engine - Community.\n\
 --rabbit : Install RabbitMq, with it's Erlang dependency.\n\
 --tor    : Install Tor Daemon, which listens on port 9050.\n\
@@ -1048,6 +1049,10 @@ while [ "$1" != "" ]; do
              ;;
         --ruby ) InstallRuby=true
              ;;
+        --rubyv ) shift
+             InstallRuby=true
+             RubyVersion="$1"
+             ;;
         --docker ) InstallDocker=true
              ;;
         --rabbit ) InstallRabbitMq=true
@@ -1111,7 +1116,7 @@ if [ $TestMode == 1 ]; then
     PRINTLOG "=====Request Options========="
     printBinaryVal $RequestOptions
     PRINTLOG "=====Environment Options====="
-    PRINTLOG "Ruby Install      : $InstallRuby"
+    PRINTLOG "Ruby Install      : $InstallRuby, RubyVersion: <$RubyVersion>"
     PRINTLOG "Docker Install    : $InstallDocker"
     PRINTLOG "RabbitMq Install  : $InstallRabbitMq"
     PRINTLOG "Tor Daemon Install: $InstallTorDaemon"
@@ -1126,19 +1131,8 @@ fi
 ########################################
 
 if [ "$InstallRuby" == true ]; then
-    PRINTLOG "Downloading RVM verification keys."
-    gpg --keyserver hkp://pool.sks-keyservers.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 7D2BAF1CF37B13E2069D6956105BD0E739499BDB
-
-    ADD_PPA_REPO_LIST+=(
-                        "ppa:rael-gc/rvm"
-                       )
-    P_UPDATE_INS_LIST+=(
-                        "software-properties-common"
-                       )
     INSTALL_COMP_LIST+=(
-                        "libgmp-dev"
-                        "libssl-dev"
-                        "rvm"
+                        "gnupg"
                        )
 fi
 
@@ -1241,6 +1235,18 @@ if [ "$InstallDocker" == true ]; then
     chmod a+x "$GitLabRunnerPath"
     useradd --comment 'GitLab Runner' --create-home gitlab-runner --shell /bin/bash
     gitlab-runner install --user=gitlab-runner --working-directory=/home/gitlab-runner
+fi
+
+if [ "$InstallRuby" == true ]; then
+    PRINTLOG "Downloading RVM verification keys."
+    gpg --keyserver hkp://pool.sks-keyservers.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 7D2BAF1CF37B13E2069D6956105BD0E739499BDB
+    PRINTLOG "Install RVM."
+    if [ -z "$RubyVersion" ]; then
+        curl -sSL https://get.rvm.io | bash -s stable
+    else
+        PRINTLOG "... with Ruby <$RubyVersion>."
+        curl -sSL https://get.rvm.io | bash -s stable --ruby=$RubyVersion
+    fi
 fi
 
 fossilBin="fossil"
@@ -1701,6 +1707,9 @@ if [ -v UserInfo[@] ]; then
 
         [ "$InstallDocker" = true ] \
             && usermod -a -G docker $usern # Required to allow users ability to use docker service.
+
+        [ "$InstallRuby" == true ] \
+            && usermod -a -G rvm $usern
     done
 fi
 
