@@ -16,24 +16,24 @@ DebPackages=(
 InstallDir="/usr/share"
 UsrLocalDir="/usr/local"
 
-NodeJsVer="node-v12.13.1-linux-x64"
+NodeJsVer="node-v12.14.0-linux-x64"
 NodeJsPkg="$NodeJsVer.tar.xz"
-NodeJsUrl="https://nodejs.org/dist/v12.13.1/$NodeJsPkg"
+NodeJsUrl="https://nodejs.org/dist/v12.14.0/$NodeJsPkg"
 NodeInstallDir="$InstallDir/nodejs"
 
 FossilScmPkg="fossil-linux-x64-2.10.tar.gz"
 FossilScmUrl="https://www.fossil-scm.org/index.html/uv/$FossilScmPkg"
 FossilInstallDir="$InstallDir/fossilscm"
 
-GoLangPkg="go1.13.4.linux-amd64.tar.gz"
+GoLangPkg="go1.13.5.linux-amd64.tar.gz"
 GoLangUrl="https://dl.google.com/go/$GoLangPkg"
 GoPath="$UsrLocalDir/go"
 
 TelegramPackage="telegram_linux.tar.xz"
 TelegramPackageHttpURL="https://telegram.org/dl/desktop/linux"
 
-VeraCryptPkg="veracrypt-1.24-Hotfix1-setup.tar.bz2"
-VeraCryptUrl="https://launchpad.net/veracrypt/trunk/1.24-hotfix1/+download/$VeraCryptPkg"
+VeraCryptPkg="veracrypt-1.24-Update2-setup.tar.bz2"
+VeraCryptUrl="https://launchpad.net/veracrypt/trunk/1.24-update2/+download/$VeraCryptPkg"
 
 DockerComposeUrl="https://github.com/docker/compose/releases/download/1.25.0/docker-compose-Linux-x86_64"
 
@@ -140,6 +140,7 @@ REMOVE_COMP__LIST=(
                    "audacious"
                    "gnome-mplayer"
                    "mpv"
+                   "celluloid"
                    "gnome-mpv"
                    "guvcview"
                    "mtpaint"
@@ -381,9 +382,7 @@ name='Mint-Y-Dark'\n\
 icon-theme='Mint-X-Dark'\n\
 gtk-theme='Mint-Y-Dark'\n\
 clock-show-date=true\n\
-scaling-factor=uint32 0\n\
-\n\
-[org.gnome.desktop.interface]\n\
+first-day-of-week=1\n\
 scaling-factor=uint32 0\n"
 
 TEXT_CinnamonSoundsGSettingsConfig="[org.cinnamon.sounds]\n\
@@ -396,29 +395,31 @@ switch-enabled=false\n"
 
 TEXT_CinnamonMouseGSettingsConfig="[org.cinnamon.settings-daemon.peripherals.touchpad]\n\
 natural-scroll=false\n\
-motion-threshold=2\n\
 disable-while-typing=true\n\
-horizontal-scrolling=false\n"
+horizontal-scrolling=true\n\
+clickpad-click=2\n\
+\n\
+[org.cinnamon.settings-daemon.peripherals.mouse]\n\
+natural-scroll=false\n\
+locate-pointer=true\n"
 
 TEXT_CinnamonPowerGSettingsConfig="[org.cinnamon.settings-daemon.plugins.power]\n\
 sleep-display-ac=600\n\
-lid-close-ac-action='nothing'\n\
-lid-close-battery-action='nothing'\n"
+lock-on-suspend=true\n"
 
 TEXT_CinnamonDesktopGSettingsConfig="[org.nemo.desktop]\n\
 trash-icon-visible=true\n\
 \n\
 [org.cinnamon.desktop.privacy]\n\
 remember-recent-files=$CinnamonRememberRecentFiles\n\
+recent-files-max-age=30\n\
 \n\
 [org.cinnamon.desktop.background]\n\
-color-shading-type='solid'\n\
 picture-options='none'\n\
 primary-color='$DesktopBackgroundColor'\n\
 \n\
 [org.cinnamon]\n\
 startup-animation=false\n\
-desktop-effects=false\n\
 desklet-decorations=0\n\
 enabled-desklets=['clock@cinnamon.org:0:170:10']\n\
 panels-height=['1:$CinnamonPanelHeight']\n\
@@ -426,7 +427,8 @@ panels-autohide=['1:$CinnamonPanelAutohide']\n\
 \n\
 [org.cinnamon.desktop.screensaver]\n\
 use-custom-format=true\n\
-date-format='%a %d %b %Y'\n"
+date-format='%a %d %b %Y'\n\
+lock-enabled=true\n"
 
 TEXT_XedGSettingsConfig="[org.x.editor.preferences.editor]\n\
 display-right-margin=true\n\
@@ -436,9 +438,11 @@ display-line-numbers=true\n\
 insert-spaces=true\n\
 auto-indent=true\n\
 bracket-matching=true\n\
+wrap-mode='none'\n\
 scheme='oblivion'\n\
 \n\
 [org.x.editor.preferences.ui]\n\
+statusbar-visible=true\n\
 minimap-visible=true\n"
 
 ##### Ubuntu Configs ######
@@ -1342,18 +1346,25 @@ BashrcForAll="/etc/skel/.bashrc"
 sed -i.bak -r \
 '/alias[[:space:]]+ll=/d;'\
 '/alias hiss=/d;'\
-'/____gititer____/d;'\
+'/alias git[[:alpha:]]+=/d;'\
+'/____gititer/d;'\
  $BashrcForAll
 # '/export PYTHONPATH=/d;'\
 
 echo -e "\
 alias ll='ls --time-style=\"long-iso\" -alF'\n\
 alias hiss='history | grep'\n\
-function ____gititer____() { for d in ./*/; do pushd \$d > /dev/null 2>&1; pwd && git \$1; echo; popd > /dev/null 2>&1; done }\n\
+function ____gititer____() { for d in ./*/; do pushd \$d > /dev/null 2>&1; echo -e \"\\\033[1;36m\" ; pwd ; echo -e \"\\\033[0m\" ; git \$1 \$2; echo; popd > /dev/null 2>&1; done }\n\
+function ____gititer2____() { for d in ./*/; do pushd \$d > /dev/null 2>&1; echo -e \"\\\033[1;36m\" ; pwd ; echo -e \"\\\033[0m\" ; git \$1 \"\$2\" \"\$3\"; echo; popd > /dev/null 2>&1; done }\n\
 alias gitstates='____gititer____ status'\n\
 alias gitpushes='____gititer____ push'\n\
 alias gitpulls='____gititer____ pull'\n\
-alias gitdiffs='____gititer____ diff'\n"\
+alias gitdiffs='____gititer____ diff'\n\
+alias gitcheckouts='____gititer____ checkout'\n\
+alias gitadds='____gititer____ add'\n\
+alias gitlogs='____gititer____ log'\n\
+alias gitmerges='____gititer____ merge'\n\
+alias gitcommits='____gititer2____ commit'\n"\
  >> $BashrcForAll
 # export PYTHONPATH=.\n"\
 
