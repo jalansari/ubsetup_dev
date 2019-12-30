@@ -32,8 +32,8 @@ GoPath="$UsrLocalDir/go"
 TelegramPackage="telegram_linux.tar.xz"
 TelegramPackageHttpURL="https://telegram.org/dl/desktop/linux"
 
-VeraCryptPkg="veracrypt-1.24-Update2-setup.tar.bz2"
-VeraCryptUrl="https://launchpad.net/veracrypt/trunk/1.24-update2/+download/$VeraCryptPkg"
+VeraCryptPkg="veracrypt-1.24-Update3-setup.tar.bz2"
+VeraCryptUrl="https://launchpad.net/veracrypt/trunk/1.24-update3/+download/$VeraCryptPkg"
 
 DockerComposeUrl="https://github.com/docker/compose/releases/download/1.25.0/docker-compose-Linux-x86_64"
 
@@ -256,7 +256,7 @@ LIST_OF_LAUNCHERS=(
 
 TEXT_Usage="\n\
 Usage $0 [-a] [-i] [-r] [-c]\n\
-      [--ruby | --rubyv <version>] [--docker] [--rabbit] [--tor]\n\
+      [--ruby | --rubyv <version>] [--docker] [--gitlabr] [--rabbit] [--tor]\n\
       [-un <Full Name>] [-ue <Email>]\n\
       [-h]\n\
 \n\
@@ -270,6 +270,7 @@ Requests:\n\
 --ruby   : Intall RVM for Ruby installation.  (Not required if using '--rubyv').\n\
 --rubyv  : Intall RVM, AND install a specific Ruby version.\n\
 --docker : Install Docker Engine - Community.\n\
+--gitlabr: Install Gitlab Runner (really needs --docker for this to work).
 --rabbit : Install RabbitMq, with it's Erlang dependency.\n\
 --tor    : Install Tor Daemon, which listens on port 9050.\n\
 \n\
@@ -1020,6 +1021,7 @@ function usage()
 
 InstallRuby=false
 InstallDocker=false
+InstallGitlabRunner=false
 InstallRabbitMq=false
 InstallTorDaemon=false
 
@@ -1054,6 +1056,8 @@ while [ "$1" != "" ]; do
              RubyVersion="$1"
              ;;
         --docker ) InstallDocker=true
+             ;;
+        --gitlabr ) InstallGitlabRunner=true;
              ;;
         --rabbit ) InstallRabbitMq=true
              ;;
@@ -1230,11 +1234,13 @@ if [ "$InstallDocker" == true ]; then
         && wget $DockerComposeUrl -O /usr/local/bin/docker-compose \
         && chmod +x /usr/local/bin/docker-compose
 
-    GitLabRunnerPath="/usr/local/bin/gitlab-runner"
-    wget https://gitlab-runner-downloads.s3.amazonaws.com/latest/binaries/gitlab-runner-linux-amd64 -O "$GitLabRunnerPath"
-    chmod a+x "$GitLabRunnerPath"
-    useradd --comment 'GitLab Runner' --create-home gitlab-runner --shell /bin/bash
-    gitlab-runner install --user=gitlab-runner --working-directory=/home/gitlab-runner
+    if [ "$InstallGitlabRunner" == true ]; then
+        GitLabRunnerPath="/usr/local/bin/gitlab-runner"
+        wget https://gitlab-runner-downloads.s3.amazonaws.com/latest/binaries/gitlab-runner-linux-amd64 -O "$GitLabRunnerPath"
+        chmod a+x "$GitLabRunnerPath"
+        useradd --comment 'GitLab Runner' --create-home gitlab-runner --shell /bin/bash
+        gitlab-runner install --user=gitlab-runner --working-directory=/home/gitlab-runner
+    fi
 fi
 
 if [ "$InstallRuby" == true ]; then
@@ -1520,9 +1526,19 @@ if [ $cinnamonInstalled == 0 ]; then
     PRINTLOG "Updating file <$menuCfg>"
     sed -i.bak -r '/\"menu-label\"/,/^\s*}/{s|(\"default\"\s*:\s*)\".*?\"(,?)|\1\"\"\2|;};' $menuCfg
 
+    notifCfg="/usr/share/cinnamon/applets/notifications@cinnamon.org/settings-schema.json"
+    PRINTLOG "Updating file <$notifCfg>"
+    sed -i.bak -r '/\"ignoreTransientNotifications\"/,/^\s*}/{s|(\"default\"\s*:\s*)true(,?)|\1false\2|;};' $notifCfg
+
     powerCfg="/usr/share/cinnamon/applets/power@cinnamon.org/settings-schema.json"
     PRINTLOG "Updating file <$powerCfg>"
-    sed -i.bak -r '/\"labelinfo\"/,/^[[:space:]]*\"default\"/{s|(\"default\"\s*:\s*\").*?(\",?)|\1percentage_time\2|;};' $powerCfg
+    sed -i.bak -r '/\"labelinfo\"/,/^[[:space:]]*\"default\"/{s|(\"default\"\s*:\s*\").*?(\",?)|\1percentage_time\2|;};'\
+'/\"showmulti\"/,/^\s*}/{s|(\"default\"\s*:\s*)false(,?)|\1true\2|;};' $powerCfg
+
+    showDTCfg="/usr/share/cinnamon/applets/show-desktop@cinnamon.org/settings-schema.json"
+    PRINTLOG "Updating file <$showDTCfg>"
+    sed -i.bak -r '/\"peek-at-desktop\"/,/^\s*}/{s|(\"default\"\s*:\s*)false(,?)|\1true\2|;};'\
+'/\"peek-blur\"/,/^\s*}/{s|(\"default\"\s*:\s*)false(,?)|\1true\2|;};' $showDTCfg
 
     launchersListStr=""
     for applauncher in "${LIST_OF_LAUNCHERS[@]}"
@@ -1548,7 +1564,9 @@ if [ $cinnamonInstalled == 0 ]; then
     rm -rf "$userHomeDir/.cinnamon/configs/clock@cinnamon.org"
     rm -rf "$userHomeDir/.cinnamon/configs/calendar@cinnamon.org"
     rm -rf "$userHomeDir/.cinnamon/configs/menu@cinnamon.org"
+    rm -rf "$userHomeDir/.cinnamon/configs/notifications@cinnamon.org"
     rm -rf "$userHomeDir/.cinnamon/configs/power@cinnamon.org"
+    rm -rf "$userHomeDir/.cinnamon/configs/show-desktop@cinnamon.org"
     rm -rf "$userHomeDir/.cinnamon/configs/panel-launchers@cinnamon.org"
     rm -rf "$userHomeDir/.cinnamon/configs/grouped-window-list@cinnamon.org"
 
