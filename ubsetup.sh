@@ -16,16 +16,16 @@ DebPackages=(
 InstallDir="/usr/share"
 UsrLocalDir="/usr/local"
 
-NodeJsVer="node-v12.14.0-linux-x64"
+NodeJsVer="node-v12.14.1-linux-x64"
 NodeJsPkg="$NodeJsVer.tar.xz"
-NodeJsUrl="https://nodejs.org/dist/v12.14.0/$NodeJsPkg"
+NodeJsUrl="https://nodejs.org/dist/v12.14.1/$NodeJsPkg"
 NodeInstallDir="$InstallDir/nodejs"
 
 FossilScmPkg="fossil-linux-x64-2.10.tar.gz"
 FossilScmUrl="https://www.fossil-scm.org/index.html/uv/$FossilScmPkg"
 FossilInstallDir="$InstallDir/fossilscm"
 
-GoLangPkg="go1.13.5.linux-amd64.tar.gz"
+GoLangPkg="go1.13.6.linux-amd64.tar.gz"
 GoLangUrl="https://dl.google.com/go/$GoLangPkg"
 GoPath="$UsrLocalDir/go"
 
@@ -35,7 +35,7 @@ TelegramPackageHttpURL="https://telegram.org/dl/desktop/linux"
 VeraCryptPkg="veracrypt-1.24-Update3-setup.tar.bz2"
 VeraCryptUrl="https://launchpad.net/veracrypt/trunk/1.24-update3/+download/$VeraCryptPkg"
 
-DockerComposeUrl="https://github.com/docker/compose/releases/download/1.25.0/docker-compose-Linux-x86_64"
+DockerComposeUrl="https://github.com/docker/compose/releases/download/1.25.3/docker-compose-Linux-x86_64"
 
 
 declare -A Fonts
@@ -406,8 +406,15 @@ natural-scroll=false\n\
 locate-pointer=true\n"
 
 TEXT_CinnamonPowerGSettingsConfig="[org.cinnamon.settings-daemon.plugins.power]\n\
-sleep-display-ac=600\n\
-lock-on-suspend=true\n"
+lock-on-suspend=true\n
+idle-brightness=10\n\
+critical-battery-action='nothing'\n\
+lid-close-ac-action='nothing'\n\
+lid-close-battery-action='nothing'\n\
+sleep-inactive-ac-timeout=0\n\
+sleep-inactive-battery-timeout=0\n\
+sleep-display-battery=600\n\
+sleep-display-ac=600\n"
 
 TEXT_CinnamonDesktopGSettingsConfig="[org.nemo.desktop]\n\
 trash-icon-visible=true\n\
@@ -466,6 +473,9 @@ primary-color='$DesktopBackgroundColor'\n\
 picture-options='wallpaper'\n\
 secondary-color='$DesktopBackgroundColor'\n\
 \n\
+[org.gnome.desktop.privacy]\n\
+remember-recent-files=true\n\
+\n\
 [org.gnome.desktop.screensaver]\n\
 picture-uri='file:////usr/share/gnome-control-center/pixmaps/noise-texture-light.png'
 color-shading-type='solid'\n\
@@ -479,6 +489,8 @@ favorite-apps=[]\n"
 
 TEXT_nautilusGSettingsConfig="[org.gnome.nautilus.preferences]\n\
 default-folder-viewer='list-view'\n\
+show-image-thumbnails='never'\n\
+executable-text-activation='display'\n\
 \n\
 [org.gnome.nautilus.list-view]\n\
 default-visible-columns=['name', 'size', 'type', 'owner', 'group', 'permissions', 'date_modified']\n\
@@ -1366,8 +1378,8 @@ sed -i.bak -r \
 echo -e "\
 alias ll='ls --time-style=\"long-iso\" -alF'\n\
 alias hiss='history | grep'\n\
-function ____gititer____() { for d in ./*/; do pushd \$d > /dev/null 2>&1; echo -e \"\\\033[1;36m\" ; pwd ; echo -e \"\\\033[0m\" ; git \$1 \$2; echo; popd > /dev/null 2>&1; done }\n\
-function ____gititer2____() { for d in ./*/; do pushd \$d > /dev/null 2>&1; echo -e \"\\\033[1;36m\" ; pwd ; echo -e \"\\\033[0m\" ; git \$1 \"\$2\" \"\$3\"; echo; popd > /dev/null 2>&1; done }\n\
+function ____gititer____() { for d in ./*/; do pushd \$d > /dev/null 2>&1; echo -e \"\\\033[30;1;106m\" ; pwd ; echo -e \"\\\033[0m\" ; git \$1 \$2; echo; popd > /dev/null 2>&1; done }\n\
+function ____gititer2____() { for d in ./*/; do pushd \$d > /dev/null 2>&1; echo -e \"\\\033[30;1;106m\" ; pwd ; echo -e \"\\\033[0m\" ; git \$1 \"\$2\" \"\$3\"; echo; popd > /dev/null 2>&1; done }\n\
 alias gitstates='____gititer____ status'\n\
 alias gitpushes='____gititer____ push'\n\
 alias gitpulls='____gititer____ pull'\n\
