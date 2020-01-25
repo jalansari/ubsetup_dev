@@ -428,6 +428,9 @@ sleep-display-ac=600\n"
 TEXT_CinnamonDesktopGSettingsConfig="[org.nemo.desktop]\n\
 trash-icon-visible=true\n\
 \n\
+[org.gnome.shell.extensions.dash-to-dock]\n\
+dock-fixed=false\n\
+\n\
 [org.cinnamon.desktop.privacy]\n\
 remember-recent-files=$CinnamonRememberRecentFiles\n\
 recent-files-max-age=30\n\
