@@ -162,9 +162,6 @@ INSTALL_COMP_LIST=(
                    "vim"
                    "htop"
                    "unzip"
-                   "git"
-                   "curl"
-                   "ssh"
                    "python-pip" # Pip package management tools.
                    "python3-pip"
                   )
@@ -173,7 +170,16 @@ INSTAL_PIP2n3_MAP=(
                    "virtualenv"
                   )
 
-# List of components to be installed.
+INSTALL_COMP_LIST_SERVER=(
+                   "fail2ban"
+                   "nginx"
+                   "uwsgi-plugin-python3"
+                  )
+
+INSTAL_PIP2n3_MAP_SERVER=(
+                   "uwsgi"
+                   )
+
 INSTALL_COMP_LIST_DESKTOP=(
                    "vlc"
                    "firefox"
@@ -197,10 +203,13 @@ INSTALL_COMP_LIST_DESKTOP=(
                    "graphviz"
                    "wireshark"
                    "sqlitebrowser"
+                   "git"
                    "gitk"
                    "gitg"
+                   "curl"
                    "shunit2" # Shell script unit test framework.
                    "pv"
+                   "ssh"
                    "libpango1.0-0" # Needed by Dropbox installer.
                    "ipython"
                    "subsurface"
@@ -1120,6 +1129,8 @@ checkDebPkgInstalled "ubuntu-server"
 ubServerEnvironment=$?
 if [ $ubServerEnvironment == 0 ]; then
     PRINTLOG "******************** Ubuntu SERVER"
+    INSTALL_COMP_LIST=( "${INSTALL_COMP_LIST[@]}" "${INSTALL_COMP_LIST_SERVER[@]}" )
+    INSTAL_PIP2n3_MAP=( "${INSTAL_PIP2n3_MAP[@]}" "${INSTAL_PIP2n3_MAP_SERVER[@]}" )
 else
     PRINTLOG "******************** Ubuntu DESKTOP"
     INSTALL_COMP_LIST=( "${INSTALL_COMP_LIST[@]}" "${INSTALL_COMP_LIST_DESKTOP[@]}" )
@@ -1267,16 +1278,16 @@ if [ "$InstallRuby" == true ]; then
     fi
 fi
 
-fossilBin="fossil"
-wgetAndUnpack "$FossilScmUrl" "$FossilScmPkg" "$FossilInstallDir" "$FossilInstallDir/$fossilBin" \
-    && updatePathGlobally "$FossilInstallDir"
-
-nodeJsDir="$NodeInstallDir/$NodeJsVer"
-wgetAndUnpack "$NodeJsUrl" "$NodeJsPkg" "$NodeInstallDir" "$nodeJsDir" \
-    && updatePathGlobally "$nodeJsDir/bin"
-chgrp -R $DevGroupName $nodeJsDir
-
 if [ $ubServerEnvironment != 0 ]; then
+    fossilBin="fossil"
+    wgetAndUnpack "$FossilScmUrl" "$FossilScmPkg" "$FossilInstallDir" "$FossilInstallDir/$fossilBin" \
+        && updatePathGlobally "$FossilInstallDir"
+
+    nodeJsDir="$NodeInstallDir/$NodeJsVer"
+    wgetAndUnpack "$NodeJsUrl" "$NodeJsPkg" "$NodeInstallDir" "$nodeJsDir" \
+        && updatePathGlobally "$nodeJsDir/bin"
+    chgrp -R $DevGroupName $nodeJsDir
+
     PRINTLOG "Installing debian packages from web:"
     for key in "${!DebPackages[@]}"
     do
