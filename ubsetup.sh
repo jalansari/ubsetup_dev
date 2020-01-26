@@ -428,9 +428,6 @@ sleep-display-ac=600\n"
 TEXT_CinnamonDesktopGSettingsConfig="[org.nemo.desktop]\n\
 trash-icon-visible=true\n\
 \n\
-[org.gnome.shell.extensions.dash-to-dock]\n\
-dock-fixed=false\n\
-\n\
 [org.cinnamon.desktop.privacy]\n\
 remember-recent-files=$CinnamonRememberRecentFiles\n\
 recent-files-max-age=30\n\
@@ -484,6 +481,9 @@ color-shading-type='solid'\n\
 primary-color='$DesktopBackgroundColor'\n\
 picture-options='wallpaper'\n\
 secondary-color='$DesktopBackgroundColor'\n\
+\n\
+[org.gnome.shell.extensions.dash-to-dock]\n\
+dock-fixed=false\n\
 \n\
 [org.gnome.desktop.privacy]\n\
 remember-recent-files=true\n\
