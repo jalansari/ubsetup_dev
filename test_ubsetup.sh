@@ -180,13 +180,19 @@ function runUpdatePathTest()
     assertEquals $3 $ret
 }
 
-function grepForStrAndDelFile()
+function grepForStr()
 {   searchStr="$1"
     searchFile=$2
     grepExpectedRet=$3
     grep "$searchStr" $searchFile > /dev/null 2>&1
     testRet=$?
-    assertEquals $grepExpectedRet $testRet
+    fileContent="$( cat $searchFile )"
+    assertEquals "===== Expected to Find: <$searchStr> ===== File Content: <$fileContent>" $grepExpectedRet $testRet
+}
+
+function grepForStrAndDelFile()
+{   searchFile=$2
+    grepForStr "$1" $searchFile $3
     rm $searchFile
 }
 
@@ -241,6 +247,138 @@ function test_updatePathInFile_fileIsActuallyDirRet9()
 
     runUpdatePathTest $additionalValue $testfile $expectedRet
     rm -rf $testfile
+}
+
+################################################################################
+
+function runRemoveFromPathTest()
+{   removeFromPath "$1" "$2"
+    ret=$?
+    assertEquals $3 $ret
+}
+
+function test_removeFromPath_fileDoesNotExistRet1()
+{   testfile="removefrompathtestfile"
+    rm -rf $testfile > /dev/null 2>&1
+    removeText="\$NewPath"
+    expectedRet=9
+
+    runRemoveFromPathTest "$removeText" $testfile $expectedRet
+}
+
+function test_removeFromPath_fileIsActuallyDirRet1()
+{   testfile="removefrompathtestfile"
+    rm -rf $testfile > /dev/null 2>&1
+    mkdir -p $testfile
+    removeText="\$NewPath"
+    expectedRet=9
+
+    runRemoveFromPathTest "$removeText" $testfile $expectedRet
+    rm -rf $testfile
+}
+
+function test_removeFromPath_emptyInput()
+{   testfile="removefrompathtestfile"
+    rm -rf $testfile > /dev/null 2>&1
+    removeText=""
+    expectedRet=8
+    echo -e "text\n\n  PATH=sometext:\$PATH::more\nevenmore" > $testfile
+
+    runRemoveFromPathTest "$removeText" "$testfile" $expectedRet
+
+    grepForStrAndDelFile "^  PATH=sometext:\$PATH::more$" "$testfile" 0
+}
+
+function test_removeFromPath_stringNotExists()
+{   testfile="removefrompathtestfile"
+    rm -rf $testfile > /dev/null 2>&1
+    removeText="/somepath/not/exists"
+    expectedRet=0
+    echo -e "text\n\n  PATH=sometext:\$PATH::more\nevenmore" > $testfile
+
+    runRemoveFromPathTest "$removeText" "$testfile" $expectedRet
+
+    grepForStrAndDelFile "^  PATH=sometext:\$PATH::more$" "$testfile" 0
+}
+
+function test_removeFromPath_stringAlmostExists()
+{   testfile="removefrompathtestfile"
+    rm -rf $testfile > /dev/null 2>&1
+    removeText="/somepath/exists"
+    expectedRet=0
+    echo -e "text\n\n  PATH=sometext:/somepath/exists/butnotquite:\$PATH::more\nevenmore" > $testfile
+
+    runRemoveFromPathTest "$removeText" "$testfile" $expectedRet
+
+    grepForStrAndDelFile "^  PATH=sometext:/somepath/exists/butnotquite:\$PATH::more$" "$testfile" 0
+}
+
+function test_removeFromPath_stringExists()
+{   testfile="removefrompathtestfile"
+    rm -rf $testfile > /dev/null 2>&1
+    removeText="/somepath/exists"
+    expectedRet=0
+    echo -e "text\n\n  PATH=sometext:/somepath/exists:\$PATH::more\nevenmore" > $testfile
+
+    runRemoveFromPathTest "$removeText" "$testfile" $expectedRet
+
+    grepForStrAndDelFile "^  PATH=sometext:\$PATH::more$" "$testfile" 0
+}
+
+function test_removeFromPath_stringWithDollarSignDoesNotExists()
+{   testfile="removefrompathtestfile"
+    rm -rf $testfile > /dev/null 2>&1
+    removeText="\$APREFIX/somepath/exists"
+    expectedRet=0
+    echo -e "text\n\n  PATH=sometext:/somepath/exists:\$PATH::more\nevenmore" > $testfile
+
+    runRemoveFromPathTest "$removeText" "$testfile" $expectedRet
+
+    grepForStrAndDelFile "^  PATH=sometext:/somepath/exists:\$PATH::more$" "$testfile" 0
+}
+
+function test_removeFromPath_stringWithDollarSignExists()
+{   testfile="removefrompathtestfile"
+    rm -rf $testfile > /dev/null 2>&1
+    removeText="\$APREFIX/somepath/exists"
+    expectedRet=0
+    echo -e "text\n\n  PATH=sometext:\$APREFIX/somepath/exists:\$PATH::more\nevenmore" > $testfile
+
+    runRemoveFromPathTest "$removeText" "$testfile" $expectedRet
+
+    grepForStrAndDelFile "^  PATH=sometext:\$PATH::more$" "$testfile" 0
+}
+
+function test_removeFromPath_stringExistsAsTwoAlmostSameInstances()
+{   testfile="removefrompathtestfile"
+    rm -rf $testfile > /dev/null 2>&1
+    removeText="/somepath/exists"
+    expectedRet=0
+
+    echo -e "text\n\n  PATH=sometext:/somepath/exists:\$PATH::/somepath/exists/withextra:more\nevenmore" > $testfile
+    runRemoveFromPathTest "$removeText" "$testfile" $expectedRet
+    grepForStrAndDelFile "^  PATH=sometext:\$PATH::/somepath/exists/withextra:more$" "$testfile" 0
+
+    echo -e "text\n\n  PATH=sometext:/somepath/exists:\$PATH::\$ANOTHERPATH/somepath/exists:more\nevenmore" > $testfile
+    runRemoveFromPathTest "$removeText" "$testfile" $expectedRet
+    grepForStrAndDelFile "^  PATH=sometext:\$PATH::\$ANOTHERPATH/somepath/exists:more$" "$testfile" 0
+}
+
+function test_removeFromPath_stringExistsAsTwoExactInstances()
+{   testfile="removefrompathtestfile"
+    rm -rf $testfile > /dev/null 2>&1
+    removeText="/some path/exists"
+    expectedRet=0
+
+    echo -e "text\n PATH=sometext:/some path/exi\n\n  PATH=sometext:/some path/exists:\$PATH::/some path/exists:more\nevenmore" > $testfile
+    runRemoveFromPathTest "$removeText" "$testfile" $expectedRet
+    grepForStr "^  PATH=sometext:\$PATH::more$" "$testfile" 0
+    grepForStrAndDelFile "^ PATH=sometext:/some path/exi$" "$testfile" 0
+
+    echo -e "text\nsometext:/some path/exits\n\n  PATH=sometext:/some path/exists:\$PATH::/some path/exists\nevenmore" > $testfile
+    runRemoveFromPathTest "$removeText" "$testfile" $expectedRet
+    grepForStr "^  PATH=sometext:\$PATH::$" "$testfile" 0
+    grepForStrAndDelFile "^sometext:/some path/exits$" "$testfile" 0
 }
 
 ################################################################################

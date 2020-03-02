@@ -16,16 +16,16 @@ DebPackages=(
 InstallDir="/usr/share"
 UsrLocalDir="/usr/local"
 
-NodeJsVer="node-v12.16.0-linux-x64"
+NodeJsVer="node-v12.16.1-linux-x64"
 NodeJsPkg="$NodeJsVer.tar.xz"
-NodeJsUrl="https://nodejs.org/dist/v12.16.0/$NodeJsPkg"
+NodeJsUrl="https://nodejs.org/dist/v12.16.1/$NodeJsPkg"
 NodeInstallDir="$InstallDir/nodejs"
 
 FossilScmPkg="fossil-linux-x64-2.10.tar.gz"
 FossilScmUrl="https://www.fossil-scm.org/index.html/uv/$FossilScmPkg"
 FossilInstallDir="$InstallDir/fossilscm"
 
-GoLangPkg="go1.13.8.linux-amd64.tar.gz"
+GoLangPkg="go1.14.linux-amd64.tar.gz"
 GoLangUrl="https://dl.google.com/go/$GoLangPkg"
 GoPath="$UsrLocalDir/go"
 
@@ -741,6 +741,21 @@ function updatePathGlobally()
     updatePathInFile $1 $GlobalProfileFile
 }
 
+function removeFromPath()
+{   removeText="$1"
+    file="$2"
+    if [ ! -f "$file" ]; then
+        return 9
+    fi
+    if [ -z "$removeText" ]; then
+        return 8
+    fi
+    searchStrEscd="$( echo "$removeText" | sed -r 's|([/$])|\\\1|g;' )"
+    sed -i -r '/^(export)?\s*PATH=.*'"$searchStrEscd"':?/ '\
+'{s|([^[:alnum:]\/\$\-\._])'"$searchStrEscd"'[^[:alnum:]\/\$\-\._]:?|\1|g;'\
+' s|([^[:alnum:]\/\$\-\._])'"$searchStrEscd"':?$|\1|g;};' "$file"
+}
+
 function addAptKeys()
 {   listOfKeys=("${!1}")
     if [ ${#listOfKeys[@]} != 0 ]; then
@@ -1416,7 +1431,8 @@ chown $userOfThisScript:$groupOfUserOfThisScript $usersBashrc
 ########################################
 
 swappinessOriginal=`cat /proc/sys/vm/swappiness`
-PRINTLOG "Swappiness: old <$swappinessOriginal>, new <$SwappinessVal>."
+PRINTLOG "Swappiness    : old <$swappinessOriginal>, new <$SwappinessVal>."
+PRINTLOG "iNotifyWatches: <$NumiNotifyWatches>."
 
 SysCtlConf="/etc/sysctl.conf"
 sed -i.bak -r \
