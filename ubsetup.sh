@@ -1,5 +1,4 @@
 #!/bin/bash
-# sudo ./ubsetup.sh -a --ruby -un "ServerUser" -ue "user@setup.me" --docker | tee ubsetup.sh.log
 
 ########################################
 ##### Constants and variables used
@@ -36,6 +35,14 @@ VeraCryptPkg="veracrypt-1.24-Update4-setup.tar.bz2"
 VeraCryptUrl="https://launchpad.net/veracrypt/trunk/1.24-update4/+download/$VeraCryptPkg"
 
 DockerComposeUrl="https://github.com/docker/compose/releases/download/1.25.4/docker-compose-Linux-x86_64"
+
+AndroidPkg="android-studio-ide-192.6241897-linux.tar.gz"
+AndroidUrl="https://dl.google.com/dl/android/studio/ide-zips/3.6.1.0/$AndroidPkg"
+AndroidInstallDir="$InstallDir/androidstudio"
+
+FlutterPkg="flutter_linux_v1.12.13+hotfix.8-stable.tar.xz"
+FlutterUrl="https://storage.googleapis.com/flutter_infra/releases/stable/linux/$FlutterPkg"
+FlutterInstallDir="$InstallDir/flutterdev"
 
 
 declare -A Fonts
@@ -265,7 +272,7 @@ LIST_OF_LAUNCHERS=(
 
 TEXT_Usage="\n\
 Usage $0 [-a] [-i] [-r] [-c]\n\
-      [--ruby | --rubyv <version>] [--docker] [--gitlabr] [--rabbit] [--tor]\n\
+      [--ruby | --rubyv <version>] [--docker] [--gitlabr] [--rabbit] [--tor] [--flutter]\n\
       [-un <Full Name>] [-ue <Email>]\n\
       [-h]\n\
 \n\
@@ -282,6 +289,7 @@ Requests:\n\
 --gitlabr: Install Gitlab Runner (really needs --docker for this to work).
 --rabbit : Install RabbitMq, with it's Erlang dependency.\n\
 --tor    : Install Tor Daemon, which listens on port 9050.\n\
+--flutter: Install majority of components to get Flutter setup.\n\
 \n\
 Configuration options:\n\
 -un      : Configure full name for the user running this script.\n\
@@ -1063,6 +1071,8 @@ InstallDocker=false
 InstallGitlabRunner=false
 InstallRabbitMq=false
 InstallTorDaemon=false
+InstallFlutterSDK=false
+isFlutterInstalled=false
 
 RequestOptions=$((2#0000))
 TestMode=0
@@ -1101,6 +1111,8 @@ while [ "$1" != "" ]; do
         --rabbit ) InstallRabbitMq=true
              ;;
         --tor ) InstallTorDaemon=true
+             ;;
+        --flutter ) InstallFlutterSDK=true
              ;;
         -un ) shift
              opt_userfullname="$1"
@@ -1165,6 +1177,7 @@ if [ $TestMode == 1 ]; then
     PRINTLOG "Docker Install    : $InstallDocker"
     PRINTLOG "RabbitMq Install  : $InstallRabbitMq"
     PRINTLOG "Tor Daemon Install: $InstallTorDaemon"
+    PRINTLOG "FlutterSDK Install: $InstallFlutterSDK"
     exit
 fi
 
@@ -1225,6 +1238,13 @@ if [ "$InstallTorDaemon" == true ]; then
     INSTALL_COMP_LIST+=(
                         "tor"
                         "deb.torproject.org-keyring"
+                       )
+fi
+
+if [ "$InstallFlutterSDK" == true ]; then
+    INSTALL_COMP_LIST+=(
+                        "lib32stdc++6" # Required for flutter sdk.
+                        "qemu-kvm" # Required for Android emulator.
                        )
 fi
 
@@ -1327,6 +1347,14 @@ if [ $ubServerEnvironment != 0 ]; then
         else
             echo "export GOPATH=$GoWorkspacePath" >> $UserProfileFile
         fi
+    fi
+
+    if [ "$InstallFlutterSDK" == true ]; then
+        wgetAndUnpack "$FlutterUrl" "$FlutterPkg" "$FlutterInstallDir" "$FlutterInstallDir" \
+            && updatePathGlobally "$FlutterInstallDir/flutter/bin" \
+            && source $GlobalProfileFile \
+            && isFlutterInstalled=true
+        wgetAndUnpack "$AndroidUrl" "$AndroidPkg" "$AndroidInstallDir" "$AndroidInstallDir"
     fi
 
     VeraCryptBin="/usr/bin/veracrypt"
@@ -1513,6 +1541,10 @@ EOBLOCK
     }
     installVSCodeExt "ms-python.python"
     # installVSCodeExt "streetsidesoftware.code-spell-checker"
+
+    [ "$isFlutterInstalled" = true ] \
+        && installVSCodeExt "dart-code.dart-code" \
+        && installVSCodeExt "dart-code.flutter"
 fi
 
 
@@ -1768,6 +1800,9 @@ if [ -v UserInfo[@] ]; then
         [ "$InstallDocker" = true ] \
             && usermod -a -G docker $usern # Required to allow users ability to use docker service.
 
+        [ "$isFlutterInstalled" = true ] \
+            && usermod -a -G kvm $usern # Required to allow users ability to use kvm for Android emulation.
+
         [ "$InstallRuby" == true ] \
             && usermod -a -G rvm $usern
     done
@@ -1792,6 +1827,11 @@ PRINTLOG "  *  VSCode Extensions: Code Spell Checker ..."
 PRINTLOG "Installations to be completed manually:"
 PRINTLOG "  *  Veracrypt"
 PRINTLOG "  *  Dropbox"
+PRINTLOG "  *  Complete Android Studio setup, run:"
+PRINTLOG "         $AndroidInstallDir/android-studio/bin/studio.sh"
+PRINTLOG "  *  Install Android Studio plugins:"
+PRINTLOG "         File > Settings > Plugins : Browse repositories"
+PRINTLOG "         Install Flutter and Dart plugins."
 PRINTLOG "******************************"
 PRINTLOG ""
 PRINTLOG "******************************"
