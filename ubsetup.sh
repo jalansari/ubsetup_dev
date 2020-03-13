@@ -231,7 +231,7 @@ INSTAL_PIP2n3_MAP_DESKTOP=(
 
 declare -A DebSources
 DebSources=(
-            ["deb [arch=amd64] https://dl.google.com/linux/chrome/deb/ stable main"]="/etc/apt/sources.list.d/google.list" # google-chrome
+            ["deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main"]="/etc/apt/sources.list.d/google.list" # google-chrome
            )
 
 ADD_APT_KEYS_LIST=(
