@@ -9,7 +9,7 @@ declare -A DebPackages
 DebPackages=(
              ["code"]="https://go.microsoft.com/fwlink/?LinkID=760868;mscode.deb" # 760865 for insider edition
              ["vagrant"]="https://releases.hashicorp.com/vagrant/2.2.7/vagrant_2.2.7_x86_64.deb"
-             ["dropbox"]="https://www.dropbox.com/download?dl=packages/ubuntu/dropbox_2019.02.14_amd64.deb"
+             ["dropbox"]="https://www.dropbox.com/download?dl=packages/ubuntu/dropbox_2020.03.04_amd64.deb"
             )
 
 InstallDir="/usr/share"
@@ -24,7 +24,7 @@ FossilScmPkg="fossil-linux-x64-2.10.tar.gz"
 FossilScmUrl="https://www.fossil-scm.org/index.html/uv/$FossilScmPkg"
 FossilInstallDir="$InstallDir/fossilscm"
 
-GoLangPkg="go1.14.linux-amd64.tar.gz"
+GoLangPkg="go1.14.1.linux-amd64.tar.gz"
 GoLangUrl="https://dl.google.com/go/$GoLangPkg"
 GoPath="$UsrLocalDir/go"
 
@@ -222,6 +222,7 @@ INSTALL_COMP_LIST_DESKTOP=(
                    "subsurface"
                    "python-tk" # Toolkit required for matplotlib graphics.
                    "python3-tk"
+                   "ncdu"
                   )
 
 INSTAL_PIP2n3_MAP_DESKTOP=(
