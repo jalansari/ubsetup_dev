@@ -36,8 +36,8 @@ VeraCryptUrl="https://launchpad.net/veracrypt/trunk/1.24-update4/+download/$Vera
 
 DockerComposeUrl="https://github.com/docker/compose/releases/download/1.25.5/docker-compose-Linux-x86_64"
 
-AndroidPkg="android-studio-ide-192.6308749-linux.tar.gz"
-AndroidUrl="https://dl.google.com/dl/android/studio/ide-zips/3.6.2.0/$AndroidPkg"
+AndroidPkg="android-studio-ide-192.6392135-linux.tar.gz"
+AndroidUrl="https://dl.google.com/dl/android/studio/ide-zips/3.6.3.0/$AndroidPkg"
 AndroidInstallDir="$InstallDir/androidstudio"
 
 FlutterPkg="flutter_linux_v1.12.13+hotfix.9-stable.tar.xz"
@@ -126,6 +126,7 @@ REMOVE_COMP__LIST=(
                    "gnome-mines"
                    "gnome-sudoku"
                    "aisleriot" # solitaire games
+                   "2048-qt"
                    "shotwell"
                    "transmission-common"
                    "banshee"
@@ -272,7 +273,7 @@ LIST_OF_LAUNCHERS=(
 ########################################
 
 TEXT_Usage="\n\
-Usage $0 [-a] [-i] [-r] [-c]\n\
+Usage $0 [-a] [-i] [-r]\n\
       [--ruby | --rubyv <version>] [--docker] [--gitlabr] [--rabbit] [--tor] [--flutter]\n\
       [-un <Full Name>] [-ue <Email>]\n\
       [-h]\n\
@@ -282,7 +283,6 @@ Usage $0 [-a] [-i] [-r] [-c]\n\
 Requests:\n\
 -r       : Remove unnecessary components.  (Default.)\n\
 -i       : Install components and configs.\n\
--c       : Configure user environment.\n\
 -a       : Same and i, r and c combined.\n\
 --ruby   : Intall RVM for Ruby installation.  (Not required if using '--rubyv').\n\
 --rubyv  : Intall RVM, AND install a specific Ruby version.\n\
