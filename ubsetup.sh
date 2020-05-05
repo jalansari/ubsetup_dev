@@ -900,9 +900,12 @@ function installPythonPipPackages()
     if [ ${#listOfPips[@]} != 0 ]; then
         PRINTLOG "Python packages to be INSTALLED:"
         printf "        %s\n" "${listOfPips[@]}"
-        for item in "${listOfPips[@]}"
+        pips=()
+        which pip > /dev/null && pips+=("pip")
+        which pip3 > /dev/null && pips+=("pip3")
+        for pipv in "${pips[@]}"
         do
-            for pipv in "pip" "pip3"
+            for item in "${listOfPips[@]}"
             do
                 PRINTLOG "INSTALLING $pipv: [$item]"
                 $pipv install $item
