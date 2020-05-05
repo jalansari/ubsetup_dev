@@ -15,9 +15,9 @@ DebPackages=(
 InstallDir="/usr/share"
 UsrLocalDir="/usr/local"
 
-NodeJsVer="node-v12.16.2-linux-x64"
+NodeJsVer="node-v12.16.3-linux-x64"
 NodeJsPkg="$NodeJsVer.tar.xz"
-NodeJsUrl="https://nodejs.org/dist/v12.16.2/$NodeJsPkg"
+NodeJsUrl="https://nodejs.org/dist/v12.16.3/$NodeJsPkg"
 NodeInstallDir="$InstallDir/nodejs"
 
 FossilScmPkg="fossil-linux-x64-2.10.tar.gz"
@@ -275,7 +275,7 @@ LIST_OF_LAUNCHERS=(
 TEXT_Usage="\n\
 Usage $0 [-a] [-i] [-r]\n\
       [--ruby | --rubyv <version>] [--docker] [--gitlabr] [--rabbit] [--tor] [--flutter]\n\
-      [-un <Full Name>] [-ue <Email>]\n\
+      [-un <FullName>] [-ug <GroupName>] [-ue <Email>]\n\
       [-h]\n\
 \n\
 -h   : Show this very same helpful message.\n\
@@ -294,6 +294,7 @@ Requests:\n\
 \n\
 Configuration options:\n\
 -un      : Configure full name for the user running this script.\n\
+-ug      : Configure group name for the user running this script.\n\
 -ue      : Configure email for the user running this script.\n\
 \n\
 Test options:\n\
@@ -1079,6 +1080,7 @@ RequestOptions=$((2#0000))
 TestMode=0
 
 opt_userfullname=""
+opt_usergroup=""
 opt_useremail=""
 
 OPT_INSTAL=$((2#0001))
@@ -1118,6 +1120,9 @@ while [ "$1" != "" ]; do
         -un ) shift
              opt_userfullname="$1"
              ;;
+        -ug ) shift
+             opt_usergroup="$1"
+             ;;
         -ue ) shift
              opt_useremail="$1"
              ;;
@@ -1140,21 +1145,24 @@ PRINTLOG "    Username <$userOfThisScript>"
 PRINTLOG "    Group    <$groupOfUserOfThisScript>"
 PRINTLOG "    Home     <$userHomeDir>"
 
-if [ ! -z "$opt_userfullname" ] || [ ! -z "$opt_useremail" ]; then
-    currentUserDescFromArray="${UserInfo[$currentUserNameKey]}"
+currentUserDescFromArray="${UserInfo[$currentUserNameKey]}"
 
-    if [ ! -z "$opt_userfullname" ]; then
-        PRINTLOG "    FullName <$opt_userfullname>"
-        currentUserDescFromArray=$( sed -r 's/([^;]*)(;.*)/'"$opt_userfullname"'\2/' <<< "$currentUserDescFromArray" )
-    fi
-    if [ ! -z "$opt_useremail" ]; then
-        PRINTLOG "    Email    <$opt_useremail>"
-        currentUserDescFromArray=$( sed -r 's/([^;]*;)([^;]*)(;.*)/\1'"$opt_useremail"'\3/' <<< "$currentUserDescFromArray" )
-    fi
-
-    PRINTLOG "    UserDesc <$currentUserDescFromArray>"
-    UserInfo[$currentUserNameKey]="$currentUserDescFromArray"
+if [ ! -z "$opt_userfullname" ]; then
+    PRINTLOG "    FullName <$opt_userfullname>"
+    currentUserDescFromArray=$( sed -r 's/[^;]*(;.*)/'"$opt_userfullname"'\1/' <<< "$currentUserDescFromArray" )
 fi
+if [ ! -z "$opt_usergroup" ]; then
+    PRINTLOG "    NewGroup <$opt_usergroup>"
+    currentUserDescFromArray=$( sed -r 's/(.*;)[^;]*/\1'"$opt_usergroup"'/' <<< "$currentUserDescFromArray" )
+fi
+if [ ! -z "$opt_useremail" ]; then
+    PRINTLOG "    Email    <$opt_useremail>"
+    currentUserDescFromArray=$( sed -r 's/([^;]*;)[^;]*(.*)/\1'"$opt_useremail"'\2/' <<< "$currentUserDescFromArray" )
+fi
+
+PRINTLOG "    UserDesc <$currentUserDescFromArray>"
+UserInfo[$currentUserNameKey]="$currentUserDescFromArray"
+
 
 checkDebPkgInstalled "ubuntu-server"
 ubServerEnvironment=$?
@@ -1326,6 +1334,9 @@ if [ $ubServerEnvironment != 0 ]; then
     wgetAndUnpack "$NodeJsUrl" "$NodeJsPkg" "$NodeInstallDir" "$nodeJsDir" \
         && updatePathGlobally "$nodeJsDir/bin"
     chgrp -R $DevGroupName $nodeJsDir
+    # Give developer group permissions to write, so we can npm install globally.
+    chmod -R g+rw $nodeJsDir/lib/node_modules
+    chmod -R g+rw $nodeJsDir/bin
 
     PRINTLOG "Installing debian packages from web:"
     for key in "${!DebPackages[@]}"
