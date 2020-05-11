@@ -8,7 +8,7 @@
 declare -A DebPackages
 DebPackages=(
              ["code"]="https://go.microsoft.com/fwlink/?LinkID=760868;mscode.deb" # 760865 for insider edition
-             ["vagrant"]="https://releases.hashicorp.com/vagrant/2.2.7/vagrant_2.2.7_x86_64.deb"
+             ["vagrant"]="https://releases.hashicorp.com/vagrant/2.2.9/vagrant_2.2.9_x86_64.deb"
              ["dropbox"]="https://www.dropbox.com/download?dl=packages/ubuntu/dropbox_2020.03.04_amd64.deb"
             )
 
@@ -40,7 +40,7 @@ AndroidPkg="android-studio-ide-192.6392135-linux.tar.gz"
 AndroidUrl="https://dl.google.com/dl/android/studio/ide-zips/3.6.3.0/$AndroidPkg"
 AndroidInstallDir="$InstallDir/androidstudio"
 
-FlutterPkg="flutter_linux_v1.12.13+hotfix.9-stable.tar.xz"
+FlutterPkg="flutter_linux_1.17.0-stable.tar.xz"
 FlutterUrl="https://storage.googleapis.com/flutter_infra/releases/stable/linux/$FlutterPkg"
 FlutterInstallDir="$InstallDir/flutterdev"
 
@@ -339,23 +339,23 @@ user_pref(\"signon.rememberSignons\", $FirefoxRememberLogins);"
 TEXT_TerminatorCfg="[global_config]\n\
 [keybindings]\n\
 [profiles]\n\
-[[default]]\n\
-background_darkness = 0.92\n\
-scrollback_lines = $TerminatorScrollbackLines\n\
-scroll_on_output = False\n\
-background_type = transparent\n\
-background_image = None\n\
-use_system_font = False\n\
-font = Monospace 14\n\
+    [[default]]\n\
+        background_darkness = 0.92\n\
+        scrollback_lines = $TerminatorScrollbackLines\n\
+        scroll_on_output = False\n\
+        background_type = transparent\n\
+        background_image = None\n\
+        use_system_font = False\n\
+        font = Monospace 12\n\
 [layouts]\n\
-[[default]]\n\
-[[[child1]]]\n\
-type = Terminal\n\
-parent = window0\n\
-[[[window0]]]\n\
-type = Window\n\
-parent = \"\"\n\
-size = $TerminatorWindowSize\n\
+    [[default]]\n\
+        [[[child1]]]\n\
+            type = Terminal\n\
+            parent = window0\n\
+        [[[window0]]]\n\
+            type = Window\n\
+            parent = \"\"\n\
+            size = $TerminatorWindowSize\n\
 [plugins]\n"
 
 TEXT_LocalBookmarks="file://$userHomeDir/Documents\n\
@@ -473,9 +473,12 @@ scheme='oblivion'\n\
 statusbar-visible=true\n\
 minimap-visible=true\n"
 
+
 ##### Ubuntu Configs ######
 
 TEXT_UbuntuPowerGSettingsConfig="[org.gnome.settings-daemon.plugins.power]\n\
+sleep-inactive-battery-timeout=1800\n\
+sleep-inactive-battery-type='nothing'\n\
 sleep-inactive-ac-timeout=3600\n\
 sleep-inactive-ac-type='nothing'\n"
 
@@ -493,6 +496,7 @@ picture-options='wallpaper'\n\
 secondary-color='$DesktopBackgroundColor'\n\
 \n\
 [org.gnome.shell.extensions.dash-to-dock]\n\
+dash-max-icon-size=32\n\
 dock-fixed=false\n\
 \n\
 [org.gnome.desktop.privacy]\n\
@@ -507,7 +511,7 @@ secondary-color='#000000'\n\
 \n\
 [org.gnome.shell]\n\
 app-picker-view=uint32 1\n\
-favorite-apps=[]\n"
+favorite-apps=[]\n" # favorite-apps is later over-written with list of launchers.
 
 TEXT_nautilusGSettingsConfig="[org.gnome.nautilus.preferences]\n\
 default-folder-viewer='list-view'\n\
@@ -516,9 +520,10 @@ executable-text-activation='display'\n\
 \n\
 [org.gnome.nautilus.list-view]\n\
 default-visible-columns=['name', 'size', 'type', 'owner', 'group', 'permissions', 'date_modified']\n\
-default-column-order=['name', 'size', 'type', 'owner', 'group', 'permissions', 'date_modified', 'mime_type', 'where', 'date_modified_with_time', 'date_accessed', 'recency']\n\
+default-column-order=['name', 'size', 'type', 'owner', 'group', 'permissions', 'date_modified', 'date_modified_with_time', 'date_accessed', 'recency']\n\
 \n\
 [org.gtk.settings.file-chooser]\n\
+sort-directories-first=true\n\
 show-hidden=$FMShowHiddenFilesVal\n"
 
 TEXT_geditGSettingsConfig="[org.gnome.gedit.preferences.editor]\n\
@@ -533,6 +538,7 @@ display-overview-map=true\n\
 scheme='oblivion'\n\
 background-pattern='none'\n\
 wrap-last-split-mode='word'\n"
+
 
 ##### Application Configs ######
 
@@ -1762,6 +1768,9 @@ if [ $ubuntuInstalled == 0 ]; then
     echo -e "$TEXT_UbuntuPowerGSettingsConfig" >> $GSettingsCfg
 
     RunGlibCompileSchemas=true
+
+    PRINTLOG "Configuring Gnome to ignore lid close."
+    sed -i -r 's/#?(HandleLidSwitch\w*)=.*/\1=ignore/;' /etc/systemd/logind.conf
 fi
 
 
@@ -1834,8 +1843,6 @@ fi
 PRINTLOG "******************************"
 PRINTLOG "Manual steps to complete system setup (after reboot):"
 PRINTLOG ""
-PRINTLOG "Extra installation steps:"
-PRINTLOG "  *  Ruby version install, ..."
 PRINTLOG "Additions to be applied:"
 PRINTLOG "  *  Firefox addons: AdBlock, noScript, ..."
 PRINTLOG "  *  VSCode Extensions: Code Spell Checker ..."
