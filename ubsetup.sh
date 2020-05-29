@@ -80,7 +80,7 @@ LxPanelHeight="24"
 LxPanelColour="#758880"
 
 TerminatorScrollbackLines=10000
-TerminatorWindowSize="1100, 700"
+TerminatorWindowSize="1100, 600"
 
 VimRcFile="/etc/vim/vimrc"
 GitSysConfigFile="/etc/gitconfig"
