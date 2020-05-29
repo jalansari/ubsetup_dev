@@ -15,16 +15,16 @@ DebPackages=(
 InstallDir="/usr/share"
 UsrLocalDir="/usr/local"
 
-NodeJsVer="node-v12.16.3-linux-x64"
+NodeJsVer="node-v12.17.0-linux-x64"
 NodeJsPkg="$NodeJsVer.tar.xz"
-NodeJsUrl="https://nodejs.org/dist/v12.16.3/$NodeJsPkg"
+NodeJsUrl="https://nodejs.org/dist/v12.17.0/$NodeJsPkg"
 NodeInstallDir="$InstallDir/nodejs"
 
-FossilScmPkg="fossil-linux-x64-2.10.tar.gz"
+FossilScmPkg="fossil-linux-x64-2.11.tar.gz"
 FossilScmUrl="https://www.fossil-scm.org/index.html/uv/$FossilScmPkg"
 FossilInstallDir="$InstallDir/fossilscm"
 
-GoLangPkg="go1.14.2.linux-amd64.tar.gz"
+GoLangPkg="go1.14.3.linux-amd64.tar.gz"
 GoLangUrl="https://dl.google.com/go/$GoLangPkg"
 GoPath="$UsrLocalDir/go"
 
@@ -36,11 +36,11 @@ VeraCryptUrl="https://launchpad.net/veracrypt/trunk/1.24-update4/+download/$Vera
 
 DockerComposeUrl="https://github.com/docker/compose/releases/download/1.25.5/docker-compose-Linux-x86_64"
 
-AndroidPkg="android-studio-ide-192.6392135-linux.tar.gz"
-AndroidUrl="https://dl.google.com/dl/android/studio/ide-zips/3.6.3.0/$AndroidPkg"
+AndroidPkg="android-studio-ide-193.6514223-linux.tar.gz"
+AndroidUrl="https://dl.google.com/dl/android/studio/ide-zips/4.0.0.16/$AndroidPkg"
 AndroidInstallDir="$InstallDir/androidstudio"
 
-FlutterPkg="flutter_linux_1.17.0-stable.tar.xz"
+FlutterPkg="flutter_linux_1.17.2-stable.tar.xz"
 FlutterUrl="https://storage.googleapis.com/flutter_infra/releases/stable/linux/$FlutterPkg"
 FlutterInstallDir="$InstallDir/flutterdev"
 
