@@ -287,7 +287,7 @@ Usage $0 [-a] [-i] [-r]\n\
 Requests:\n\
 -r       : Remove unnecessary components.  (Default.)\n\
 -i       : Install components and configs.\n\
--a       : Same and i, r and c combined.\n\
+-a       : Same and i and r combined.\n\
 --ruby   : Intall RVM for Ruby installation.  (Not required if using '--rubyv').\n\
 --rubyv  : Intall RVM, AND install a specific Ruby version.\n\
 --docker : Install Docker Engine - Community.\n\
