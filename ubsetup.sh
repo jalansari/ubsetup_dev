@@ -772,6 +772,11 @@ function removeFromPath()
 ' s|([^[:alnum:]\/\$\-\._])'"$searchStrEscd"':?$|\1|g;};' "$file"
 }
 
+function removeFromPathGlobally()
+{   PRINTLOG "Updating <$GlobalProfileFile>, removing <$1> from PATH."
+    removeFromPath $1 $GlobalProfileFile
+}
+
 function addAptKeys()
 {   listOfKeys=("${!1}")
     if [ ${#listOfKeys[@]} != 0 ]; then
@@ -1014,6 +1019,34 @@ function addUserGitConfig()
     # chmod 600 $sshUserPvtKey
 }
 
+# Update user descriptor string with new values.  Descriptor string is expected
+# to be of the format:
+#     <FullName>;<email>;<sshpvtkeyfile>;<maingroup>
+# Modified descriptor will be printed as output.
+# Parameters:
+#     $1 : User descriptor string.
+#     $2 : New user full name.
+#     $3 : New group name.
+#     $4 : New user email.
+# Returns:
+#     0 Successfully modified descriptor.
+function modifyUserDescriptor()
+{   userDesc="$1"
+    userFullName="$2"
+    userGroup="$3"
+    userEmail="$4"
+    if [ ! -z "$userFullName" ]; then
+        userDesc=$( sed -r 's/[^;]*(;.*)/'"$userFullName"'\1/' <<< "$userDesc" )
+    fi
+    if [ ! -z "$userGroup" ]; then
+        userDesc=$( sed -r 's/(.*;)[^;]*/\1'"$userGroup"'/' <<< "$userDesc" )
+    fi
+    if [ ! -z "$userEmail" ]; then
+        userDesc=$( sed -r 's/([^;]*;)[^;]*(.*)/\1'"$userEmail"'\2/' <<< "$userDesc" )
+    fi
+    echo "$userDesc"
+}
+
 # Add new user.
 # Parameters:
 #     $1 : New username.
@@ -1154,20 +1187,7 @@ PRINTLOG "    Username <$userOfThisScript>"
 PRINTLOG "    Group    <$groupOfUserOfThisScript>"
 PRINTLOG "    Home     <$userHomeDir>"
 
-currentUserDescFromArray="${UserInfo[$currentUserNameKey]}"
-
-if [ ! -z "$opt_userfullname" ]; then
-    PRINTLOG "    FullName <$opt_userfullname>"
-    currentUserDescFromArray=$( sed -r 's/[^;]*(;.*)/'"$opt_userfullname"'\1/' <<< "$currentUserDescFromArray" )
-fi
-if [ ! -z "$opt_usergroup" ]; then
-    PRINTLOG "    NewGroup <$opt_usergroup>"
-    currentUserDescFromArray=$( sed -r 's/(.*;)[^;]*/\1'"$opt_usergroup"'/' <<< "$currentUserDescFromArray" )
-fi
-if [ ! -z "$opt_useremail" ]; then
-    PRINTLOG "    Email    <$opt_useremail>"
-    currentUserDescFromArray=$( sed -r 's/([^;]*;)[^;]*(.*)/\1'"$opt_useremail"'\2/' <<< "$currentUserDescFromArray" )
-fi
+currentUserDescFromArray=$( modifyUserDescriptor "${UserInfo[$currentUserNameKey]}" "$opt_userfullname" "$opt_usergroup" "$opt_useremail" )
 
 PRINTLOG "    UserDesc <$currentUserDescFromArray>"
 UserInfo[$currentUserNameKey]="$currentUserDescFromArray"

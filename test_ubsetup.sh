@@ -465,6 +465,63 @@ function test_iterAssociativeArrAndCall_manyValArray()
 
 ################################################################################
 
+function test_modifyUserDescriptor_noChanges()
+{   userDesc="FullName;email;sshpvtkeyfile;maingroup"
+    expected=0
+    newUserDesc=$( modifyUserDescriptor "$userDesc" "" "" "" )
+    actualReturn=$?
+    assertEquals $expected $actualReturn
+    assertEquals "$userDesc" "$newUserDesc"
+}
+
+function test_modifyUserDescriptor_changeFullName()
+{   userDesc="FullName;email;sshpvtkeyfile;maingroup"
+    userFullName="New Full Name"
+    userDescExpected="$userFullName;email;sshpvtkeyfile;maingroup"
+    expected=0
+    newUserDesc=$( modifyUserDescriptor "$userDesc" "$userFullName" "" "" )
+    actualReturn=$?
+    assertEquals $expected $actualReturn
+    assertEquals "$userDescExpected" "$newUserDesc"
+}
+
+function test_modifyUserDescriptor_changeGroup()
+{   userDesc="FullName;email;sshpvtkeyfile;maingroup"
+    userGroup="testgrp"
+    userDescExpected="FullName;email;sshpvtkeyfile;$userGroup"
+    expected=0
+    newUserDesc=$( modifyUserDescriptor "$userDesc" "" "$userGroup" "" )
+    actualReturn=$?
+    assertEquals $expected $actualReturn
+    assertEquals "$userDescExpected" "$newUserDesc"
+}
+
+function test_modifyUserDescriptor_changeEmail()
+{   userDesc="FullName;email;sshpvtkeyfile;maingroup"
+    userEmail="an@email.co.test"
+    userDescExpected="FullName;$userEmail;sshpvtkeyfile;maingroup"
+    expected=0
+    newUserDesc=$( modifyUserDescriptor "$userDesc" "" "" "$userEmail" )
+    actualReturn=$?
+    assertEquals $expected $actualReturn
+    assertEquals "$userDescExpected" "$newUserDesc"
+}
+
+function test_modifyUserDescriptor_changeNameGroupEmail()
+{   userDesc="FullName;email;sshpvtkeyfile;maingroup"
+    userFullName="New Full Name"
+    userGroup="testgrp"
+    userEmail="an@email.co.test"
+    userDescExpected="$userFullName;$userEmail;sshpvtkeyfile;$userGroup"
+    expected=0
+    newUserDesc=$( modifyUserDescriptor "$userDesc" "$userFullName" "$userGroup" "$userEmail" )
+    actualReturn=$?
+    assertEquals $expected $actualReturn
+    assertEquals "$userDescExpected" "$newUserDesc"
+}
+
+################################################################################
+
 function test_addNewUser_NoUsername()
 {   usernameToAdd=""
     groupName=""
