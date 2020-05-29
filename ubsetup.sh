@@ -103,7 +103,7 @@ DevGroupName="adm" # This group applies to development tools where users need wr
 UserHomeBin="$userHomeDir/bin"
 TerminatorCfgDir="$userHomeDir/.config/terminator"
 TerminatorCfgFile="$TerminatorCfgDir/config"
-GoWorkspacePath="$userHomeDir/goworkspace"
+GoWorkspacePath="\$HOME/goworkspace"
 UserProfileFile="$userHomeDir/.profile"
 UnpackDirForIncompletePckgs="$userHomeDir/Downloads"
 
