@@ -8,39 +8,39 @@
 declare -A DebPackages
 DebPackages=(
              ["code"]="https://go.microsoft.com/fwlink/?LinkID=760868;mscode.deb" # 760865 for insider edition
-             ["vagrant"]="https://releases.hashicorp.com/vagrant/2.2.9/vagrant_2.2.9_x86_64.deb"
+             ["vagrant"]="https://releases.hashicorp.com/vagrant/2.2.10/vagrant_2.2.10_x86_64.deb"
              ["dropbox"]="https://www.dropbox.com/download?dl=packages/ubuntu/dropbox_2020.03.04_amd64.deb"
             )
 
 InstallDir="/usr/share"
 UsrLocalDir="/usr/local"
 
-NodeJsVer="node-v12.18.1-linux-x64"
+NodeJsVer="node-v12.18.3-linux-x64"
 NodeJsPkg="$NodeJsVer.tar.xz"
-NodeJsUrl="https://nodejs.org/dist/v12.18.1/$NodeJsPkg"
+NodeJsUrl="https://nodejs.org/dist/v12.18.3/$NodeJsPkg"
 NodeInstallDir="$InstallDir/nodejs"
 
-FossilScmPkg="fossil-linux-x64-2.11.1.tar.gz"
+FossilScmPkg="fossil-linux-x64-2.12.1.tar.gz"
 FossilScmUrl="https://www.fossil-scm.org/index.html/uv/$FossilScmPkg"
 FossilInstallDir="$InstallDir/fossilscm"
 
-GoLangPkg="go1.14.4.linux-amd64.tar.gz"
-GoLangUrl="https://dl.google.com/go/$GoLangPkg"
+GoLangPkg="go1.15.1.linux-amd64.tar.gz"
+GoLangUrl="https://golang.org/dl/$GoLangPkg"
 GoPath="$UsrLocalDir/go"
 
 TelegramPackage="telegram_linux.tar.xz"
 TelegramPackageHttpURL="https://telegram.org/dl/desktop/linux"
 
-VeraCryptPkg="veracrypt-1.24-Update4-setup.tar.bz2"
-VeraCryptUrl="https://launchpad.net/veracrypt/trunk/1.24-update4/+download/$VeraCryptPkg"
+VeraCryptPkg="veracrypt-1.24-Update7-setup.tar.bz2"
+VeraCryptUrl="https://launchpad.net/veracrypt/trunk/1.24-update7/+download/$VeraCryptPkg"
 
-DockerComposeUrl="https://github.com/docker/compose/releases/download/1.26.0/docker-compose-Linux-x86_64"
+DockerComposeUrl="https://github.com/docker/compose/releases/download/1.26.2/docker-compose-Linux-x86_64"
 
-AndroidPkg="android-studio-ide-193.6514223-linux.tar.gz"
-AndroidUrl="https://dl.google.com/dl/android/studio/ide-zips/4.0.0.16/$AndroidPkg"
+AndroidPkg="android-studio-ide-193.6626763-linux.tar.gz"
+AndroidUrl="https://dl.google.com/dl/android/studio/ide-zips/4.0.1.0/$AndroidPkg"
 AndroidInstallDir="$InstallDir/androidstudio"
 
-FlutterPkg="flutter_linux_1.17.3-stable.tar.xz"
+FlutterPkg="flutter_linux_1.20.3-stable.tar.xz"
 FlutterUrl="https://storage.googleapis.com/flutter_infra/releases/stable/linux/$FlutterPkg"
 FlutterInstallDir="$InstallDir/flutterdev"
 
@@ -52,6 +52,7 @@ Fonts=(
        ["inconsolata"]="https://fonts.google.com/download?family=Inconsolata"
        ["source_code_p"]="https://fonts.google.com/download?family=Source%20Code%20Pro"
        ["mononoki"]="https://github.com/madmalik/mononoki/releases/download/1.2/mononoki.zip"
+       ["jetbrains_mono"]="https://www.fontsquirrel.com/fonts/download/jetbrains-mono"
       )
 allFontsFolder="/usr/share/fonts/ubsetup_installed_fonts"
 
@@ -70,7 +71,7 @@ FileManagerViewMode="list"
 
 WorkspacesNumberOf=1
 
-CinnamonPanelHeight="33"
+CinnamonPanelHeight="25"
 CinnamonPanelAutohide="false"
 CinnamonRememberRecentFiles="true"
 
