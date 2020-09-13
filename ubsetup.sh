@@ -104,7 +104,8 @@ DevGroupName="adm" # This group applies to development tools where users need wr
 UserHomeBin="$userHomeDir/bin"
 TerminatorCfgDir="$userHomeDir/.config/terminator"
 TerminatorCfgFile="$TerminatorCfgDir/config"
-GoWorkspacePath="\$HOME/goworkspace"
+GoWorkspacePath="$userHomeDir/goworkspace"
+GoWorkspacePathLit="\$HOME/goworkspace"
 UserProfileFile="$userHomeDir/.profile"
 UnpackDirForIncompletePckgs="$userHomeDir/Downloads"
 
@@ -1387,11 +1388,11 @@ if [ $ubServerEnvironment != 0 ]; then
         mkdir -p $GoWorkspacePath
         chown -R $userOfThisScript:$groupOfUserOfThisScript $GoWorkspacePath
         PRINTLOG "    Go workspace <$GoWorkspacePath>"
-        grep "GOPATH=.*$GoWorkspacePath" $UserProfileFile > /dev/null 2>&1
+        grep "GOPATH=.*$GoWorkspacePathLit" $UserProfileFile > /dev/null 2>&1
         if [ $? == 0 ]; then
             PRINTLOG "GoLang workspace path already set in user's GOPATH variable."
         else
-            echo "export GOPATH=$GoWorkspacePath" >> $UserProfileFile
+            echo "export GOPATH=$GoWorkspacePathLit" >> $UserProfileFile
         fi
     fi
 
