@@ -16,9 +16,9 @@ ___
   * `./ubsetup.sh -h`
 
 * Most likely usage:
-  * `./ubsetup.sh -a -un "<Full_Name>" -ue "<Email_Address>"`
+  * `./ubsetup.sh -a -un "<Full_Name>" -ue "<Email_Address>" -ug "<group>"`
 * Or, capture log to stdout and file:
-  * `./ubsetup.sh -a -un "<Full_Name>" -ue "<Email_Address>" | tee ubsetup.log`
+  * `./ubsetup.sh -a -un "<Full_Name>" -ue "<Email_Address>" -ug "<group>" | tee ubsetup.log`
 
 ___
 
