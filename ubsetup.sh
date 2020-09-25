@@ -193,6 +193,7 @@ INSTALL_COMP_LIST=(
                    "unzip"
                    "python-pip" # Pip package management tools.
                    "python3-pip"
+                   "python3-venv"
                   )
 
 INSTAL_PIP2n3_MAP=(
@@ -239,7 +240,7 @@ INSTALL_COMP_LIST_DESKTOP=(
                    "shunit2" # Shell script unit test framework.
                    "pv"
                    "ssh"
-                   "libpango1.0-0" # Needed by Dropbox installer.
+                   "libpango-1.0-0" # Needed by Dropbox installer.
                    "libpcrecpp0v5" # Needed by mysql-workbench
                    "ipython"
                    "subsurface"
@@ -422,7 +423,7 @@ mouse-button-modifier='<Super>'\n\
 name='Mint-Y-Dark'\n\
 \n\
 [org.cinnamon.desktop.interface]\n\
-icon-theme='Mint-X-Dark'\n\
+icon-theme='Mint-Y-Dark'\n\
 gtk-theme='Mint-Y-Dark'\n\
 clock-show-date=true\n\
 first-day-of-week=1\n\
@@ -431,9 +432,9 @@ scaling-factor=uint32 0\n"
 TEXT_CinnamonSoundsGSettingsConfig="[org.cinnamon.sounds]\n\
 login-enabled=false\n\
 logout-enabled=false\n\
+plug-enabled=false\n\
 unplug-enabled=false\n\
 tile-enabled=false\n\
-plug-enabled=false\n\
 switch-enabled=false\n"
 
 TEXT_CinnamonMouseGSettingsConfig="[org.cinnamon.settings-daemon.peripherals.touchpad]\n\
@@ -441,21 +442,25 @@ natural-scroll=false\n\
 disable-while-typing=true\n\
 horizontal-scrolling=true\n\
 clickpad-click=2\n\
+custom-acceleration=true\n\
+motion-acceleration=8.0\n\
+motion-threshold=1\n\
 \n\
 [org.cinnamon.settings-daemon.peripherals.mouse]\n\
-natural-scroll=false\n\
-locate-pointer=true\n"
+natural-scroll=false\n"
 
 TEXT_CinnamonPowerGSettingsConfig="[org.cinnamon.settings-daemon.plugins.power]\n\
 lock-on-suspend=true\n
-idle-brightness=10\n\
 critical-battery-action='nothing'\n\
-lid-close-ac-action='nothing'\n\
-lid-close-battery-action='nothing'\n\
 sleep-inactive-ac-timeout=0\n\
 sleep-inactive-battery-timeout=0\n\
 sleep-display-battery=600\n\
-sleep-display-ac=600\n"
+sleep-display-ac=600\n\
+button-power='interactive'\n\
+lid-close-ac-action='nothing'\n\
+lid-close-battery-action='nothing'\n\
+idle-dim-time=90\n\
+idle-brightness=10\n"
 
 TEXT_CinnamonDesktopGSettingsConfig="[org.nemo.desktop]\n\
 trash-icon-visible=true\n\
@@ -468,6 +473,9 @@ recent-files-max-age=30\n\
 picture-options='none'\n\
 primary-color='$DesktopBackgroundColor'\n\
 \n\
+[org/cinnamon/desktop/session]\n\
+idle-delay=uint32 300\n\
+\n\
 [org.cinnamon]\n\
 startup-animation=false\n\
 desklet-decorations=0\n\
@@ -478,7 +486,11 @@ panels-autohide=['1:$CinnamonPanelAutohide']\n\
 [org.cinnamon.desktop.screensaver]\n\
 use-custom-format=true\n\
 date-format='%a %d %b %Y'\n\
-lock-enabled=true\n"
+lock-enabled=true\n\
+lock-delay=uint32 2\n\
+\n\
+[org.cinnamon.desktop.a11y.keyboard]\n\
+togglekeys-enable-osd=true\n"
 
 TEXT_XedGSettingsConfig="[org.x.editor.preferences.editor]\n\
 display-right-margin=true\n\
@@ -489,9 +501,11 @@ insert-spaces=true\n\
 auto-indent=true\n\
 bracket-matching=true\n\
 wrap-mode='none'\n\
+highlight-current-line=true\n\
 scheme='oblivion'\n\
 \n\
 [org.x.editor.preferences.ui]\n\
+enable-tab-scrolling=false\n\
 statusbar-visible=true\n\
 minimap-visible=true\n"
 
@@ -511,25 +525,28 @@ night-light-schedule-from=21.0\n\
 night-light-schedule-to=8.0\n"
 
 TEXT_UbuntuDesktopGSettingsConfig="[org.gnome.desktop.background]\n\
-picture-uri='file:////usr/share/gnome-control-center/pixmaps/noise-texture-light.png'
-color-shading-type='solid'\n\
+picture-uri=''
 primary-color='$DesktopBackgroundColor'\n\
-picture-options='wallpaper'\n\
-secondary-color='$DesktopBackgroundColor'\n\
+\n\
+[org.gnome.desktop.interface]\n\
+gtk-theme='Yaru-dark'\n\
 \n\
 [org.gnome.shell.extensions.dash-to-dock]\n\
 dash-max-icon-size=32\n\
 dock-fixed=false\n\
 \n\
 [org.gnome.desktop.privacy]\n\
+recent-files-max-age=30\n\
 remember-recent-files=true\n\
 \n\
 [org.gnome.desktop.screensaver]\n\
-picture-uri='file:////usr/share/gnome-control-center/pixmaps/noise-texture-light.png'
-color-shading-type='solid'\n\
-primary-color='#000000'\n\
-picture-options='wallpaper'\n\
-secondary-color='#000000'\n\
+lock-delay=uint32 0\n\
+\n\
+[org.gnome.desktop.session]\n\
+idle-delay=uint32 300\n\
+\n\
+[org.gnome.settings-daemon.plugins.media-keys]\n\
+home=['<Primary><Alt>h']\n\
 \n\
 [org.gnome.shell]\n\
 app-picker-view=uint32 1\n\
@@ -556,10 +573,11 @@ display-line-numbers=true\n\
 bracket-matching=true\n\
 highlight-current-line=true\n\
 display-right-margin=true\n\
-display-overview-map=true\n\
+right-margin-position=uint32 80\n\
+wrap-mode='word'\n\
+wrap-last-split-mode='word'\n\
 scheme='oblivion'\n\
-background-pattern='none'\n\
-wrap-last-split-mode='word'\n"
+background-pattern='none'\n"
 
 
 ##### Application Configs ######
