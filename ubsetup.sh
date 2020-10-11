@@ -1492,7 +1492,14 @@ alias gitcheckouts='____gititer____ checkout'\n\
 alias gitadds='____gititer____ add'\n\
 alias gitlogs='____gititer____ log'\n\
 alias gitmerges='____gititer____ merge'\n\
-alias gitcommits='____gititer2____ commit'\n"\
+alias gitcommits='____gititer2____ commit'\n\
+\n\
+function ____check_py_requirements____() { reqsFile=\"\$1\"; if [ ! -f \"\$reqsFile\" ]; then reqsFile=\"requirements.txt\"; fi; cat \"\$reqsFile\" | while read -r line; do test \"\$line\" == \"\" && continue ; pckg=\$( echo \$line | awk -F'==' '{ print \$1 }' ) vers=\$( echo \$line | awk -F'==' '{ print \$2 }' ) && echo -n \"\$pckg : \$vers\" && ver_found=\$( pip search \$pckg | awk -v envvar=\"\$pckg\" '{ if (\$1==envvar) { print \$2 } }' ) && if [ \"\$ver_found\" == \"\" ]; then echo -e \" - \\\033[1;31mNOT FOUND (try https://pypi.org/search/?q=\$pckg)\\\033[0m\" ; else echo -n \" - Latest version: \$ver_found\" ; test \"\$ver_found\" != \"(\$vers)\" && echo -e \" - \\\033[1;33mNOT EQUAL\\\033[0m\" || echo \"\" ; fi ; done }\n\
+alias cpr='____check_py_requirements____'\n\
+\n\
+alias cleanpydir='rm -rf testresults.xml .coverage .cache .pytest_cache htmlcov && find . -name \"__pycache__\" -type d ! -path \"*/.venv/*\" ! -path \"*/.git/*\" ! -path \"*/venv/*\" | xargs rm -rf'\n\
+\n\
+alias trimws='find . -type f ! -path \"*/.venv/*\" ! -path \"*/.git/*\" ! -path \"*/venv/*\" | xargs -I fl bash -c '\"'\"'FILE=\"fl\"; echo \">>>>>>>> \$FILE\"; sed -i -r \"s/\s+$//;\" \"\$FILE\"; [[ \$( tail -c 1 \"\$FILE\" ) != \"\" ]] && echo >> \"\$FILE\"'\"'\"''\n"\
  >> $BashrcForAll
 # export PYTHONPATH=.\n"\
 
