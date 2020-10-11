@@ -15,9 +15,9 @@ DebPackages=(
 InstallDir="/usr/share"
 UsrLocalDir="/usr/local"
 
-NodeJsVer="node-v12.18.4-linux-x64"
+NodeJsVer="node-v12.19.0-linux-x64"
 NodeJsPkg="$NodeJsVer.tar.xz"
-NodeJsUrl="https://nodejs.org/dist/v12.18.4/$NodeJsPkg"
+NodeJsUrl="https://nodejs.org/dist/v12.19.0/$NodeJsPkg"
 NodeInstallDir="$InstallDir/nodejs"
 
 FossilScmPkg="fossil-linux-x64-2.12.1.tar.gz"
@@ -36,11 +36,11 @@ VeraCryptUrl="https://launchpad.net/veracrypt/trunk/1.24-update7/+download/$Vera
 
 DockerComposeUrl="https://github.com/docker/compose/releases/download/1.27.4/docker-compose-Linux-x86_64"
 
-AndroidPkg="android-studio-ide-193.6626763-linux.tar.gz"
-AndroidUrl="https://dl.google.com/dl/android/studio/ide-zips/4.0.1.0/$AndroidPkg"
+AndroidPkg="android-studio-ide-193.6821437-linux.tar.gz"
+AndroidUrl="https://dl.google.com/dl/android/studio/ide-zips/4.0.2.0/$AndroidPkg"
 AndroidInstallDir="$InstallDir/androidstudio"
 
-FlutterPkg="flutter_linux_1.20.4-stable.tar.xz"
+FlutterPkg="flutter_linux_1.22.1-stable.tar.xz"
 FlutterUrl="https://storage.googleapis.com/flutter_infra/releases/stable/linux/$FlutterPkg"
 FlutterInstallDir="$InstallDir/flutterdev"
 
