@@ -24,7 +24,7 @@ FossilScmPkg="fossil-linux-x64-2.12.1.tar.gz"
 FossilScmUrl="https://www.fossil-scm.org/index.html/uv/$FossilScmPkg"
 FossilInstallDir="$InstallDir/fossilscm"
 
-GoLangPkg="go1.15.2.linux-amd64.tar.gz"
+GoLangPkg="go1.15.3.linux-amd64.tar.gz"
 GoLangUrl="https://golang.org/dl/$GoLangPkg"
 GoPath="$UsrLocalDir/go"
 
@@ -36,11 +36,11 @@ VeraCryptUrl="https://launchpad.net/veracrypt/trunk/1.24-update7/+download/$Vera
 
 DockerComposeUrl="https://github.com/docker/compose/releases/download/1.27.4/docker-compose-Linux-x86_64"
 
-AndroidPkg="android-studio-ide-193.6821437-linux.tar.gz"
-AndroidUrl="https://dl.google.com/dl/android/studio/ide-zips/4.0.2.0/$AndroidPkg"
+AndroidPkg="android-studio-ide-201.6858069-linux.tar.gz"
+AndroidUrl="https://dl.google.com/dl/android/studio/ide-zips/4.1.0.19/$AndroidPkg"
 AndroidInstallDir="$InstallDir/androidstudio"
 
-FlutterPkg="flutter_linux_1.22.1-stable.tar.xz"
+FlutterPkg="flutter_linux_1.22.2-stable.tar.xz"
 FlutterUrl="https://storage.googleapis.com/flutter_infra/releases/stable/linux/$FlutterPkg"
 FlutterInstallDir="$InstallDir/flutterdev"
 
