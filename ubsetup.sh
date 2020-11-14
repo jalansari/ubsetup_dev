@@ -8,23 +8,23 @@
 declare -A DebPackages
 DebPackages=(
              ["code"]="https://go.microsoft.com/fwlink/?LinkID=760868;mscode.deb" # 760865 for insider edition
-             ["vagrant"]="https://releases.hashicorp.com/vagrant/2.2.10/vagrant_2.2.10_x86_64.deb"
+             ["vagrant"]="https://releases.hashicorp.com/vagrant/2.2.13/vagrant_2.2.13_x86_64.deb"
              ["dropbox"]="https://www.dropbox.com/download?dl=packages/ubuntu/dropbox_2020.03.04_amd64.deb"
             )
 
 InstallDir="/usr/share"
 UsrLocalDir="/usr/local"
 
-NodeJsVer="node-v12.19.0-linux-x64"
+NodeJsVer="node-v14.15.0-linux-x64"
 NodeJsPkg="$NodeJsVer.tar.xz"
-NodeJsUrl="https://nodejs.org/dist/v12.19.0/$NodeJsPkg"
+NodeJsUrl="https://nodejs.org/dist/v14.15.0/$NodeJsPkg"
 NodeInstallDir="$InstallDir/nodejs"
 
-FossilScmPkg="fossil-linux-x64-2.12.1.tar.gz"
+FossilScmPkg="fossil-linux-x64-2.13.tar.gz"
 FossilScmUrl="https://www.fossil-scm.org/index.html/uv/$FossilScmPkg"
 FossilInstallDir="$InstallDir/fossilscm"
 
-GoLangPkg="go1.15.3.linux-amd64.tar.gz"
+GoLangPkg="go1.15.5.linux-amd64.tar.gz"
 GoLangUrl="https://golang.org/dl/$GoLangPkg"
 GoPath="$UsrLocalDir/go"
 
@@ -36,11 +36,11 @@ VeraCryptUrl="https://launchpad.net/veracrypt/trunk/1.24-update7/+download/$Vera
 
 DockerComposeUrl="https://github.com/docker/compose/releases/download/1.27.4/docker-compose-Linux-x86_64"
 
-AndroidPkg="android-studio-ide-201.6858069-linux.tar.gz"
-AndroidUrl="https://dl.google.com/dl/android/studio/ide-zips/4.1.0.19/$AndroidPkg"
+AndroidPkg="android-studio-ide-201.6953283-linux.tar.gz"
+AndroidUrl="https://dl.google.com/dl/android/studio/ide-zips/4.1.1.0//$AndroidPkg"
 AndroidInstallDir="$InstallDir/androidstudio"
 
-FlutterPkg="flutter_linux_1.22.2-stable.tar.xz"
+FlutterPkg="flutter_linux_1.22.4-stable.tar.xz"
 FlutterUrl="https://storage.googleapis.com/flutter_infra/releases/stable/linux/$FlutterPkg"
 FlutterInstallDir="$InstallDir/flutterdev"
 
