@@ -8,23 +8,23 @@
 declare -A DebPackages
 DebPackages=(
              ["code"]="https://go.microsoft.com/fwlink/?LinkID=760868;mscode.deb" # 760865 for insider edition
-             ["vagrant"]="https://releases.hashicorp.com/vagrant/2.2.13/vagrant_2.2.13_x86_64.deb"
+             ["vagrant"]="https://releases.hashicorp.com/vagrant/2.2.14/vagrant_2.2.14_x86_64.deb"
              ["dropbox"]="https://www.dropbox.com/download?dl=packages/ubuntu/dropbox_2020.03.04_amd64.deb"
             )
 
 InstallDir="/usr/share"
 UsrLocalDir="/usr/local"
 
-NodeJsVer="node-v14.15.0-linux-x64"
+NodeJsVer="node-v14.15.5-linux-x64"
 NodeJsPkg="$NodeJsVer.tar.xz"
-NodeJsUrl="https://nodejs.org/dist/v14.15.0/$NodeJsPkg"
+NodeJsUrl="https://nodejs.org/dist/v14.15.5/$NodeJsPkg"
 NodeInstallDir="$InstallDir/nodejs"
 
-FossilScmPkg="fossil-linux-x64-2.13.tar.gz"
-FossilScmUrl="https://www.fossil-scm.org/index.html/uv/$FossilScmPkg"
+FossilScmPkg="fossil-linux-x64-2.14.tar.gz"
+FossilScmUrl="https://fossil-scm.org/home/uv/$FossilScmPkg"
 FossilInstallDir="$InstallDir/fossilscm"
 
-GoLangPkg="go1.15.5.linux-amd64.tar.gz"
+GoLangPkg="go1.15.8.linux-amd64.tar.gz"
 GoLangUrl="https://golang.org/dl/$GoLangPkg"
 GoPath="$UsrLocalDir/go"
 
@@ -34,13 +34,13 @@ TelegramPackageHttpURL="https://telegram.org/dl/desktop/linux"
 VeraCryptPkg="veracrypt-1.24-Update7-setup.tar.bz2"
 VeraCryptUrl="https://launchpad.net/veracrypt/trunk/1.24-update7/+download/$VeraCryptPkg"
 
-DockerComposeUrl="https://github.com/docker/compose/releases/download/1.27.4/docker-compose-Linux-x86_64"
+DockerComposeUrl="https://github.com/docker/compose/releases/download/1.28.2/docker-compose-Linux-x86_64"
 
-AndroidPkg="android-studio-ide-201.6953283-linux.tar.gz"
-AndroidUrl="https://dl.google.com/dl/android/studio/ide-zips/4.1.1.0//$AndroidPkg"
+AndroidPkg="android-studio-ide-201.7042882-linux.tar.gz"
+AndroidUrl="https://dl.google.com/dl/android/studio/ide-zips/4.1.2.0/$AndroidPkg"
 AndroidInstallDir="$InstallDir/androidstudio"
 
-FlutterPkg="flutter_linux_1.22.4-stable.tar.xz"
+FlutterPkg="flutter_linux_1.22.6-stable.tar.xz"
 FlutterUrl="https://storage.googleapis.com/flutter_infra/releases/stable/linux/$FlutterPkg"
 FlutterInstallDir="$InstallDir/flutterdev"
 
@@ -1334,9 +1334,10 @@ installPythonPipPackages INSTAL_PIP2n3_MAP[@]
 ########################################
 
 if [ "$InstallDocker" == true ]; then
+    dc_targetbin="/usr/local/bin/docker-compose"
     test ! -z $DockerComposeUrl \
-        && wget $DockerComposeUrl -O /usr/local/bin/docker-compose \
-        && chmod +x /usr/local/bin/docker-compose
+        && wget $DockerComposeUrl -O "$dc_targetbin" \
+        && chmod +x "$dc_targetbin"
 
     if [ "$InstallGitlabRunner" == true ]; then
         GitLabRunnerPath="/usr/local/bin/gitlab-runner"
