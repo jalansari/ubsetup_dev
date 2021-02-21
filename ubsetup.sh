@@ -37,6 +37,20 @@ VeraCryptUrl="https://launchpad.net/veracrypt/trunk/1.24-update7/+download/$Vera
 
 DockerComposeUrl="https://github.com/docker/compose/releases/download/1.28.2/docker-compose-Linux-x86_64"
 
+TerraformPkg="terraform_0.14.6_linux_amd64.zip"
+TerraformUrl="https://releases.hashicorp.com/terraform/0.14.6/$TerraformPkg"
+TerraformInstallDir="$InstallDir/terraform"
+
+TerragruntUrl="https://github.com/gruntwork-io/terragrunt/releases/latest/download/terragrunt_linux_amd64"
+TerragruntInstallDir="$InstallDir/terragrunt"
+
+ConfiglintPkg="config-lint_Linux_x86_64.tar.gz"
+ConfiglintUrl="https://github.com/stelligent/config-lint/releases/latest/download/$ConfiglintPkg"
+ConfiglintInstallDir="$InstallDir/configlint"
+
+AwsCliPkg="awscli-exe-linux-x86_64.zip"
+AwsCliUrl="https://awscli.amazonaws.com/$AwsCliPkg"
+
 AndroidPkg="android-studio-ide-201.7042882-linux.tar.gz"
 AndroidUrl="https://dl.google.com/dl/android/studio/ide-zips/4.1.2.0/$AndroidPkg"
 AndroidInstallDir="$InstallDir/androidstudio"
@@ -1394,6 +1408,23 @@ if [ $ubServerEnvironment != 0 ]; then
     do
         installDebPackageFromHttp ${DebPackages["$key"]} $key
     done
+
+    wgetAndUnpack "$TerraformUrl" "$TerraformPkg" "$TerraformInstallDir" "$TerraformInstallDir" \
+        && updatePathGlobally "$TerraformInstallDir"
+
+    [ ! -z "$TerragruntUrl" ] && [ ! -e "$TerragruntInstallDir/terragrunt" ] \
+        && mkdir -p "$TerragruntInstallDir" \
+        && wget -O "$TerragruntInstallDir/terragrunt" $TerragruntUrl \
+        && chmod +rx "$TerragruntInstallDir/terragrunt" \
+        && updatePathGlobally "$TerragruntInstallDir"
+
+    wgetAndUnpack "$ConfiglintUrl" "$ConfiglintPkg" "$ConfiglintInstallDir" "$ConfiglintInstallDir" \
+        && updatePathGlobally "$ConfiglintInstallDir"
+
+    awscliUnpackTo="$UnpackDirForIncompletePckgs"
+    awscliDir="$awscliUnpackTo/aws"
+    wgetAndUnpack "$AwsCliUrl" "$AwsCliPkg" "$awscliUnpackTo" "$awscliDir" \
+        && chown -R $userOfThisScript:$groupOfUserOfThisScript "$awscliDir"
 
     wgetAndUnpack "$GoLangUrl" "$GoLangPkg" "$UsrLocalDir" "$GoPath"
     if [ $? == 0 ]; then
