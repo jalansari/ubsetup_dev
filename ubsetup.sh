@@ -940,14 +940,15 @@ function installPythonPipPackages()
 # Download and unpack a tarball.
 # Parameters:
 #     $1 : Http URL of the package to be downloaded.
-#     $2 : Name of tarball package that will be downloaded.
-#     $3 : Location to which the tarball should be unpacked.
+#     $2 : Name of compressed package that will be downloaded.
+#     $3 : Location to which the package should be unpacked.
 #     $4 : Optional.  Path, which if exists, means nothing needs to be done.
 # Returns:
 #     0 Successfully downloaded and unpacked.
 #     1 The path $4 already exists.
-#     2 The downloaded file was not a valid archive.
+#     2 One of the required parameters was not specified.
 #     3 There was a problem downloading archive.
+#     4 There was a problem decompressing the archive.
 function wgetAndUnpack()
 {   if [ -z "$1" ] || [ -z "$2" ] || [ -z "$3" ]; then
         return 2
@@ -958,16 +959,29 @@ function wgetAndUnpack()
     fi
     PRINTLOG "Downloading and unpacking <$2> to <$3>."
     mkdir -p "$3"
-    wget "$1" -O "$TempFolderForDownloads/$2"
+    tempDownload="$TempFolderForDownloads/$2"
+    wget "$1" -O "$tempDownload"
     wgetStatus=$?
     if [ $wgetStatus != 0 ]; then
         PRINT_ERROR "Download error <$wgetStatus>."
         return 3
     fi
-    tar -C "$3" -xf "$TempFolderForDownloads/$2"
-    tarStatus=$?
-    rm "$TempFolderForDownloads/$2"
-    return $tarStatus
+    decompStatus=0
+    if [[ "$2" == *.zip ]]; then
+        PRINTLOG "Unzipping file <$tempDownload> to <$3>."
+        unzip "$tempDownload" -d "$3"
+        decompStatus=$?
+    else
+        PRINTLOG "Untarball file <$tempDownload> to <$3>."
+        tar -C "$3" -xf "$tempDownload"
+        decompStatus=$?
+    fi
+    rm "$tempDownload"
+    if [ $decompStatus != 0 ]; then
+        PRINT_ERROR "Decompress error <$decompStatus>."
+        return 4
+    fi
+    return $decompStatus
 }
 
 function launchAndKillAppAsUser()
@@ -1414,25 +1428,18 @@ if [ $ubServerEnvironment != 0 ]; then
 
     telegramUnpackTo="$UnpackDirForIncompletePckgs"
     telegramBin="$telegramUnpackTo/Telegram/Telegram"
-    wgetAndUnpack "$TelegramPackageHttpURL" "$TelegramPackage" "$telegramUnpackTo" "$telegramBin"
-    chown -R $userOfThisScript:$groupOfUserOfThisScript "$telegramUnpackTo"
+    wgetAndUnpack "$TelegramPackageHttpURL" "$TelegramPackage" "$telegramUnpackTo" "$telegramBin" \
+        && chown -R $userOfThisScript:$groupOfUserOfThisScript "$telegramUnpackTo"
 
     PRINTLOG "Installing fonts."
     doBuildFontCache=false
     for key in "${!Fonts[@]}"
     do
         fontFolder="$allFontsFolder/$key"
-        if [ -e "$fontFolder" ]; then
-            PRINTLOG "Font [$key] already exists: [$fontFolder]"
-            continue
-        fi
-        doBuildFontCache=true
         downloadUrl=${Fonts["$key"]}
         PRINTLOG "Download and setup font [$key]: [$downloadUrl] -> [$fontFolder]"
-        wget -O $key.zip $downloadUrl
-        mkdir -p $fontFolder
-        unzip -d $fontFolder $key.zip
-        rm $key.zip
+        wgetAndUnpack "$downloadUrl" "$key.zip" "$fontFolder" "$fontFolder" \
+            && doBuildFontCache=true
     done
     if [ "$doBuildFontCache" == true ]; then
         chmod -R --reference=/usr/share/fonts/opentype $allFontsFolder

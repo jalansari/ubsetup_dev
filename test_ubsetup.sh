@@ -661,7 +661,7 @@ function test_wgetAndUnpack_emptyStrReturns2()
     assertEquals $expected $returnedVal
 }
 
-function test_wgetAndUnpack_testFileOrDirExitstsReturns1()
+function test_wgetAndUnpack_testFileOrDirExistsReturns1()
 {   testfileordir="wgetandunpacktest"
     expected=1
     rm -rf $testfileordir
@@ -728,7 +728,7 @@ function test_wgetAndUnpack_testGetEmptyFile()
 
     aFileName="emptyFile"
     touch "$TestServerFolder/$aFileName"
-    expected=2
+    expected=4
 
     wgetAndUnpack "$TestServerDomain/$aFileName" "emptyFileDownloaded" "$WgetToDir" "emptyFileDownloaded" > /dev/null 2>&1
 
@@ -743,7 +743,7 @@ function test_wgetAndUnpack_testGetFileNotTarball()
 
     aFileName="plainTextFile"
     echo "Some text!" > "$TestServerFolder/$aFileName"
-    expected=2
+    expected=4
 
     wgetAndUnpack "$TestServerDomain/$aFileName" "emptyFileDownloaded" "$WgetToDir" "emptyFileDownloaded" > /dev/null 2>&1
 
@@ -776,6 +776,35 @@ function test_wgetAndUnpack_testGetTarball()
     # While everything is setup, run a test for when path already exists.
     expected=1
     wgetAndUnpack "$TestServerDomain/$tarbFileName" "$tarbFileName" "$WgetToDir" "$WgetToDir/$aFileName1" > /dev/null 2>&1
+    returnedVal=$?
+    assertEquals $expected $returnedVal
+
+    cleanupAfterTestServerTesting
+}
+
+function test_wgetAndUnpack_testGetZip()
+{   runTestServer
+
+    aFileName1="plainTextFile1"
+    echo "Some text 1!" > $aFileName1
+    aFileName2="plainTextFile2"
+    echo "Some text 2!" > $aFileName2
+    compFileName="tarFile.zip"
+    zip "$TestServerFolder/$compFileName" $aFileName1 $aFileName2
+    rm $aFileName1 $aFileName2
+    expected=0
+
+    wgetAndUnpack "$TestServerDomain/$compFileName" "$compFileName" "$WgetToDir" "pathShouldNotExists" > /dev/null 2>&1
+
+    returnedVal=$?
+    assertEquals $expected $returnedVal
+    assertTrue "Unpack folder not found" "[ -d $WgetToDir ]"
+    assertTrue "Unpacked file1 not found" "[ -f $WgetToDir/$aFileName1 ]"
+    assertTrue "Unpacked file2 not found" "[ -f $WgetToDir/$aFileName2 ]"
+
+    # While everything is setup, run a test for when path already exists.
+    expected=1
+    wgetAndUnpack "$TestServerDomain/$compFileName" "$compFileName" "$WgetToDir" "$WgetToDir/$aFileName1" > /dev/null 2>&1
     returnedVal=$?
     assertEquals $expected $returnedVal
 
