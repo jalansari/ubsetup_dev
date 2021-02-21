@@ -25,7 +25,7 @@ FossilScmPkg="fossil-linux-x64-2.14.tar.gz"
 FossilScmUrl="https://fossil-scm.org/home/uv/$FossilScmPkg"
 FossilInstallDir="$InstallDir/fossilscm"
 
-GoLangPkg="go1.15.8.linux-amd64.tar.gz"
+GoLangPkg="go1.16.linux-amd64.tar.gz"
 GoLangUrl="https://golang.org/dl/$GoLangPkg"
 GoPath="$UsrLocalDir/go"
 
@@ -35,10 +35,10 @@ TelegramPackageHttpURL="https://telegram.org/dl/desktop/linux"
 VeraCryptPkg="veracrypt-1.24-Update7-setup.tar.bz2"
 VeraCryptUrl="https://launchpad.net/veracrypt/trunk/1.24-update7/+download/$VeraCryptPkg"
 
-DockerComposeUrl="https://github.com/docker/compose/releases/download/1.28.2/docker-compose-Linux-x86_64"
+DockerComposeUrl="https://github.com/docker/compose/releases/latest/download/docker-compose-Linux-x86_64"
 
-TerraformPkg="terraform_0.14.6_linux_amd64.zip"
-TerraformUrl="https://releases.hashicorp.com/terraform/0.14.6/$TerraformPkg"
+TerraformPkg="terraform_0.14.7_linux_amd64.zip"
+TerraformUrl="https://releases.hashicorp.com/terraform/0.14.7/$TerraformPkg"
 TerraformInstallDir="$InstallDir/terraform"
 
 TerragruntUrl="https://github.com/gruntwork-io/terragrunt/releases/latest/download/terragrunt_linux_amd64"

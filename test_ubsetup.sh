@@ -738,7 +738,7 @@ function test_wgetAndUnpack_testGetEmptyFile()
     cleanupAfterTestServerTesting
 }
 
-function test_wgetAndUnpack_testGetFileNotTarball()
+function test_wgetAndUnpack_testGetFileNotCompressedFile()
 {   runTestServer
 
     aFileName="plainTextFile"
@@ -746,6 +746,13 @@ function test_wgetAndUnpack_testGetFileNotTarball()
     expected=4
 
     wgetAndUnpack "$TestServerDomain/$aFileName" "emptyFileDownloaded" "$WgetToDir" "emptyFileDownloaded" > /dev/null 2>&1
+
+    returnedVal=$?
+    assertEquals $expected $returnedVal
+
+    mv "$TestServerFolder/$aFileName"  "$TestServerFolder/$aFileName.zip"
+
+    wgetAndUnpack "$TestServerDomain/$aFileName.zip" "emptyFileDownloaded.zip" "$WgetToDir" "emptyFileDownloaded" > /dev/null 2>&1
 
     returnedVal=$?
     assertEquals $expected $returnedVal
