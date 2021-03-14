@@ -16,16 +16,16 @@ DebPackages=(
 InstallDir="/usr/share"
 UsrLocalDir="/usr/local"
 
-NodeJsVer="node-v14.15.5-linux-x64"
+NodeJsVer="node-v14.16.0-linux-x64"
 NodeJsPkg="$NodeJsVer.tar.xz"
-NodeJsUrl="https://nodejs.org/dist/v14.15.5/$NodeJsPkg"
+NodeJsUrl="https://nodejs.org/dist/v14.16.0/$NodeJsPkg"
 NodeInstallDir="$InstallDir/nodejs"
 
 FossilScmPkg="fossil-linux-x64-2.14.tar.gz"
 FossilScmUrl="https://fossil-scm.org/home/uv/$FossilScmPkg"
 FossilInstallDir="$InstallDir/fossilscm"
 
-GoLangPkg="go1.16.linux-amd64.tar.gz"
+GoLangPkg="go1.16.2.linux-amd64.tar.gz"
 GoLangUrl="https://golang.org/dl/$GoLangPkg"
 GoPath="$UsrLocalDir/go"
 
@@ -36,10 +36,6 @@ VeraCryptPkg="veracrypt-1.24-Update7-setup.tar.bz2"
 VeraCryptUrl="https://launchpad.net/veracrypt/trunk/1.24-update7/+download/$VeraCryptPkg"
 
 DockerComposeUrl="https://github.com/docker/compose/releases/latest/download/docker-compose-Linux-x86_64"
-
-TerraformPkg="terraform_0.14.7_linux_amd64.zip"
-TerraformUrl="https://releases.hashicorp.com/terraform/0.14.7/$TerraformPkg"
-TerraformInstallDir="$InstallDir/terraform"
 
 TerragruntUrl="https://github.com/gruntwork-io/terragrunt/releases/latest/download/terragrunt_linux_amd64"
 TerragruntInstallDir="$InstallDir/terragrunt"
@@ -55,7 +51,7 @@ AndroidPkg="android-studio-ide-201.7042882-linux.tar.gz"
 AndroidUrl="https://dl.google.com/dl/android/studio/ide-zips/4.1.2.0/$AndroidPkg"
 AndroidInstallDir="$InstallDir/androidstudio"
 
-FlutterPkg="flutter_linux_1.22.6-stable.tar.xz"
+FlutterPkg="flutter_linux_2.0.2-stable.tar.xz"
 FlutterUrl="https://storage.googleapis.com/flutter_infra/releases/stable/linux/$FlutterPkg"
 FlutterInstallDir="$InstallDir/flutterdev"
 
@@ -246,6 +242,7 @@ INSTALL_COMP_LIST_DESKTOP=(
                    "python-tk" # Toolkit required for matplotlib graphics.
                    "python3-tk"
                    "ncdu"
+                   "terraform"
                   )
 
 INSTAL_PIP2n3_MAP_DESKTOP=(
@@ -255,10 +252,12 @@ INSTAL_PIP2n3_MAP_DESKTOP=(
 declare -A DebSources
 DebSources=(
             ["deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main"]="/etc/apt/sources.list.d/google.list" # google-chrome
+            ["deb [arch=$(dpkg --print-architecture)] https://apt.releases.hashicorp.com focal main"]="/etc/apt/sources.list.d/terraform.list"
            )
 
 ADD_APT_KEYS_LIST=(
                    "https://dl.google.com/linux/linux_signing_key.pub" # google-chrome
+                   "https://apt.releases.hashicorp.com/gpg" # Terraform
                   )
 
 # List of PPA repositories to be added.
@@ -1408,9 +1407,6 @@ if [ $ubServerEnvironment != 0 ]; then
     do
         installDebPackageFromHttp ${DebPackages["$key"]} $key
     done
-
-    wgetAndUnpack "$TerraformUrl" "$TerraformPkg" "$TerraformInstallDir" "$TerraformInstallDir" \
-        && updatePathGlobally "$TerraformInstallDir"
 
     [ ! -z "$TerragruntUrl" ] && [ ! -e "$TerragruntInstallDir/terragrunt" ] \
         && mkdir -p "$TerragruntInstallDir" \
