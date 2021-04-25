@@ -247,6 +247,7 @@ INSTALL_COMP_LIST_DESKTOP=(
 
 INSTAL_PIP2n3_MAP_DESKTOP=(
                    "setuptools" # Installs easy_install, needed to install virtualenv.
+                   "yolk3k" # Needed to query for latest version of pip packages (see "cpr" command in bashrc).
                   )
 
 declare -A DebSources
@@ -1530,10 +1531,20 @@ alias gitlogs='____gititer____ log'\n\
 alias gitmerges='____gititer____ merge'\n\
 alias gitcommits='____gititer2____ commit'\n\
 \n\
-function ____check_py_requirements____() { reqsFile=\"\$1\"; if [ ! -f \"\$reqsFile\" ]; then reqsFile=\"requirements.txt\"; fi; cat \"\$reqsFile\" | while read -r line; do test \"\$line\" == \"\" && continue ; pckg=\$( echo \$line | awk -F'==' '{ print \$1 }' ) vers=\$( echo \$line | awk -F'==' '{ print \$2 }' ) && echo -n \"\$pckg : \$vers\" && ver_found=\$( pip search \$pckg | awk -v envvar=\"\$pckg\" '{ if (\$1==envvar) { print \$2 } }' ) && if [ \"\$ver_found\" == \"\" ]; then echo -e \" - \\\033[1;31mNOT FOUND (try https://pypi.org/search/?q=\$pckg)\\\033[0m\" ; else echo -n \" - Latest version: \$ver_found\" ; test \"\$ver_found\" != \"(\$vers)\" && echo -e \" - \\\033[1;33mNOT EQUAL\\\033[0m\" || echo \"\" ; fi ; done }\n\
+function ____check_py_requirements____() {\n\
+    reqsFile=\"\$1\"\n\
+    if [ ! -f \"\$reqsFile\" ]; then reqsFile=\"requirements.txt\"; fi
+    cat \"\$reqsFile\" | while read -r line; do test \"\$line\" == \"\" && continue ; pckg=\$( echo \$line | awk -F'[=~]=' '{ print \$1 }' ) vers=\$( echo \$line | awk -F'==' '{ print \$2 }' ) && echo -n \"\$pckg : \$vers\" && ver_found=\$( yolk -V \$pckg | awk -v envvar=\"\$pckg\" '{ if (\$1==envvar) { print \$2 } }' ) && if [ \"\$ver_found\" == \"\" ]; then echo -e \" - \\\033[1;31mNOT FOUND (try https://pypi.org/search/?q=\$pckg)\\\033[0m\" ; else echo -n \" - Latest version: \$ver_found\" ; test \"\$ver_found\" != \"\$vers\" && echo -e \" - \\\033[1;33mNOT EQUAL\\\033[0m\" || echo \"\" ; fi ; done\n\
+}\n\
 alias cpr='____check_py_requirements____'\n\
 \n\
-alias cleanpydir='rm -rf testresults.xml .coverage .cache .pytest_cache htmlcov && find . -name \"__pycache__\" -type d ! -path \"*/.venv/*\" ! -path \"*/.git/*\" ! -path \"*/venv/*\" | xargs rm -rf && find . -type f -name \"*.pyc\" -delete'\n\
+function ____cleanpydir____() {\n\
+    rm -rf testresults.xml .coverage .cache .pytest_cache htmlcov .hypothesis\n\
+    find . -name \"__pycache__\" -type d -not -path \"*/.venv/*\" -not -path \"*/.git/*\" -not -path \"*/venv/*\" | xargs rm -rf\n\
+    # find . -type f -name \"*.pyc\" -delete\n\
+    if [[ \$1 == \"f\" ]]; then rm -rf .venv; fi\n\
+}\n\
+alias cleanpyd='____cleanpydir____'\n\
 \n\
 alias trimws='find . -type f ! -path \"*/.venv/*\" ! -path \"*/.git/*\" ! -path \"*/venv/*\" | xargs -I fl bash -c '\"'\"'FILE=\"fl\"; echo \">>>>>>>> \$FILE\"; sed -i -r \"s/\s+$//;\" \"\$FILE\"; [[ \$( tail -c 1 \"\$FILE\" ) != \"\" ]] && echo >> \"\$FILE\"'\"'\"''\n"\
  >> $BashrcForAll
