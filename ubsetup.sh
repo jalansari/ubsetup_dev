@@ -105,14 +105,14 @@ GlobalProfileFile="/etc/profile"
 TempFolderForDownloads="/tmp"
 
 
-userOfThisScript=`id -u -n $SUDO_USER`
-groupOfUserOfThisScript=`id -g -n $SUDO_USER`
+userOfThisScript=$( id -u -n "$SUDO_USER" )
+groupOfUserOfThisScript=$( id -g -n "$SUDO_USER" )
 userHomeDir=$( getent passwd "$userOfThisScript" | cut -d: -f6 )
 
 DevGroupName="adm" # This group applies to development tools where users need write access; e.g. so we can use npm install.  TODO - Maybe create a development specific group (don't reuse "adm").
 
 
-UserHomeBin="$userHomeDir/bin"
+# UserHomeBin="$userHomeDir/bin"
 TerminatorCfgDir="$userHomeDir/.config/terminator"
 TerminatorCfgFile="$TerminatorCfgDir/config"
 GoWorkspacePath="$userHomeDir/goworkspace"
@@ -382,9 +382,9 @@ TEXT_TerminatorCfg="[global_config]\n\
 TEXT_LocalBookmarks="file://$userHomeDir/Documents\n\
 file://$userHomeDir/Downloads\n"
 
-FMShowHiddenFilesVal="false"
-if [ $FileManagerShowHidden == 1 ]; then
-    FMShowHiddenFilesVal="true"
+FMShowHiddenFilesVal="true"
+if [ $FileManagerShowHidden == $FileManagerShowHiddenNo ]; then
+    FMShowHiddenFilesVal="false"
 fi
 TEXT_NemoGSettingsConfig="[org.nemo.preferences]\n\
 default-folder-viewer='$FileManagerViewMode-view'\n\
@@ -648,9 +648,9 @@ function removeLeastSignificantBit()
 #     0     : Component is installed.
 #     Other : Component is not installed.
 function checkDebPkgInstalled()
-{   item=$1
+{   item="$1"
     # Check installation was successful
-    dpkg -l $item 2> /dev/null | grep -E '^ii' > /dev/null 2>&1
+    dpkg -l "$item" 2> /dev/null | grep -E '^ii' > /dev/null 2>&1
     return $?
 }
 
@@ -1533,8 +1533,22 @@ alias gitcommits='____gititer2____ commit'\n\
 \n\
 function ____check_py_requirements____() {\n\
     reqsFile=\"\$1\"\n\
-    if [ ! -f \"\$reqsFile\" ]; then reqsFile=\"requirements.txt\"; fi
-    cat \"\$reqsFile\" | while read -r line; do test \"\$line\" == \"\" && continue ; pckg=\$( echo \$line | awk -F'[=~]=' '{ print \$1 }' ) vers=\$( echo \$line | awk -F'==' '{ print \$2 }' ) && echo -n \"\$pckg : \$vers\" && ver_found=\$( yolk -V \$pckg | awk -v envvar=\"\$pckg\" '{ if (\$1==envvar) { print \$2 } }' ) && if [ \"\$ver_found\" == \"\" ]; then echo -e \" - \\\033[1;31mNOT FOUND (try https://pypi.org/search/?q=\$pckg)\\\033[0m\" ; else echo -n \" - Latest version: \$ver_found\" ; test \"\$ver_found\" != \"\$vers\" && echo -e \" - \\\033[1;33mNOT EQUAL\\\033[0m\" || echo \"\" ; fi ; done\n\
+    if [ ! -f \"\$reqsFile\" ]; then reqsFile=\"requirements.txt\"; fi\n\
+    cat \"\$reqsFile\" | while read -r line; do\n\
+        test \"\$line\" == \"\" && continue\n\
+        pckg=\$( echo \$line | awk -F'[=~]=' '{ print \$1 }' )\n\
+        vers=\$( echo \$line | awk -F'==' '{ print \$2 }' )\n\
+        test \"\$pckg\" == \"\" && continue\n\
+        test \"\$vers\" == \"\" && continue\n\
+        echo -n \"\$pckg : \$vers\"\n\
+        ver_found=\$( yolk -V \$pckg | awk -v envvar=\"\$pckg\" '{ if (\$1==envvar) { print \$2 } }' )\n\
+        if [ \"\$ver_found\" == \"\" ]; then\n\
+            echo -e \" - \\\033[1;31mNOT FOUND (try https://pypi.org/search/?q=\$pckg)\\\033[0m\"\n\
+        else\n\
+            echo -n \" - Latest version: \$ver_found\"\n\
+            test \"\$ver_found\" != \"\$vers\" && echo -e \" - \\\033[1;33mNOT EQUAL\\\033[0m\" || echo \"\"\n\
+        fi\n\
+    done\n\
 }\n\
 alias cpr='____check_py_requirements____'\n\
 \n\
