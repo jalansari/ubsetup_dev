@@ -8,7 +8,7 @@
 declare -A DebPackages
 DebPackages=(
              ["code"]="https://go.microsoft.com/fwlink/?LinkID=760868;mscode.deb" # 760865 for insider edition
-             ["vagrant"]="https://releases.hashicorp.com/vagrant/2.2.14/vagrant_2.2.14_x86_64.deb"
+             ["vagrant"]="https://releases.hashicorp.com/vagrant/2.2.16/vagrant_2.2.16_x86_64.deb"
              ["dropbox"]="https://www.dropbox.com/download?dl=packages/ubuntu/dropbox_2020.03.04_amd64.deb"
              ["mysql-workbench-community"]="https://dev.mysql.com/get/Downloads/MySQLGUITools/mysql-workbench-community_8.0.23-1ubuntu20.04_amd64.deb"
             )
@@ -16,16 +16,16 @@ DebPackages=(
 InstallDir="/usr/share"
 UsrLocalDir="/usr/local"
 
-NodeJsVer="node-v14.16.0-linux-x64"
+NodeJsVer="node-v14.17.0-linux-x64"
 NodeJsPkg="$NodeJsVer.tar.xz"
-NodeJsUrl="https://nodejs.org/dist/v14.16.0/$NodeJsPkg"
+NodeJsUrl="https://nodejs.org/dist/v14.17.0/$NodeJsPkg"
 NodeInstallDir="$InstallDir/nodejs"
 
-FossilScmPkg="fossil-linux-x64-2.14.tar.gz"
+FossilScmPkg="fossil-linux-x64-2.15.1.tar.gz"
 FossilScmUrl="https://fossil-scm.org/home/uv/$FossilScmPkg"
 FossilInstallDir="$InstallDir/fossilscm"
 
-GoLangPkg="go1.16.2.linux-amd64.tar.gz"
+GoLangPkg="go1.16.4.linux-amd64.tar.gz"
 GoLangUrl="https://golang.org/dl/$GoLangPkg"
 GoPath="$UsrLocalDir/go"
 
@@ -47,12 +47,12 @@ ConfiglintInstallDir="$InstallDir/configlint"
 AwsCliPkg="awscli-exe-linux-x86_64.zip"
 AwsCliUrl="https://awscli.amazonaws.com/$AwsCliPkg"
 
-AndroidPkg="android-studio-ide-201.7042882-linux.tar.gz"
-AndroidUrl="https://dl.google.com/dl/android/studio/ide-zips/4.1.2.0/$AndroidPkg"
+AndroidPkg="android-studio-ide-202.7351085-linux.tar.gz"
+AndroidUrl="https://dl.google.com/dl/android/studio/ide-zips/4.2.1.0/$AndroidPkg"
 AndroidInstallDir="$InstallDir/androidstudio"
 
-FlutterPkg="flutter_linux_2.0.2-stable.tar.xz"
-FlutterUrl="https://storage.googleapis.com/flutter_infra/releases/stable/linux/$FlutterPkg"
+FlutterPkg="flutter_linux_2.2.1-stable.tar.xz"
+FlutterUrl="https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/$FlutterPkg"
 FlutterInstallDir="$InstallDir/flutterdev"
 
 
