@@ -1537,7 +1537,7 @@ function ____check_py_requirements____() {\n\
     cat \"\$reqsFile\" | while read -r line; do\n\
         test \"\$line\" == \"\" && continue\n\
         pckg=\$( echo \$line | awk -F'[=~]=' '{ print \$1 }' )\n\
-        vers=\$( echo \$line | awk -F'==' '{ print \$2 }' )\n\
+        vers=\$( echo \$line | awk -F'[=~]=' '{ print \$2 }' )\n\
         test \"\$pckg\" == \"\" && continue\n\
         test \"\$vers\" == \"\" && continue\n\
         echo -n \"\$pckg : \$vers\"\n\
