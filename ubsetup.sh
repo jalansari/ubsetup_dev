@@ -10,7 +10,7 @@ DebPackages=(
              ["code"]="https://go.microsoft.com/fwlink/?LinkID=760868;mscode.deb" # 760865 for insider edition
              ["vagrant"]="https://releases.hashicorp.com/vagrant/2.2.16/vagrant_2.2.16_x86_64.deb"
              ["dropbox"]="https://www.dropbox.com/download?dl=packages/ubuntu/dropbox_2020.03.04_amd64.deb"
-             ["mysql-workbench-community"]="https://dev.mysql.com/get/Downloads/MySQLGUITools/mysql-workbench-community_8.0.23-1ubuntu20.04_amd64.deb"
+             ["mysql-workbench-community"]=""https://dev.mysql.com/get/Downloads/MySQLGUITools/mysql-workbench-community_8.0.25-1ubuntu20.04_amd64.deb"
             )
 
 InstallDir="/usr/share"
@@ -25,7 +25,7 @@ FossilScmPkg="fossil-linux-x64-2.15.1.tar.gz"
 FossilScmUrl="https://fossil-scm.org/home/uv/$FossilScmPkg"
 FossilInstallDir="$InstallDir/fossilscm"
 
-GoLangPkg="go1.16.4.linux-amd64.tar.gz"
+GoLangPkg="go1.16.5.linux-amd64.tar.gz"
 GoLangUrl="https://golang.org/dl/$GoLangPkg"
 GoPath="$UsrLocalDir/go"
 
@@ -37,11 +37,15 @@ VeraCryptUrl="https://launchpad.net/veracrypt/trunk/1.24-update7/+download/$Vera
 
 DockerComposeUrl="https://github.com/docker/compose/releases/latest/download/docker-compose-Linux-x86_64"
 
-TerragruntUrl="https://github.com/gruntwork-io/terragrunt/releases/latest/download/terragrunt_linux_amd64"
+TerraformPkg="terraform_1.0.0_linux_amd64.zip"
+TerraformUrl="https://releases.hashicorp.com/terraform/1.0.0/$TerraformPkg"
+TerraformInstallDir="$InstallDir/terraform"
+
+TerragruntUrl="https://github.com/gruntwork-io/terragrunt/releases/download/v0.30.3/terragrunt_linux_amd64"
 TerragruntInstallDir="$InstallDir/terragrunt"
 
 ConfiglintPkg="config-lint_Linux_x86_64.tar.gz"
-ConfiglintUrl="https://github.com/stelligent/config-lint/releases/latest/download/$ConfiglintPkg"
+ConfiglintUrl="https://github.com/stelligent/config-lint/releases/download/v1.6.0/$ConfiglintPkg"
 ConfiglintInstallDir="$InstallDir/configlint"
 
 AwsCliPkg="awscli-exe-linux-x86_64.zip"
@@ -51,7 +55,7 @@ AndroidPkg="android-studio-ide-202.7351085-linux.tar.gz"
 AndroidUrl="https://dl.google.com/dl/android/studio/ide-zips/4.2.1.0/$AndroidPkg"
 AndroidInstallDir="$InstallDir/androidstudio"
 
-FlutterPkg="flutter_linux_2.2.1-stable.tar.xz"
+FlutterPkg="flutter_linux_2.2.2-stable.tar.xz"
 FlutterUrl="https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/$FlutterPkg"
 FlutterInstallDir="$InstallDir/flutterdev"
 
@@ -242,7 +246,6 @@ INSTALL_COMP_LIST_DESKTOP=(
                    "python-tk" # Toolkit required for matplotlib graphics.
                    "python3-tk"
                    "ncdu"
-                   "terraform"
                   )
 
 INSTAL_PIP2n3_MAP_DESKTOP=(
@@ -253,12 +256,10 @@ INSTAL_PIP2n3_MAP_DESKTOP=(
 declare -A DebSources
 DebSources=(
             ["deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main"]="/etc/apt/sources.list.d/google.list" # google-chrome
-            ["deb [arch=$(dpkg --print-architecture)] https://apt.releases.hashicorp.com focal main"]="/etc/apt/sources.list.d/terraform.list"
            )
 
 ADD_APT_KEYS_LIST=(
                    "https://dl.google.com/linux/linux_signing_key.pub" # google-chrome
-                   "https://apt.releases.hashicorp.com/gpg" # Terraform
                   )
 
 # List of PPA repositories to be added.
@@ -1408,6 +1409,9 @@ if [ $ubServerEnvironment != 0 ]; then
     do
         installDebPackageFromHttp ${DebPackages["$key"]} $key
     done
+
+    wgetAndUnpack "$TerraformUrl" "$TerraformPkg" "$TerraformInstallDir" "$TerraformInstallDir" \
+        && updatePathGlobally "$TerraformInstallDir"
 
     [ ! -z "$TerragruntUrl" ] && [ ! -e "$TerragruntInstallDir/terragrunt" ] \
         && mkdir -p "$TerragruntInstallDir" \
