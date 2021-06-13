@@ -302,38 +302,39 @@ LIST_OF_LAUNCHERS=(
 ##### Usage help text.
 ########################################
 
-TEXT_Usage="\n\
-Usage $0 [-a] [-i] [-r]\n\
-      [--ruby | --rubyv <version>] [--docker] [--gitlabr] [--rabbit] [--tor] [--flutter]\n\
-      [-un <FullName>] [-ug <GroupName>] [-ue <Email>]\n\
-      [-h]\n\
-\n\
--h   : Show this very same helpful message.\n\
-\n\
-Requests:\n\
--r       : Remove unnecessary components.  (Default.)\n\
--i       : Install components and configs.\n\
--a       : Same and i and r combined.\n\
---ruby   : Intall RVM for Ruby installation.  (Not required if using '--rubyv').\n\
---rubyv  : Intall RVM, AND install a specific Ruby version.\n\
---docker : Install Docker Engine - Community.\n\
---gitlabr: Install Gitlab Runner (really needs --docker for this to work).
---rabbit : Install RabbitMq, with it's Erlang dependency.\n\
---tor    : Install Tor Daemon, which listens on port 9050.\n\
---flutter: Install majority of components to get Flutter setup.\n\
-\n\
-Configuration options:\n\
--un      : Configure full name for the user running this script.\n\
--ug      : Configure group name for the user running this script.\n\
--ue      : Configure email for the user running this script.\n\
-\n\
-Test options:\n\
--t       : Test mode; prints options and nothing else.\n\
--tt      : Testing mode; does nothing, just allows loading into test script\n\
-           for running tests.\n\
-\n\
-If no options are specified, default behaviour is to remove components\n\
-(i.e. same as using -r option alone).\n"
+read -r -d '' TEXT_Usage << EOTXT
+Usage $0 [-a] [-i] [-r]
+      [--ruby | --rubyv <version>] [--docker] [--gitlabr] [--rabbit] [--tor] [--flutter]
+      [-un <FullName>] [-ug <GroupName>] [-ue <Email>]
+      [-h]
+
+-h   : Show this very same helpful message.
+
+Requests:
+-r       : Remove unnecessary components.  (Default.)
+-i       : Install components and configs.
+-a       : Same and i and r combined.
+--ruby   : Intall RVM for Ruby installation.  (Not required if using '--rubyv').
+--rubyv  : Intall RVM, AND install a specific Ruby version.
+--docker : Install Docker Engine - Community.
+--gitlabr: Install Gitlab Runner (needs --docker for this to work).
+--rabbit : Install RabbitMq, with its Erlang dependency.
+--tor    : Install Tor Daemon, which listens on port 9050.
+--flutter: Install majority of components to get Flutter setup.
+
+Configuration options:
+-un      : Configure full name for the user running this script.
+-ug      : Configure group name for the user running this script.
+-ue      : Configure email for the user running this script.
+
+Test options:
+-t       : Test mode; prints options and nothing else.
+-tt      : Testing mode; does nothing, just allows loading into test script
+           for running tests.
+
+If no options are specified, default behaviour is to remove components
+(i.e. same as using -r option alone).
+EOTXT
 
 
 ########################################
@@ -342,294 +343,430 @@ If no options are specified, default behaviour is to remove components\n\
 
 ##### Cinnamon Configs ######
 
-TEXT_VimRC="set t_Co=256\n\
-hi Normal guifg=#E0E2E4 guibg=#293134\n\
-hi Normal ctermfg=195 ctermbg=233\n\
-hi colorcolumn ctermbg=234 guibg=#1C1C1C\n\
-execute \"set cc=73,81,\" . join(range(101,354), ',')\n\
-hi LineNr ctermbg=238 guibg=#444444 ctermfg=243 guifg=#767676\n\
-hi Search ctermbg=019 guibg=#0000AF ctermfg=011 guifg=#FFFF00\n\
-set number\n\
-set tabstop=4\n\
-set shiftwidth=4\n\
-set expandtab\n\
-set hlsearch\n\
-set title\n\
-set listchars=eol:¶,tab:➤∘,trail:☠,extends:»,precedes:«\n\
-set list\n\
-set nocompatible\n"
+read -r -d '' TEXT_VimRC <<- EOTXT
+	set t_Co=256
+	hi Normal guifg=#E0E2E4 guibg=#293134
+	hi Normal ctermfg=195 ctermbg=233
+	hi colorcolumn ctermbg=234 guibg=#1C1C1C
+	execute "set cc=73,81," . join(range(101,354), ',')
+	hi LineNr ctermbg=238 guibg=#444444 ctermfg=243 guifg=#767676
+	hi Search ctermbg=019 guibg=#0000AF ctermfg=011 guifg=#FFFF00
+	set number
+	set tabstop=4
+	set shiftwidth=4
+	set expandtab
+	set hlsearch
+	set title
+	set listchars=eol:¶,tab:➤∘,trail:☠,extends:»,precedes:«
+	set list
+	set nocompatible
+EOTXT
 
-TEXT_GitCfg="[core]\n\
-	editor = vim\n"
+read -r -d '' TEXT_GitCfg <<- EOTXT
+	[core]
+	    editor = vim
+EOTXT
 
-TEXT_FirefoxCfg="user_pref(\"browser.startup.homepage\", \"$FirefoxHomePage\");\n\
-user_pref(\"datareporting.healthreport.uploadEnabled\", false);\n\
-user_pref(\"signon.rememberSignons\", $FirefoxRememberLogins);"
+read -r -d '' TEXT_FirefoxCfg <<- EOTXT
+	user_pref("browser.startup.homepage", "$FirefoxHomePage");
+	user_pref("datareporting.healthreport.uploadEnabled", false);
+	user_pref("signon.rememberSignons", $FirefoxRememberLogins);
+EOTXT
 
-TEXT_TerminatorCfg="[global_config]\n\
-[keybindings]\n\
-[profiles]\n\
-    [[default]]\n\
-        background_darkness = 0.92\n\
-        scrollback_lines = $TerminatorScrollbackLines\n\
-        scroll_on_output = False\n\
-        background_type = transparent\n\
-        background_image = None\n\
-        use_system_font = False\n\
-        font = Monospace 12\n\
-[layouts]\n\
-    [[default]]\n\
-        [[[child1]]]\n\
-            type = Terminal\n\
-            parent = window0\n\
-        [[[window0]]]\n\
-            type = Window\n\
-            parent = \"\"\n\
-            size = $TerminatorWindowSize\n\
-[plugins]\n"
+read -r -d '' TEXT_TerminatorCfg <<- EOTXT
+	[global_config]
+	[keybindings]
+	[profiles]
+	    [[default]]
+	        background_darkness = 0.92
+	        scrollback_lines = $TerminatorScrollbackLines
+	        scroll_on_output = False
+	        background_type = transparent
+	        background_image = None
+	        use_system_font = False
+	        font = Monospace 12
+	[layouts]
+	    [[default]]
+	        [[[child1]]]
+	            type = Terminal
+	            parent = window0
+	        [[[window0]]]
+	            type = Window
+	            parent = ""
+	            size = $TerminatorWindowSize
+	[plugins]
+EOTXT
 
-TEXT_LocalBookmarks="file://$userHomeDir/Documents\n\
-file://$userHomeDir/Downloads\n"
+read -r -d '' TEXT_LocalBookmarks <<- EOTXT
+	file://$userHomeDir/Documents
+	file://$userHomeDir/Downloads
+EOTXT
 
 FMShowHiddenFilesVal="true"
 if [ $FileManagerShowHidden == $FileManagerShowHiddenNo ]; then
     FMShowHiddenFilesVal="false"
 fi
-TEXT_NemoGSettingsConfig="[org.nemo.preferences]\n\
-default-folder-viewer='$FileManagerViewMode-view'\n\
-show-hidden-files=$FMShowHiddenFilesVal\n\
-show-image-thumbnails='never'\n\
-show-full-path-titles=true\n\
-quick-renames-with-pause-in-between=true\n\
-show-advanced-permissions=true\n\
-show-home-icon-toolbar=true\n\
-show-new-folder-icon-toolbar=true\n\
-show-search-icon-toolbar=true\n\
-show-compact-view-icon-toolbar=false\n\
-show-icon-view-icon-toolbar=false\n\
-show-list-view-icon-toolbar=false\n\
-show-open-in-terminal-toolbar=true\n\
-date-format='iso'\n\
-\n\
-[org.nemo.list-view]\n\
-default-visible-columns=['name', 'size', 'type', 'date_modified', 'owner', 'group', 'permissions']\n"
+read -r -d '' TEXT_NemoGSettingsConfig <<- EOTXT
+	[org.nemo.preferences]
+	default-folder-viewer='$FileManagerViewMode-view'
+	show-hidden-files=$FMShowHiddenFilesVal
+	show-image-thumbnails='never'
+	show-full-path-titles=true
+	quick-renames-with-pause-in-between=true
+	show-advanced-permissions=true
+	show-home-icon-toolbar=true
+	show-new-folder-icon-toolbar=true
+	show-search-icon-toolbar=true
+	show-compact-view-icon-toolbar=false
+	show-icon-view-icon-toolbar=false
+	show-list-view-icon-toolbar=false
+	show-open-in-terminal-toolbar=true
+	date-format='iso'
 
-TEXT_CinnamonTermGSettingsConfig="[org.cinnamon.desktop.applications.terminal]\n\
-exec='/usr/bin/terminator'\n"
-TEXT_TermGSettingsConfigGnome="[org.gnome.desktop.default-applications.terminal]\n\
-exec='/usr/bin/terminator'\n"
-TEXT_TermGSettingsConfigCinnamon="[org.cinnamon.desktop.default-applications.terminal]\n\
-exec='/usr/bin/terminator'\n"
+	[org.nemo.list-view]
+	default-visible-columns=['name', 'size', 'type', 'date_modified', 'owner', 'group', 'permissions']
+EOTXT
 
-TEXT_CinnamonDesktopIfGSettingsConfig="[org.cinnamon.desktop.wm.preferences]\n\
-theme='Mint-Y-Dark'\n\
-num-workspaces=$WorkspacesNumberOf\n\
-mouse-button-modifier='<Super>'\n\
-\n\
-[org.cinnamon.theme]\n\
-name='Mint-Y-Dark'\n\
-\n\
-[org.cinnamon.desktop.interface]\n\
-icon-theme='Mint-Y-Dark'\n\
-gtk-theme='Mint-Y-Dark'\n\
-clock-show-date=true\n\
-first-day-of-week=1\n\
-scaling-factor=uint32 0\n"
+read -r -d '' TEXT_CinnamonTermGSettingsConfig <<- EOTXT
+	[org.cinnamon.desktop.applications.terminal]
+	exec='/usr/bin/terminator'
+EOTXT
+read -r -d '' TEXT_TermGSettingsConfigGnome <<- EOTXT
+	[org.gnome.desktop.default-applications.terminal]
+	exec='/usr/bin/terminator'
+EOTXT
+read -r -d '' TEXT_TermGSettingsConfigCinnamon <<- EOTXT
+	[org.cinnamon.desktop.default-applications.terminal]
+	exec='/usr/bin/terminator'
+EOTXT
 
-TEXT_CinnamonSoundsGSettingsConfig="[org.cinnamon.sounds]\n\
-login-enabled=false\n\
-logout-enabled=false\n\
-plug-enabled=false\n\
-unplug-enabled=false\n\
-tile-enabled=false\n\
-switch-enabled=false\n"
+read -r -d '' TEXT_CinnamonDesktopIfGSettingsConfig <<- EOTXT
+	[org.cinnamon.desktop.wm.preferences]
+	theme='Mint-Y-Dark'
+	num-workspaces=$WorkspacesNumberOf
+	mouse-button-modifier='<Super>'
 
-TEXT_CinnamonMouseGSettingsConfig="[org.cinnamon.settings-daemon.peripherals.touchpad]\n\
-natural-scroll=false\n\
-disable-while-typing=true\n\
-horizontal-scrolling=true\n\
-clickpad-click=2\n\
-custom-acceleration=true\n\
-motion-acceleration=8.0\n\
-motion-threshold=1\n\
-\n\
-[org.cinnamon.settings-daemon.peripherals.mouse]\n\
-natural-scroll=false\n"
+	[org.cinnamon.theme]
+	name='Mint-Y-Dark'
 
-TEXT_CinnamonPowerGSettingsConfig="[org.cinnamon.settings-daemon.plugins.power]\n\
-lock-on-suspend=true\n
-critical-battery-action='nothing'\n\
-sleep-inactive-ac-timeout=0\n\
-sleep-inactive-battery-timeout=0\n\
-sleep-display-battery=600\n\
-sleep-display-ac=600\n\
-button-power='interactive'\n\
-lid-close-ac-action='nothing'\n\
-lid-close-battery-action='nothing'\n\
-idle-dim-time=90\n\
-idle-brightness=10\n"
+	[org.cinnamon.desktop.interface]
+	icon-theme='Mint-Y-Dark'
+	gtk-theme='Mint-Y-Dark'
+	clock-show-date=true
+	first-day-of-week=1
+	scaling-factor=uint32 0
+EOTXT
 
-TEXT_CinnamonDesktopGSettingsConfig="[org.nemo.desktop]\n\
-trash-icon-visible=true\n\
-\n\
-[org.cinnamon.desktop.privacy]\n\
-remember-recent-files=$CinnamonRememberRecentFiles\n\
-recent-files-max-age=30\n\
-\n\
-[org.cinnamon.desktop.background]\n\
-picture-options='none'\n\
-primary-color='$DesktopBackgroundColor'\n\
-\n\
-[org/cinnamon/desktop/session]\n\
-idle-delay=uint32 300\n\
-\n\
-[org.cinnamon]\n\
-startup-animation=false\n\
-desklet-decorations=0\n\
-enabled-desklets=['clock@cinnamon.org:0:170:10']\n\
-panels-height=['1:$CinnamonPanelHeight']\n\
-panels-autohide=['1:$CinnamonPanelAutohide']\n\
-\n\
-[org.cinnamon.desktop.screensaver]\n\
-use-custom-format=true\n\
-date-format='%a %d %b %Y'\n\
-lock-enabled=true\n\
-lock-delay=uint32 2\n\
-\n\
-[org.cinnamon.desktop.a11y.keyboard]\n\
-togglekeys-enable-osd=true\n"
+read -r -d '' TEXT_CinnamonSoundsGSettingsConfig <<- EOTXT
+	[org.cinnamon.sounds]
+	login-enabled=false
+	logout-enabled=false
+	plug-enabled=false
+	unplug-enabled=false
+	tile-enabled=false
+	switch-enabled=false
+EOTXT
 
-TEXT_XedGSettingsConfig="[org.x.editor.preferences.editor]\n\
-display-right-margin=true\n\
-right-margin-position=uint32 80\n\
-tabs-size=uint32 4\n\
-display-line-numbers=true\n\
-insert-spaces=true\n\
-auto-indent=true\n\
-bracket-matching=true\n\
-wrap-mode='none'\n\
-highlight-current-line=true\n\
-scheme='oblivion'\n\
-\n\
-[org.x.editor.preferences.ui]\n\
-enable-tab-scrolling=false\n\
-statusbar-visible=true\n\
-minimap-visible=true\n"
+read -r -d '' TEXT_CinnamonMouseGSettingsConfig <<- EOTXT
+	[org.cinnamon.settings-daemon.peripherals.touchpad]
+	natural-scroll=false
+	disable-while-typing=true
+	horizontal-scrolling=true
+	clickpad-click=2
+	custom-acceleration=true
+	motion-acceleration=8.0
+	motion-threshold=1
+
+	[org.cinnamon.settings-daemon.peripherals.mouse]
+	natural-scroll=false
+EOTXT
+
+read -r -d '' TEXT_CinnamonPowerGSettingsConfig <<- EOTXT
+	[org.cinnamon.settings-daemon.plugins.power]
+	lock-on-suspend=true\n
+	critical-battery-action='nothing'
+	sleep-inactive-ac-timeout=0
+	sleep-inactive-battery-timeout=0
+	sleep-display-battery=600
+	sleep-display-ac=600
+	button-power='interactive'
+	lid-close-ac-action='nothing'
+	lid-close-battery-action='nothing'
+	idle-dim-time=90
+	idle-brightness=10
+EOTXT
+
+read -r -d '' TEXT_CinnamonDesktopGSettingsConfig <<- EOTXT
+	[org.nemo.desktop]
+	trash-icon-visible=true
+
+	[org.cinnamon.desktop.privacy]
+	remember-recent-files=$CinnamonRememberRecentFiles
+	recent-files-max-age=30
+
+	[org.cinnamon.desktop.background]
+	picture-options='none'
+	primary-color='$DesktopBackgroundColor'
+
+	[org/cinnamon/desktop/session]
+	idle-delay=uint32 300
+
+	[org.cinnamon]
+	startup-animation=false
+	desklet-decorations=0
+	enabled-desklets=['clock@cinnamon.org:0:170:10']
+	panels-height=['1:$CinnamonPanelHeight']
+	panels-autohide=['1:$CinnamonPanelAutohide']
+
+	[org.cinnamon.desktop.screensaver]
+	use-custom-format=true
+	date-format='%a %d %b %Y'
+	lock-enabled=true
+	lock-delay=uint32 2
+
+	[org.cinnamon.desktop.a11y.keyboard]
+	togglekeys-enable-osd=true
+EOTXT
+
+read -r -d '' TEXT_XedGSettingsConfig <<- EOTXT
+	[org.x.editor.preferences.editor]
+	display-right-margin=true
+	right-margin-position=uint32 80
+	tabs-size=uint32 4
+	display-line-numbers=true
+	insert-spaces=true
+	auto-indent=true
+	bracket-matching=true
+	wrap-mode='none'
+	highlight-current-line=true
+	scheme='oblivion'
+
+	[org.x.editor.preferences.ui]
+	enable-tab-scrolling=false
+	statusbar-visible=true
+	minimap-visible=true
+EOTXT
 
 
 ##### Ubuntu Configs ######
 
-TEXT_UbuntuPowerGSettingsConfig="[org.gnome.settings-daemon.plugins.power]\n\
-sleep-inactive-battery-timeout=1800\n\
-sleep-inactive-battery-type='nothing'\n\
-sleep-inactive-ac-timeout=3600\n\
-sleep-inactive-ac-type='nothing'\n"
+read -r -d '' TEXT_UbuntuPowerGSettingsConfig <<- EOTXT
+	[org.gnome.settings-daemon.plugins.power]
+	sleep-inactive-battery-timeout=1800
+	sleep-inactive-battery-type='nothing'
+	sleep-inactive-ac-timeout=3600
+	sleep-inactive-ac-type='nothing'
+EOTXT
 
-TEXT_UbuntuNightLightGSettingsConfig="[org.gnome.settings-daemon.plugins.color]\n\
-night-light-enabled=true\n\
-night-light-schedule-automatic=false\n\
-night-light-schedule-from=21.0\n\
-night-light-schedule-to=8.0\n"
+read -r -d '' TEXT_UbuntuNightLightGSettingsConfig <<- EOTXT
+	[org.gnome.settings-daemon.plugins.color]
+	night-light-enabled=true
+	night-light-schedule-automatic=false
+	night-light-schedule-from=21.0
+	night-light-schedule-to=8.0
+EOTXT
 
-TEXT_UbuntuDesktopGSettingsConfig="[org.gnome.desktop.background]\n\
-picture-uri=''
-primary-color='$DesktopBackgroundColor'\n\
-\n\
-[org.gnome.desktop.interface]\n\
-gtk-theme='Yaru-dark'\n\
-\n\
-[org.gnome.shell.extensions.dash-to-dock]\n\
-dash-max-icon-size=32\n\
-dock-fixed=false\n\
-\n\
-[org.gnome.desktop.privacy]\n\
-recent-files-max-age=30\n\
-remember-recent-files=true\n\
-\n\
-[org.gnome.desktop.screensaver]\n\
-lock-delay=uint32 0\n\
-\n\
-[org.gnome.desktop.session]\n\
-idle-delay=uint32 300\n\
-\n\
-[org.gnome.settings-daemon.plugins.media-keys]\n\
-home=['<Primary><Alt>h']\n\
-\n\
-[org.gnome.shell]\n\
-app-picker-view=uint32 1\n\
-favorite-apps=[]\n" # favorite-apps is later over-written with list of launchers.
+read -r -d '' TEXT_UbuntuDesktopGSettingsConfig <<- EOTXT
+	[org.gnome.desktop.background]
+	picture-uri=''
+	primary-color='$DesktopBackgroundColor'
 
-TEXT_nautilusGSettingsConfig="[org.gnome.nautilus.preferences]\n\
-default-folder-viewer='list-view'\n\
-show-image-thumbnails='never'\n\
-executable-text-activation='display'\n\
-\n\
-[org.gnome.nautilus.list-view]\n\
-default-visible-columns=['name', 'size', 'type', 'owner', 'group', 'permissions', 'date_modified']\n\
-default-column-order=['name', 'size', 'type', 'owner', 'group', 'permissions', 'date_modified', 'date_modified_with_time', 'date_accessed', 'recency']\n\
-\n\
-[org.gtk.settings.file-chooser]\n\
-sort-directories-first=true\n\
-show-hidden=$FMShowHiddenFilesVal\n"
+	[org.gnome.desktop.interface]
+	gtk-theme='Yaru-dark'
 
-TEXT_geditGSettingsConfig="[org.gnome.gedit.preferences.editor]\n\
-tabs-size=uint32 4\n\
-auto-indent=true\n\
-insert-spaces=true\n\
-display-line-numbers=true\n\
-bracket-matching=true\n\
-highlight-current-line=true\n\
-display-right-margin=true\n\
-right-margin-position=uint32 80\n\
-wrap-mode='word'\n\
-wrap-last-split-mode='word'\n\
-scheme='oblivion'\n\
-background-pattern='none'\n"
+	[org.gnome.shell.extensions.ding]
+	icon-size='small'
+
+	[org.gnome.shell.extensions.dash-to-dock]
+	dash-max-icon-size=32
+	dock-fixed=false
+
+	[org.gnome.desktop.privacy]
+	recent-files-max-age=30
+	remember-recent-files=true
+
+	[org.gnome.desktop.screensaver]
+	lock-delay=uint32 0
+
+	[org.gnome.desktop.session]
+	idle-delay=uint32 300
+
+	[org.gnome.settings-daemon.plugins.media-keys]
+	home=['<Primary><Alt>h']
+
+	[org.gnome.shell]
+	app-picker-view=uint32 1
+	favorite-apps=[]
+EOTXT
+# favorite-apps is later over-written with list of launchers.
+
+read -r -d '' TEXT_nautilusGSettingsConfig <<- EOTXT
+	[org.gnome.nautilus.preferences]
+	default-folder-viewer='list-view'
+	show-image-thumbnails='never'
+	executable-text-activation='display'
+
+	[org.gnome.nautilus.list-view]
+	default-visible-columns=['name', 'size', 'type', 'owner', 'group', 'permissions', 'date_modified']
+	default-column-order=['name', 'size', 'type', 'owner', 'group', 'permissions', 'date_modified', 'date_modified_with_time', 'date_accessed', 'recency']
+	default-zoom-level='small'
+
+	[org.gtk.settings.file-chooser]
+	sort-directories-first=true
+	show-hidden=$FMShowHiddenFilesVal
+EOTXT
+
+read -r -d '' TEXT_geditGSettingsConfig <<- EOTXT
+	[org.gnome.gedit.preferences.editor]
+	tabs-size=uint32 4
+	auto-indent=true
+	insert-spaces=true
+	display-line-numbers=true
+	bracket-matching=true
+	highlight-current-line=true
+	display-right-margin=true
+	right-margin-position=uint32 80
+	wrap-mode='word'
+	wrap-last-split-mode='word'
+	scheme='oblivion'
+	background-pattern='none'
+EOTXT
 
 
 ##### Application Configs ######
 
-TEXT_VlcRC="[qt4]\n\
-qt-privacy-ask=0\n\
-metadata-network-access=0\n\
-[core]\n\
-play-and-exit=1\n\
-one-instance-when-started-from-file=0\n"
+read -r -d '' TEXT_VlcRC <<- EOTXT
+	[qt4]
+	qt-privacy-ask=0
+	metadata-network-access=0
+	[core]
+	play-and-exit=1
+	one-instance-when-started-from-file=0
+EOTXT
 
-TEXT_MozillaCrashReporter="[Crash Reporter]\n\
-SubmitReport=0\n"
+read -r -d '' TEXT_MozillaCrashReporter <<- EOTXT
+	[Crash Reporter]
+	SubmitReport=0
+EOTXT
 
-TEXT_AtomEditorConfig="\"*\":\n\
-  core:\n\
-    telemetryConsent: \"no\"\n\
-  editor:\n\
-    invisibles:\n\
-      eol: \"¶\"\n\
-    showInvisibles: true\n\
-    showIndentGuide: true\n\
-    tabLength: 4\n\
-    tabType: \"soft\"\n\
-    scrollPastEnd: true\n\
-  welcome:\n\
-    showOnStartup: false\n"
+read -r -d '' TEXT_AtomEditorConfig <<- EOTXT
+	"*":
+	  core:
+	    telemetryConsent: "no"
+	  editor:
+	    invisibles:
+	      eol: "¶"
+	    showInvisibles: true
+	    showIndentGuide: true
+	    tabLength: 4
+	    tabType: "soft"
+	    scrollPastEnd: true
+	  welcome:
+	    showOnStartup: false
+EOTXT
 
-TEXT_VSCodeConfig="{\n\
-  \"editor.fontFamily\": \"'Ubuntu Mono'\",\n\
-  \"editor.fontSize\": 14,\n\
-  \"editor.lineHeight\": 21,\n\
-  \"editor.renderWhitespace\": \"all\",\n\
-  \"editor.rulers\": [80, 100],\n\
-  \"editor.quickSuggestions\": {\n\
-    \"other\": true,\n\
-    \"comments\": true,\n\
-    \"strings\": true\n\
-  },\n\
-  \"workbench.startupEditor\": \"none\",\n\
-  \"telemetry.enableTelemetry\": false,\n\
-  \"files.trimTrailingWhitespace\": true,\n\
-  \"diffEditor.ignoreTrimWhitespace\": false,\n\
-  \"editor.detectIndentation\": false,\n\
-}\n"
+read -r -d '' TEXT_VSCodeConfig <<- EOTXT
+	{
+	  "editor.fontFamily": "'Ubuntu Mono'",
+	  "editor.fontSize": 14,
+	  "editor.lineHeight": 21,
+	  "editor.renderWhitespace": "all",
+	  "editor.rulers": [80, 100],
+	  "editor.quickSuggestions": {
+	    "other": true,
+	    "comments": true,
+	    "strings": true
+	  },
+	  "workbench.startupEditor": "none",
+	  "telemetry.enableTelemetry": false,
+	  "files.trimTrailingWhitespace": true,
+	  "diffEditor.ignoreTrimWhitespace": false,
+	  "editor.detectIndentation": false,
+	}
+EOTXT
+
+
+##### Bash aliases ######
+
+read -r -d '' TEXT_BashToolAliases <<- "EOTXT"
+	alias ll='ls --time-style="long-iso" -alF'
+	alias hiss='history | grep'
+	alias trimws='find . -type f ! -path "*/.venv/*" ! -path "*/.git/*" ! -path "*/venv/*" | xargs -I fl bash -c '"'"'FILE="fl"; echo ">>>>>>>> $FILE"; sed -i -r "s/\s+$//;" "$FILE"; [[ $( tail -c 1 "$FILE" ) != "" ]] && echo >> "$FILE"'"'"
+EOTXT
+
+read -r -d '' TEXT_BashGitAliases <<- "EOTXT"
+	function ____gititer____()
+	{
+	    for d in ./*/; do
+	        pushd $d > /dev/null 2>&1
+	        echo -e "\033[30;1;106m"
+	        pwd
+	        echo -e "\033[0m"
+	        git "$1" "$2"
+	        echo
+	        popd > /dev/null 2>&1
+	    done
+	}
+	function ____gititer2____()
+	{
+	    for d in ./*/; do
+	        pushd $d > /dev/null 2>&1
+	        echo -e "\033[30;1;106m"
+	        pwd
+	        echo -e "\033[0m"
+	        git "$1" "$2" "$3"
+	        echo
+	        popd > /dev/null 2>&1
+	    done
+	}
+	alias gitstates='____gititer____ status'
+	alias gitpushes='____gititer____ push'
+	alias gitpulls='____gititer____ pull'
+	alias gitdiffs='____gititer____ diff'
+	alias gitcheckouts='____gititer____ checkout'
+	alias gitadds='____gititer____ add'
+	alias gitlogs='____gititer____ log'
+	alias gitmerges='____gititer____ merge'
+	alias gitcommits='____gititer2____ commit'
+EOTXT
+
+read -r -d '' TEXT_BashPythonToolAliases <<- "EOTXT"
+	function ____check_py_requirements____() {
+	    reqsFile="$1"
+	    if [ ! -f "$reqsFile" ]; then
+	        reqsFile="requirements.txt";
+	    fi
+	    cat "$reqsFile" | while read -r line; do
+	        test "$line" == "" && continue
+	        pckg=$( echo $line | awk -F'[=~]=' '{ print $1 }' )
+	        vers=$( echo $line | awk -F'[=~]=' '{ print $2 }' )
+	        test "$pckg" == "" && continue
+	        test "$vers" == "" && continue
+	        echo -n "$pckg : $vers"
+	        ver_found=$( yolk -V $pckg | awk -v envvar="$pckg" '{ if ($1==envvar) { print $2 } }' )
+	        if [ "$ver_found" == "" ]; then
+	            echo -e " - \033[1;31mNOT FOUND (try https://pypi.org/search/?q=$pckg)\033[0m"
+	        else
+	            echo -n " - Latest version: $ver_found"
+	            test "$ver_found" != "$vers" && echo -e " - \033[1;33mNOT EQUAL\033[0m" || echo ""
+	        fi
+	    done
+	}
+	alias cpr='____check_py_requirements____'
+
+	function ____cleanpydir____() {
+	    rm -rf testresults.xml .coverage .cache .pytest_cache htmlcov .hypothesis
+	    find . -name "__pycache__" -type d \
+	        -not -path "*/.venv/*" \
+	        -not -path "*/.git/*" \
+	        -not -path "*/venv/*" | xargs rm -rf
+	    # find . -type f -name "*.pyc" -delete
+	    if [[ $1 == "f" ]]; then
+	        rm -rf .venv;
+	    fi
+	}
+	alias cleanpyd='____cleanpydir____'
+EOTXT
 
 
 ########################################
@@ -1546,50 +1683,11 @@ sed -i.bak -r \
 # '/export PYTHONPATH=/d;'\
 
 echo -e "\
-alias ll='ls --time-style=\"long-iso\" -alF'\n\
-alias hiss='history | grep'\n\
-function ____gititer____() { for d in ./*/; do pushd \$d > /dev/null 2>&1; echo -e \"\\\033[30;1;106m\" ; pwd ; echo -e \"\\\033[0m\" ; git \$1 \$2; echo; popd > /dev/null 2>&1; done }\n\
-function ____gititer2____() { for d in ./*/; do pushd \$d > /dev/null 2>&1; echo -e \"\\\033[30;1;106m\" ; pwd ; echo -e \"\\\033[0m\" ; git \$1 \"\$2\" \"\$3\"; echo; popd > /dev/null 2>&1; done }\n\
-alias gitstates='____gititer____ status'\n\
-alias gitpushes='____gititer____ push'\n\
-alias gitpulls='____gititer____ pull'\n\
-alias gitdiffs='____gititer____ diff'\n\
-alias gitcheckouts='____gititer____ checkout'\n\
-alias gitadds='____gititer____ add'\n\
-alias gitlogs='____gititer____ log'\n\
-alias gitmerges='____gititer____ merge'\n\
-alias gitcommits='____gititer2____ commit'\n\
+$TEXT_BashToolAliases
 \n\
-function ____check_py_requirements____() {\n\
-    reqsFile=\"\$1\"\n\
-    if [ ! -f \"\$reqsFile\" ]; then reqsFile=\"requirements.txt\"; fi\n\
-    cat \"\$reqsFile\" | while read -r line; do\n\
-        test \"\$line\" == \"\" && continue\n\
-        pckg=\$( echo \$line | awk -F'[=~]=' '{ print \$1 }' )\n\
-        vers=\$( echo \$line | awk -F'[=~]=' '{ print \$2 }' )\n\
-        test \"\$pckg\" == \"\" && continue\n\
-        test \"\$vers\" == \"\" && continue\n\
-        echo -n \"\$pckg : \$vers\"\n\
-        ver_found=\$( yolk -V \$pckg | awk -v envvar=\"\$pckg\" '{ if (\$1==envvar) { print \$2 } }' )\n\
-        if [ \"\$ver_found\" == \"\" ]; then\n\
-            echo -e \" - \\\033[1;31mNOT FOUND (try https://pypi.org/search/?q=\$pckg)\\\033[0m\"\n\
-        else\n\
-            echo -n \" - Latest version: \$ver_found\"\n\
-            test \"\$ver_found\" != \"\$vers\" && echo -e \" - \\\033[1;33mNOT EQUAL\\\033[0m\" || echo \"\"\n\
-        fi\n\
-    done\n\
-}\n\
-alias cpr='____check_py_requirements____'\n\
+$TEXT_BashGitAliases
 \n\
-function ____cleanpydir____() {\n\
-    rm -rf testresults.xml .coverage .cache .pytest_cache htmlcov .hypothesis\n\
-    find . -name \"__pycache__\" -type d -not -path \"*/.venv/*\" -not -path \"*/.git/*\" -not -path \"*/venv/*\" | xargs rm -rf\n\
-    # find . -type f -name \"*.pyc\" -delete\n\
-    if [[ \$1 == \"f\" ]]; then rm -rf .venv; fi\n\
-}\n\
-alias cleanpyd='____cleanpydir____'\n\
-\n\
-alias trimws='find . -type f ! -path \"*/.venv/*\" ! -path \"*/.git/*\" ! -path \"*/venv/*\" | xargs -I fl bash -c '\"'\"'FILE=\"fl\"; echo \">>>>>>>> \$FILE\"; sed -i -r \"s/\s+$//;\" \"\$FILE\"; [[ \$( tail -c 1 \"\$FILE\" ) != \"\" ]] && echo >> \"\$FILE\"'\"'\"''\n"\
+$TEXT_BashPythonToolAliases\n" \
  >> $BashrcForAll
 # export PYTHONPATH=.\n"\
 
