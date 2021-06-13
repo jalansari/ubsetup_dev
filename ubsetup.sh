@@ -217,7 +217,7 @@ INSTAL_PIP2n3_MAP_SERVER=(
 INSTALL_COMP_LIST_DESKTOP=(
                    "vlc"
                    "firefox"
-                   "deluge"
+                   "qbittorrent"
                    "terminator"
                    "unrar"
                    "p7zip-full"
