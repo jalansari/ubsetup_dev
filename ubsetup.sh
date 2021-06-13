@@ -10,7 +10,8 @@ DebPackages=(
              ["code"]="https://go.microsoft.com/fwlink/?LinkID=760868;mscode.deb" # 760865 for insider edition
              ["vagrant"]="https://releases.hashicorp.com/vagrant/2.2.16/vagrant_2.2.16_x86_64.deb"
              ["dropbox"]="https://www.dropbox.com/download?dl=packages/ubuntu/dropbox_2020.03.04_amd64.deb"
-             ["mysql-workbench-community"]="https://dev.mysql.com/get/Downloads/MySQLGUITools/mysql-workbench-community_8.0.25-1ubuntu20.04_amd64.deb"
+             ["draw.io"]="https://github.com/jgraph/drawio-desktop/releases/download/v14.6.13/drawio-amd64-14.6.13.deb"
+             ["mysql-workbench-community"]="https://dev.mysql.com/get/Downloads/MySQLGUITools/mysql-workbench-community_8.0.25-1ubuntu21.04_amd64.deb"
             )
 
 InstallDir="/usr/share"
@@ -133,6 +134,9 @@ NumiNotifyWatches=524288
 SLEEP_AFTER_INSTALL_REQUEST="0.2"
 
 
+UbuntuReleaseName=$( awk -F"=" '/^UBUNTU_CODENAME/ {print $2;}' /etc/os-release )
+
+
 ########################################
 ##### Lists of components.
 ########################################
@@ -241,9 +245,13 @@ INSTALL_COMP_LIST_DESKTOP=(
                    "pv"
                    "ssh"
                    "libpango-1.0-0" # Needed by Dropbox installer.
+                   "libpango1.0-0" # Needed by Dropbox installer.
+                   "libzip4"
+                   "libproj19" # Needed by mysql-workbench
+                   "proj-data" # Needed by mysql-workbench
+                   "libopengl0" # Needed by mysql-workbench
                    "libpcrecpp0v5" # Needed by mysql-workbench
                    "ipython"
-                   "subsurface"
                    "python-tk" # Toolkit required for matplotlib graphics.
                    "python3-tk"
                    "ncdu"
@@ -268,7 +276,6 @@ ADD_PPA_REPO_LIST=(
                   )
 
 ADD_PPA_REPO_LIST_DESKTOP=(
-                   "ppa:subsurface/subsurface" # Needed to install subsurface dive computer application.
                   )
 
 DEBCONF_SET_ITEMS=(
@@ -1291,7 +1298,7 @@ if [ "$InstallDocker" == true ]; then
                         "https://download.docker.com/linux/ubuntu/gpg"
                        )
     # $(lsb_release -cs) should give the codename, but on linuxmint, it will give the mint codename (e.g. tessa) and not the Ubuntu one.
-    DebSources["deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable"]="/etc/apt/sources.list.d/docker.list"
+    DebSources["deb [arch=amd64] https://download.docker.com/linux/ubuntu $UbuntuReleaseName stable"]="/etc/apt/sources.list.d/docker.list"
     P_UPDATE_INS_LIST+=(
                         # "ca-certificates" # Should already be installed
                         # "curl" # Should already be installed
@@ -1311,8 +1318,8 @@ if [ "$InstallRabbitMq" == true ]; then
                         "https://packages.erlang-solutions.com/ubuntu/erlang_solutions.asc"
                         "https://dl.bintray.com/rabbitmq/Keys/rabbitmq-release-signing-key.asc"
                        )
-    DebSources["deb https://packages.erlang-solutions.com/ubuntu bionic contrib"]="/etc/apt/sources.list.d/erlang.list"
-    DebSources["deb https://dl.bintray.com/rabbitmq/debian bionic main"]="/etc/apt/sources.list.d/bintray.rabbitmq.list"
+    DebSources["deb https://packages.erlang-solutions.com/ubuntu $UbuntuReleaseName contrib"]="/etc/apt/sources.list.d/erlang.list"
+    DebSources["deb https://dl.bintray.com/rabbitmq/debian $UbuntuReleaseName main"]="/etc/apt/sources.list.d/bintray.rabbitmq.list"
 
     INSTALL_COMP_LIST+=(
                         "rabbitmq-server"
@@ -1324,8 +1331,8 @@ if [ "$InstallTorDaemon" == true ]; then
                         "https://deb.torproject.org/torproject.org/A3C4F0F979CAA22CDBA8F512EE8CBC9E886DDD89.asc"
                        )
 
-    DebSources["deb https://deb.torproject.org/torproject.org bionic main"]="/etc/apt/sources.list.d/tord.list"
-    DebSources["deb-src https://deb.torproject.org/torproject.org bionic main"]="/etc/apt/sources.list.d/tord.list"
+    DebSources["deb https://deb.torproject.org/torproject.org $UbuntuReleaseName main"]="/etc/apt/sources.list.d/tord.list"
+    DebSources["deb-src https://deb.torproject.org/torproject.org $UbuntuReleaseName main"]="/etc/apt/sources.list.d/tord.list"
 
     INSTALL_COMP_LIST+=(
                         "tor"
@@ -1887,6 +1894,8 @@ if [ $ubuntuInstalled == 0 ]; then
 
     PRINTLOG "Configuring Gnome to ignore lid close."
     sed -i -r 's/#?(HandleLidSwitch\w*)=.*/\1=ignore/;' /etc/systemd/logind.conf
+
+    rm -rf "$userHomeDir/.config/dconf"
 fi
 
 

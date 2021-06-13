@@ -1,6 +1,6 @@
 Script that sets up a Linux Ubuntu-based system, to be used for development.
 
-Currently, only really works with Ubuntu 20.04 and Linux Mint 20.
+Currently, only really works with Ubuntu 20.04/21.04 and Linux Mint 20.
 
 The script is intended to be a single script that can be run directly after
 installing a system.  Therefore, a very convenient, one-file, single-step to
@@ -18,7 +18,7 @@ ___
 * Most likely usage:
   * `./ubsetup.sh -a -un "<Full_Name>" -ue "<Email_Address>" -ug "<group>"`
 * Or, capture log to stdout and file:
-  * `./ubsetup.sh -a -un "<Full_Name>" -ue "<Email_Address>" -ug "<group>" | tee ubsetup.log`
+  * `./ubsetup.sh -a --docker -un "<Full_Name>" -ue "<Email_Address>" -ug "<group>" 2>&1 | tee ubsetup.log`
 
 ___
 
