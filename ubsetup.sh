@@ -336,14 +336,15 @@ Test options:
 
 If no options are specified, default behaviour is to remove components
 (i.e. same as using -r option alone).
+
+Example command:
+sudo ./ubsetup.sh -a --docker -un "<FULL_NAME>" -ue "<EMAIL>" -ug $( id -g -n $USER ) 2>&1 | tee ubsetup.sh.log
 EOTXT
 
 
 ########################################
 ##### Text files that are written as a whole.
 ########################################
-
-##### Cinnamon Configs ######
 
 read -r -d '' TEXT_VimRC <<- EOTXT
 	set t_Co=256
@@ -367,6 +368,10 @@ EOTXT
 read -r -d '' TEXT_GitCfg <<- EOTXT
 	[core]
 	    editor = vim
+	[push]
+	    default = simple
+	[pull]
+	    rebase = false
 EOTXT
 
 read -r -d '' TEXT_FirefoxCfg <<- EOTXT
@@ -398,6 +403,9 @@ read -r -d '' TEXT_TerminatorCfg <<- EOTXT
 	            size = $TerminatorWindowSize
 	[plugins]
 EOTXT
+
+
+##### Cinnamon Configs ######
 
 read -r -d '' TEXT_LocalBookmarks <<- EOTXT
 	file://$userHomeDir/Documents
@@ -575,6 +583,7 @@ read -r -d '' TEXT_UbuntuDesktopGSettingsConfig <<- EOTXT
 
 	[org.gnome.desktop.interface]
 	gtk-theme='Yaru-dark'
+	enable-animations=false
 
 	[org.gnome.shell.extensions.ding]
 	icon-size='small'
