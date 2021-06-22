@@ -1589,10 +1589,16 @@ if [ $ubServerEnvironment != 0 ]; then
     wgetAndUnpack "$ConfiglintUrl" "$ConfiglintPkg" "$ConfiglintInstallDir" "$ConfiglintInstallDir" \
         && updatePathGlobally "$ConfiglintInstallDir"
 
-    awscliUnpackTo="$UnpackDirForIncompletePckgs"
+    awscliUnpackTo="$TempFolderForDownloads"
     awscliDir="$awscliUnpackTo/aws"
+    awsCredsDir="$userHomeDir/.aws"
+    awsCredsCurrUser="$awsCredsDir/credentials"
     wgetAndUnpack "$AwsCliUrl" "$AwsCliPkg" "$awscliUnpackTo" "$awscliDir" \
-        && chown -R $userOfThisScript:$groupOfUserOfThisScript "$awscliDir"
+        && "$awscliDir/install" \
+        && rm -rf "$awscliDir" \
+        && mkdir -p "$awsCredsDir" \
+        && touch "$awsCredsCurrUser" \
+        && echo -e "[default]\naws_access_key_id=<ID>\naws_secret_access_key=<KEY>\n" >> "$awsCredsCurrUser"
 
     wgetAndUnpack "$GoLangUrl" "$GoLangPkg" "$UsrLocalDir" "$GoPath"
     if [ $? == 0 ]; then
