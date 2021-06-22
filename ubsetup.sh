@@ -12,17 +12,18 @@ DebPackages=(
              ["dropbox"]="https://www.dropbox.com/download?dl=packages/ubuntu/dropbox_2020.03.04_amd64.deb"
              ["draw.io"]="https://github.com/jgraph/drawio-desktop/releases/download/v14.6.13/drawio-amd64-14.6.13.deb"
              ["mysql-workbench-community"]="https://dev.mysql.com/get/Downloads/MySQLGUITools/mysql-workbench-community_8.0.25-1ubuntu21.04_amd64.deb"
+             ["slack-desktop"]="https://downloads.slack-edge.com/linux_releases/slack-desktop-4.17.0-amd64.deb"
             )
 
 InstallDir="/usr/share"
 UsrLocalDir="/usr/local"
 
-NodeJsVer="node-v14.17.0-linux-x64"
+NodeJsVer="node-v14.17.1-linux-x64"
 NodeJsPkg="$NodeJsVer.tar.xz"
-NodeJsUrl="https://nodejs.org/dist/v14.17.0/$NodeJsPkg"
+NodeJsUrl="https://nodejs.org/dist/v14.17.1/$NodeJsPkg"
 NodeInstallDir="$InstallDir/nodejs"
 
-FossilScmPkg="fossil-linux-x64-2.15.1.tar.gz"
+FossilScmPkg="fossil-linux-x64-2.15.2.tar.gz"
 FossilScmUrl="https://fossil-scm.org/home/uv/$FossilScmPkg"
 FossilInstallDir="$InstallDir/fossilscm"
 
@@ -42,7 +43,7 @@ TerraformPkg="terraform_1.0.0_linux_amd64.zip"
 TerraformUrl="https://releases.hashicorp.com/terraform/1.0.0/$TerraformPkg"
 TerraformInstallDir="$InstallDir/terraform"
 
-TerragruntUrl="https://github.com/gruntwork-io/terragrunt/releases/download/v0.30.3/terragrunt_linux_amd64"
+TerragruntUrl="https://github.com/gruntwork-io/terragrunt/releases/download/v0.31.0/terragrunt_linux_amd64"
 TerragruntInstallDir="$InstallDir/terragrunt"
 
 ConfiglintPkg="config-lint_Linux_x86_64.tar.gz"
