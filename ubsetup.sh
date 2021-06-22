@@ -732,7 +732,7 @@ read -r -d '' TEXT_BashGitAliases <<- "EOTXT"
 	alias gitadds='____gititer____ add'
 	alias gitlogs='____gititer____ log'
 	alias gitmerges='____gititer____ merge'
-	alias gitcommits='____gititer2____ commit'
+	alias gitcommits='____gititer____ commit'
 EOTXT
 
 read -r -d '' TEXT_BashPythonToolAliases <<- "EOTXT"
