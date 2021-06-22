@@ -1214,7 +1214,7 @@ function addUserGitConfig()
 {   gitUserCfg="/home/$1/.gitconfig"
     PRINTLOG "Git user config <$gitUserCfg>:"
     PRINTLOG "        <$4>, <$3>"
-    userGitConfigLines="[user]\n	email = $4\n	name = $3\n\n[push]\n	default = simple\n"
+    userGitConfigLines="[user]\n	email = $4\n	name = $3\n"
     echo -e "$userGitConfigLines" > $gitUserCfg
     chown -R $1:$2 $gitUserCfg
     # TODO also add private ssh key to sshUserPvtKey="/home/$1/.ssh/id_rsa"
