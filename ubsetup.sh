@@ -18,12 +18,12 @@ DebPackages=(
 InstallDir="/usr/share"
 UsrLocalDir="/usr/local"
 
-NodeJsVer="node-v14.17.1-linux-x64"
+NodeJsVer="node-v14.17.2-linux-x64"
 NodeJsPkg="$NodeJsVer.tar.xz"
-NodeJsUrl="https://nodejs.org/dist/v14.17.1/$NodeJsPkg"
+NodeJsUrl="https://nodejs.org/dist/v14.17.2/$NodeJsPkg"
 NodeInstallDir="$InstallDir/nodejs"
 
-FossilScmPkg="fossil-linux-x64-2.15.2.tar.gz"
+FossilScmPkg="fossil-linux-x64-2.16.tar.gz"
 FossilScmUrl="https://fossil-scm.org/home/uv/$FossilScmPkg"
 FossilInstallDir="$InstallDir/fossilscm"
 
@@ -53,11 +53,11 @@ ConfiglintInstallDir="$InstallDir/configlint"
 AwsCliPkg="awscli-exe-linux-x86_64.zip"
 AwsCliUrl="https://awscli.amazonaws.com/$AwsCliPkg"
 
-AndroidPkg="android-studio-ide-202.7351085-linux.tar.gz"
-AndroidUrl="https://dl.google.com/dl/android/studio/ide-zips/4.2.1.0/$AndroidPkg"
+AndroidPkg="android-studio-ide-202.7486908-linux.tar.gz"
+AndroidUrl="https://dl.google.com/dl/android/studio/ide-zips/4.2.2.0/$AndroidPkg"
 AndroidInstallDir="$InstallDir/androidstudio"
 
-FlutterPkg="flutter_linux_2.2.2-stable.tar.xz"
+FlutterPkg="flutter_linux_2.2.3-stable.tar.xz"
 FlutterUrl="https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/$FlutterPkg"
 FlutterInstallDir="$InstallDir/flutterdev"
 
