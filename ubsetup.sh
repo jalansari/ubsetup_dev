@@ -80,7 +80,7 @@ UserInfo=(
           [$currentUserNameKey]="Full Name;em@il.com;sshpvtkeyfile;maingroup"
          )
 
-KeyboardShortcutVSCode="code"
+KeyboardShortcutVSCode="<Alt><Super>c"
 KeyboardShortcutChrome="<Alt><Super>b"
 KeyboardShortcutUpdateMan="<Alt><Super>u"
 KeyboardShortcutHome="<Super>h"
