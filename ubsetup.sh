@@ -338,7 +338,7 @@ If no options are specified, default behaviour is to remove components
 (i.e. same as using -r option alone).
 
 Example command:
-sudo ./ubsetup.sh -a --docker -un "<FULL_NAME>" -ue "<EMAIL>" -ug $( id -g -n $USER ) 2>&1 | tee ubsetup.sh.log
+sudo ./ubsetup.sh -a --docker -un "<FULL_NAME>" -ue "<EMAIL>" -ug $( id -g -n $SUDO_USER ) 2>&1 | tee ubsetup.sh.log
 EOTXT
 
 
