@@ -80,6 +80,11 @@ UserInfo=(
           [$currentUserNameKey]="Full Name;em@il.com;sshpvtkeyfile;maingroup"
          )
 
+KeyboardShortcutVSCode="code"
+KeyboardShortcutChrome="<Alt><Super>b"
+KeyboardShortcutUpdateMan="<Alt><Super>u"
+KeyboardShortcutHome="<Super>h"
+KeyboardShortcutTerminal="<Super>Return"
 
 FileManagerShowHiddenYes=1
 FileManagerShowHiddenNo=0
@@ -467,6 +472,30 @@ read -r -d '' TEXT_CinnamonDesktopIfGSettingsConfig <<- EOTXT
 	scaling-factor=uint32 0
 EOTXT
 
+read -r -d '' TEXT_CinnamonKeyboardShortCutsConfig <<- EOTXT
+	[org.cinnamon.desktop.keybindings]
+	custom-list=['custom2', 'custom1', 'custom0', '__dummy__']
+
+	[org.cinnamon.desktop.keybindings.custom-keybindings.custom0]
+	binding=['$KeyboardShortcutVSCode']
+	command='code'
+	name='VSCode'
+
+	[org.cinnamon.desktop.keybindings.custom-keybindings.custom1]
+	binding=['$KeyboardShortcutChrome']
+	command='google-chrome'
+	name='Chrome'
+
+	[org.cinnamon.desktop.keybindings.custom-keybindings.custom2]
+	binding=['$KeyboardShortcutUpdateMan']
+	command='mintupdate'
+	name='Update Manager'
+
+	[org.cinnamon.desktop.keybindings.media-keys]
+	home=['$KeyboardShortcutHome']
+	terminal=['$KeyboardShortcutTerminal']
+EOTXT
+
 read -r -d '' TEXT_CinnamonSoundsGSettingsConfig <<- EOTXT
 	[org.cinnamon.sounds]
 	login-enabled=false
@@ -604,6 +633,22 @@ read -r -d '' TEXT_UbuntuDesktopGSettingsConfig <<- EOTXT
 
 	[org.gnome.settings-daemon.plugins.media-keys]
 	home=['<Primary><Alt>h']
+
+	[org.gnome.settings-daemon.plugins.media-keys]
+	custom-keybindings=['/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/']
+	home=['$KeyboardShortcutHome']
+	terminal=['$KeyboardShortcutTerminal']
+	www=['$KeyboardShortcutChrome']
+
+	[org.gnome.settings-daemon.plugins.media-keys.custom-keybindings.custom0]
+	binding='$KeyboardShortcutVSCode'
+	command='code'
+	name='VSCode'
+
+	[org.gnome.settings-daemon.plugins.media-keys.custom-keybindings.custom1]
+	binding='$KeyboardShortcutUpdateMan'
+	command='update-manager'
+	name='UpdateManager'
 
 	[org.gnome.shell]
 	app-picker-view=uint32 1
@@ -1904,6 +1949,10 @@ if [ $cinnamonInstalled == 0 ]; then
     PRINTLOG ".. interface scaling."
     DesktopIfGSettingsCfg="$GlibScemasDir/${GlibPriorityNum}_desktopif.gschema.override"
     echo -e "$TEXT_CinnamonDesktopIfGSettingsConfig" >> $DesktopIfGSettingsCfg
+
+    PRINTLOG "Configuring Desktop Shortcuts."
+    KeyShortcutsGSettingsCfg="$GlibScemasDir/${GlibPriorityNum}_keyshortcuts.gschema.override"
+    echo -e "$TEXT_CinnamonKeyboardShortCutsConfig" >> $KeyShortcutsGSettingsCfg
 
     PRINTLOG "Configuring Desktop Sounds."
     SoundsGSettingsCfg="$GlibScemasDir/${GlibPriorityNum}_sounds.gschema.override"
