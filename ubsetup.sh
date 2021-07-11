@@ -237,8 +237,8 @@ INSTALL_COMP_LIST_DESKTOP=(
                    "gimp"
                    "qmmp" # Music player like Windows' winamp.
                    "easytag" # One of the better ID3 tag editors.
-                   "virtualbox-dkms"
-                   "virtualbox-qt"
+                   # "virtualbox-dkms"
+                   # "virtualbox-qt"
                    "gparted"
                    "graphviz"
                    "wireshark"
@@ -300,7 +300,7 @@ LIST_OF_LAUNCHERS=(
                    "filemanager"
                    "terminator"
                    "google-chrome"
-                   "virtualbox"
+                   # "virtualbox"
                    "code"
                   )
 
