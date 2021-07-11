@@ -7,7 +7,7 @@
 
 declare -A DebPackages
 DebPackages=(
-             ["code"]="https://go.microsoft.com/fwlink/?LinkID=760868;mscode.deb" # 760865 for insider edition
+             ["code"]="https://code.visualstudio.com/sha/download?build=stable&os=linux-deb-x64;mscode.deb"
              ["vagrant"]="https://releases.hashicorp.com/vagrant/2.2.16/vagrant_2.2.16_x86_64.deb"
              ["dropbox"]="https://www.dropbox.com/download?dl=packages/ubuntu/dropbox_2020.03.04_amd64.deb"
              ["draw.io"]="https://github.com/jgraph/drawio-desktop/releases/download/v14.6.13/drawio-amd64-14.6.13.deb"
@@ -18,9 +18,9 @@ DebPackages=(
 InstallDir="/usr/share"
 UsrLocalDir="/usr/local"
 
-NodeJsVer="node-v14.17.2-linux-x64"
+NodeJsVer="node-v14.17.3-linux-x64"
 NodeJsPkg="$NodeJsVer.tar.xz"
-NodeJsUrl="https://nodejs.org/dist/v14.17.2/$NodeJsPkg"
+NodeJsUrl="https://nodejs.org/dist/v14.17.3/$NodeJsPkg"
 NodeInstallDir="$InstallDir/nodejs"
 
 FossilScmPkg="fossil-linux-x64-2.16.tar.gz"
@@ -39,16 +39,16 @@ VeraCryptUrl="https://launchpad.net/veracrypt/trunk/1.24-update7/+download/$Vera
 
 DockerComposeUrl="https://github.com/docker/compose/releases/latest/download/docker-compose-Linux-x86_64"
 
-TerraformPkg="terraform_1.0.0_linux_amd64.zip"
-TerraformUrl="https://releases.hashicorp.com/terraform/1.0.0/$TerraformPkg"
+TerraformPkg="terraform_1.0.1_linux_amd64.zip"
+TerraformUrl="https://releases.hashicorp.com/terraform/1.0.1/$TerraformPkg"
 TerraformInstallDir="$InstallDir/terraform"
 
 TerragruntUrl="https://github.com/gruntwork-io/terragrunt/releases/download/v0.31.0/terragrunt_linux_amd64"
 TerragruntInstallDir="$InstallDir/terragrunt"
 
-ConfiglintPkg="config-lint_Linux_x86_64.tar.gz"
-ConfiglintUrl="https://github.com/stelligent/config-lint/releases/download/v1.6.0/$ConfiglintPkg"
-ConfiglintInstallDir="$InstallDir/configlint"
+# ConfiglintPkg="config-lint_Linux_x86_64.tar.gz"
+# ConfiglintUrl="https://github.com/stelligent/config-lint/releases/download/v1.6.0/$ConfiglintPkg"
+# ConfiglintInstallDir="$InstallDir/configlint"
 
 AwsCliPkg="awscli-exe-linux-x86_64.zip"
 AwsCliUrl="https://awscli.amazonaws.com/$AwsCliPkg"
