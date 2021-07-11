@@ -1643,7 +1643,8 @@ if [ $ubServerEnvironment != 0 ]; then
         && rm -rf "$awscliDir" \
         && mkdir -p "$awsCredsDir" \
         && touch "$awsCredsCurrUser" \
-        && echo -e "[default]\naws_access_key_id=<ID>\naws_secret_access_key=<KEY>\n" >> "$awsCredsCurrUser"
+        && echo -e "[default]\naws_access_key_id=<ID>\naws_secret_access_key=<KEY>\n" >> "$awsCredsCurrUser" \
+        && chown -R $userOfThisScript:$groupOfUserOfThisScript "$awsCredsCurrUser"
 
     wgetAndUnpack "$GoLangUrl" "$GoLangPkg" "$UsrLocalDir" "$GoPath"
     if [ $? == 0 ]; then
