@@ -8,26 +8,26 @@
 declare -A DebPackages
 DebPackages=(
              ["code"]="https://code.visualstudio.com/sha/download?build=stable&os=linux-deb-x64;mscode.deb"
-             ["vagrant"]="https://releases.hashicorp.com/vagrant/2.2.16/vagrant_2.2.16_x86_64.deb"
+             ["vagrant"]="https://releases.hashicorp.com/vagrant/2.2.18/vagrant_2.2.18_x86_64.deb"
              ["dropbox"]="https://www.dropbox.com/download?dl=packages/ubuntu/dropbox_2020.03.04_amd64.deb"
-             ["draw.io"]="https://github.com/jgraph/drawio-desktop/releases/download/v14.6.13/drawio-amd64-14.6.13.deb"
-             ["mysql-workbench-community"]="https://dev.mysql.com/get/Downloads/MySQLGUITools/mysql-workbench-community_8.0.25-1ubuntu21.04_amd64.deb"
-             ["slack-desktop"]="https://downloads.slack-edge.com/linux_releases/slack-desktop-4.17.0-amd64.deb"
+             ["draw.io"]="https://github.com/jgraph/drawio-desktop/releases/download/v14.9.6/drawio-amd64-14.9.6.deb"
+             ["mysql-workbench-community"]="https://dev.mysql.com/get/Downloads/MySQLGUITools/mysql-workbench-community_8.0.26-1ubuntu20.04_amd64.deb"
+             ["slack-desktop"]="https://downloads.slack-edge.com/linux_releases/slack-desktop-4.18.0-amd64.deb"
             )
 
 InstallDir="/usr/share"
 UsrLocalDir="/usr/local"
 
-NodeJsVer="node-v14.17.3-linux-x64"
+NodeJsVer="node-v14.17.5-linux-x64"
 NodeJsPkg="$NodeJsVer.tar.xz"
-NodeJsUrl="https://nodejs.org/dist/v14.17.3/$NodeJsPkg"
+NodeJsUrl="https://nodejs.org/dist/v14.17.5/$NodeJsPkg"
 NodeInstallDir="$InstallDir/nodejs"
 
 FossilScmPkg="fossil-linux-x64-2.16.tar.gz"
 FossilScmUrl="https://fossil-scm.org/home/uv/$FossilScmPkg"
 FossilInstallDir="$InstallDir/fossilscm"
 
-GoLangPkg="go1.16.5.linux-amd64.tar.gz"
+GoLangPkg="go1.17.linux-amd64.tar.gz"
 GoLangUrl="https://golang.org/dl/$GoLangPkg"
 GoPath="$UsrLocalDir/go"
 
@@ -41,10 +41,8 @@ DockerComposeUrl="https://github.com/docker/compose/releases/latest/download/doc
 
 TerraformPkg="terraform_1.0.1_linux_amd64.zip"
 TerraformUrl="https://releases.hashicorp.com/terraform/1.0.1/$TerraformPkg"
-TerraformInstallDir="$InstallDir/terraform"
 
-TerragruntUrl="https://github.com/gruntwork-io/terragrunt/releases/download/v0.31.0/terragrunt_linux_amd64"
-TerragruntInstallDir="$InstallDir/terragrunt"
+# TerragruntUrl="https://github.com/gruntwork-io/terragrunt/releases/download/v0.31.4/terragrunt_linux_amd64"
 
 # ConfiglintPkg="config-lint_Linux_x86_64.tar.gz"
 # ConfiglintUrl="https://github.com/stelligent/config-lint/releases/download/v1.6.0/$ConfiglintPkg"
@@ -53,8 +51,8 @@ TerragruntInstallDir="$InstallDir/terragrunt"
 AwsCliPkg="awscli-exe-linux-x86_64.zip"
 AwsCliUrl="https://awscli.amazonaws.com/$AwsCliPkg"
 
-AndroidPkg="android-studio-ide-202.7486908-linux.tar.gz"
-AndroidUrl="https://dl.google.com/dl/android/studio/ide-zips/4.2.2.0/$AndroidPkg"
+AndroidPkg="android-studio-2020.3.1.22-linux.tar.gz"
+AndroidUrl="https://dl.google.com/dl/android/studio/ide-zips/2020.3.1.22/$AndroidPkg"
 AndroidInstallDir="$InstallDir/androidstudio"
 
 FlutterPkg="flutter_linux_2.2.3-stable.tar.xz"
@@ -237,8 +235,8 @@ INSTALL_COMP_LIST_DESKTOP=(
                    "gimp"
                    "qmmp" # Music player like Windows' winamp.
                    "easytag" # One of the better ID3 tag editors.
-                   # "virtualbox-dkms"
-                   # "virtualbox-qt"
+                   "virtualbox-dkms"
+                   "virtualbox-qt"
                    "gparted"
                    "graphviz"
                    "wireshark"
@@ -253,7 +251,8 @@ INSTALL_COMP_LIST_DESKTOP=(
                    "libpango-1.0-0" # Needed by Dropbox installer.
                    "libpango1.0-0" # Needed by Dropbox installer.
                    "libzip4"
-                   "libproj19" # Needed by mysql-workbench
+                   "libproj15" # Needed by mysql-workbench (ubuntu 20.x)
+                   "libproj19" # Needed by mysql-workbench (ubuntu 21.x)
                    "proj-data" # Needed by mysql-workbench
                    "libopengl0" # Needed by mysql-workbench
                    "libpcrecpp0v5" # Needed by mysql-workbench
@@ -262,6 +261,7 @@ INSTALL_COMP_LIST_DESKTOP=(
                    "python-tk" # Toolkit required for matplotlib graphics.
                    "python3-tk"
                    "ncdu"
+                   "libimage-exiftool-perl" # To read and modify/remove exif tags from photos.
                   )
 
 INSTAL_PIP2n3_MAP_DESKTOP=(
@@ -300,7 +300,7 @@ LIST_OF_LAUNCHERS=(
                    "filemanager"
                    "terminator"
                    "google-chrome"
-                   # "virtualbox"
+                   "virtualbox"
                    "code"
                   )
 
@@ -1622,14 +1622,11 @@ if [ $ubServerEnvironment != 0 ]; then
         installDebPackageFromHttp ${DebPackages["$key"]} $key
     done
 
-    wgetAndUnpack "$TerraformUrl" "$TerraformPkg" "$TerraformInstallDir" "$TerraformInstallDir" \
-        && updatePathGlobally "$TerraformInstallDir"
+    wgetAndUnpack "$TerraformUrl" "$TerraformPkg" "/usr/local/bin" "/usr/local/bin/terraform"
 
-    [ ! -z "$TerragruntUrl" ] && [ ! -e "$TerragruntInstallDir/terragrunt" ] \
-        && mkdir -p "$TerragruntInstallDir" \
-        && wget -O "$TerragruntInstallDir/terragrunt" $TerragruntUrl \
-        && chmod +rx "$TerragruntInstallDir/terragrunt" \
-        && updatePathGlobally "$TerragruntInstallDir"
+    [ ! -z "$TerragruntUrl" ] && [ ! -e "/usr/local/bin/terragrunt" ] \
+        && wget -O "/usr/local/bin/terragrunt" $TerragruntUrl \
+        && chmod +rx "/usr/local/bin/terragrunt"
 
     wgetAndUnpack "$ConfiglintUrl" "$ConfiglintPkg" "$ConfiglintInstallDir" "$ConfiglintInstallDir" \
         && updatePathGlobally "$ConfiglintInstallDir"

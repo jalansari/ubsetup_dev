@@ -1,6 +1,6 @@
 Script that sets up a Linux Ubuntu-based system, to be used for development.
 
-Currently, only really works with Ubuntu 20.04/21.04 and Linux Mint 20.
+Currently, only really works with Ubuntu 20.04 and Linux Mint 20.
 
 The script is intended to be a single script that can be run directly after
 installing a system.  Therefore, a very convenient, one-file, single-step to
