@@ -42,7 +42,7 @@ DockerComposeUrl="https://github.com/docker/compose/releases/latest/download/doc
 TerraformPkg="terraform_1.0.1_linux_amd64.zip"
 TerraformUrl="https://releases.hashicorp.com/terraform/1.0.1/$TerraformPkg"
 
-# TerragruntUrl="https://github.com/gruntwork-io/terragrunt/releases/download/v0.31.4/terragrunt_linux_amd64"
+# TerragruntUrl="https://github.com/gruntwork-io/terragrunt/releases/download/v0.31.5/terragrunt_linux_amd64"
 
 # ConfiglintPkg="config-lint_Linux_x86_64.tar.gz"
 # ConfiglintUrl="https://github.com/stelligent/config-lint/releases/download/v1.6.0/$ConfiglintPkg"
@@ -51,8 +51,8 @@ TerraformUrl="https://releases.hashicorp.com/terraform/1.0.1/$TerraformPkg"
 AwsCliPkg="awscli-exe-linux-x86_64.zip"
 AwsCliUrl="https://awscli.amazonaws.com/$AwsCliPkg"
 
-AndroidPkg="android-studio-2020.3.1.22-linux.tar.gz"
-AndroidUrl="https://dl.google.com/dl/android/studio/ide-zips/2020.3.1.22/$AndroidPkg"
+AndroidPkg="android-studio-2020.3.1.23-linux.tar.gz"
+AndroidUrl="https://dl.google.com/dl/android/studio/ide-zips/2020.3.1.23/$AndroidPkg"
 AndroidInstallDir="$InstallDir/androidstudio"
 
 FlutterPkg="flutter_linux_2.2.3-stable.tar.xz"
