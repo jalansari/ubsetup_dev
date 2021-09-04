@@ -12,15 +12,15 @@ DebPackages=(
              ["dropbox"]="https://www.dropbox.com/download?dl=packages/ubuntu/dropbox_2020.03.04_amd64.deb"
              ["draw.io"]="https://github.com/jgraph/drawio-desktop/releases/download/v14.9.6/drawio-amd64-14.9.6.deb"
              ["mysql-workbench-community"]="https://dev.mysql.com/get/Downloads/MySQLGUITools/mysql-workbench-community_8.0.26-1ubuntu20.04_amd64.deb"
-             ["slack-desktop"]="https://downloads.slack-edge.com/linux_releases/slack-desktop-4.18.0-amd64.deb"
+             ["slack-desktop"]="https://downloads.slack-edge.com/linux_releases/slack-desktop-4.19.2-amd64.deb"
             )
 
 InstallDir="/usr/share"
 UsrLocalDir="/usr/local"
 
-NodeJsVer="node-v14.17.5-linux-x64"
+NodeJsVer="node-v14.17.6-linux-x64"
 NodeJsPkg="$NodeJsVer.tar.xz"
-NodeJsUrl="https://nodejs.org/dist/v14.17.5/$NodeJsPkg"
+NodeJsUrl="https://nodejs.org/dist/v14.17.6/$NodeJsPkg"
 NodeInstallDir="$InstallDir/nodejs"
 
 FossilScmPkg="fossil-linux-x64-2.16.tar.gz"
@@ -39,8 +39,8 @@ VeraCryptUrl="https://launchpad.net/veracrypt/trunk/1.24-update7/+download/$Vera
 
 DockerComposeUrl="https://github.com/docker/compose/releases/latest/download/docker-compose-Linux-x86_64"
 
-TerraformPkg="terraform_1.0.1_linux_amd64.zip"
-TerraformUrl="https://releases.hashicorp.com/terraform/1.0.1/$TerraformPkg"
+TerraformPkg="terraform_1.0.5_linux_amd64.zip"
+TerraformUrl="https://releases.hashicorp.com/terraform/1.0.5/$TerraformPkg"
 
 # TerragruntUrl="https://github.com/gruntwork-io/terragrunt/releases/download/v0.31.5/terragrunt_linux_amd64"
 
@@ -51,8 +51,8 @@ TerraformUrl="https://releases.hashicorp.com/terraform/1.0.1/$TerraformPkg"
 AwsCliPkg="awscli-exe-linux-x86_64.zip"
 AwsCliUrl="https://awscli.amazonaws.com/$AwsCliPkg"
 
-AndroidPkg="android-studio-2020.3.1.23-linux.tar.gz"
-AndroidUrl="https://dl.google.com/dl/android/studio/ide-zips/2020.3.1.23/$AndroidPkg"
+AndroidPkg="android-studio-2020.3.1.24-linux.tar.gz"
+AndroidUrl="https://dl.google.com/dl/android/studio/ide-zips/2020.3.1.24/$AndroidPkg"
 AndroidInstallDir="$InstallDir/androidstudio"
 
 FlutterPkg="flutter_linux_2.2.3-stable.tar.xz"
