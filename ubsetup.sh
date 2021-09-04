@@ -790,21 +790,29 @@ read -r -d '' TEXT_BashPythonToolAliases <<- "EOTXT"
 	    if [ ! -f "$reqsFile" ]; then
 	        reqsFile="requirements.txt";
 	    fi
+	    reqsFileTmp="$reqsFile.cprtmp"
 	    cat "$reqsFile" | while read -r line; do
-	        test "$line" == "" && continue
-	        pckg=$( echo $line | awk -F'[=~]=' '{ print $1 }' )
-	        vers=$( echo $line | awk -F'[=~]=' '{ print $2 }' )
+	        if [ "$line" == "" ]; then
+	            echo >> "$reqsFileTmp"
+	            continue
+	        fi
+	        pckg=$( echo $line | awk -F'[=~><]=' '{ print $1 }' )
+	        vers=$( echo $line | awk -F'[=~><]=' '{ print $2 }' )
 	        test "$pckg" == "" && continue
 	        test "$vers" == "" && continue
 	        echo -n "$pckg : $vers"
 	        ver_found=$( yolk -V $pckg | awk -v envvar="$pckg" '{ if ($1==envvar) { print $2 } }' )
 	        if [ "$ver_found" == "" ]; then
 	            echo -e " - \033[1;31mNOT FOUND (try https://pypi.org/search/?q=$pckg)\033[0m"
+	            echo "$line" >> "$reqsFileTmp"
 	        else
 	            echo -n " - Latest version: $ver_found"
 	            test "$ver_found" != "$vers" && echo -e " - \033[1;33mNOT EQUAL\033[0m" || echo ""
+	            newLine="${line/$vers/$ver_found}"
+	            echo "$newLine" >> "$reqsFileTmp"
 	        fi
 	    done
+	    test -f "$reqsFileTmp" && mv "$reqsFileTmp" "$reqsFile"
 	}
 	alias cpr='____check_py_requirements____'
 
