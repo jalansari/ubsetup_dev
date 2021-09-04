@@ -792,14 +792,12 @@ read -r -d '' TEXT_BashPythonToolAliases <<- "EOTXT"
 	    fi
 	    reqsFileTmp="$reqsFile.cprtmp"
 	    cat "$reqsFile" | while read -r line; do
-	        if [ "$line" == "" ]; then
-	            echo >> "$reqsFileTmp"
+	        pckg=$( echo "$line" | awk -F'[=~><]=' '{ print $1 }' )
+	        vers=$( echo "$line" | awk -F'[=~><]=' '{ print $2 }' )
+	        if [ "$pckg" == "" ] || [ "$vers" == "" ]; then
+	            echo "$line" >> "$reqsFileTmp"
 	            continue
 	        fi
-	        pckg=$( echo $line | awk -F'[=~><]=' '{ print $1 }' )
-	        vers=$( echo $line | awk -F'[=~><]=' '{ print $2 }' )
-	        test "$pckg" == "" && continue
-	        test "$vers" == "" && continue
 	        echo -n "$pckg : $vers"
 	        ver_found=$( yolk -V $pckg | awk -v envvar="$pckg" '{ if ($1==envvar) { print $2 } }' )
 	        if [ "$ver_found" == "" ]; then
