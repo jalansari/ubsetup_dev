@@ -755,8 +755,7 @@ read -r -d '' TEXT_BashToolAliases <<- "EOTXT"
 EOTXT
 
 read -r -d '' TEXT_BashGitAliases <<- "EOTXT"
-	function ____gititer____()
-	{
+	function ____gititer____() {
 	    for d in ./*/; do
 	        pushd $d > /dev/null 2>&1
 	        echo -e "\033[30;1;106m"
@@ -1741,8 +1740,11 @@ BashrcForAll="/etc/skel/.bashrc"
 sed -i.bak -r \
 '/alias[[:space:]]+ll=/d;'\
 '/alias hiss=/d;'\
-'/alias git[[:alpha:]]+=/d;'\
-'/____gititer/d;'\
+'/alias trimws=/d;'\
+'/____gititer/,/^}$/{/.*/d};'\
+'/____check_py/,/^}$/{/.*/d};'\
+'/____cleanpy/,/^}$/{/.*/d};'\
+'s/(HISTFILESIZE)=.*/\1=5000/; s/(HISTSIZE)=.*/\1=2000/;'\
  $BashrcForAll
 # '/export PYTHONPATH=/d;'\
 
