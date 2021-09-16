@@ -825,6 +825,7 @@ read -r -d '' TEXT_BashPythonToolAliases <<- "EOTXT"
 	    fi
 	}
 	alias cleanpyd='____cleanpydir____'
+	alias cleanpyds='sudo bash -c "$(declare -f ____cleanpydir____); ____cleanpydir____"'
 EOTXT
 
 
@@ -1650,7 +1651,7 @@ if [ $ubServerEnvironment != 0 ]; then
         && mkdir -p "$awsCredsDir" \
         && touch "$awsCredsCurrUser" \
         && echo -e "[default]\naws_access_key_id=<ID>\naws_secret_access_key=<KEY>\n" >> "$awsCredsCurrUser" \
-        && chown -R $userOfThisScript:$groupOfUserOfThisScript "$awsCredsCurrUser"
+        && chown -R $userOfThisScript:$groupOfUserOfThisScript "$awsCredsDir"
 
     wgetAndUnpack "$GoLangUrl" "$GoLangPkg" "$UsrLocalDir" "$GoPath"
     if [ $? == 0 ]; then
