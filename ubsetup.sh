@@ -369,6 +369,7 @@ read -r -d '' TEXT_VimRC <<- EOTXT
 	set listchars=eol:¶,tab:➤∘,trail:☠,extends:»,precedes:«
 	set list
 	set nocompatible
+	autocmd BufWritePre * :%s/\s\+$//e
 EOTXT
 
 read -r -d '' TEXT_GitCfg <<- EOTXT
