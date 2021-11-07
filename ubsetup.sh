@@ -8,11 +8,11 @@
 declare -A DebPackages
 DebPackages=(
              ["code"]="https://code.visualstudio.com/sha/download?build=stable&os=linux-deb-x64;mscode.deb"
-             ["vagrant"]="https://releases.hashicorp.com/vagrant/2.2.18/vagrant_2.2.18_x86_64.deb"
+             ["vagrant"]="https://releases.hashicorp.com/vagrant/2.2.19/vagrant_2.2.19_x86_64.deb"
              ["dropbox"]="https://www.dropbox.com/download?dl=packages/ubuntu/dropbox_2020.03.04_amd64.deb"
              ["draw.io"]="https://github.com/jgraph/drawio-desktop/releases/download/v15.4.0/drawio-amd64-15.4.0.deb"
              ["mysql-workbench-community"]="https://dev.mysql.com/get/Downloads/MySQLGUITools/mysql-workbench-community_8.0.27-1ubuntu20.04_amd64.deb"
-             ["slack-desktop"]="https://downloads.slack-edge.com/releases/linux/4.20.0/prod/x64/slack-desktop-4.20.0-amd64.deb"
+             ["slack-desktop"]="https://downloads.slack-edge.com/releases/linux/4.21.1/prod/x64/slack-desktop-4.21.1-amd64.deb"
             )
 
 InstallDir="/usr/share"
@@ -27,7 +27,7 @@ FossilScmPkg="fossil-linux-x64-2.17.tar.gz"
 FossilScmUrl="https://fossil-scm.org/home/uv/$FossilScmPkg"
 FossilInstallDir="$InstallDir/fossilscm"
 
-GoLangPkg="go1.17.2.linux-amd64.tar.gz"
+GoLangPkg="go1.17.3.linux-amd64.tar.gz"
 GoLangUrl="https://golang.org/dl/$GoLangPkg"
 GoPath="$UsrLocalDir/go"
 
