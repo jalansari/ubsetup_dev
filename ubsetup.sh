@@ -374,11 +374,13 @@ EOTXT
 
 read -r -d '' TEXT_GitCfg <<- EOTXT
 	[core]
-	    editor = vim
+		editor = vim
 	[push]
-	    default = simple
+		default = simple
 	[pull]
-	    rebase = false
+		rebase = false
+	[alias]
+		lg = log --graph --all --pretty=format:'%C(bold magenta)%h%Creset (%G?) : %s %C(cyan)%cI %Cgreen(%cr) %C(blue)%an %C(bold green)(%ae) %C(yellow)%d%Creset %GK'
 EOTXT
 
 read -r -d '' TEXT_FirefoxCfg <<- EOTXT
