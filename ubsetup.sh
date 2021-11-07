@@ -752,9 +752,9 @@ read -r -d '' TEXT_BashToolAliases <<- "EOTXT"
 	alias ll='ls --time-style="long-iso" -alF'
 	alias hiss='history | grep'
 	alias trimws='find . -type f ! -path "*/.venv/*" ! -path "*/.git/*" ! -path "*/venv/*" | xargs -I fl bash -c '"'"'FILE="fl"; echo ">>>>>>>> $FILE"; sed -i -r "s/\s+$//;" "$FILE"; [[ $( tail -c 1 "$FILE" ) != "" ]] && echo >> "$FILE"'"'"
-
-	# Disable xon/off flow control, as it clashes with history search (Ctrl-s)
-	stty -ixon
+	alias dnuke="docker system prune -af &&  docker system prune --volumes -f"
+	alias dlistall="docker ps -a && docker images -a"
+	stty -ixon # Disable xon/off flow control, as it clashes with history search (Ctrl-s)
 EOTXT
 
 read -r -d '' TEXT_BashGitAliases <<- "EOTXT"
@@ -1745,6 +1745,9 @@ sed -i.bak -r \
 '/alias[[:space:]]+ll=/d;'\
 '/alias hiss=/d;'\
 '/alias trimws=/d;'\
+'/alias dnuke=/d;'\
+'/alias dlistall=/d;'\
+'/^stty /d;'\
 '/____gititer/,/^}$/{/.*/d};'\
 '/____check_py/,/^}$/{/.*/d};'\
 '/____cleanpy/,/^}$/{/.*/d};'\
