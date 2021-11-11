@@ -10,7 +10,7 @@ DebPackages=(
              ["code"]="https://code.visualstudio.com/sha/download?build=stable&os=linux-deb-x64;mscode.deb"
              ["vagrant"]="https://releases.hashicorp.com/vagrant/2.2.19/vagrant_2.2.19_x86_64.deb"
              ["dropbox"]="https://www.dropbox.com/download?dl=packages/ubuntu/dropbox_2020.03.04_amd64.deb"
-             ["draw.io"]="https://github.com/jgraph/drawio-desktop/releases/download/v15.4.0/drawio-amd64-15.4.0.deb"
+             ["draw.io"]="https://github.com/jgraph/drawio-desktop/releases/download/v15.7.3/drawio-amd64-15.7.3.deb"
              ["mysql-workbench-community"]="https://dev.mysql.com/get/Downloads/MySQLGUITools/mysql-workbench-community_8.0.27-1ubuntu20.04_amd64.deb"
              ["slack-desktop"]="https://downloads.slack-edge.com/releases/linux/4.21.1/prod/x64/slack-desktop-4.21.1-amd64.deb"
             )
@@ -42,7 +42,7 @@ DockerComposeUrl="https://github.com/docker/compose/releases/latest/download/doc
 TerraformPkg="terraform_1.0.8_linux_amd64.zip"
 TerraformUrl="https://releases.hashicorp.com/terraform/1.0.8/$TerraformPkg"
 
-# TerragruntUrl="https://github.com/gruntwork-io/terragrunt/releases/download/v0.31.5/terragrunt_linux_amd64"
+# TerragruntUrl="https://github.com/gruntwork-io/terragrunt/releases/download/v0.35.9/terragrunt_linux_amd64"
 
 # ConfiglintPkg="config-lint_Linux_x86_64.tar.gz"
 # ConfiglintUrl="https://github.com/stelligent/config-lint/releases/download/v1.6.0/$ConfiglintPkg"
