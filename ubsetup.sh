@@ -247,6 +247,7 @@ INSTALL_COMP_LIST_DESKTOP=(
                    "curl"
                    "shunit2" # Shell script unit test framework.
                    "pv"
+                   "jq"
                    "ssh"
                    "libpango-1.0-0" # Needed by Dropbox installer.
                    "libpango1.0-0" # Needed by Dropbox installer.
