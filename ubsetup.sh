@@ -743,6 +743,10 @@ read -r -d '' TEXT_VSCodeConfig <<- EOTXT
 	  "files.trimTrailingWhitespace": true,
 	  "diffEditor.ignoreTrimWhitespace": false,
 	  "editor.detectIndentation": false,
+	  "[terraform]": {
+	    "editor.tabSize": 2
+	  }
+	  "terminal.integrated.scrollback": 20000,
 	}
 EOTXT
 
