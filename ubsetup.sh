@@ -10,37 +10,37 @@ DebPackages=(
              ["code"]="https://code.visualstudio.com/sha/download?build=stable&os=linux-deb-x64;mscode.deb"
              ["vagrant"]="https://releases.hashicorp.com/vagrant/2.2.19/vagrant_2.2.19_x86_64.deb"
              ["dropbox"]="https://www.dropbox.com/download?dl=packages/ubuntu/dropbox_2020.03.04_amd64.deb"
-             ["draw.io"]="https://github.com/jgraph/drawio-desktop/releases/download/v15.8.4/drawio-amd64-15.8.4.deb"
-             ["mysql-workbench-community"]="https://dev.mysql.com/get/Downloads/MySQLGUITools/mysql-workbench-community_8.0.27-1ubuntu20.04_amd64.deb"
-             ["slack-desktop"]="https://downloads.slack-edge.com/releases/linux/4.22.0/prod/x64/slack-desktop-4.22.0-amd64.deb"
+             ["draw.io"]="https://github.com/jgraph/drawio-desktop/releases/download/v16.4.0/drawio-amd64-16.4.0.deb"
+             ["mysql-workbench-community"]="https://dev.mysql.com/get/Downloads/MySQLGUITools/mysql-workbench-community_8.0.28-1ubuntu20.04_amd64.deb"
+             ["slack-desktop"]="https://downloads.slack-edge.com/releases/linux/4.23.0/prod/x64/slack-desktop-4.23.0-amd64.deb"
             )
 
 InstallDir="/usr/share"
 UsrLocalDir="/usr/local"
 
-NodeJsVer="node-v16.13.0-linux-x64"
+NodeJsVer="node-v16.13.2-linux-x64"
 NodeJsPkg="$NodeJsVer.tar.xz"
-NodeJsUrl="https://nodejs.org/dist/v16.13.0/$NodeJsPkg"
+NodeJsUrl="https://nodejs.org/dist/v16.13.2/$NodeJsPkg"
 NodeInstallDir="$InstallDir/nodejs"
 
 FossilScmPkg="fossil-linux-x64-2.17.tar.gz"
 FossilScmUrl="https://fossil-scm.org/home/uv/$FossilScmPkg"
 FossilInstallDir="$InstallDir/fossilscm"
 
-GoLangPkg="go1.17.3.linux-amd64.tar.gz"
-GoLangUrl="https://golang.org/dl/$GoLangPkg"
+GoLangPkg="go1.17.6.linux-amd64.tar.gz"
+GoLangUrl="https://go.dev/dl/$GoLangPkg"
 GoPath="$UsrLocalDir/go"
 
 TelegramPackage="telegram_linux.tar.xz"
 TelegramPackageHttpURL="https://telegram.org/dl/desktop/linux"
 
-VeraCryptPkg="veracrypt-1.24-Update7-setup.tar.bz2"
-VeraCryptUrl="https://launchpad.net/veracrypt/trunk/1.24-update7/+download/$VeraCryptPkg"
+VeraCryptPkg="veracrypt-1.25.4-setup.tar.bz2"
+VeraCryptUrl="https://launchpad.net/veracrypt/trunk/1.25.4/+download/$VeraCryptPkg"
 
 DockerComposeUrl="https://github.com/docker/compose/releases/latest/download/docker-compose-Linux-x86_64"
 
-TerraformPkg="terraform_1.0.8_linux_amd64.zip"
-TerraformUrl="https://releases.hashicorp.com/terraform/1.0.8/$TerraformPkg"
+TerraformPkg="terraform_1.1.3_linux_amd64.zip"
+TerraformUrl="https://releases.hashicorp.com/terraform/1.1.3/$TerraformPkg"
 
 # TerragruntUrl="https://github.com/gruntwork-io/terragrunt/releases/download/v0.35.9/terragrunt_linux_amd64"
 
@@ -52,10 +52,10 @@ AwsCliPkg="awscli-exe-linux-x86_64.zip"
 AwsCliUrl="https://awscli.amazonaws.com/$AwsCliPkg"
 
 AndroidPkg="android-studio-2020.3.1.25-linux.tar.gz"
-AndroidUrl="https://dl.google.com/dl/android/studio/ide-zips/2020.3.1.25/$AndroidPkg"
+AndroidUrl="https://dl.google.com/dl/android/studio/ide-zips/2020.3.1.26/$AndroidPkg"
 AndroidInstallDir="$InstallDir/androidstudio"
 
-FlutterPkg="flutter_linux_2.5.3-stable.tar.xz"
+FlutterPkg="flutter_linux_2.8.1-stable.tar.xz"
 FlutterUrl="https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/$FlutterPkg"
 FlutterInstallDir="$InstallDir/flutterdev"
 
