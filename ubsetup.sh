@@ -10,7 +10,7 @@ DebPackages=(
              ["code"]="https://code.visualstudio.com/sha/download?build=stable&os=linux-deb-x64;mscode.deb"
              ["vagrant"]="https://releases.hashicorp.com/vagrant/2.2.19/vagrant_2.2.19_x86_64.deb"
              ["dropbox"]="https://www.dropbox.com/download?dl=packages/ubuntu/dropbox_2020.03.04_amd64.deb"
-             ["draw.io"]="https://github.com/jgraph/drawio-desktop/releases/download/v16.4.0/drawio-amd64-16.4.0.deb"
+             ["draw.io"]="https://github.com/jgraph/drawio-desktop/releases/download/v16.5.1/drawio-amd64-16.5.1.deb"
              ["mysql-workbench-community"]="https://dev.mysql.com/get/Downloads/MySQLGUITools/mysql-workbench-community_8.0.28-1ubuntu20.04_amd64.deb"
              ["slack-desktop"]="https://downloads.slack-edge.com/releases/linux/4.23.0/prod/x64/slack-desktop-4.23.0-amd64.deb"
             )
@@ -51,11 +51,11 @@ TerraformUrl="https://releases.hashicorp.com/terraform/1.1.3/$TerraformPkg"
 AwsCliPkg="awscli-exe-linux-x86_64.zip"
 AwsCliUrl="https://awscli.amazonaws.com/$AwsCliPkg"
 
-AndroidPkg="android-studio-2020.3.1.25-linux.tar.gz"
-AndroidUrl="https://dl.google.com/dl/android/studio/ide-zips/2020.3.1.26/$AndroidPkg"
+AndroidPkg="android-studio-2021.1.1.21-linux.tar.gz"
+AndroidUrl="https://dl.google.com/dl/android/studio/ide-zips/2021.1.1.21/$AndroidPkg"
 AndroidInstallDir="$InstallDir/androidstudio"
 
-FlutterPkg="flutter_linux_2.8.1-stable.tar.xz"
+FlutterPkg="flutter_linux_2.10.0-stable.tar.xz"
 FlutterUrl="https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/$FlutterPkg"
 FlutterInstallDir="$InstallDir/flutterdev"
 
