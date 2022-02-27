@@ -18,24 +18,24 @@ DebPackages=(
 InstallDir="/usr/share"
 UsrLocalDir="/usr/local"
 
-NodeJsVer="node-v16.13.2-linux-x64"
+NodeJsVer="node-v16.14.0-linux-x64"
 NodeJsPkg="$NodeJsVer.tar.xz"
-NodeJsUrl="https://nodejs.org/dist/v16.13.2/$NodeJsPkg"
+NodeJsUrl="https://nodejs.org/dist/v16.14.0/$NodeJsPkg"
 NodeInstallDir="$InstallDir/nodejs"
 
-FossilScmPkg="fossil-linux-x64-2.17.tar.gz"
+FossilScmPkg="fossil-linux-x64-2.18.tar.gz"
 FossilScmUrl="https://fossil-scm.org/home/uv/$FossilScmPkg"
 FossilInstallDir="$InstallDir/fossilscm"
 
-GoLangPkg="go1.17.6.linux-amd64.tar.gz"
+GoLangPkg="go1.17.7.linux-amd64.tar.gz"
 GoLangUrl="https://go.dev/dl/$GoLangPkg"
 GoPath="$UsrLocalDir/go"
 
 TelegramPackage="telegram_linux.tar.xz"
 TelegramPackageHttpURL="https://telegram.org/dl/desktop/linux"
 
-VeraCryptPkg="veracrypt-1.25.4-setup.tar.bz2"
-VeraCryptUrl="https://launchpad.net/veracrypt/trunk/1.25.4/+download/$VeraCryptPkg"
+VeraCryptPkg="veracrypt-1.25.9-setup.tar.bz2"
+VeraCryptUrl="https://launchpad.net/veracrypt/trunk/1.25.9/+download/$VeraCryptPkg"
 
 DockerComposeUrl="https://github.com/docker/compose/releases/latest/download/docker-compose-Linux-x86_64"
 
@@ -51,11 +51,11 @@ TerraformUrl="https://releases.hashicorp.com/terraform/1.1.3/$TerraformPkg"
 AwsCliPkg="awscli-exe-linux-x86_64.zip"
 AwsCliUrl="https://awscli.amazonaws.com/$AwsCliPkg"
 
-AndroidPkg="android-studio-2021.1.1.21-linux.tar.gz"
-AndroidUrl="https://dl.google.com/dl/android/studio/ide-zips/2021.1.1.21/$AndroidPkg"
+AndroidPkg="android-studio-2021.1.1.22-linux.tar.gz"
+AndroidUrl="https://dl.google.com/dl/android/studio/ide-zips/2021.1.1.22/$AndroidPkg"
 AndroidInstallDir="$InstallDir/androidstudio"
 
-FlutterPkg="flutter_linux_2.10.0-stable.tar.xz"
+FlutterPkg="flutter_linux_2.10.2-stable.tar.xz"
 FlutterUrl="https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/$FlutterPkg"
 FlutterInstallDir="$InstallDir/flutterdev"
 
