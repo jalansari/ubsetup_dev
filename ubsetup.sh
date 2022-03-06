@@ -752,6 +752,13 @@ read -r -d '' TEXT_VSCodeConfig <<- EOTXT
 	}
 EOTXT
 
+read -r -d '' TEXT_VSCodeWorkspaceExample <<- EOTXT
+	{
+	    "folders": [
+	    ],
+	}
+EOTXT
+
 
 ##### Bash aliases ######
 
@@ -1859,6 +1866,11 @@ EOBLOCK
     installVSCodeExt "hashicorp.terraform"
     installVSCodeExt "eamodio.gitlens"
     installVSCodeExt "yzhang.markdown-all-in-one"
+
+    vsCodeWorkspaceFileExample="$userHomeDir/Documents/devProjects.code-workspace"
+    [ ! -e "$vsCodeWorkspaceFileExample" ] \
+        && echo -e "$TEXT_VSCodeWorkspaceExample" >> "$vsCodeWorkspaceFileExample" \
+        && chown -R $userOfThisScript:$groupOfUserOfThisScript "$vsCodeWorkspaceFileExample"
 
     [ "$isFlutterInstalled" = true ] \
         && installVSCodeExt "dart-code.dart-code" \
