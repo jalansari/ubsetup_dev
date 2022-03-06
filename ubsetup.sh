@@ -27,7 +27,7 @@ FossilScmPkg="fossil-linux-x64-2.18.tar.gz"
 FossilScmUrl="https://fossil-scm.org/home/uv/$FossilScmPkg"
 FossilInstallDir="$InstallDir/fossilscm"
 
-GoLangPkg="go1.17.7.linux-amd64.tar.gz"
+GoLangPkg="go1.17.8.linux-amd64.tar.gz"
 GoLangUrl="https://go.dev/dl/$GoLangPkg"
 GoPath="$UsrLocalDir/go"
 
@@ -55,7 +55,7 @@ AndroidPkg="android-studio-2021.1.1.22-linux.tar.gz"
 AndroidUrl="https://dl.google.com/dl/android/studio/ide-zips/2021.1.1.22/$AndroidPkg"
 AndroidInstallDir="$InstallDir/androidstudio"
 
-FlutterPkg="flutter_linux_2.10.2-stable.tar.xz"
+FlutterPkg="flutter_linux_2.10.3-stable.tar.xz"
 FlutterUrl="https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/$FlutterPkg"
 FlutterInstallDir="$InstallDir/flutterdev"
 
