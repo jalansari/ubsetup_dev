@@ -1855,7 +1855,10 @@ sudo -u $userOfThisScript bash << EOBLOCK
 EOBLOCK
     }
     installVSCodeExt "ms-python.python"
-    # installVSCodeExt "streetsidesoftware.code-spell-checker"
+    installVSCodeExt "streetsidesoftware.code-spell-checker"
+    installVSCodeExt "hashicorp.terraform"
+    installVSCodeExt "eamodio.gitlens"
+    installVSCodeExt "yzhang.markdown-all-in-one"
 
     [ "$isFlutterInstalled" = true ] \
         && installVSCodeExt "dart-code.dart-code" \
