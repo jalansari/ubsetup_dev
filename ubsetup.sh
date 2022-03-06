@@ -464,7 +464,7 @@ EOTXT
 
 read -r -d '' TEXT_CinnamonDesktopIfGSettingsConfig <<- EOTXT
 	[org.cinnamon.desktop.wm.preferences]
-	theme='Mint-Y-Dark'
+	theme='Mint-X'
 	num-workspaces=$WorkspacesNumberOf
 	mouse-button-modifier='<Super>'
 
