@@ -1507,13 +1507,6 @@ if [ "$InstallDocker" == true ]; then
                        )
     # $(lsb_release -cs) should give the codename, but on linuxmint, it will give the mint codename (e.g. tessa) and not the Ubuntu one.
     DebSources["deb [arch=amd64] https://download.docker.com/linux/ubuntu $UbuntuReleaseName stable"]="/etc/apt/sources.list.d/docker.list"
-    P_UPDATE_INS_LIST+=(
-                        # "ca-certificates" # Should already be installed
-                        # "curl" # Should already be installed
-                        "apt-transport-https"
-                        "gnupg-agent"
-                        "software-properties-common"
-                       )
     INSTALL_COMP_LIST+=(
                         "docker-ce"
                         "docker-ce-cli"
