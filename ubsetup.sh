@@ -245,6 +245,7 @@ INSTALL_COMP_LIST_DESKTOP=(
                    "git"
                    "gitk"
                    "gitg"
+                   "gnupg"
                    "curl"
                    "shunit2" # Shell script unit test framework.
                    "pv"
