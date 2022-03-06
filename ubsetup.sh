@@ -1770,7 +1770,6 @@ $TEXT_BashGitAliases
 \n\
 $TEXT_BashPythonToolAliases\n" \
  >> $BashrcForAll
-# export PYTHONPATH=.\n"\
 
 usersBashrc="$userHomeDir/.bashrc"
 cp $BashrcForAll $usersBashrc
