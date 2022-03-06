@@ -37,7 +37,8 @@ TelegramPackageHttpURL="https://telegram.org/dl/desktop/linux"
 VeraCryptPkg="veracrypt-1.25.9-setup.tar.bz2"
 VeraCryptUrl="https://launchpad.net/veracrypt/trunk/1.25.9/+download/$VeraCryptPkg"
 
-DockerComposeUrl="https://github.com/docker/compose/releases/latest/download/docker-compose-Linux-x86_64"
+# DockerComposeUrl="https://github.com/docker/compose/releases/latest/download/docker-compose-Linux-x86_64"
+DockerComposeUrl="https://github.com/docker/compose/releases/download/1.29.2/docker-compose-Linux-x86_64"
 
 TerraformPkg="terraform_1.1.3_linux_amd64.zip"
 TerraformUrl="https://releases.hashicorp.com/terraform/1.1.3/$TerraformPkg"
