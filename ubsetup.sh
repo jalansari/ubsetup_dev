@@ -809,8 +809,8 @@ read -r -d '' TEXT_BashPythonToolAliases <<- "EOTXT"
 	    fi
 	    reqsFileTmp="$reqsFile.cprtmp"
 	    cat "$reqsFile" | while read -r line; do
-	        pckg=$( echo "$line" | awk -F'[=~><]=' '{ print $1 }' )
-	        vers=$( echo "$line" | awk -F'[=~><]=' '{ print $2 }' )
+	        pckg=$( echo "$line" | awk -F'(\\[.+\\])?[=~><]=' '{ print $1 }' )
+	        vers=$( echo "$line" | awk -F'[=~><]='            '{ print $2 }' )
 	        if [ "$pckg" == "" ] || [ "$vers" == "" ]; then
 	            echo "$line" >> "$reqsFileTmp"
 	            continue
