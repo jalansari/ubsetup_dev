@@ -1755,10 +1755,14 @@ sed -i.bak -r \
 '/alias trimws=/d;'\
 '/alias dnuke=/d;'\
 '/alias dlistall=/d;'\
+'/alias cleantf=/d;'\
 '/^stty /d;'\
 '/____gititer/,/^}$/{/.*/d};'\
+'/alias git/d;'\
 '/____check_py/,/^}$/{/.*/d};'\
 '/____cleanpy/,/^}$/{/.*/d};'\
+'/alias cpr=/d;'\
+'/alias cleanpyd/d;'\
 's/(HISTFILESIZE)=.*/\1=5000/; s/(HISTSIZE)=.*/\1=2000/;'\
  $BashrcForAll
 # '/export PYTHONPATH=/d;'\
