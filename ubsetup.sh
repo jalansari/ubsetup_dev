@@ -52,6 +52,10 @@ TerraformUrl="https://releases.hashicorp.com/terraform/1.1.3/$TerraformPkg"
 AwsCliPkg="awscli-exe-linux-x86_64.zip"
 AwsCliUrl="https://awscli.amazonaws.com/$AwsCliPkg"
 
+PlantUmlVer="1.2022.4"
+PlantUmlUrl="https://github.com/plantuml/plantuml/releases/download/v$PlantUmlVer/plantuml-$PlantUmlVer.jar"
+PlantumlTargetBin="/usr/local/bin/plantuml.jar"
+
 AndroidPkg="android-studio-2021.1.1.23-linux.tar.gz"
 AndroidUrl="https://dl.google.com/dl/android/studio/ide-zips/2021.1.1.23/$AndroidPkg"
 AndroidInstallDir="$InstallDir/androidstudio"
@@ -770,6 +774,10 @@ read -r -d '' TEXT_BashToolAliases <<- "EOTXT"
 	alias dlistall="docker ps -a && docker images -a"
 	alias cleantf='find -type f -name .terraform.lock* | xargs -I fl bash -c "cd \$( dirname fl ) && pwd && rm -rf .terraform*"'
 	stty -ixon # Disable xon/off flow control, as it clashes with history search (Ctrl-s)
+EOTXT
+
+read -r -d '' TEXT_BashToolAliases_Inter <<- EOTXT
+	alias plantuml="java -jar $PlantumlTargetBin -verbose -tsvg"
 EOTXT
 
 read -r -d '' TEXT_BashGitAliases <<- "EOTXT"
@@ -1664,6 +1672,9 @@ if [ $ubServerEnvironment != 0 ]; then
         && echo -e "[default]\naws_access_key_id=<ID>\naws_secret_access_key=<KEY>\n" >> "$awsCredsCurrUser" \
         && chown -R $userOfThisScript:$groupOfUserOfThisScript "$awsCredsDir"
 
+    test ! -z $PlantUmlUrl \
+        && wget $PlantUmlUrl -O "$PlantumlTargetBin"
+
     wgetAndUnpack "$GoLangUrl" "$GoLangPkg" "$UsrLocalDir" "$GoPath"
     if [ $? == 0 ]; then
         updatePathGlobally "$GoPath/bin"
@@ -1757,6 +1768,7 @@ sed -i.bak -r \
 '/alias dlistall=/d;'\
 '/alias cleantf=/d;'\
 '/^stty /d;'\
+'/alias plantuml=/d;'\
 '/____gititer/,/^}$/{/.*/d};'\
 '/alias git/d;'\
 '/____check_py/,/^}$/{/.*/d};'\
@@ -1769,6 +1781,8 @@ sed -i.bak -r \
 
 echo -e "\
 $TEXT_BashToolAliases
+\n\
+$TEXT_BashToolAliases_Inter
 \n\
 $TEXT_BashGitAliases
 \n\
