@@ -772,7 +772,7 @@ read -r -d '' TEXT_BashToolAliases <<- "EOTXT"
 	alias trimws='find . -type f ! -path "*/.venv/*" ! -path "*/.git/*" ! -path "*/venv/*" | xargs -I fl bash -c '"'"'FILE="fl"; echo ">>>>>>>> $FILE"; sed -i -r "s/\s+$//;" "$FILE"; [[ $( tail -c 1 "$FILE" ) != "" ]] && echo >> "$FILE"'"'"
 	alias dnuke="docker system prune -af &&  docker system prune --volumes -f"
 	alias dlistall="docker ps -a && docker images -a"
-	alias cleantf='find -type f -name .terraform.lock* | xargs -I fl bash -c "cd \$( dirname fl ) && pwd && rm -rf .terraform*"'
+	alias cleantf='find . -type f -name .terraform.lock* | xargs -I fl bash -c "cd \$( dirname fl ) && pwd && rm -rf .terraform*"'
 	stty -ixon # Disable xon/off flow control, as it clashes with history search (Ctrl-s)
 EOTXT
 
