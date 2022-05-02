@@ -11,16 +11,16 @@ DebPackages=(
              ["vagrant"]="https://releases.hashicorp.com/vagrant/2.2.19/vagrant_2.2.19_x86_64.deb"
              ["dropbox"]="https://www.dropbox.com/download?dl=packages/ubuntu/dropbox_2020.03.04_amd64.deb"
              ["draw.io"]="https://github.com/jgraph/drawio-desktop/releases/download/v17.4.2/drawio-amd64-17.4.2.deb"
-             ["mysql-workbench-community"]="https://dev.mysql.com/get/Downloads/MySQLGUITools/mysql-workbench-community_8.0.28-1ubuntu20.04_amd64.deb"
+             ["mysql-workbench-community"]="https://dev.mysql.com/get/Downloads/MySQLGUITools/mysql-workbench-community_8.0.29-1ubuntu20.04_amd64.deb"
              ["slack-desktop"]="https://downloads.slack-edge.com/releases/linux/4.25.0/prod/x64/slack-desktop-4.25.0-amd64.deb"
             )
 
 InstallDir="/usr/share"
 UsrLocalDir="/usr/local"
 
-NodeJsVer="node-v16.14.2-linux-x64"
+NodeJsVer="node-v16.15.0-linux-x64"
 NodeJsPkg="$NodeJsVer.tar.xz"
-NodeJsUrl="https://nodejs.org/dist/v16.14.2/$NodeJsPkg"
+NodeJsUrl="https://nodejs.org/dist/v16.15.0/$NodeJsPkg"
 NodeInstallDir="$InstallDir/nodejs"
 
 FossilScmPkg="fossil-linux-x64-2.18.tar.gz"
@@ -52,7 +52,7 @@ TerraformUrl="https://releases.hashicorp.com/terraform/1.1.3/$TerraformPkg"
 AwsCliPkg="awscli-exe-linux-x86_64.zip"
 AwsCliUrl="https://awscli.amazonaws.com/$AwsCliPkg"
 
-PlantUmlVer="1.2022.4"
+PlantUmlVer="1.2022.5"
 PlantUmlUrl="https://github.com/plantuml/plantuml/releases/download/v$PlantUmlVer/plantuml-$PlantUmlVer.jar"
 PlantumlTargetBin="/usr/local/bin/plantuml.jar"
 
