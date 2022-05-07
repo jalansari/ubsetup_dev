@@ -378,6 +378,7 @@ read -r -d '' TEXT_VimRC <<- EOTXT
 	set list
 	set nocompatible
 	autocmd BufWritePre * :%s/\s\+$//e
+	autocmd BufWritePost *.plantuml !java -jar $PlantumlTargetBin -verbose -tsvg <afile>
 EOTXT
 
 read -r -d '' TEXT_GitCfg <<- EOTXT
