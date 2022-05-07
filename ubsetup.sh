@@ -1887,6 +1887,7 @@ EOBLOCK
     installVSCodeExt "hashicorp.terraform"
     installVSCodeExt "eamodio.gitlens"
     installVSCodeExt "yzhang.markdown-all-in-one"
+    installVSCodeExt "ms-vscode.makefile-tools"
     installVSCodeExt "jebbs.plantuml"
 
     vsCodeWorkspaceFileExample="$userHomeDir/Documents/devProjects.code-workspace"
