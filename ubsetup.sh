@@ -752,8 +752,10 @@ read -r -d '' TEXT_VSCodeConfig <<- EOTXT
 	  "editor.detectIndentation": false,
 	  "[terraform]": {
 	    "editor.tabSize": 2
-	  }
+	  },
 	  "terminal.integrated.scrollback": 20000,
+	  "plantuml.render": "Local",
+	  "plantuml.jar": "$PlantumlTargetBin",
 	}
 EOTXT
 
@@ -1869,7 +1871,7 @@ if [ $? == 0 ]; then
 
     mkdir -p $VSCodeUsrDir
     VSCodeCfg="$VSCodeUsrDir/settings.json"
-    echo -e "$TEXT_VSCodeConfig" >> $VSCodeCfg
+    echo -e "$TEXT_VSCodeConfig" > $VSCodeCfg
     chown -R $userOfThisScript:$groupOfUserOfThisScript $VSCodeDir
 
     function installVSCodeExt()
@@ -1885,6 +1887,7 @@ EOBLOCK
     installVSCodeExt "hashicorp.terraform"
     installVSCodeExt "eamodio.gitlens"
     installVSCodeExt "yzhang.markdown-all-in-one"
+    installVSCodeExt "jebbs.plantuml"
 
     vsCodeWorkspaceFileExample="$userHomeDir/Documents/devProjects.code-workspace"
     [ ! -e "$vsCodeWorkspaceFileExample" ] \
