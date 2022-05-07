@@ -269,6 +269,7 @@ INSTALL_COMP_LIST_DESKTOP=(
                    "python3-tk"
                    "ncdu"
                    "libimage-exiftool-perl" # To read and modify/remove exif tags from photos.
+                   "ffmpeg"
                    "mkvtoolnix"
                   )
 
