@@ -40,8 +40,8 @@ VeraCryptUrl="https://launchpad.net/veracrypt/trunk/1.25.9/+download/$VeraCryptP
 # DockerComposeUrl="https://github.com/docker/compose/releases/latest/download/docker-compose-Linux-x86_64"
 DockerComposeUrl="https://github.com/docker/compose/releases/download/1.29.2/docker-compose-Linux-x86_64"
 
-TerraformPkg="terraform_1.1.3_linux_amd64.zip"
-TerraformUrl="https://releases.hashicorp.com/terraform/1.1.3/$TerraformPkg"
+TerraformPkg="terraform_1.1.9_linux_amd64.zip"
+TerraformUrl="https://releases.hashicorp.com/terraform/1.1.9/$TerraformPkg"
 
 # TerragruntUrl="https://github.com/gruntwork-io/terragrunt/releases/download/v0.36.3/terragrunt_linux_amd64"
 
