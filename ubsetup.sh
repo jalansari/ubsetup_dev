@@ -879,7 +879,7 @@ read -r -d '' TEXT_BashPythonToolAliases <<- "EOTXT"
 	alias cpr='____check_py_requirements____'
 
 	function ____cleanpydir____() {
-	    rm -rf testresults.xml .coverage .cache .pytest_cache htmlcov .hypothesis
+	    rm -rf testresults.xml .coverage .cache .pytest_cache htmlcov .hypothesis *.egg-info
 	    find . -name "__pycache__" -type d \
 	        -not -path "*/.venv/*" \
 	        -not -path "*/.git/*" \
