@@ -10,9 +10,9 @@ DebPackages=(
              ["code"]="https://code.visualstudio.com/sha/download?build=stable&os=linux-deb-x64;mscode.deb"
              ["vagrant"]="https://releases.hashicorp.com/vagrant/2.2.19/vagrant_2.2.19_x86_64.deb"
              ["dropbox"]="https://www.dropbox.com/download?dl=packages/ubuntu/dropbox_2020.03.04_amd64.deb"
-             ["draw.io"]="https://github.com/jgraph/drawio-desktop/releases/download/v18.0.1/drawio-amd64-18.0.1.deb"
+             ["draw.io"]="https://github.com/jgraph/drawio-desktop/releases/download/v18.0.6/drawio-amd64-18.0.6.deb"
              ["mysql-workbench-community"]="https://dev.mysql.com/get/Downloads/MySQLGUITools/mysql-workbench-community_8.0.29-1ubuntu20.04_amd64.deb"
-             ["slack-desktop"]="https://downloads.slack-edge.com/releases/linux/4.25.0/prod/x64/slack-desktop-4.25.0-amd64.deb"
+             ["slack-desktop"]="https://downloads.slack-edge.com/releases/linux/4.26.1/prod/x64/slack-desktop-4.26.1-amd64.deb"
             )
 
 InstallDir="/usr/share"
@@ -27,7 +27,7 @@ FossilScmPkg="fossil-linux-x64-2.18.tar.gz"
 FossilScmUrl="https://fossil-scm.org/home/uv/$FossilScmPkg"
 FossilInstallDir="$InstallDir/fossilscm"
 
-GoLangPkg="go1.18.1.linux-amd64.tar.gz"
+GoLangPkg="go1.18.2.linux-amd64.tar.gz"
 GoLangUrl="https://go.dev/dl/$GoLangPkg"
 GoPath="$UsrLocalDir/go"
 
@@ -56,11 +56,11 @@ PlantUmlVer="1.2022.5"
 PlantUmlUrl="https://github.com/plantuml/plantuml/releases/download/v$PlantUmlVer/plantuml-$PlantUmlVer.jar"
 PlantumlTargetBin="/usr/local/bin/plantuml.jar"
 
-AndroidPkg="android-studio-2021.1.1.23-linux.tar.gz"
-AndroidUrl="https://dl.google.com/dl/android/studio/ide-zips/2021.1.1.23/$AndroidPkg"
+AndroidPkg="android-studio-2021.2.1.14-linux.tar.gz"
+AndroidUrl="https://dl.google.com/dl/android/studio/ide-zips/2021.2.1.14/$AndroidPkg"
 AndroidInstallDir="$InstallDir/androidstudio"
 
-FlutterPkg="flutter_linux_2.10.5-stable.tar.xz"
+FlutterPkg="flutter_linux_3.0.1-stable.tar.xz"
 FlutterUrl="https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/$FlutterPkg"
 FlutterInstallDir="$InstallDir/flutterdev"
 
