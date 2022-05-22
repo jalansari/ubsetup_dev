@@ -873,6 +873,7 @@ read -r -d '' TEXT_BashPythonToolAliases <<- "EOTXT"
 	            newLine="${line/$vers/$ver_found}"
 	            echo "$newLine" >> "$reqsFileTmp"
 	        fi
+            sleep 0.2
 	    done
 	    test -f "$reqsFileTmp" && mv "$reqsFileTmp" "$reqsFile"
 	}
