@@ -855,17 +855,18 @@ read -r -d '' TEXT_BashPythonToolAliases <<- "EOTXT"
 	        reqsFile="requirements.txt";
 	    fi
 	    reqsFileTmp="$reqsFile.cprtmp"
-	    cat "$reqsFile" | while read -r line; do
+	    cat "$reqsFile" | while IFS='' read -r line; do
 	        pckg=$( echo "$line" | awk -F'(\\\\[.+\\\\])?[=~><]=' '{ print $1 }' )
 	        vers=$( echo "$line" | awk -F'[=~><]='                '{ print $2 }' )
 	        if [ "$pckg" == "" ] || [ "$vers" == "" ]; then
 	            echo "$line" >> "$reqsFileTmp"
 	            continue
 	        fi
-	        echo -n "$pckg : $vers"
-	        ver_found=$( yolk -V $pckg | awk -v envvar="$pckg" '{ if ($1==envvar) { print $2 } }' )
+	        pckg_no_spaces=$( echo $pckg )
+	        echo -n "$pckg_no_spaces : $vers"
+	        ver_found=$( yolk -V $pckg_no_spaces | awk -v envvar="$pckg_no_spaces" '{ if ($1==envvar) { print $2 } }' )
 	        if [ "$ver_found" == "" ]; then
-	            echo -e " - \033[1;31mNOT FOUND (try https://pypi.org/search/?q=$pckg)\033[0m"
+	            echo -e " - \033[1;31mNOT FOUND (try https://pypi.org/search/?q=$pckg_no_spaces)\033[0m"
 	            echo "$line" >> "$reqsFileTmp"
 	        else
 	            echo -n " - Latest version: $ver_found"
