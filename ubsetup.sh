@@ -40,8 +40,8 @@ VeraCryptUrl="https://launchpad.net/veracrypt/trunk/1.25.9/+download/$VeraCryptP
 # DockerComposeUrl="https://github.com/docker/compose/releases/latest/download/docker-compose-Linux-x86_64"
 DockerComposeUrl="https://github.com/docker/compose/releases/download/1.29.2/docker-compose-Linux-x86_64"
 
-TerraformPkg="terraform_1.1.9_linux_amd64.zip"
-TerraformUrl="https://releases.hashicorp.com/terraform/1.1.9/$TerraformPkg"
+TerraformPkg="terraform_1.2.1_linux_amd64.zip"
+TerraformUrl="https://releases.hashicorp.com/terraform/1.2.1/$TerraformPkg"
 
 # TerragruntUrl="https://github.com/gruntwork-io/terragrunt/releases/download/v0.36.3/terragrunt_linux_amd64"
 
@@ -56,8 +56,8 @@ PlantUmlVer="1.2022.5"
 PlantUmlUrl="https://github.com/plantuml/plantuml/releases/download/v$PlantUmlVer/plantuml-$PlantUmlVer.jar"
 PlantumlTargetBin="/usr/local/bin/plantuml.jar"
 
-AndroidPkg="android-studio-2021.2.1.14-linux.tar.gz"
-AndroidUrl="https://dl.google.com/dl/android/studio/ide-zips/2021.2.1.14/$AndroidPkg"
+AndroidPkg="android-studio-2021.2.1.15-linux.tar.gz"
+AndroidUrl="https://dl.google.com/dl/android/studio/ide-zips/2021.2.1.15/$AndroidPkg"
 AndroidInstallDir="$InstallDir/androidstudio"
 
 FlutterPkg="flutter_linux_3.0.1-stable.tar.xz"
