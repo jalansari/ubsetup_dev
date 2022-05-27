@@ -759,8 +759,10 @@ read -r -d '' TEXT_VSCodeConfig <<- EOTXT
 	  "plantuml.render": "Local",
 	  "plantuml.jar": "$PlantumlTargetBin",
 	  "cSpell.userWords": [
+	    "aiohttp",
 	    "asyncio",
 	    "boto",
+	    "creds",
 	    "dockerignore",
 	    "emea",
 	    "entrypoint",
