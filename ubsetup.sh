@@ -272,6 +272,7 @@ INSTALL_COMP_LIST_DESKTOP=(
                    "ifmetric" # Used to set priority interface for VPN connections.
                    "ffmpeg"
                    "mkvtoolnix"
+                   "gromit-mpx"
                   )
 
 INSTAL_PIP2n3_MAP_DESKTOP=(
