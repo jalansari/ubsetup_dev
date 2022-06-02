@@ -10,7 +10,7 @@ DebPackages=(
              ["code"]="https://code.visualstudio.com/sha/download?build=stable&os=linux-deb-x64;mscode.deb"
              ["vagrant"]="https://releases.hashicorp.com/vagrant/2.2.19/vagrant_2.2.19_x86_64.deb"
              ["dropbox"]="https://www.dropbox.com/download?dl=packages/ubuntu/dropbox_2020.03.04_amd64.deb"
-             ["draw.io"]="https://github.com/jgraph/drawio-desktop/releases/download/v18.0.6/drawio-amd64-18.0.6.deb"
+             ["draw.io"]="https://github.com/jgraph/drawio-desktop/releases/download/v18.1.3/drawio-amd64-18.1.3.deb"
              ["mysql-workbench-community"]="https://dev.mysql.com/get/Downloads/MySQLGUITools/mysql-workbench-community_8.0.29-1ubuntu20.04_amd64.deb"
              ["slack-desktop"]="https://downloads.slack-edge.com/releases/linux/4.26.1/prod/x64/slack-desktop-4.26.1-amd64.deb"
             )
@@ -18,16 +18,16 @@ DebPackages=(
 InstallDir="/usr/share"
 UsrLocalDir="/usr/local"
 
-NodeJsVer="node-v16.15.0-linux-x64"
+NodeJsVer="node-v16.15.1-linux-x64"
 NodeJsPkg="$NodeJsVer.tar.xz"
-NodeJsUrl="https://nodejs.org/dist/v16.15.0/$NodeJsPkg"
+NodeJsUrl="https://nodejs.org/dist/v16.15.1/$NodeJsPkg"
 NodeInstallDir="$InstallDir/nodejs"
 
 FossilScmPkg="fossil-linux-x64-2.18.tar.gz"
 FossilScmUrl="https://fossil-scm.org/home/uv/$FossilScmPkg"
 FossilInstallDir="$InstallDir/fossilscm"
 
-GoLangPkg="go1.18.2.linux-amd64.tar.gz"
+GoLangPkg="go1.18.3.linux-amd64.tar.gz"
 GoLangUrl="https://go.dev/dl/$GoLangPkg"
 GoPath="$UsrLocalDir/go"
 
