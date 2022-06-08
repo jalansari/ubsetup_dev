@@ -749,7 +749,7 @@ read -r -d '' TEXT_VSCodeConfig <<- EOTXT
 	    "strings": true
 	  },
 	  "workbench.startupEditor": "none",
-	  "telemetry.enableTelemetry": false,
+	  "telemetry.telemetryLevel": "off",
 	  "files.trimTrailingWhitespace": true,
 	  "diffEditor.ignoreTrimWhitespace": false,
 	  "editor.detectIndentation": false,
