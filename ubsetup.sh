@@ -43,7 +43,7 @@ DockerComposeUrl="https://github.com/docker/compose/releases/download/1.29.2/doc
 TerraformPkg="terraform_1.2.1_linux_amd64.zip"
 TerraformUrl="https://releases.hashicorp.com/terraform/1.2.1/$TerraformPkg"
 
-# TerragruntUrl="https://github.com/gruntwork-io/terragrunt/releases/download/v0.36.3/terragrunt_linux_amd64"
+# TerragruntUrl="https://github.com/gruntwork-io/terragrunt/releases/download/v0.37.1/terragrunt_linux_amd64"
 
 # ConfiglintPkg="config-lint_Linux_x86_64.tar.gz"
 # ConfiglintUrl="https://github.com/stelligent/config-lint/releases/download/v1.6.0/$ConfiglintPkg"
