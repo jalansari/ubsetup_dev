@@ -273,6 +273,9 @@ INSTALL_COMP_LIST_DESKTOP=(
                    "ffmpeg"
                    "mkvtoolnix"
                    "gromit-mpx"
+                   "libcurl4-openssl-dev" # Needed by pycurl, in case it is required in any development.
+                   "libssl-dev" # Needed by pycurl, in case it is required in any development.
+                   "libpq-dev" #  Needed by psycopg2, in case it is required in any development.
                   )
 
 INSTAL_PIP2n3_MAP_DESKTOP=(
