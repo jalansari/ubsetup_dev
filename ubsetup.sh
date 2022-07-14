@@ -874,21 +874,21 @@ EOTXT
 read -r -d '' TEXT_BashPythonToolAliases <<- "EOTXT"
 	function ____check_py_requirements____() {
 	    reqsFile="$1"
-	    if [ ! -f "$reqsFile" ]; then
+	    if [[ ! -f "$reqsFile" ]]; then
 	        reqsFile="requirements.txt";
 	    fi
 	    reqsFileTmp="$reqsFile.cprtmp"
 	    cat "$reqsFile" | while IFS='' read -r line; do
 	        pckg=$( echo "$line" | awk -F'(\\\\[.+\\\\])?[=~><]=' '{ print $1 }' )
 	        vers=$( echo "$line" | awk -F'[=~><]='                '{ print $2 }' )
-	        if [ "$pckg" == "" ] || [ "$vers" == "" ]; then
+	        if [[ "$pckg" == "" ]] || [[ "$vers" == "" ]]; then
 	            echo "$line" >> "$reqsFileTmp"
 	            continue
 	        fi
 	        pckg_no_spaces=$( echo $pckg )
 	        echo -n "$pckg_no_spaces : $vers"
 	        ver_found=$( yolk -V $pckg_no_spaces | awk -v envvar="$pckg_no_spaces" '{ if ($1==envvar) { print $2 } }' )
-	        if [ "$ver_found" == "" ]; then
+	        if [[ "$ver_found" == "" ]]; then
 	            echo -e " - \033[1;31mNOT FOUND (try https://pypi.org/search/?q=$pckg_no_spaces)\033[0m"
 	            echo "$line" >> "$reqsFileTmp"
 	        else
@@ -904,7 +904,7 @@ read -r -d '' TEXT_BashPythonToolAliases <<- "EOTXT"
 	alias cpr='____check_py_requirements____'
 
 	function ____cleanpydir____() {
-	    rm -rf testresults.xml .coverage .cache .pytest_cache htmlcov .hypothesis *.egg-info
+	    rm -rf testresults.xml .coverage .cache .pytest_cache htmlcov .hypothesis "*.egg-info"
 	    find . -name "__pycache__" -type d \
 	        -not -path "*/.venv/*" \
 	        -not -path "*/.git/*" \
