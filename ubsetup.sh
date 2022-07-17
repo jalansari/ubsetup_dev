@@ -723,22 +723,6 @@ read -r -d '' TEXT_MozillaCrashReporter <<- EOTXT
 	SubmitReport=0
 EOTXT
 
-read -r -d '' TEXT_AtomEditorConfig <<- EOTXT
-	"*":
-	  core:
-	    telemetryConsent: "no"
-	  editor:
-	    invisibles:
-	      eol: "¶"
-	    showInvisibles: true
-	    showIndentGuide: true
-	    tabLength: 4
-	    tabType: "soft"
-	    scrollPastEnd: true
-	  welcome:
-	    showOnStartup: false
-EOTXT
-
 read -r -d '' TEXT_VSCodeConfig <<- EOTXT
 	{
 	  "editor.fontFamily": "'Ubuntu Mono'",
@@ -1910,18 +1894,6 @@ if [ $? == 0 ]; then
     launchAndKillAppAsUser "deluge" $userOfThisScript
     PRINTLOG "Updating deluge prefs: [$delugeCfg]"
     sed -i.bak -r 's|(.*close_to_tray.*)false(.*)|\1true\2|;' $delugeCfg
-fi
-
-checkDebPkgInstalled "atom"
-if [ $? == 0 ]; then
-    AtomUsrDir="$userHomeDir/.atom"
-    AtomCfg="$AtomUsrDir/config.cson"
-    if [ ! -f $AtomCfg ]; then
-        PRINTLOG "Configuring Atom editor."
-        mkdir -p $AtomUsrDir
-        echo -e "$TEXT_AtomEditorConfig" >> $AtomCfg
-        chown -R $userOfThisScript:$groupOfUserOfThisScript $AtomUsrDir
-    fi
 fi
 
 checkDebPkgInstalled "code"
