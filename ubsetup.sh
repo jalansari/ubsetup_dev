@@ -1843,7 +1843,6 @@ sed -i.bak -r \
 '/alias cleanpyd/d;'\
 's/(HISTFILESIZE)=.*/\1=5000/; s/(HISTSIZE)=.*/\1=2000/;'\
  $BashrcForAll
-# '/export PYTHONPATH=/d;'\
 
 echo -e "\
 $TEXT_BashToolAliases
