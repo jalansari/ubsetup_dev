@@ -1654,7 +1654,7 @@ installPythonPipPackages INSTAL_PIP2n3_MAP[@]
 ########################################
 
 if [ "$InstallDocker" == true ]; then
-    dc_targetbin="/usr/local/bin/docker-compose"
+    dc_targetbin="/usr/libexec/docker/cli-plugins/docker-compose"
     test ! -z $DockerComposeUrl \
         && wget $DockerComposeUrl -O "$dc_targetbin" \
         && chmod +x "$dc_targetbin"
