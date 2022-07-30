@@ -581,6 +581,9 @@ read -r -d '' TEXT_CinnamonDesktopGSettingsConfig <<- EOTXT
 	[org.cinnamon.desktop.screensaver]
 	use-custom-format=true
 	date-format='%a %d %b %Y'
+	time-format='%H:%M'
+	font-date='Ubuntu 30'
+	font-time='Ubuntu 60'
 	lock-enabled=true
 	lock-delay=uint32 2
 
