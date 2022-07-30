@@ -482,6 +482,9 @@ read -r -d '' TEXT_CinnamonDesktopIfGSettingsConfig <<- EOTXT
 	[org.cinnamon.theme]
 	name='Mint-Y-Dark'
 
+	[org.gnome.desktop.interface]
+	clock-format='24h'
+
 	[org.cinnamon.desktop.interface]
 	icon-theme='Mint-Y-Dark'
 	gtk-theme='Mint-Y-Dark'
