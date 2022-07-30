@@ -755,7 +755,7 @@ read -r -d '' TEXT_VSCodeConfig <<- EOTXT
 	  "workbench.startupEditor": "none",
 	  "telemetry.telemetryLevel": "off",
 	  "files.trimTrailingWhitespace": true,
-	  "files.autoSave": "onFocusChange",
+	  "files.autoSave": "onWindowChange",
 	  "diffEditor.ignoreTrimWhitespace": false,
 	  "editor.detectIndentation": false,
 	  "[terraform]": {
