@@ -609,6 +609,11 @@ read -r -d '' TEXT_XedGSettingsConfig <<- EOTXT
 	wrap-mode='none'
 	highlight-current-line=true
 	scheme='oblivion'
+	draw-whitespace=true
+	draw-whitespace-inside=true
+	draw-whitespace-leading=true
+	draw-whitespace-newline=false
+	draw-whitespace-trailing=true
 
 	[org.x.editor.preferences.ui]
 	enable-tab-scrolling=false
