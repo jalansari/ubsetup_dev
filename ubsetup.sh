@@ -592,6 +592,9 @@ read -r -d '' TEXT_CinnamonDesktopGSettingsConfig <<- EOTXT
 
 	[org.cinnamon.desktop.notifications]
 	remove-old=false
+
+	[com.linuxmint.report]
+	ignored-reports=['install-language-packs', 'install-media-codecs', 'timeshift-no-setup']
 EOTXT
 
 read -r -d '' TEXT_XedGSettingsConfig <<- EOTXT
