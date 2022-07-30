@@ -589,6 +589,9 @@ read -r -d '' TEXT_CinnamonDesktopGSettingsConfig <<- EOTXT
 
 	[org.cinnamon.desktop.a11y.keyboard]
 	togglekeys-enable-osd=true
+
+	[org.cinnamon.desktop.notifications]
+	remove-old=false
 EOTXT
 
 read -r -d '' TEXT_XedGSettingsConfig <<- EOTXT
