@@ -23,7 +23,7 @@ NodeJsPkg="$NodeJsVer.tar.xz"
 NodeJsUrl="https://nodejs.org/dist/v16.16.0/$NodeJsPkg"
 NodeInstallDir="$InstallDir/nodejs"
 
-FossilScmPkg="fossil-linux-x64-2.18.tar.gz"
+FossilScmPkg="fossil-linux-x64-2.19.tar.gz"
 FossilScmUrl="https://fossil-scm.org/home/uv/$FossilScmPkg"
 FossilInstallDir="$InstallDir/fossilscm"
 
@@ -40,8 +40,8 @@ VeraCryptUrl="https://launchpad.net/veracrypt/trunk/1.25.9/+download/$VeraCryptP
 DockerComposeUrl="https://github.com/docker/compose/releases/latest/download/docker-compose-Linux-x86_64"
 # DockerComposeUrl="https://github.com/docker/compose/releases/download/1.29.2/docker-compose-Linux-x86_64"
 
-TerraformPkg="terraform_1.2.5_linux_amd64.zip"
-TerraformUrl="https://releases.hashicorp.com/terraform/1.2.5/$TerraformPkg"
+TerraformPkg="terraform_1.2.6_linux_amd64.zip"
+TerraformUrl="https://releases.hashicorp.com/terraform/1.2.6/$TerraformPkg"
 
 # TerragruntUrl="https://github.com/gruntwork-io/terragrunt/releases/download/v0.37.1/terragrunt_linux_amd64"
 
