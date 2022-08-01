@@ -543,7 +543,7 @@ EOTXT
 
 read -r -d '' TEXT_CinnamonPowerGSettingsConfig <<- EOTXT
 	[org.cinnamon.settings-daemon.plugins.power]
-	lock-on-suspend=true\n
+	lock-on-suspend=true
 	critical-battery-action='nothing'
 	sleep-inactive-ac-timeout=0
 	sleep-inactive-battery-timeout=0
