@@ -447,13 +447,13 @@ read -r -d '' TEXT_NemoGSettingsConfig <<- EOTXT
 	show-full-path-titles=true
 	quick-renames-with-pause-in-between=true
 	show-advanced-permissions=true
-	show-home-icon-toolbar=true
-	show-new-folder-icon-toolbar=true
-	show-search-icon-toolbar=true
 	show-compact-view-icon-toolbar=false
+	show-home-icon-toolbar=true
 	show-icon-view-icon-toolbar=false
 	show-list-view-icon-toolbar=false
+	show-new-folder-icon-toolbar=true
 	show-open-in-terminal-toolbar=true
+	show-search-icon-toolbar=true
 	date-format='iso'
 
 	[org.nemo.list-view]
