@@ -574,6 +574,8 @@ read -r -d '' TEXT_CinnamonDesktopGSettingsConfig <<- EOTXT
 	[org.cinnamon]
 	startup-animation=false
 	desklet-decorations=0
+	desklet-snap=true
+	desklet-snap-interval=25
 	enabled-desklets=['clock@cinnamon.org:0:170:10']
 	panels-height=['1:$CinnamonPanelHeight']
 	panels-autohide=['1:$CinnamonPanelAutohide']
