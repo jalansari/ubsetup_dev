@@ -27,7 +27,7 @@ FossilScmPkg="fossil-linux-x64-2.19.tar.gz"
 FossilScmUrl="https://fossil-scm.org/home/uv/$FossilScmPkg"
 FossilInstallDir="$InstallDir/fossilscm"
 
-GoLangPkg="go1.18.4.linux-amd64.tar.gz"
+GoLangPkg="go1.19.linux-amd64.tar.gz"
 GoLangUrl="https://go.dev/dl/$GoLangPkg"
 GoPath="$UsrLocalDir/go"
 
@@ -43,7 +43,7 @@ DockerComposeUrl="https://github.com/docker/compose/releases/latest/download/doc
 TerraformPkg="terraform_1.2.6_linux_amd64.zip"
 TerraformUrl="https://releases.hashicorp.com/terraform/1.2.6/$TerraformPkg"
 
-# TerragruntUrl="https://github.com/gruntwork-io/terragrunt/releases/download/v0.37.1/terragrunt_linux_amd64"
+# TerragruntUrl="https://github.com/gruntwork-io/terragrunt/releases/download/v0.38.5/terragrunt_linux_amd64"
 
 # ConfiglintPkg="config-lint_Linux_x86_64.tar.gz"
 # ConfiglintUrl="https://github.com/stelligent/config-lint/releases/download/v1.6.0/$ConfiglintPkg"
