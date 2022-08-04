@@ -207,7 +207,6 @@ INSTALL_COMP_LIST=(
                    "vim"
                    "htop"
                    "unzip"
-                   "python-pip" # Pip package management tools.
                    "python3-pip"
                    "python3-venv"
                   )
@@ -267,9 +266,8 @@ INSTALL_COMP_LIST_DESKTOP=(
                    "libopengl0" # Needed by mysql-workbench
                    "libpcrecpp0v5" # Needed by mysql-workbench
                    "libappindicator3-1" # Needed for draw.io
-                   "ipython"
-                   "python-tk" # Toolkit required for matplotlib graphics.
-                   "python3-tk"
+                   "ipython3"
+                   "python3-tk" # Toolkit required for matplotlib graphics.
                    "ncdu"
                    "libimage-exiftool-perl" # To read and modify/remove exif tags from photos.
                    "ifmetric" # Used to set priority interface for VPN connections.
