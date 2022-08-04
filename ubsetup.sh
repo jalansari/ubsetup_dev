@@ -272,6 +272,7 @@ INSTALL_COMP_LIST_DESKTOP=(
                    "ifmetric" # Used to set priority interface for VPN connections.
                    "ffmpeg"
                    "mkvtoolnix"
+                   "subtitleeditor"
                    "gromit-mpx"
                    "libcurl4-openssl-dev" # Needed by pycurl, in case it is required in any development.
                    "libssl-dev" # Needed by pycurl, in case it is required in any development.
