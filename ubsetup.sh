@@ -553,7 +553,7 @@ read -r -d '' TEXT_CinnamonMouseGSettingsConfig <<- EOTXT
 
 	[org.cinnamon.desktop.peripherals.mouse]
 	middle-click-emulation=false
-	natural-scroll=true
+	natural-scroll=false
 EOTXT
 
 read -r -d '' TEXT_CinnamonPowerGSettingsConfig <<- EOTXT
