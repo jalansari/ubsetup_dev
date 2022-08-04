@@ -493,7 +493,6 @@ EOTXT
 
 read -r -d '' TEXT_CinnamonDesktopIfGSettingsConfig <<- EOTXT
 	[org.cinnamon.desktop.wm.preferences]
-	theme='Mint-X'
 	num-workspaces=$WorkspacesNumberOf
 	mouse-button-modifier='<Super>'
 
@@ -508,7 +507,6 @@ read -r -d '' TEXT_CinnamonDesktopIfGSettingsConfig <<- EOTXT
 	gtk-theme='Mint-Y-Dark'
 	clock-show-date=true
 	first-day-of-week=1
-	scaling-factor=uint32 0
 EOTXT
 
 read -r -d '' TEXT_CinnamonKeyboardShortCutsConfig <<- EOTXT
@@ -546,17 +544,16 @@ read -r -d '' TEXT_CinnamonSoundsGSettingsConfig <<- EOTXT
 EOTXT
 
 read -r -d '' TEXT_CinnamonMouseGSettingsConfig <<- EOTXT
-	[org.cinnamon.settings-daemon.peripherals.touchpad]
-	natural-scroll=false
+	[org.cinnamon.desktop.peripherals.touchpad]
+	click-method='fingers'
 	disable-while-typing=true
-	horizontal-scrolling=true
-	clickpad-click=2
-	custom-acceleration=true
-	motion-acceleration=8.0
-	motion-threshold=1
-
-	[org.cinnamon.settings-daemon.peripherals.mouse]
 	natural-scroll=false
+	speed=0.575
+	tap-to-click=true
+
+	[org.cinnamon.desktop.peripherals.mouse]
+	middle-click-emulation=false
+	natural-scroll=true
 EOTXT
 
 read -r -d '' TEXT_CinnamonPowerGSettingsConfig <<- EOTXT
