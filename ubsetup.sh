@@ -421,6 +421,8 @@ EOTXT
 
 read -r -d '' TEXT_TerminatorCfg <<- EOTXT
 	[global_config]
+	    case_sensitive = False
+	    invert_search = True
 	[keybindings]
 	[profiles]
 	    [[default]]
