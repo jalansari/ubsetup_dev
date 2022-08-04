@@ -260,8 +260,7 @@ INSTALL_COMP_LIST_DESKTOP=(
                    "libpango-1.0-0" # Needed by Dropbox installer.
                    "libpango1.0-0" # Needed by Dropbox installer.
                    "libzip4"
-                   "libproj15" # Needed by mysql-workbench (ubuntu 20.x)
-                   "libproj19" # Needed by mysql-workbench (ubuntu 21.x)
+                   "libproj22" # Needed by mysql-workbench (ubuntu 22.04)
                    "proj-data" # Needed by mysql-workbench
                    "libopengl0" # Needed by mysql-workbench
                    "libpcrecpp0v5" # Needed by mysql-workbench
