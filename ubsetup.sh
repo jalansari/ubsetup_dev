@@ -56,8 +56,8 @@ PlantUmlVer="1.2022.6"
 PlantUmlUrl="https://github.com/plantuml/plantuml/releases/download/v$PlantUmlVer/plantuml-$PlantUmlVer.jar"
 PlantumlTargetBin="/usr/local/bin/plantuml.jar"
 
-AndroidPkg="android-studio-2021.2.1.15-linux.tar.gz"
-AndroidUrl="https://dl.google.com/dl/android/studio/ide-zips/2021.2.1.15/$AndroidPkg"
+AndroidPkg="android-studio-2021.2.1.16-linux.tar.gz"
+AndroidUrl="https://dl.google.com/dl/android/studio/ide-zips/2021.2.1.16/$AndroidPkg"
 AndroidInstallDir="$InstallDir/androidstudio"
 
 FlutterPkg="flutter_linux_3.0.5-stable.tar.xz"
