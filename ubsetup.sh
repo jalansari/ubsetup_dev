@@ -37,7 +37,7 @@ TelegramPackageHttpURL="https://telegram.org/dl/desktop/linux"
 VeraCryptPkg="veracrypt-1.25.9-setup.tar.bz2"
 VeraCryptUrl="https://launchpad.net/veracrypt/trunk/1.25.9/+download/$VeraCryptPkg"
 
-DockerComposeUrl="https://github.com/docker/compose/releases/latest/download/docker-compose-Linux-x86_64"
+# DockerComposeUrl="https://github.com/docker/compose/releases/latest/download/docker-compose-Linux-x86_64"
 # DockerComposeUrl="https://github.com/docker/compose/releases/download/1.29.2/docker-compose-Linux-x86_64"
 
 TerraformPkg="terraform_1.2.6_linux_amd64.zip"
@@ -1598,6 +1598,7 @@ if [ "$InstallDocker" == true ]; then
                         "docker-ce"
                         "docker-ce-cli"
                         "containerd.io"
+                        "docker-compose-plugin"
                        )
 fi
 
@@ -1678,10 +1679,10 @@ installPythonPipPackages INSTAL_PIP2n3_MAP[@]
 ########################################
 
 if [ "$InstallDocker" == true ]; then
-    dc_targetbin="/usr/libexec/docker/cli-plugins/docker-compose"
-    test ! -z $DockerComposeUrl \
-        && wget $DockerComposeUrl -O "$dc_targetbin" \
-        && chmod +x "$dc_targetbin"
+    # dc_targetbin="/usr/libexec/docker/cli-plugins/docker-compose"
+    # test ! -z $DockerComposeUrl \
+    #     && wget $DockerComposeUrl -O "$dc_targetbin" \
+    #     && chmod +x "$dc_targetbin"
 
     if [ "$InstallGitlabRunner" == true ]; then
         GitLabRunnerPath="/usr/local/bin/gitlab-runner"
