@@ -803,6 +803,7 @@ read -r -d '' TEXT_VSCodeConfig <<- EOTXT
 	    "pytest",
 	    "roadmap",
 	    "scikit",
+	    "scrollback",
 	    "sqlalchemy",
 	    "templating",
 	    "urllib",
