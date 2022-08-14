@@ -264,7 +264,6 @@ INSTALL_COMP_LIST_DESKTOP=(
                    "proj-data" # Needed by mysql-workbench
                    "libopengl0" # Needed by mysql-workbench
                    "libpcrecpp0v5" # Needed by mysql-workbench
-                   "libappindicator3-1" # Needed for draw.io
                    "ipython3"
                    "python3-tk" # Toolkit required for matplotlib graphics.
                    "ncdu"
