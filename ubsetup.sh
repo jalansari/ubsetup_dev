@@ -756,6 +756,7 @@ read -r -d '' TEXT_VSCodeConfig <<- EOTXT
 	    "strings": true
 	  },
 	  "workbench.startupEditor": "none",
+	  "git.mergeEditor": false,
 	  "telemetry.telemetryLevel": "off",
 	  "files.trimTrailingWhitespace": true,
 	  "files.autoSave": "onWindowChange",
