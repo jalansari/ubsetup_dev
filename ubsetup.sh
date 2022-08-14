@@ -761,10 +761,10 @@ read -r -d '' TEXT_VSCodeConfig <<- EOTXT
 	  "files.autoSave": "onWindowChange",
 	  "diffEditor.ignoreTrimWhitespace": false,
 	  "editor.detectIndentation": false,
+	  "terminal.integrated.scrollback": 20000,
 	  "[terraform]": {
 	    "editor.tabSize": 2
 	  },
-	  "terminal.integrated.scrollback": 20000,
 	  "plantuml.render": "Local",
 	  "plantuml.jar": "$PlantumlTargetBin",
 	  "cSpell.userWords": [
