@@ -1593,7 +1593,7 @@ if [ "$InstallDocker" == true ]; then
                         "https://download.docker.com/linux/ubuntu/gpg"
                        )
     # $(lsb_release -cs) should give the codename, but on linuxmint, it will give the mint codename (e.g. tessa) and not the Ubuntu one.
-    DebSources["deb [arch=amd64] https://download.docker.com/linux/ubuntu $UbuntuReleaseName stable"]="/etc/apt/sources.list.d/docker.list"
+    DebSources["deb [arch=$(dpkg --print-architecture)] https://download.docker.com/linux/ubuntu $UbuntuReleaseName stable"]="/etc/apt/sources.list.d/docker.list"
     INSTALL_COMP_LIST+=(
                         "docker-ce"
                         "docker-ce-cli"
