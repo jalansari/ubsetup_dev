@@ -838,7 +838,6 @@ read -r -d '' TEXT_BashToolAliases <<- "EOTXT"
 	alias dnuke="docker system prune -af &&  docker system prune --volumes -f"
 	alias dlistall="docker ps -a && docker images -a"
 	alias dstopall="docker kill $(docker ps -q)"
-	alias docker-compose="docker compose"
 	alias cleantf='find . -type f -name .terraform.lock* | xargs -I fl bash -c "cd \$( dirname fl ) && pwd && rm -rf .terraform*"'
 	stty -ixon # Disable xon/off flow control, as it clashes with history search (Ctrl-s)
 	set -o vi
@@ -1683,6 +1682,11 @@ if [ "$InstallDocker" == true ]; then
     # test ! -z $DockerComposeUrl \
     #     && wget $DockerComposeUrl -O "$dc_targetbin" \
     #     && chmod +x "$dc_targetbin"
+
+    # Wrapper docker compose for backward compatibility
+    DockerComposeOldCommand="/usr/bin/docker-compose"
+    echo 'docker compose "$@"' > "$DockerComposeOldCommand" \
+        && chmod a+x "$DockerComposeOldCommand"
 
     if [ "$InstallGitlabRunner" == true ]; then
         GitLabRunnerPath="/usr/local/bin/gitlab-runner"
