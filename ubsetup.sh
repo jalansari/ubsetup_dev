@@ -146,6 +146,7 @@ NumiNotifyWatches=524288
 SLEEP_AFTER_INSTALL_REQUEST="0.2"
 
 
+AptKeyringsDir="/usr/share/keyrings/ubsetup"
 UbuntuReleaseName=$( awk -F"=" '/^UBUNTU_CODENAME/ {print $2;}' /etc/os-release )
 
 
@@ -285,11 +286,11 @@ INSTAL_PIP2n3_MAP_DESKTOP=(
 
 declare -A DebSources
 DebSources=(
-            ["deb [arch=amd64] https://dl.google.com/linux/chrome/deb/ stable main"]="/etc/apt/sources.list.d/google.list" # google-chrome
+            ["deb [arch=$(dpkg --print-architecture) signed-by=$AptKeyringsDir/chrome.gpg] https://dl.google.com/linux/chrome/deb/ stable main"]="/etc/apt/sources.list.d/google.list" # google-chrome
            )
 
 ADD_APT_KEYS_LIST=(
-                   "https://dl.google.com/linux/linux_signing_key.pub" # google-chrome
+                   "https://dl.google.com/linux/linux_signing_key.pub;chrome.gpg" # google-chrome
                   )
 
 # List of PPA repositories to be added.
@@ -1147,12 +1148,15 @@ function removeFromPathGlobally()
 function addAptKeys()
 {   listOfKeys=("${!1}")
     if [ ${#listOfKeys[@]} != 0 ]; then
-        PRINTLOG "APT Keys to be added:"
+        PRINTLOG "APT Keys to be added into [$AptKeyringsDir]:"
         printf "        %s\n" "${listOfKeys[@]}"
         for item in "${listOfKeys[@]}"
         do
-            PRINTLOG "ADDING KEY: [$item]"
-            wget -q -O - $item | sudo apt-key add - > /dev/null
+            IFS=';' read -ra keyUrlDestArray <<< "$item"
+            keyUrl="${keyUrlDestArray[0]}"
+            keyDest="${keyUrlDestArray[1]}"
+            PRINTLOG "ADDING KEY: [$keyUrl] -> [$keyDest]"
+            wget -q -O - "$keyUrl" | gpg --dearmor --yes -o "$AptKeyringsDir/$keyDest"
         done
     fi
 }
@@ -1169,13 +1173,19 @@ function addDebSource()
 }
 
 function removeDebSourceIfDup()
-{   fileSrc="$2"
-    numgrepped=`grep -rF "$1" $(dirname "$fileSrc") | wc -l`
-    PRINTLOG "    <$numgrepped> sources found."
-    if [ $numgrepped -gt 1 ]; then
-        PRINTLOG "    Removing file."
-        rm "$fileSrc"
-    fi
+{   debSourceSpecifier="$1"
+    fileSrc="$2"
+    searchStrRegex="${debSourceSpecifier%[*}.*${debSourceSpecifier#*]}"
+    PRINTLOG "    Searching for <$searchStrRegex>."
+    greppedFiles=($(grep -lre "$searchStrRegex" $(dirname "$fileSrc")))
+    PRINTLOG "    <${#greppedFiles[@]}> sources found."
+    for a_file in "${greppedFiles[@]}"
+    do
+        if [[ "$a_file" != "$fileSrc" ]]; then
+            PRINTLOG "    Removing file <$a_file>."
+            rm "$a_file"
+        fi
+    done
 }
 
 function iterAssociativeArrAndCall()
@@ -1615,10 +1625,10 @@ fi
 
 if [ "$InstallDocker" == true ]; then
     ADD_APT_KEYS_LIST+=(
-                        "https://download.docker.com/linux/ubuntu/gpg"
+                        "https://download.docker.com/linux/ubuntu/gpg;docker.gpg"
                        )
     # $(lsb_release -cs) should give the codename, but on linuxmint, it will give the mint codename (e.g. tessa) and not the Ubuntu one.
-    DebSources["deb [arch=$(dpkg --print-architecture)] https://download.docker.com/linux/ubuntu $UbuntuReleaseName stable"]="/etc/apt/sources.list.d/docker.list"
+    DebSources["deb [arch=$(dpkg --print-architecture) signed-by=$AptKeyringsDir/docker.gpg] https://download.docker.com/linux/ubuntu $UbuntuReleaseName stable"]="/etc/apt/sources.list.d/docker.list"
     INSTALL_COMP_LIST+=(
                         "docker-ce"
                         "docker-ce-cli"
@@ -1629,11 +1639,11 @@ fi
 
 if [ "$InstallRabbitMq" == true ]; then
     ADD_APT_KEYS_LIST+=(
-                        "https://packages.erlang-solutions.com/ubuntu/erlang_solutions.asc"
-                        "https://dl.bintray.com/rabbitmq/Keys/rabbitmq-release-signing-key.asc"
+                        "https://packages.erlang-solutions.com/ubuntu/erlang_solutions.asc;rabbitmq-erlang.gpg"
+                        "https://dl.bintray.com/rabbitmq/Keys/rabbitmq-release-signing-key.asc;rabbitmq.gpg"
                        )
-    DebSources["deb https://packages.erlang-solutions.com/ubuntu $UbuntuReleaseName contrib"]="/etc/apt/sources.list.d/erlang.list"
-    DebSources["deb https://dl.bintray.com/rabbitmq/debian $UbuntuReleaseName main"]="/etc/apt/sources.list.d/bintray.rabbitmq.list"
+    DebSources["deb [signed-by=$AptKeyringsDir/rabbitmq-erlang.gpg] https://packages.erlang-solutions.com/ubuntu $UbuntuReleaseName contrib"]="/etc/apt/sources.list.d/erlang.list"
+    DebSources["deb [signed-by=$AptKeyringsDir/rabbitmq.gpg] https://dl.bintray.com/rabbitmq/debian $UbuntuReleaseName main"]="/etc/apt/sources.list.d/bintray.rabbitmq.list"
 
     INSTALL_COMP_LIST+=(
                         "rabbitmq-server"
@@ -1642,11 +1652,11 @@ fi
 
 if [ "$InstallTorDaemon" == true ]; then
     ADD_APT_KEYS_LIST+=(
-                        "https://deb.torproject.org/torproject.org/A3C4F0F979CAA22CDBA8F512EE8CBC9E886DDD89.asc"
+                        "https://deb.torproject.org/torproject.org/A3C4F0F979CAA22CDBA8F512EE8CBC9E886DDD89.asc;tor-archive-keyring.gpg"
                        )
 
-    DebSources["deb https://deb.torproject.org/torproject.org $UbuntuReleaseName main"]="/etc/apt/sources.list.d/tord.list"
-    DebSources["deb-src https://deb.torproject.org/torproject.org $UbuntuReleaseName main"]="/etc/apt/sources.list.d/tord.list"
+    DebSources["deb [arch=$(dpkg --print-architecture) signed-by=$AptKeyringsDir/tor-archive-keyring.gpg] https://deb.torproject.org/torproject.org $UbuntuReleaseName main"]="/etc/apt/sources.list.d/tord.list"
+    DebSources["deb-src [arch=$(dpkg --print-architecture) signed-by=$AptKeyringsDir/tor-archive-keyring.gpg] https://deb.torproject.org/torproject.org $UbuntuReleaseName main"]="/etc/apt/sources.list.d/tord.list"
 
     INSTALL_COMP_LIST+=(
                         "tor"
@@ -1676,6 +1686,8 @@ if [ $(( $RequestOptions & $OPT_INSTAL )) != $OPT_INSTAL ]; then
     exit 0
 fi
 
+
+mkdir -p $AptKeyringsDir
 
 addAptKeys ADD_APT_KEYS_LIST[@]
 addDebSourcestoSourceLists "$(declare -p DebSources)"
