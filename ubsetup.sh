@@ -343,6 +343,7 @@ Requests:
 --rabbit : Install RabbitMq, with its Erlang dependency.
 --tor    : Install Tor Daemon, which listens on port 9050.
 --flutter: Install majority of components to get Flutter setup.
+--ov24   : Install Openvpn 2.4, using debian's update-alternatives.
 
 Configuration options:
 -un      : Configure full name for the user running this script.
@@ -358,7 +359,7 @@ If no options are specified, default behaviour is to remove components
 (i.e. same as using -r option alone).
 
 Example command:
-sudo ./ubsetup.sh -a --docker -un "<FULL_NAME>" -ue "<EMAIL>" -ug $( id -g -n $SUDO_USER ) 2>&1 | tee ubsetup.sh.log
+sudo ./ubsetup.sh -a --docker -un "<FULL_NAME>" -ue "<EMAIL>" -ug $( id -g -n $SUDO_USER ) --ov24 2>&1 | tee ubsetup.sh.log
 EOTXT
 
 
@@ -1508,6 +1509,7 @@ InstallRabbitMq=false
 InstallTorDaemon=false
 InstallFlutterSDK=false
 isFlutterInstalled=false
+InstallOpenvpn24=false
 
 RequestOptions=$((2#0000))
 TestMode=0
@@ -1549,6 +1551,8 @@ while [ "$1" != "" ]; do
         --tor ) InstallTorDaemon=true
              ;;
         --flutter ) InstallFlutterSDK=true
+             ;;
+        --ov24 ) InstallOpenvpn24=true
              ;;
         -un ) shift
              opt_userfullname="$1"
@@ -1607,6 +1611,7 @@ if [ $TestMode == 1 ]; then
     PRINTLOG "RabbitMq Install  : $InstallRabbitMq"
     PRINTLOG "Tor Daemon Install: $InstallTorDaemon"
     PRINTLOG "FlutterSDK Install: $InstallFlutterSDK"
+    PRINTLOG "Openvpn2.4 Install: $InstallOpenvpn24"
     exit
 fi
 
@@ -1815,6 +1820,30 @@ if [ $ubServerEnvironment != 0 ]; then
             && source $GlobalProfileFile \
             && isFlutterInstalled=true
         downloadAndUnpack "$AndroidUrl" "$AndroidPkg" "$AndroidInstallDir" "$AndroidInstallDir"
+    fi
+
+    if [ "$InstallOpenvpn24" == true ]; then
+        wget http://archive.ubuntu.com/ubuntu/pool/main/o/openssl/libssl1.1_1.1.1f-1ubuntu2.16_amd64.deb -O package.deb \
+            && ar x package.deb data.tar.xz \
+            && tar xf data.tar.xz \
+            && cp -r usr/lib/x86_64-linux-gnu/* /usr/lib/x86_64-linux-gnu/ \
+            && rm -rf package.deb data.tar.xz usr
+
+        wget http://archive.ubuntu.com/ubuntu/pool/main/o/openvpn/openvpn_2.4.7-1ubuntu2.20.04.4_amd64.deb -O package.deb \
+            && ar x package.deb data.tar.xz \
+            && tar xf data.tar.xz \
+            && cp usr/sbin/openvpn /usr/sbin/openvpn.2.4 \
+            && cp -r usr/lib/x86_64-linux-gnu/openvpn/* /usr/lib/x86_64-linux-gnu/openvpn.2.4/ \
+            && rm -rf package.deb data.tar.xz etc lib usr var
+
+        mv /usr/sbin/openvpn /usr/sbin/openvpn.2.5
+        mv /usr/lib/openvpn /usr/lib/openvpn.2.5
+        mkdir -p /usr/lib/openvpn.2.4
+        ln -sf /usr/lib/x86_64-linux-gnu/openvpn.2.4/plugins/openvpn-plugin-auth-pam.so /usr/lib/openvpn.2.4/
+        ln -sf /usr/lib/x86_64-linux-gnu/openvpn.2.4/plugins/openvpn-plugin-down-root.so /usr/lib/openvpn.2.4/
+
+        update-alternatives --install /usr/sbin/openvpn openvpn /usr/sbin/openvpn.2.5 10 --slave /usr/lib/openvpn libopenvpn /usr/lib/openvpn.2.5
+        update-alternatives --install /usr/sbin/openvpn openvpn /usr/sbin/openvpn.2.4 9 --slave /usr/lib/openvpn libopenvpn /usr/lib/openvpn.2.4
     fi
 
     VeraCryptBin="/usr/bin/veracrypt"
