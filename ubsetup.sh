@@ -343,7 +343,7 @@ Requests:
 --rabbit : Install RabbitMq, with its Erlang dependency.
 --tor    : Install Tor Daemon, which listens on port 9050.
 --flutter: Install majority of components to get Flutter setup.
---ov24   : Install Openvpn 2.4, using debian's update-alternatives.
+--ov24   : Install Openvpn 2.4, using update-alternatives.
 
 Configuration options:
 -un      : Configure full name for the user running this script.
