@@ -932,7 +932,7 @@ EOTXT
 
 LOG_PREFIX="ENVSETUP:  "
 prefixColour="0;33"
-logColour="0;34"
+logColour="1;36"
 ERRORCOLOUR="1;31"
 function PRINTLOG()
 {   echo -e "\033[${prefixColour}m${LOG_PREFIX}\033[0m\033[${logColour}m${1}\033[0m"
