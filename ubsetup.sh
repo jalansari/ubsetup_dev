@@ -43,7 +43,7 @@ VeraCryptUrl="https://launchpad.net/veracrypt/trunk/1.25.9/+download/$VeraCryptP
 TerraformPkg="terraform_1.2.6_linux_amd64.zip"
 TerraformUrl="https://releases.hashicorp.com/terraform/1.2.6/$TerraformPkg"
 
-# TerragruntUrl="https://github.com/gruntwork-io/terragrunt/releases/download/v0.38.7/terragrunt_linux_amd64"
+# TerragruntUrl="https://github.com/gruntwork-io/terragrunt/releases/download/v0.38.8/terragrunt_linux_amd64"
 
 # ConfiglintPkg="config-lint_Linux_x86_64.tar.gz"
 # ConfiglintUrl="https://github.com/stelligent/config-lint/releases/download/v1.6.0/$ConfiglintPkg"
@@ -52,7 +52,7 @@ TerraformUrl="https://releases.hashicorp.com/terraform/1.2.6/$TerraformPkg"
 AwsCliPkg="awscli-exe-linux-x86_64.zip"
 AwsCliUrl="https://awscli.amazonaws.com/$AwsCliPkg"
 
-PlantUmlVer="1.2022.6"
+PlantUmlVer="1.2022.7"
 PlantUmlUrl="https://github.com/plantuml/plantuml/releases/download/v$PlantUmlVer/plantuml-$PlantUmlVer.jar"
 PlantumlTargetBin="/usr/local/bin/plantuml.jar"
 
