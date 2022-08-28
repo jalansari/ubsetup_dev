@@ -8,7 +8,6 @@
 declare -A DebPackages
 DebPackages=(
              ["code"]="https://code.visualstudio.com/sha/download?build=stable&os=linux-deb-x64;mscode.deb"
-             ["vagrant"]="https://releases.hashicorp.com/vagrant/2.2.19/vagrant_2.2.19_x86_64.deb"
              ["dropbox"]="https://www.dropbox.com/download?dl=packages/ubuntu/dropbox_2020.03.04_amd64.deb"
              ["draw.io"]="https://github.com/jgraph/drawio-desktop/releases/download/v20.2.3/drawio-amd64-20.2.3.deb"
              ["mysql-workbench-community"]="https://dev.mysql.com/get/Downloads/MySQLGUITools/mysql-workbench-community_8.0.29-1ubuntu20.04_amd64.deb"
@@ -30,6 +29,9 @@ FossilInstallDir="$InstallDir/fossilscm"
 GoLangPkg="go1.19.linux-amd64.tar.gz"
 GoLangUrl="https://go.dev/dl/$GoLangPkg"
 GoPath="$UsrLocalDir/go"
+
+VagrantPkg="vagrant_2.3.0_linux_amd64.zip"
+VagrantUrl="https://releases.hashicorp.com/vagrant/2.3.0/$VagrantPkg"
 
 TelegramPackage="telegram_linux.tar.xz"
 TelegramPackageHttpURL="https://telegram.org/dl/desktop/linux"
@@ -1727,6 +1729,8 @@ if [ $ubServerEnvironment != 0 ]; then
     do
         installDebPackageFromHttp ${DebPackages["$key"]} $key
     done
+
+    wgetAndUnpack "$VagrantUrl" "$VagrantPkg" "/usr/local/bin" "/usr/local/bin/vagrant"
 
     wgetAndUnpack "$TerraformUrl" "$TerraformPkg" "/usr/local/bin" "/usr/local/bin/terraform"
 
