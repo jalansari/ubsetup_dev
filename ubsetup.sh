@@ -8,6 +8,7 @@
 declare -A DebPackages
 DebPackages=(
              ["code"]="https://code.visualstudio.com/sha/download?build=stable&os=linux-deb-x64;mscode.deb"
+             ["bcompare"]="https://www.scootersoftware.com/bcompare-4.4.3.26655_amd64.deb"
              ["dropbox"]="https://www.dropbox.com/download?dl=packages/ubuntu/dropbox_2020.03.04_amd64.deb"
              ["draw.io"]="https://github.com/jgraph/drawio-desktop/releases/download/v20.3.0/drawio-amd64-20.3.0.deb"
              ["mysql-workbench-community"]="https://dev.mysql.com/get/Downloads/MySQLGUITools/mysql-workbench-community_8.0.29-1ubuntu20.04_amd64.deb"
@@ -2250,6 +2251,7 @@ PRINTLOG "Manual steps to complete system setup (after reboot):"
 PRINTLOG ""
 PRINTLOG "Additions to be applied:"
 PRINTLOG "  *  Firefox addons: AdBlock, noScript, ..."
+PRINTLOG "  *  BeyondCompare: Colour theme ..."
 PRINTLOG "  *  VSCode Extensions: Code Spell Checker, Terraform, ..."
 PRINTLOG "Installations to be completed manually:"
 PRINTLOG "  *  Veracrypt"
