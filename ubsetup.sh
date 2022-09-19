@@ -115,8 +115,8 @@ VimRcFile="/etc/vim/vimrc"
 GitSysConfigFile="/etc/gitconfig"
 
 FirefoxHomePage="https://www.google.co.uk"
-FirefoxRememberLogins="false"
-FirefoxSysConfig="/etc/firefox/syspref.js"
+FirefoxSysPrefsConfig="/usr/lib/firefox/defaults/pref/local-settings.js"
+FirefoxSysUsersConfig="/usr/lib/firefox/mozilla.cfg"
 
 GlobalProfileFile="/etc/profile"
 TempFolderForDownloads="/tmp"
@@ -401,10 +401,24 @@ read -r -d '' TEXT_GitCfg <<- EOTXT
 		lg = log --graph --all --pretty=format:'%C(bold magenta)%h%Creset (%G?) : %s %C(cyan)%cI %Cgreen(%cr) %C(blue)%an %C(bold green)(%ae) %C(yellow)%d%Creset %GK'
 EOTXT
 
+read -r -d '' TEXT_FirefoxPrefs <<- EOTXT
+	pref("general.config.filename", "mozilla.cfg");
+	pref("general.config.obscure_value", 0);
+EOTXT
+
 read -r -d '' TEXT_FirefoxCfg <<- EOTXT
-	user_pref("browser.startup.homepage", "$FirefoxHomePage");
-	user_pref("datareporting.healthreport.uploadEnabled", false);
-	user_pref("signon.rememberSignons", $FirefoxRememberLogins);
+	pref("browser.startup.homepage", "$FirefoxHomePage");
+	// pref("signon.rememberSignons", false);
+
+	pref("browser.newtabpage.activity-stream.feeds.section.topstories", false);
+	pref("browser.newtabpage.activity-stream.feeds.topsites", false);
+
+	pref("browser.startup.page", 3); // 3 : Resume the previous browser session
+
+	pref("browser.urlbar.showSearchSuggestionsFirst", false);
+
+	pref("datareporting.healthreport.uploadEnabled", false);
+	pref("app.shield.optoutstudies.enabled", false);
 EOTXT
 
 read -r -d '' TEXT_TerminatorCfg <<- EOTXT
@@ -1828,9 +1842,15 @@ fi
 
 checkDebPkgInstalled "firefox"
 if [ $? == 0 ]; then
-    PRINTLOG "Updating mozilla prefs: [$FirefoxSysConfig]"
-    sed -i -r '/\"browser\.startup\.homepage\"/d; /\"datareporting\.healthreport\.uploadEnabled\"/d; /\"signon\.rememberSignons\"/d' $FirefoxSysConfig
-    echo -e "$TEXT_FirefoxCfg" >> $FirefoxSysConfig
+    PRINTLOG "Updating mozilla prefs: [$FirefoxSysPrefsConfig] [$FirefoxSysUsersConfig]"
+    echo -e "$TEXT_FirefoxPrefs" >> "$FirefoxSysPrefsConfig"
+    echo -e "$TEXT_FirefoxCfg" >> "$FirefoxSysUsersConfig"
+    # Delete current user's .mozilla directory, if its size is small enough
+    # (< 14MB) to be as it was from first use, with no changes by the owner.
+    if [[ -d "$userHomeDir/.mozilla" ]]; then
+        sizeOfCurrentUsersMozillaDir=$(du -sb $userHomeDir/.mozilla | awk '{print $1;}')
+        [[ $sizeOfCurrentUsersMozillaDir < 14000000 ]] && rm -rf "$userHomeDir/.mozilla"
+    fi
 fi
 
 
