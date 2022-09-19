@@ -407,6 +407,7 @@ read -r -d '' TEXT_FirefoxPrefs <<- EOTXT
 EOTXT
 
 read -r -d '' TEXT_FirefoxCfg <<- EOTXT
+	//
 	pref("browser.startup.homepage", "$FirefoxHomePage");
 	// pref("signon.rememberSignons", false);
 
