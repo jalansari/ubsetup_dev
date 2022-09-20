@@ -1044,8 +1044,13 @@ function installDebPackageFromHttp()
         tempDownloadedFile="$tempDownloadDir/$debfilename"
         PRINTLOG "Downloading to <$tempDownloadedFile>"
         mkdir -p "$tempDownloadDir"
-        wget "$debFileHttpUrl" -O "$tempDownloadedFile"
-        installDebPackage "$packageName" "$tempDownloadedFile"
+        curl "$debFileHttpUrl" --retry 5 -L -f -o "$tempDownloadedFile"
+        downloadCmdError=$?
+        if [ $downloadCmdError == 0 ]; then
+            installDebPackage "$packageName" "$tempDownloadedFile"
+        else
+            PRINT_ERROR "Error <$downloadCmdError> downloading <"$debFileHttpUrl">"
+        fi
         rm -rf "$tempDownloadDir"
     fi
 }
@@ -1301,7 +1306,7 @@ function installPythonPipPackages()
 #     2 One of the required parameters was not specified.
 #     3 There was a problem downloading archive.
 #     4 There was a problem decompressing the archive.
-function wgetAndUnpack()
+function downloadAndUnpack()
 {   if [ -z "$1" ] || [ -z "$2" ] || [ -z "$3" ]; then
         return 2
     fi
@@ -1312,10 +1317,10 @@ function wgetAndUnpack()
     PRINTLOG "Downloading and unpacking <$2> to <$3>."
     mkdir -p "$3"
     tempDownload="$TempFolderForDownloads/$2"
-    wget "$1" -O "$tempDownload"
-    wgetStatus=$?
-    if [ $wgetStatus != 0 ]; then
-        PRINT_ERROR "Download error <$wgetStatus>."
+    curl "$1" -L -f -o "$tempDownload"
+    curlStatus=$?
+    if [ $curlStatus != 0 ]; then
+        PRINT_ERROR "Download error <$curlStatus>."
         return 3
     fi
     decompStatus=0
@@ -1698,7 +1703,7 @@ installPythonPipPackages INSTAL_PIP2n3_MAP[@]
 if [ "$InstallDocker" == true ]; then
     # dc_targetbin="/usr/libexec/docker/cli-plugins/docker-compose"
     # test -n "$DockerComposeUrl" \
-    #     && wget "$DockerComposeUrl" -O "$dc_targetbin" \
+    #     && curl "$DockerComposeUrl" -f -o "$dc_targetbin" \
     #     && chmod +x "$dc_targetbin"
 
     # Wrapper docker compose for backward compatibility
@@ -1708,7 +1713,7 @@ if [ "$InstallDocker" == true ]; then
 
     if [ "$InstallGitlabRunner" == true ]; then
         GitLabRunnerPath="/usr/local/bin/gitlab-runner"
-        wget https://gitlab-runner-downloads.s3.amazonaws.com/latest/binaries/gitlab-runner-linux-amd64 -O "$GitLabRunnerPath" \
+        curl https://gitlab-runner-downloads.s3.amazonaws.com/latest/binaries/gitlab-runner-linux-amd64 -f -o "$GitLabRunnerPath" \
             && chmod a+x "$GitLabRunnerPath" \
             && useradd --comment 'GitLab Runner' --create-home gitlab-runner --shell /bin/bash \
             && gitlab-runner install --user=gitlab-runner --working-directory=/home/gitlab-runner
@@ -1729,11 +1734,11 @@ fi
 
 if [ $ubServerEnvironment != 0 ]; then
     fossilBin="fossil"
-    wgetAndUnpack "$FossilScmUrl" "$FossilScmPkg" "$FossilInstallDir" "$FossilInstallDir/$fossilBin" \
+    downloadAndUnpack "$FossilScmUrl" "$FossilScmPkg" "$FossilInstallDir" "$FossilInstallDir/$fossilBin" \
         && updatePathGlobally "$FossilInstallDir"
 
     nodeJsDir="$NodeInstallDir/$NodeJsVer"
-    wgetAndUnpack "$NodeJsUrl" "$NodeJsPkg" "$NodeInstallDir" "$nodeJsDir" \
+    downloadAndUnpack "$NodeJsUrl" "$NodeJsPkg" "$NodeInstallDir" "$nodeJsDir" \
         && updatePathGlobally "$nodeJsDir/bin"
     chgrp -R $DevGroupName $nodeJsDir
     # Give developer group permissions to write, so we can npm install globally.
@@ -1746,22 +1751,22 @@ if [ $ubServerEnvironment != 0 ]; then
         installDebPackageFromHttp ${DebPackages["$key"]} $key
     done
 
-    wgetAndUnpack "$VagrantUrl" "$VagrantPkg" "/usr/local/bin" "/usr/local/bin/vagrant"
+    downloadAndUnpack "$VagrantUrl" "$VagrantPkg" "/usr/local/bin" "/usr/local/bin/vagrant"
 
-    wgetAndUnpack "$TerraformUrl" "$TerraformPkg" "/usr/local/bin" "/usr/local/bin/terraform"
+    downloadAndUnpack "$TerraformUrl" "$TerraformPkg" "/usr/local/bin" "/usr/local/bin/terraform"
 
     [ -n "$TerragruntUrl" ] && [ ! -e "/usr/local/bin/terragrunt" ] \
-        && wget -O "/usr/local/bin/terragrunt" "$TerragruntUrl" \
+        && curl "$TerragruntUrl" -f -o "/usr/local/bin/terragrunt" \
         && chmod +rx "/usr/local/bin/terragrunt"
 
-    wgetAndUnpack "$ConfiglintUrl" "$ConfiglintPkg" "$ConfiglintInstallDir" "$ConfiglintInstallDir" \
+    downloadAndUnpack "$ConfiglintUrl" "$ConfiglintPkg" "$ConfiglintInstallDir" "$ConfiglintInstallDir" \
         && updatePathGlobally "$ConfiglintInstallDir"
 
     awscliUnpackTo="$TempFolderForDownloads"
     awscliDir="$awscliUnpackTo/aws"
     awsCredsDir="$userHomeDir/.aws"
     awsCredsCurrUser="$awsCredsDir/credentials"
-    wgetAndUnpack "$AwsCliUrl" "$AwsCliPkg" "$awscliUnpackTo" "$awscliDir" \
+    downloadAndUnpack "$AwsCliUrl" "$AwsCliPkg" "$awscliUnpackTo" "$awscliDir" \
         && "$awscliDir/install" \
         && rm -rf "$awscliDir" \
         && mkdir -p "$awsCredsDir" \
@@ -1770,9 +1775,9 @@ if [ $ubServerEnvironment != 0 ]; then
         && chown -R $userOfThisScript:$groupOfUserOfThisScript "$awsCredsDir"
 
     test -n "$PlantUmlUrl" \
-        && wget "$PlantUmlUrl" -O "$PlantumlTargetBin"
+        && curl "$PlantUmlUrl" -f -o "$PlantumlTargetBin"
 
-    wgetAndUnpack "$GoLangUrl" "$GoLangPkg" "$UsrLocalDir" "$GoPath"
+    downloadAndUnpack "$GoLangUrl" "$GoLangPkg" "$UsrLocalDir" "$GoPath"
     if [ $? == 0 ]; then
         updatePathGlobally "$GoPath/bin"
 
@@ -1790,22 +1795,22 @@ if [ $ubServerEnvironment != 0 ]; then
     fi
 
     if [ "$InstallFlutterSDK" == true ]; then
-        wgetAndUnpack "$FlutterUrl" "$FlutterPkg" "$FlutterInstallDir" "$FlutterInstallDir" \
+        downloadAndUnpack "$FlutterUrl" "$FlutterPkg" "$FlutterInstallDir" "$FlutterInstallDir" \
             && updatePathGlobally "$FlutterInstallDir/flutter/bin" \
             && source $GlobalProfileFile \
             && isFlutterInstalled=true
-        wgetAndUnpack "$AndroidUrl" "$AndroidPkg" "$AndroidInstallDir" "$AndroidInstallDir"
+        downloadAndUnpack "$AndroidUrl" "$AndroidPkg" "$AndroidInstallDir" "$AndroidInstallDir"
     fi
 
     VeraCryptBin="/usr/bin/veracrypt"
     veraCryptUnpackTo="$UnpackDirForIncompletePckgs/veracrypt"
-    wgetAndUnpack "$VeraCryptUrl" "$VeraCryptPkg" "$veraCryptUnpackTo" "$VeraCryptBin" \
+    downloadAndUnpack "$VeraCryptUrl" "$VeraCryptPkg" "$veraCryptUnpackTo" "$VeraCryptBin" \
         && chown -R $userOfThisScript:$groupOfUserOfThisScript "$veraCryptUnpackTo"
     # Looks like veracrypt cannot be auto installed, as user has to accept license conditions.
 
     telegramUnpackTo="$UnpackDirForIncompletePckgs"
     telegramBin="$telegramUnpackTo/Telegram/Telegram"
-    wgetAndUnpack "$TelegramPackageHttpURL" "$TelegramPackage" "$telegramUnpackTo" "$telegramBin" \
+    downloadAndUnpack "$TelegramPackageHttpURL" "$TelegramPackage" "$telegramUnpackTo" "$telegramBin" \
         && chown -R $userOfThisScript:$groupOfUserOfThisScript "$telegramUnpackTo"
 
     PRINTLOG "Installing fonts."
@@ -1815,7 +1820,7 @@ if [ $ubServerEnvironment != 0 ]; then
         fontFolder="$allFontsFolder/$key"
         downloadUrl=${Fonts["$key"]}
         PRINTLOG "Download and setup font [$key]: [$downloadUrl] -> [$fontFolder]"
-        wgetAndUnpack "$downloadUrl" "$key.zip" "$fontFolder" "$fontFolder" \
+        downloadAndUnpack "$downloadUrl" "$key.zip" "$fontFolder" "$fontFolder" \
             && doBuildFontCache=true
     done
     if [ "$doBuildFontCache" == true ]; then
