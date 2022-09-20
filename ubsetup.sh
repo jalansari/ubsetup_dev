@@ -874,9 +874,9 @@ read -r -d '' TEXT_BashGitAliases <<- "EOTXT"
 	        echo -e "\033[30;1;106m"
 	        pwd
 	        echo -e "\033[0m"
-	        if [[ ! -z $3 ]]; then
+	        if [[ -n "$3" ]]; then
 	            git "$1" "$2" "$3"
-	        elif [[ ! -z $2 ]]; then
+	        elif [[ -n "$2" ]]; then
 	            git "$1" "$2"
 	        else
 	            git "$1"
@@ -1028,10 +1028,10 @@ function installDebPackage()
 function installDebPackageFromHttp()
 {   IFS=';' read -ra URLnNAME <<< "$1"
     debFileHttpUrl="${URLnNAME[0]}"
-    packageName=$2
+    packageName="$2"
     PRINTLOG "Attempting to install <$packageName>, from:"
     PRINTLOG "    <$debFileHttpUrl>"
-    checkDebPkgInstalled $packageName
+    checkDebPkgInstalled "$packageName"
     if [ $? == 0 ]; then
         PRINTLOG "Deb package already installed <$packageName>"
     else
@@ -1043,10 +1043,10 @@ function installDebPackageFromHttp()
         fi
         tempDownloadedFile="$tempDownloadDir/$debfilename"
         PRINTLOG "Downloading to <$tempDownloadedFile>"
-        mkdir -p $tempDownloadDir
-        wget $debFileHttpUrl -O $tempDownloadedFile
-        installDebPackage $packageName $tempDownloadedFile
-        rm -rf $tempDownloadDir
+        mkdir -p "$tempDownloadDir"
+        wget "$debFileHttpUrl" -O "$tempDownloadedFile"
+        installDebPackage "$packageName" "$tempDownloadedFile"
+        rm -rf "$tempDownloadDir"
     fi
 }
 
@@ -1305,7 +1305,7 @@ function wgetAndUnpack()
 {   if [ -z "$1" ] || [ -z "$2" ] || [ -z "$3" ]; then
         return 2
     fi
-    if [ ! -z "$4" ] && [ -e "$4" ]; then
+    if [ -n "$4" ] && [ -e "$4" ]; then
         PRINTLOG "Not downloading <$2>, as <$4> already exists."
         return 1
     fi
@@ -1408,13 +1408,13 @@ function modifyUserDescriptor()
     userFullName="$2"
     userGroup="$3"
     userEmail="$4"
-    if [ ! -z "$userFullName" ]; then
+    if [ -n "$userFullName" ]; then
         userDesc=$( sed -r 's/[^;]*(;.*)/'"$userFullName"'\1/' <<< "$userDesc" )
     fi
-    if [ ! -z "$userGroup" ]; then
+    if [ -n "$userGroup" ]; then
         userDesc=$( sed -r 's/(.*;)[^;]*/\1'"$userGroup"'/' <<< "$userDesc" )
     fi
-    if [ ! -z "$userEmail" ]; then
+    if [ -n "$userEmail" ]; then
         userDesc=$( sed -r 's/([^;]*;)[^;]*(.*)/\1'"$userEmail"'\2/' <<< "$userDesc" )
     fi
     echo "$userDesc"
@@ -1433,7 +1433,7 @@ function modifyUserDescriptor()
 #     8 Unknown error, group could not be added.
 #     9 Unknown error, user could not be added.
 function addNewUser()
-{   test -z $1   && return 1
+{   test -z "$1" && return 1
     id -u $1 > /dev/null 2>&1
     test $? == 0 && return 2
     test -z "$2"   && return 3
@@ -1456,10 +1456,10 @@ function addNewUser()
 #     2 Username MUST exists.
 #     8 Unknown error, group could not be added.
 function updateExistingUser()
-{   test -z $1   && return 1
+{   test -z "$1" && return 1
     id -u $1 > /dev/null 2>&1
     test $? == 0 || return 2
-    if [ ! -z "$2" ]; then
+    if [ -n "$2" ]; then
         grep -E "^$2:" /etc/group > /dev/null 2>&1
         test $? == 0 || groupadd "$2" > /dev/null 2>&1
         test $? == 0 || return 8
@@ -1697,8 +1697,8 @@ installPythonPipPackages INSTAL_PIP2n3_MAP[@]
 
 if [ "$InstallDocker" == true ]; then
     # dc_targetbin="/usr/libexec/docker/cli-plugins/docker-compose"
-    # test ! -z $DockerComposeUrl \
-    #     && wget $DockerComposeUrl -O "$dc_targetbin" \
+    # test -n "$DockerComposeUrl" \
+    #     && wget "$DockerComposeUrl" -O "$dc_targetbin" \
     #     && chmod +x "$dc_targetbin"
 
     # Wrapper docker compose for backward compatibility
@@ -1708,10 +1708,10 @@ if [ "$InstallDocker" == true ]; then
 
     if [ "$InstallGitlabRunner" == true ]; then
         GitLabRunnerPath="/usr/local/bin/gitlab-runner"
-        wget https://gitlab-runner-downloads.s3.amazonaws.com/latest/binaries/gitlab-runner-linux-amd64 -O "$GitLabRunnerPath"
-        chmod a+x "$GitLabRunnerPath"
-        useradd --comment 'GitLab Runner' --create-home gitlab-runner --shell /bin/bash
-        gitlab-runner install --user=gitlab-runner --working-directory=/home/gitlab-runner
+        wget https://gitlab-runner-downloads.s3.amazonaws.com/latest/binaries/gitlab-runner-linux-amd64 -O "$GitLabRunnerPath" \
+            && chmod a+x "$GitLabRunnerPath" \
+            && useradd --comment 'GitLab Runner' --create-home gitlab-runner --shell /bin/bash \
+            && gitlab-runner install --user=gitlab-runner --working-directory=/home/gitlab-runner
     fi
 fi
 
@@ -1720,7 +1720,7 @@ if [ "$InstallRuby" == true ]; then
     gpg --keyserver hkp://pool.sks-keyservers.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 7D2BAF1CF37B13E2069D6956105BD0E739499BDB
     PRINTLOG "Install RVM."
     rubyVersionOption=""
-    if [ ! -z "$RubyVersion" ]; then
+    if [ -n "$RubyVersion" ]; then
         PRINTLOG "... with Ruby <$RubyVersion>."
         rubyVersionOption="--ruby=$RubyVersion"
     fi
@@ -1750,8 +1750,8 @@ if [ $ubServerEnvironment != 0 ]; then
 
     wgetAndUnpack "$TerraformUrl" "$TerraformPkg" "/usr/local/bin" "/usr/local/bin/terraform"
 
-    [ ! -z "$TerragruntUrl" ] && [ ! -e "/usr/local/bin/terragrunt" ] \
-        && wget -O "/usr/local/bin/terragrunt" $TerragruntUrl \
+    [ -n "$TerragruntUrl" ] && [ ! -e "/usr/local/bin/terragrunt" ] \
+        && wget -O "/usr/local/bin/terragrunt" "$TerragruntUrl" \
         && chmod +rx "/usr/local/bin/terragrunt"
 
     wgetAndUnpack "$ConfiglintUrl" "$ConfiglintPkg" "$ConfiglintInstallDir" "$ConfiglintInstallDir" \
@@ -1769,8 +1769,8 @@ if [ $ubServerEnvironment != 0 ]; then
         && echo -e "[default]\naws_access_key_id=<ID>\naws_secret_access_key=<KEY>\n" >> "$awsCredsCurrUser" \
         && chown -R $userOfThisScript:$groupOfUserOfThisScript "$awsCredsDir"
 
-    test ! -z $PlantUmlUrl \
-        && wget $PlantUmlUrl -O "$PlantumlTargetBin"
+    test -n "$PlantUmlUrl" \
+        && wget "$PlantUmlUrl" -O "$PlantumlTargetBin"
 
     wgetAndUnpack "$GoLangUrl" "$GoLangPkg" "$UsrLocalDir" "$GoPath"
     if [ $? == 0 ]; then
@@ -2221,7 +2221,7 @@ if [ -v UserInfo[@] ]; then
         email="${userInfoArray[1]}"
         sshkeyfile="${userInfoArray[2]}" # TODO - do something with sshkeyfile
         maingroup="${userInfoArray[3]}"
-        test -z $maingroup && maingroup=$usern
+        test -z "$maingroup" && maingroup=$usern
         isUserConfigured=false
         if [ "$usern" == "$currentUserNameKey" ]; then
             usern=$userOfThisScript
