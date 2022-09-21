@@ -1,10 +1,12 @@
+#!/usr/bin/env bash
+
 function runPrintBinValTest()
 {   valueToTest=$(( $1 ))
     resultExpected=$(( $2 ))
     printValExpected="$3"
     ret=$( removeLeastSignificantBit $valueToTest )
     testPrintOut=$( printBinaryVal $valueToTest )
-    assertEquals "Got: $( printBinaryVal $ret )" $resultExpected $ret
+    assertEquals "Got: $( printBinaryVal $ret )" "$resultExpected" "$ret"
     assertEquals "$printValExpected" "$testPrintOut"
 }
 
@@ -98,7 +100,7 @@ function runGetAvailableFNTest()
 {   req=$1
     exp=$2
     ret=$( getAvailableFileName "$req" )
-    newFileNameGenerated=$ret
+    newFileNameGenerated="$ret"
     assertEquals "$exp" "$ret"
 }
 
@@ -154,55 +156,55 @@ function test_getAvailableFN_fileExistsX3()
 
     touch "$requestName"
     runGetAvailableFNTest "$requestName" "$expected0"
-    newName0=$newFileNameGenerated
+    newName0="$newFileNameGenerated"
 
     touch "$newName0"
     runGetAvailableFNTest "$requestName" "$expected1"
-    newName1=$newFileNameGenerated
+    newName1="$newFileNameGenerated"
 
     touch "$newName1"
     runGetAvailableFNTest "$requestName" "$expected2"
 
-    assertTrue "File does NOT exist!" '[ -e "$requestName" ]'
-    assertTrue "File does NOT exist!" '[ -e "$newName0" ]'
-    assertTrue "File does NOT exist!" '[ -e "$newName1" ]'
+    assertTrue "File does NOT exist!" [ -e "$requestName" ]
+    assertTrue "File does NOT exist!" [ -e "$newName0" ]
+    assertTrue "File does NOT exist!" [ -e "$newName1" ]
     del3Files "$requestName" "$newName0" "$newName1"
-    assertFalse "File <$requestName> STILL exists!" '[ -e "$requestName" ]'
-    assertFalse "File <$newName0> STILL exists!" '[ -e "$newName0" ]'
-    assertFalse "File <$newName1> STILL exists!" '[ -e "$newName1" ]'
+    assertFalse "File <$requestName> STILL exists!" [ -e "$requestName" ]
+    assertFalse "File <$newName0> STILL exists!" [ -e "$newName0" ]
+    assertFalse "File <$newName1> STILL exists!" [ -e "$newName1" ]
 }
 
 ################################################################################
 
 function runUpdatePathTest()
-{   updatePathInFile $1 $2
+{   updatePathInFile "$1" "$2"
     ret=$?
-    assertEquals $3 $ret
+    assertEquals "$3" "$ret"
 }
 
 function grepForStr()
 {   searchStr="$1"
-    searchFile=$2
-    grepExpectedRet=$3
-    grep "$searchStr" $searchFile > /dev/null 2>&1
+    searchFile="$2"
+    grepExpectedRet="$3"
+    grep "$searchStr" "$searchFile" > /dev/null 2>&1
     testRet=$?
     fileContent="$( cat $searchFile )"
-    assertEquals "===== Expected to Find: <$searchStr> ===== File Content: <$fileContent>" $grepExpectedRet $testRet
+    assertEquals "===== Expected to Find: <$searchStr> ===== File Content: <$fileContent>" "$grepExpectedRet" "$testRet"
 }
 
 function grepForStrAndDelFile()
-{   searchFile=$2
-    grepForStr "$1" $searchFile $3
-    rm $searchFile
+{   searchFile="$2"
+    grepForStr "$1" "$searchFile" "$3"
+    rm "$searchFile"
 }
 
 function test_updatePathInFile_updatePathWithAdditionalValue()
 {   testfile="profiletestfile"
     additionalValue="\$NewPath/sub"
     expectedRet=0
-    echo -e "text\n\n  PATH=sometext:\$PATH\nmore" > $testfile
+    echo -e "text\n\n  PATH=sometext:\$PATH\nmore" > "$testfile"
 
-    runUpdatePathTest $additionalValue $testfile $expectedRet
+    runUpdatePathTest "$additionalValue" "$testfile" "$expectedRet"
 
     grepForStrAndDelFile "^  PATH=sometext:\$PATH:$additionalValue:$" "$testfile" 0
 }
@@ -213,40 +215,40 @@ function test_updatePathInFile_noPathUpdateValueAlreadyExists()
     expectedRet=0
     echo -e "text\n\n  PATH=sometext:\$PATH:$additionalValue:more\nevenmore" > $testfile
 
-    runUpdatePathTest "$additionalValue" $testfile $expectedRet
+    runUpdatePathTest "$additionalValue" "$testfile" "$expectedRet"
 
-    grepForStrAndDelFile "^  PATH=sometext:\$PATH:$additionalValue:more$" $testfile 0
+    grepForStrAndDelFile "^  PATH=sometext:\$PATH:$additionalValue:more$" "$testfile" 0
 }
 
 function test_updatePathInFile_addPathToFile()
 {   testfile="profiletestfile"
     additionalValue="\$NewPath/somepath"
     expectedRet=0
-    echo -e "text\n\nevenmore" > $testfile
+    echo -e "text\n\nevenmore" > "$testfile"
 
-    runUpdatePathTest $additionalValue $testfile $expectedRet
+    runUpdatePathTest "$additionalValue" "$testfile" "$expectedRet"
 
     grepForStrAndDelFile "^PATH=\$PATH:$additionalValue$" "$testfile" 0
 }
 
 function test_updatePathInFile_fileDoesNotExistRet9()
 {   testfile="profiletestfile"
-    rm $testfile > /dev/null 2>&1
+    rm "$testfile" > /dev/null 2>&1
     additionalValue="\$NewPath"
     expectedRet=9
 
-    runUpdatePathTest $additionalValue $testfile $expectedRet
+    runUpdatePathTest "$additionalValue" "$testfile" "$expectedRet"
 }
 
 function test_updatePathInFile_fileIsActuallyDirRet9()
 {   testfile="profiletestfile"
-    rm -rf $testfile > /dev/null 2>&1
-    mkdir -p $testfile
+    rm -rf "$testfile" > /dev/null 2>&1
+    mkdir -p "$testfile"
     additionalValue="\$NewPath"
     expectedRet=9
 
-    runUpdatePathTest $additionalValue $testfile $expectedRet
-    rm -rf $testfile
+    runUpdatePathTest "$additionalValue" "$testfile" "$expectedRet"
+    rm -rf "$testfile"
 }
 
 ################################################################################
@@ -254,27 +256,27 @@ function test_updatePathInFile_fileIsActuallyDirRet9()
 function runRemoveFromPathTest()
 {   removeFromPath "$1" "$2"
     ret=$?
-    assertEquals $3 $ret
+    assertEquals "$3" "$ret"
 }
 
 function test_removeFromPath_fileDoesNotExistRet1()
 {   testfile="removefrompathtestfile"
-    rm -rf $testfile > /dev/null 2>&1
+    rm -rf "$testfile" > /dev/null 2>&1
     removeText="\$NewPath"
     expectedRet=9
 
-    runRemoveFromPathTest "$removeText" $testfile $expectedRet
+    runRemoveFromPathTest "$removeText" "$testfile" "$expectedRet"
 }
 
 function test_removeFromPath_fileIsActuallyDirRet1()
 {   testfile="removefrompathtestfile"
-    rm -rf $testfile > /dev/null 2>&1
-    mkdir -p $testfile
+    rm -rf "$testfile" > /dev/null 2>&1
+    mkdir -p "$testfile"
     removeText="\$NewPath"
     expectedRet=9
 
-    runRemoveFromPathTest "$removeText" $testfile $expectedRet
-    rm -rf $testfile
+    runRemoveFromPathTest "$removeText" "$testfile" "$expectedRet"
+    rm -rf "$testfile"
 }
 
 function test_removeFromPath_emptyInput()
@@ -401,7 +403,7 @@ function test_iterAssociativeArrAndCall_invalidInputAsArray()
     returnedVal=$?
 
     expectedReturn=1
-    assertEquals $expectedReturn $returnedVal
+    assertEquals "$expectedReturn" "$returnedVal"
 
     expNumCalls=0
     expStr=""
@@ -470,7 +472,7 @@ function test_modifyUserDescriptor_noChanges()
     expected=0
     newUserDesc=$( modifyUserDescriptor "$userDesc" "" "" "" )
     actualReturn=$?
-    assertEquals $expected $actualReturn
+    assertEquals "$expected" "$actualReturn"
     assertEquals "$userDesc" "$newUserDesc"
 }
 
@@ -481,7 +483,7 @@ function test_modifyUserDescriptor_changeFullName()
     expected=0
     newUserDesc=$( modifyUserDescriptor "$userDesc" "$userFullName" "" "" )
     actualReturn=$?
-    assertEquals $expected $actualReturn
+    assertEquals "$expected" "$actualReturn"
     assertEquals "$userDescExpected" "$newUserDesc"
 }
 
@@ -492,7 +494,7 @@ function test_modifyUserDescriptor_changeGroup()
     expected=0
     newUserDesc=$( modifyUserDescriptor "$userDesc" "" "$userGroup" "" )
     actualReturn=$?
-    assertEquals $expected $actualReturn
+    assertEquals "$expected" "$actualReturn"
     assertEquals "$userDescExpected" "$newUserDesc"
 }
 
@@ -503,7 +505,7 @@ function test_modifyUserDescriptor_changeEmail()
     expected=0
     newUserDesc=$( modifyUserDescriptor "$userDesc" "" "" "$userEmail" )
     actualReturn=$?
-    assertEquals $expected $actualReturn
+    assertEquals "$expected" "$actualReturn"
     assertEquals "$userDescExpected" "$newUserDesc"
 }
 
@@ -516,7 +518,7 @@ function test_modifyUserDescriptor_changeNameGroupEmail()
     expected=0
     newUserDesc=$( modifyUserDescriptor "$userDesc" "$userFullName" "$userGroup" "$userEmail" )
     actualReturn=$?
-    assertEquals $expected $actualReturn
+    assertEquals "$expected" "$actualReturn"
     assertEquals "$userDescExpected" "$newUserDesc"
 }
 
@@ -527,22 +529,22 @@ function test_addNewUser_NoUsername()
     groupName=""
     expected=1
 
-    addNewUser $usernameToAdd "$groupName" ""
+    addNewUser "$usernameToAdd" "$groupName" ""
     actualReturn=$?
 
-    assertEquals $expected $actualReturn
+    assertEquals "$expected" "$actualReturn"
 }
 
 function test_addNewUser_UsernameAlreadyExists()
 {   userOfThisScript=$( id -u -n $SUDO_USER )
-    usernameToAdd=$userOfThisScript
+    usernameToAdd="$userOfThisScript"
     groupName=""
     expected=2
 
-    addNewUser $usernameToAdd "$groupName" ""
+    addNewUser "$usernameToAdd" "$groupName" ""
     actualReturn=$?
 
-    assertEquals $expected $actualReturn
+    assertEquals "$expected" "$actualReturn"
     # Test user details have not changed.
 }
 
@@ -552,11 +554,11 @@ function test_addNewUser_NoGroup()
     groupName=""
     expected=3
 
-    addNewUser $usernameToAdd "$groupName" ""
+    addNewUser "$usernameToAdd" "$groupName" ""
     actualReturn=$?
 
-    assertEquals $expected $actualReturn
-    id -u $usernameToAdd > /dev/null 2>&1
+    assertEquals "$expected" "$actualReturn"
+    id -u "$usernameToAdd" > /dev/null 2>&1
     assertFalse "Test user must not be created" '[ $? == 0 ]'
 }
 
@@ -567,11 +569,11 @@ function test_addNewUser_BadGECOS()
     fullName="This:Name:Should:Be:Bad: for:GECOS"
     expected=9
 
-    addNewUser $usernameToAdd "$groupName" "$fullName"
+    addNewUser "$usernameToAdd" "$groupName" "$fullName"
     actualReturn=$?
 
-    assertEquals $expected $actualReturn
-    id -u $usernameToAdd > /dev/null 2>&1
+    assertEquals "$expected" "$actualReturn"
+    id -u "$usernameToAdd" > /dev/null 2>&1
     assertFalse "Test user must not be created" '[ $? == 0 ]'
 }
 
@@ -592,10 +594,10 @@ function test_updateExistingUser_NoUsername()
     groupName=""
     expected=1
 
-    updateExistingUser $usernameToAdd "$groupName" ""
+    updateExistingUser "$usernameToAdd" "$groupName" ""
     actualReturn=$?
 
-    assertEquals $expected $actualReturn
+    assertEquals "$expected" "$actualReturn"
 }
 
 function test_updateExistingUser_UsernameDoesNotExists()
@@ -604,36 +606,36 @@ function test_updateExistingUser_UsernameDoesNotExists()
     groupName=""
     expected=2
 
-    updateExistingUser $usernameToAdd "$groupName" ""
+    updateExistingUser "$usernameToAdd" "$groupName" ""
     actualReturn=$?
 
-    assertEquals $expected $actualReturn
+    assertEquals "$expected" "$actualReturn"
 }
 
 function test_updateExistingUser_BadGECOS()
 {   userOfThisScript=$( id -u -n $SUDO_USER )
-    usernameToAdd=$userOfThisScript
+    usernameToAdd="$userOfThisScript"
     groupName=""
     fullName="This:Name:Should:Be:Bad: for:GECOS"
     expected=9
 
-    updateExistingUser $usernameToAdd "$groupName" "$fullName"
+    updateExistingUser "$usernameToAdd" "$groupName" "$fullName"
     actualReturn=$?
 
-    assertEquals $expected $actualReturn
+    assertEquals "$expected" "$actualReturn"
     # Test user details have not changed.
 }
 
 function test_updateExistingUser_BadGroupName()
 {   userOfThisScript=$( id -u -n $SUDO_USER )
-    usernameToAdd=$userOfThisScript
+    usernameToAdd="$userOfThisScript"
     groupName="bad:group:name"
     expected=8
 
-    updateExistingUser $usernameToAdd "$groupName" ""
+    updateExistingUser "$usernameToAdd" "$groupName" ""
     actualReturn=$?
 
-    assertEquals $expected $actualReturn
+    assertEquals "$expected" "$actualReturn"
     # Test user details have not changed.
 }
 
@@ -647,34 +649,34 @@ function test_updateExistingUser_BadGroupName()
 
 ################################################################################
 
-function test_wgetAndUnpack_emptyStrReturns2()
+function test_downloadAndUnpack_emptyStrReturns2()
 {   emptystr=""
     expected=2
-    wgetAndUnpack $emptystr
+    downloadAndUnpack "$emptystr"
     returnedVal=$?
-    assertEquals $expected $returnedVal
-    wgetAndUnpack "url" $emptystr
+    assertEquals "$expected" "$returnedVal"
+    downloadAndUnpack "url" "$emptystr"
     returnedVal=$?
-    assertEquals $expected $returnedVal
-    wgetAndUnpack "url" "pkgname" $emptystr
+    assertEquals "$expected" "$returnedVal"
+    downloadAndUnpack "url" "pkgname" "$emptystr"
     returnedVal=$?
-    assertEquals $expected $returnedVal
+    assertEquals "$expected" "$returnedVal"
 }
 
-function test_wgetAndUnpack_testFileOrDirExistsReturns1()
-{   testfileordir="wgetandunpacktest"
+function test_downloadAndUnpack_testFileOrDirExistsReturns1()
+{   testfileordir="downloadandunpacktest"
     expected=1
-    rm -rf $testfileordir
-    touch $testfileordir
-    wgetAndUnpack "url" "pkgname" "unpackpath" $testfileordir > /dev/null
+    rm -rf "$testfileordir"
+    touch "$testfileordir"
+    downloadAndUnpack "url" "pkgname" "unpackpath" "$testfileordir" > /dev/null
     returnedVal=$?
-    assertEquals $expected $returnedVal
-    rm $testfileordir
-    mkdir $testfileordir
-    wgetAndUnpack "url" "pkgname" "unpackpath" $testfileordir > /dev/null
+    assertEquals "$expected" "$returnedVal"
+    rm "$testfileordir"
+    mkdir "$testfileordir"
+    downloadAndUnpack "url" "pkgname" "unpackpath" "$testfileordir" > /dev/null
     returnedVal=$?
-    assertEquals $expected $returnedVal
-    rm -rf $testfileordir
+    assertEquals "$expected" "$returnedVal"
+    rm -rf "$testfileordir"
 }
 
 # With test server
@@ -692,7 +694,7 @@ function runTestServer()
         psstatcmd="ps -o stat= $TestServerPID"
         psstate=$( $psstatcmd )
         # Wait untill process state is ready and waiting ("S") or could not be started (no state).
-        while [[ ! $psstate =~ ^S ]] && [[ ! -z $psstate ]]
+        while [[ ! $psstate =~ ^S ]] && [[ -n $psstate ]]
         do
             # Waiting a little to allow state to initialise.
             sleep 0.01
@@ -706,61 +708,61 @@ function runTestServer()
 
 function cleanupAfterTestServerTesting()
 {   kill $TestServerPID
-    rm -rf $TestServerFolder
-    rm -rf $WgetToDir
+    rm -rf "$TestServerFolder"
+    rm -rf "$WgetToDir"
 }
 
-function test_wgetAndUnpack_testGetInvalidUrl()
+function test_downloadAndUnpack_testGetInvalidUrl()
 {   runTestServer
 
     expected=3
 
-    wgetAndUnpack "$TestServerDomain/InvalidUrl" "invalidUrlPckgDoesntMatter" "$WgetToDir" "pathDoesntMatter" > /dev/null 2>&1
+    downloadAndUnpack "$TestServerDomain/InvalidUrl" "invalidUrlPckgDoesntMatter" "$WgetToDir" "pathDoesntMatter" > /dev/null 2>&1
 
     returnedVal=$?
-    assertEquals $expected $returnedVal
+    assertEquals "$expected" "$returnedVal"
 
     cleanupAfterTestServerTesting
 }
 
-function test_wgetAndUnpack_testGetEmptyFile()
+function test_downloadAndUnpack_testGetEmptyFile()
 {   runTestServer
 
     aFileName="emptyFile"
     touch "$TestServerFolder/$aFileName"
     expected=4
 
-    wgetAndUnpack "$TestServerDomain/$aFileName" "emptyFileDownloaded" "$WgetToDir" "emptyFileDownloaded" > /dev/null 2>&1
+    downloadAndUnpack "$TestServerDomain/$aFileName" "emptyFileDownloaded" "$WgetToDir" "emptyFileDownloaded" > /dev/null 2>&1
 
     returnedVal=$?
-    assertEquals $expected $returnedVal
+    assertEquals "$expected" "$returnedVal"
 
     cleanupAfterTestServerTesting
 }
 
-function test_wgetAndUnpack_testGetFileNotCompressedFile()
+function test_downloadAndUnpack_testGetFileNotCompressedFile()
 {   runTestServer
 
     aFileName="plainTextFile"
     echo "Some text!" > "$TestServerFolder/$aFileName"
     expected=4
 
-    wgetAndUnpack "$TestServerDomain/$aFileName" "emptyFileDownloaded" "$WgetToDir" "emptyFileDownloaded" > /dev/null 2>&1
+    downloadAndUnpack "$TestServerDomain/$aFileName" "emptyFileDownloaded" "$WgetToDir" "emptyFileDownloaded" > /dev/null 2>&1
 
     returnedVal=$?
-    assertEquals $expected $returnedVal
+    assertEquals "$expected" "$returnedVal"
 
     mv "$TestServerFolder/$aFileName"  "$TestServerFolder/$aFileName.zip"
 
-    wgetAndUnpack "$TestServerDomain/$aFileName.zip" "emptyFileDownloaded.zip" "$WgetToDir" "emptyFileDownloaded" > /dev/null 2>&1
+    downloadAndUnpack "$TestServerDomain/$aFileName.zip" "emptyFileDownloaded.zip" "$WgetToDir" "emptyFileDownloaded" > /dev/null 2>&1
 
     returnedVal=$?
-    assertEquals $expected $returnedVal
+    assertEquals "$expected" "$returnedVal"
 
     cleanupAfterTestServerTesting
 }
 
-function test_wgetAndUnpack_testGetTarball()
+function test_downloadAndUnpack_testGetTarball()
 {   runTestServer
 
     aFileName1="plainTextFile1"
@@ -772,48 +774,48 @@ function test_wgetAndUnpack_testGetTarball()
     rm $aFileName1 $aFileName2
     expected=0
 
-    wgetAndUnpack "$TestServerDomain/$tarbFileName" "$tarbFileName" "$WgetToDir" "pathShouldNotExists" > /dev/null 2>&1
+    downloadAndUnpack "$TestServerDomain/$tarbFileName" "$tarbFileName" "$WgetToDir" "pathShouldNotExists" > /dev/null 2>&1
 
     returnedVal=$?
-    assertEquals $expected $returnedVal
+    assertEquals "$expected" "$returnedVal"
     assertTrue "Unpack folder not found" "[ -d $WgetToDir ]"
     assertTrue "Unpacked file1 not found" "[ -f $WgetToDir/$aFileName1 ]"
     assertTrue "Unpacked file2 not found" "[ -f $WgetToDir/$aFileName2 ]"
 
     # While everything is setup, run a test for when path already exists.
     expected=1
-    wgetAndUnpack "$TestServerDomain/$tarbFileName" "$tarbFileName" "$WgetToDir" "$WgetToDir/$aFileName1" > /dev/null 2>&1
+    downloadAndUnpack "$TestServerDomain/$tarbFileName" "$tarbFileName" "$WgetToDir" "$WgetToDir/$aFileName1" > /dev/null 2>&1
     returnedVal=$?
-    assertEquals $expected $returnedVal
+    assertEquals "$expected" "$returnedVal"
 
     cleanupAfterTestServerTesting
 }
 
-function test_wgetAndUnpack_testGetZip()
+function test_downloadAndUnpack_testGetZip()
 {   runTestServer
 
     aFileName1="plainTextFile1"
-    echo "Some text 1!" > $aFileName1
+    echo "Some text 1!" > "$aFileName1"
     aFileName2="plainTextFile2"
-    echo "Some text 2!" > $aFileName2
+    echo "Some text 2!" > "$aFileName2"
     compFileName="tarFile.zip"
-    zip "$TestServerFolder/$compFileName" $aFileName1 $aFileName2
-    rm $aFileName1 $aFileName2
+    zip "$TestServerFolder/$compFileName" "$aFileName1" "$aFileName2"
+    rm "$aFileName1" "$aFileName2"
     expected=0
 
-    wgetAndUnpack "$TestServerDomain/$compFileName" "$compFileName" "$WgetToDir" "pathShouldNotExists" > /dev/null 2>&1
+    downloadAndUnpack "$TestServerDomain/$compFileName" "$compFileName" "$WgetToDir" "pathShouldNotExists" > /dev/null 2>&1
 
     returnedVal=$?
-    assertEquals $expected $returnedVal
+    assertEquals "$expected" "$returnedVal"
     assertTrue "Unpack folder not found" "[ -d $WgetToDir ]"
     assertTrue "Unpacked file1 not found" "[ -f $WgetToDir/$aFileName1 ]"
     assertTrue "Unpacked file2 not found" "[ -f $WgetToDir/$aFileName2 ]"
 
     # While everything is setup, run a test for when path already exists.
     expected=1
-    wgetAndUnpack "$TestServerDomain/$compFileName" "$compFileName" "$WgetToDir" "$WgetToDir/$aFileName1" > /dev/null 2>&1
+    downloadAndUnpack "$TestServerDomain/$compFileName" "$compFileName" "$WgetToDir" "$WgetToDir/$aFileName1" > /dev/null 2>&1
     returnedVal=$?
-    assertEquals $expected $returnedVal
+    assertEquals "$expected" "$returnedVal"
 
     cleanupAfterTestServerTesting
 }
