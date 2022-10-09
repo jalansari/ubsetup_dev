@@ -1721,7 +1721,7 @@ if [ "$InstallDocker" == true ]; then
 
     if [ "$InstallGitlabRunner" == true ]; then
         GitLabRunnerPath="/usr/local/bin/gitlab-runner"
-        curl https://gitlab-runner-downloads.s3.amazonaws.com/latest/binaries/gitlab-runner-linux-amd64 -f -o "$GitLabRunnerPath" \
+        curl https://gitlab-runner-downloads.s3.amazonaws.com/latest/binaries/gitlab-runner-linux-amd64 -L -f -o "$GitLabRunnerPath" \
             && chmod a+x "$GitLabRunnerPath" \
             && useradd --comment 'GitLab Runner' --create-home gitlab-runner --shell /bin/bash \
             && gitlab-runner install --user=gitlab-runner --working-directory=/home/gitlab-runner
@@ -1764,7 +1764,7 @@ if [ $ubServerEnvironment != 0 ]; then
     downloadAndUnpack "$TerraformUrl" "$TerraformPkg" "/usr/local/bin" "/usr/local/bin/terraform"
 
     [ -n "$TerragruntUrl" ] && [ ! -e "/usr/local/bin/terragrunt" ] \
-        && curl "$TerragruntUrl" -f -o "/usr/local/bin/terragrunt" \
+        && curl "$TerragruntUrl" -L -f -o "/usr/local/bin/terragrunt" \
         && chmod +rx "/usr/local/bin/terragrunt"
 
     downloadAndUnpack "$ConfiglintUrl" "$ConfiglintPkg" "$ConfiglintInstallDir" "$ConfiglintInstallDir" \
@@ -1783,7 +1783,7 @@ if [ $ubServerEnvironment != 0 ]; then
         && chown -R $userOfThisScript:$groupOfUserOfThisScript "$awsCredsDir"
 
     test -n "$PlantUmlUrl" \
-        && curl "$PlantUmlUrl" -f -o "$PlantumlTargetBin"
+        && curl "$PlantUmlUrl" -L -f -o "$PlantumlTargetBin"
 
     downloadAndUnpack "$GoLangUrl" "$GoLangPkg" "$UsrLocalDir" "$GoPath"
     if [ $? == 0 ]; then
