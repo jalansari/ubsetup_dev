@@ -1822,14 +1822,14 @@ if [ $ubServerEnvironment != 0 ]; then
         downloadAndUnpack "$AndroidUrl" "$AndroidPkg" "$AndroidInstallDir" "$AndroidInstallDir"
     fi
 
-    if [ "$InstallOpenvpn24" == true ]; then
-        wget http://archive.ubuntu.com/ubuntu/pool/main/o/openssl/libssl1.1_1.1.1f-1ubuntu2.16_amd64.deb -O package.deb \
+    if [ "$InstallOpenvpn24" == true ] && [ ! -d /usr/lib/openvpn.2.4 ]; then
+        curl http://archive.ubuntu.com/ubuntu/pool/main/o/openssl/libssl1.1_1.1.1f-1ubuntu2.16_amd64.deb -f -o package.deb \
             && ar x package.deb data.tar.xz \
             && tar xf data.tar.xz \
             && cp -r usr/lib/x86_64-linux-gnu/* /usr/lib/x86_64-linux-gnu/ \
             && rm -rf package.deb data.tar.xz usr
 
-        wget http://archive.ubuntu.com/ubuntu/pool/main/o/openvpn/openvpn_2.4.7-1ubuntu2.20.04.4_amd64.deb -O package.deb \
+        curl http://archive.ubuntu.com/ubuntu/pool/main/o/openvpn/openvpn_2.4.7-1ubuntu2.20.04.4_amd64.deb -f -o package.deb \
             && ar x package.deb data.tar.xz \
             && tar xf data.tar.xz \
             && cp usr/sbin/openvpn /usr/sbin/openvpn.2.4 \
