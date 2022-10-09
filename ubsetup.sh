@@ -27,12 +27,12 @@ FossilScmPkg="fossil-linux-x64-2.19.tar.gz"
 FossilScmUrl="https://fossil-scm.org/home/uv/$FossilScmPkg"
 FossilInstallDir="$InstallDir/fossilscm"
 
-GoLangPkg="go1.19.1.linux-amd64.tar.gz"
+GoLangPkg="go1.19.2.linux-amd64.tar.gz"
 GoLangUrl="https://go.dev/dl/$GoLangPkg"
 GoPath="$UsrLocalDir/go"
 
-VagrantPkg="vagrant_2.3.0_linux_amd64.zip"
-VagrantUrl="https://releases.hashicorp.com/vagrant/2.3.0/$VagrantPkg"
+VagrantPkg="vagrant_2.3.1_linux_amd64.zip"
+VagrantUrl="https://releases.hashicorp.com/vagrant/2.3.1/$VagrantPkg"
 
 TelegramPackage="telegram_linux.tar.xz"
 TelegramPackageHttpURL="https://telegram.org/dl/desktop/linux"
@@ -46,7 +46,7 @@ VeraCryptUrl="https://launchpad.net/veracrypt/trunk/1.25.9/+download/$VeraCryptP
 TerraformPkg="terraform_1.3.0_linux_amd64.zip"
 TerraformUrl="https://releases.hashicorp.com/terraform/1.3.0/$TerraformPkg"
 
-# TerragruntUrl="https://github.com/gruntwork-io/terragrunt/releases/download/v0.38.12/terragrunt_linux_amd64"
+# TerragruntUrl="https://github.com/gruntwork-io/terragrunt/releases/download/v0.39.1/terragrunt_linux_amd64"
 
 # ConfiglintPkg="config-lint_Linux_x86_64.tar.gz"
 # ConfiglintUrl="https://github.com/stelligent/config-lint/releases/download/v1.6.0/$ConfiglintPkg"
@@ -63,7 +63,7 @@ AndroidPkg="android-studio-2021.3.1.16-linux.tar.gz"
 AndroidUrl="https://dl.google.com/dl/android/studio/ide-zips/2021.3.1.16/$AndroidPkg"
 AndroidInstallDir="$InstallDir/androidstudio"
 
-FlutterPkg="flutter_linux_3.3.2-stable.tar.xz"
+FlutterPkg="flutter_linux_3.3.4-stable.tar.xz"
 FlutterUrl="https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/$FlutterPkg"
 FlutterInstallDir="$InstallDir/flutterdev"
 
