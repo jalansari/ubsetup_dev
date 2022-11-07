@@ -8,7 +8,7 @@
 declare -A DebPackages
 DebPackages=(
              ["code"]="https://code.visualstudio.com/sha/download?build=stable&os=linux-deb-x64;mscode.deb"
-             ["bcompare"]="https://www.scootersoftware.com/bcompare-4.4.3.26655_amd64.deb"
+             ["bcompare"]="https://www.scootersoftware.com/bcompare-4.4.4.27058_amd64.deb"
              ["dropbox"]="https://www.dropbox.com/download?dl=packages/ubuntu/dropbox_2020.03.04_amd64.deb"
              ["draw.io"]="https://github.com/jgraph/drawio-desktop/releases/download/v20.3.0/drawio-amd64-20.3.0.deb"
              ["mysql-workbench-community"]="https://dev.mysql.com/get/Downloads/MySQLGUITools/mysql-workbench-community_8.0.29-1ubuntu20.04_amd64.deb"
@@ -18,21 +18,21 @@ DebPackages=(
 InstallDir="/usr/share"
 UsrLocalDir="/usr/local"
 
-NodeJsVer="node-v16.17.1-linux-x64"
+NodeJsVer="node-v18.12.1-linux-x64"
 NodeJsPkg="$NodeJsVer.tar.xz"
-NodeJsUrl="https://nodejs.org/dist/v16.17.1/$NodeJsPkg"
+NodeJsUrl="https://nodejs.org/dist/v18.12.1/$NodeJsPkg"
 NodeInstallDir="$InstallDir/nodejs"
 
 FossilScmPkg="fossil-linux-x64-2.19.tar.gz"
 FossilScmUrl="https://fossil-scm.org/home/uv/$FossilScmPkg"
 FossilInstallDir="$InstallDir/fossilscm"
 
-GoLangPkg="go1.19.2.linux-amd64.tar.gz"
+GoLangPkg="go1.19.3.linux-amd64.tar.gz"
 GoLangUrl="https://go.dev/dl/$GoLangPkg"
 GoPath="$UsrLocalDir/go"
 
-VagrantPkg="vagrant_2.3.1_linux_amd64.zip"
-VagrantUrl="https://releases.hashicorp.com/vagrant/2.3.1/$VagrantPkg"
+VagrantPkg="vagrant_2.3.2_linux_amd64.zip"
+VagrantUrl="https://releases.hashicorp.com/vagrant/2.3.2/$VagrantPkg"
 
 TelegramPackage="telegram_linux.tar.xz"
 TelegramPackageHttpURL="https://telegram.org/dl/desktop/linux"
@@ -43,8 +43,8 @@ VeraCryptUrl="https://launchpad.net/veracrypt/trunk/1.25.9/+download/$VeraCryptP
 # DockerComposeUrl="https://github.com/docker/compose/releases/latest/download/docker-compose-Linux-x86_64"
 # DockerComposeUrl="https://github.com/docker/compose/releases/download/1.29.2/docker-compose-Linux-x86_64"
 
-TerraformPkg="terraform_1.3.0_linux_amd64.zip"
-TerraformUrl="https://releases.hashicorp.com/terraform/1.3.0/$TerraformPkg"
+TerraformPkg="terraform_1.3.4_linux_amd64.zip"
+TerraformUrl="https://releases.hashicorp.com/terraform/1.3.4/$TerraformPkg"
 
 # TerragruntUrl="https://github.com/gruntwork-io/terragrunt/releases/download/v0.39.1/terragrunt_linux_amd64"
 
@@ -55,15 +55,15 @@ TerraformUrl="https://releases.hashicorp.com/terraform/1.3.0/$TerraformPkg"
 AwsCliPkg="awscli-exe-linux-x86_64.zip"
 AwsCliUrl="https://awscli.amazonaws.com/$AwsCliPkg"
 
-PlantUmlVer="1.2022.8"
+PlantUmlVer="1.2022.12"
 PlantUmlUrl="https://github.com/plantuml/plantuml/releases/download/v$PlantUmlVer/plantuml-$PlantUmlVer.jar"
 PlantumlTargetBin="/usr/local/bin/plantuml.jar"
 
-AndroidPkg="android-studio-2021.3.1.16-linux.tar.gz"
-AndroidUrl="https://dl.google.com/dl/android/studio/ide-zips/2021.3.1.16/$AndroidPkg"
+AndroidPkg="android-studio-2021.3.1.17-linux.tar.gz"
+AndroidUrl="https://dl.google.com/dl/android/studio/ide-zips/2021.3.1.17/$AndroidPkg"
 AndroidInstallDir="$InstallDir/androidstudio"
 
-FlutterPkg="flutter_linux_3.3.4-stable.tar.xz"
+FlutterPkg="flutter_linux_3.3.7-stable.tar.xz"
 FlutterUrl="https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/$FlutterPkg"
 FlutterInstallDir="$InstallDir/flutterdev"
 
