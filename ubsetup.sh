@@ -605,6 +605,9 @@ read -r -d '' TEXT_CinnamonDesktopGSettingsConfig <<- EOTXT
 	lock-enabled=true
 	lock-delay=uint32 2
 
+	[org.cinnamon.settings-daemon.peripherals.touchscreen]
+	orientation-lock=false
+
 	[org.cinnamon.desktop.a11y.keyboard]
 	togglekeys-enable-osd=true
 
