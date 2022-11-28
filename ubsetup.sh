@@ -647,8 +647,8 @@ EOTXT
 
 read -r -d '' TEXT_UbuntuPowerGSettingsConfig <<- EOTXT
 	[org.gnome.settings-daemon.plugins.power]
-	sleep-inactive-battery-timeout=1800
-	sleep-inactive-battery-type='nothing'
+	sleep-inactive-battery-timeout=1200
+	sleep-inactive-battery-type='suspend'
 	sleep-inactive-ac-timeout=3600
 	sleep-inactive-ac-type='nothing'
 EOTXT
@@ -659,33 +659,52 @@ read -r -d '' TEXT_UbuntuNightLightGSettingsConfig <<- EOTXT
 	night-light-schedule-automatic=false
 	night-light-schedule-from=21.0
 	night-light-schedule-to=8.0
+	night-light-temperature=uint32 2700
 EOTXT
 
 read -r -d '' TEXT_UbuntuDesktopGSettingsConfig <<- EOTXT
 	[org.gnome.desktop.background]
 	picture-uri=''
+	picture-uri-dark=''
 	primary-color='$DesktopBackgroundColor'
 
 	[org.gnome.desktop.interface]
+	color-scheme='prefer-dark'
 	gtk-theme='Yaru-dark'
+	icon-theme='Yaru'
 	enable-animations=false
+	show-battery-percentage=true
 
 	[org.gnome.shell.extensions.ding]
 	icon-size='small'
+	arrangeorder='NAME'
 
 	[org.gnome.shell.extensions.dash-to-dock]
 	dash-max-icon-size=32
 	dock-fixed=false
+	extend-height=false
 
 	[org.gnome.desktop.privacy]
 	recent-files-max-age=30
 	remember-recent-files=true
+	report-technical-problems=true
+	old-files-age=uint32 30
+	remove-old-temp-files=false
+	remove-old-trash-files=false
 
 	[org.gnome.desktop.screensaver]
 	lock-delay=uint32 0
+	lock-enabled=true
 
 	[org.gnome.desktop.session]
 	idle-delay=uint32 300
+
+	[org.gnome.desktop.peripherals.mouse]
+	natural-scroll=false
+	speed=0.20
+
+	[org.gnome.desktop.peripherals.touchpad]
+	two-finger-scrolling-enabled=true
 
 	[org.gnome.settings-daemon.plugins.media-keys]
 	home=['<Primary><Alt>h']
@@ -707,7 +726,6 @@ read -r -d '' TEXT_UbuntuDesktopGSettingsConfig <<- EOTXT
 	name='UpdateManager'
 
 	[org.gnome.shell]
-	app-picker-view=uint32 1
 	favorite-apps=[]
 EOTXT
 # favorite-apps is later over-written with list of launchers.
@@ -715,16 +733,22 @@ EOTXT
 read -r -d '' TEXT_nautilusGSettingsConfig <<- EOTXT
 	[org.gnome.nautilus.preferences]
 	default-folder-viewer='list-view'
+	search-filter-time-type='last_modified'
 	show-image-thumbnails='never'
-	executable-text-activation='display'
 
 	[org.gnome.nautilus.list-view]
-	default-visible-columns=['name', 'size', 'type', 'owner', 'group', 'permissions', 'date_modified']
-	default-column-order=['name', 'size', 'type', 'owner', 'group', 'permissions', 'date_modified', 'date_modified_with_time', 'date_accessed', 'recency']
+	default-visible-columns=['name', 'size', 'type', 'owner', 'group', 'permissions', 'date_modified_with_time']
 	default-zoom-level='small'
 
 	[org.gtk.settings.file-chooser]
+	date-format='regular'
+	location-mode='path-bar'
+	show-size-column=true
+	show-type-column=true
+	sort-column='name'
 	sort-directories-first=true
+	sort-order='ascending'
+	type-format='category'
 	show-hidden=$FMShowHiddenFilesVal
 EOTXT
 
@@ -740,8 +764,9 @@ read -r -d '' TEXT_geditGSettingsConfig <<- EOTXT
 	right-margin-position=uint32 80
 	wrap-mode='word'
 	wrap-last-split-mode='word'
-	scheme='oblivion'
+	scheme='Yaru-dark'
 	background-pattern='none'
+	display-overview-map=true
 EOTXT
 
 
