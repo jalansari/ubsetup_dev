@@ -12,7 +12,7 @@ DebPackages=(
              ["dropbox"]="https://www.dropbox.com/download?dl=packages/ubuntu/dropbox_2020.03.04_amd64.deb"
              ["draw.io"]="https://github.com/jgraph/drawio-desktop/releases/download/v20.3.0/drawio-amd64-20.3.0.deb"
              ["mysql-workbench-community"]="https://dev.mysql.com/get/Downloads/MySQLGUITools/mysql-workbench-community_8.0.31-1ubuntu22.04_amd64.deb"
-             ["slack-desktop"]="https://downloads.slack-edge.com/releases/linux/4.28.184/prod/x64/slack-desktop-4.28.184-amd64.deb"
+             ["slack-desktop"]="https://downloads.slack-edge.com/releases/linux/4.29.149/prod/x64/slack-desktop-4.29.149-amd64.deb"
             )
 
 InstallDir="/usr/share"
@@ -46,7 +46,7 @@ VeraCryptUrl="https://launchpad.net/veracrypt/trunk/1.25.9/+download/$VeraCryptP
 TerraformPkg="terraform_1.3.5_linux_amd64.zip"
 TerraformUrl="https://releases.hashicorp.com/terraform/1.3.5/$TerraformPkg"
 
-# TerragruntUrl="https://github.com/gruntwork-io/terragrunt/releases/download/v0.41.0/terragrunt_linux_amd64"
+# TerragruntUrl="https://github.com/gruntwork-io/terragrunt/releases/download/v0.42.3/terragrunt_linux_amd64"
 
 # ConfiglintPkg="config-lint_Linux_x86_64.tar.gz"
 # ConfiglintUrl="https://github.com/stelligent/config-lint/releases/download/v1.6.0/$ConfiglintPkg"
@@ -891,7 +891,7 @@ read -r -d '' TEXT_BashToolAliases <<- "EOTXT"
 	alias dstopall="docker kill $(docker ps -q)"
 	alias cleantf='find . -type f -name .terraform.lock* | xargs -I fl bash -c "cd \$( dirname fl ) && pwd && rm -rf .terraform*"'
 	stty -ixon # Disable xon/off flow control, as it clashes with history search (Ctrl-s)
-	set -o vi
+	# set -o vi
 	# bind '\e[A:history-search-backward'
 	# bind '\e[B:history-search-forward'
 EOTXT
@@ -1949,6 +1949,7 @@ sed -i.bak -r \
 '/alias dstopall=/d;'\
 '/alias cleantf=/d;'\
 '/^stty /d;'\
+'/^(# )?set -o/d;'\
 '/^(# )?bind /d;'\
 '/alias plantuml=/d;'\
 '/____gititer/,/^}$/{/.*/d};'\
