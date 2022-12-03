@@ -866,7 +866,7 @@ read -r -d '' TEXT_BashToolAliases <<- "EOTXT"
 	alias dstopall="docker kill $(docker ps -q)"
 	alias cleantf='find . -type f -name .terraform.lock* | xargs -I fl bash -c "cd \$( dirname fl ) && pwd && rm -rf .terraform*"'
 	stty -ixon # Disable xon/off flow control, as it clashes with history search (Ctrl-s)
-	set -o vi
+	# set -o vi
 	# bind '\e[A:history-search-backward'
 	# bind '\e[B:history-search-forward'
 EOTXT
@@ -1885,6 +1885,7 @@ sed -i.bak -r \
 '/alias dstopall=/d;'\
 '/alias cleantf=/d;'\
 '/^stty /d;'\
+'/^(# )?set -o/d;'\
 '/^(# )?bind /d;'\
 '/alias plantuml=/d;'\
 '/____gititer/,/^}$/{/.*/d};'\
