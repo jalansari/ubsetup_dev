@@ -1858,8 +1858,8 @@ fi
 checkDebPkgInstalled "firefox"
 if [ $? == 0 ]; then
     PRINTLOG "Updating mozilla prefs: [$FirefoxSysPrefsConfig] [$FirefoxSysUsersConfig]"
-    echo -e "$TEXT_FirefoxPrefs" >> "$FirefoxSysPrefsConfig"
-    echo -e "$TEXT_FirefoxCfg" >> "$FirefoxSysUsersConfig"
+    echo -e "$TEXT_FirefoxPrefs" > "$FirefoxSysPrefsConfig"
+    echo -e "$TEXT_FirefoxCfg" > "$FirefoxSysUsersConfig"
     # Delete current user's .mozilla directory, if its size is small enough
     # (< 14MB) to be as it was from first use, with no changes by the owner.
     if [[ -d "$userHomeDir/.mozilla" ]]; then
@@ -1995,8 +1995,9 @@ EOBLOCK
     installVSCodeExt "jebbs.plantuml"
 
     vsCodeWorkspaceFileExample="$userHomeDir/Documents/devProjects.code-workspace"
+    # vsCodeWorkspaceFileExample=$( getAvailableFileName "$vsCodeWorkspaceFileExample" )
     [ ! -e "$vsCodeWorkspaceFileExample" ] \
-        && echo -e "$TEXT_VSCodeWorkspaceExample" >> "$vsCodeWorkspaceFileExample" \
+        && echo -e "$TEXT_VSCodeWorkspaceExample" > "$vsCodeWorkspaceFileExample" \
         && chown -R $userOfThisScript:$groupOfUserOfThisScript "$vsCodeWorkspaceFileExample"
 
     [ "$isFlutterInstalled" = true ] \
@@ -2033,7 +2034,7 @@ GlibPriorityNum="zzz" # This should be a number, but distros are not using prior
 if [ $nemoinstalled == 0 ]; then
     PRINTLOG "Configuring Nemo file manager."
     NemoGSettingsCfg="$GlibScemasDir/${GlibPriorityNum}_nemo.gschema.override"
-    echo -e "$TEXT_NemoGSettingsConfig" >> $NemoGSettingsCfg
+    echo -e "$TEXT_NemoGSettingsConfig" > $NemoGSettingsCfg
     RunGlibCompileSchemas=true
 fi
 
@@ -2107,23 +2108,23 @@ if [ $cinnamonInstalled == 0 ]; then
     PRINTLOG ".. show desktop clock/date."
     PRINTLOG ".. interface scaling."
     DesktopIfGSettingsCfg="$GlibScemasDir/${GlibPriorityNum}_desktopif.gschema.override"
-    echo -e "$TEXT_CinnamonDesktopIfGSettingsConfig" >> $DesktopIfGSettingsCfg
+    echo -e "$TEXT_CinnamonDesktopIfGSettingsConfig" > $DesktopIfGSettingsCfg
 
     PRINTLOG "Configuring Desktop Shortcuts."
     KeyShortcutsGSettingsCfg="$GlibScemasDir/${GlibPriorityNum}_keyshortcuts.gschema.override"
-    echo -e "$TEXT_CinnamonKeyboardShortCutsConfig" >> $KeyShortcutsGSettingsCfg
+    echo -e "$TEXT_CinnamonKeyboardShortCutsConfig" > $KeyShortcutsGSettingsCfg
 
     PRINTLOG "Configuring Desktop Sounds."
     SoundsGSettingsCfg="$GlibScemasDir/${GlibPriorityNum}_sounds.gschema.override"
-    echo -e "$TEXT_CinnamonSoundsGSettingsConfig" >> $SoundsGSettingsCfg
+    echo -e "$TEXT_CinnamonSoundsGSettingsConfig" > $SoundsGSettingsCfg
 
     PRINTLOG "Configuring Touchpad/Mouse."
     MouseGSettingsCfg="$GlibScemasDir/${GlibPriorityNum}_mouse.gschema.override"
-    echo -e "$TEXT_CinnamonMouseGSettingsConfig" >> $MouseGSettingsCfg
+    echo -e "$TEXT_CinnamonMouseGSettingsConfig" > $MouseGSettingsCfg
 
     PRINTLOG "Configuring Power."
     PowerGSettingsCfg="$GlibScemasDir/${GlibPriorityNum}_power.gschema.override"
-    echo -e "$TEXT_CinnamonPowerGSettingsConfig" >> $PowerGSettingsCfg
+    echo -e "$TEXT_CinnamonPowerGSettingsConfig" > $PowerGSettingsCfg
 
     PRINTLOG "Configuring Desktop."
     PRINTLOG ".. remembering recent files <$CinnamonRememberRecentFiles>"
@@ -2131,12 +2132,12 @@ if [ $cinnamonInstalled == 0 ]; then
     PRINTLOG ".. background animations and decorations."
     PRINTLOG ".. panel sizing."
     DesktopGSettingsCfg="$GlibScemasDir/${GlibPriorityNum}_desktop.gschema.override"
-    echo -e "$TEXT_CinnamonDesktopGSettingsConfig" >> $DesktopGSettingsCfg
+    echo -e "$TEXT_CinnamonDesktopGSettingsConfig" > $DesktopGSettingsCfg
 
     if [ $terminatorinstalled == 0 ]; then
         PRINTLOG "Configuring Terminator as Default Terminal."
         TermGSettingsCfg="$GlibScemasDir/${GlibPriorityNum}_desktopterm.gschema.override"
-        echo -e "$TEXT_CinnamonTermGSettingsConfig" >> $TermGSettingsCfg
+        echo -e "$TEXT_CinnamonTermGSettingsConfig" > $TermGSettingsCfg
 
         TermGSettingsCfg="$GlibScemasDir/${GlibPriorityNum}_desktopterm_cin.gschema.override"
         echo -e "$TEXT_TermGSettingsConfigCinnamon" >> $TermGSettingsCfg
@@ -2151,7 +2152,7 @@ fi
 if [ $xedinstalled == 0 ]; then
     PRINTLOG "Configuring Xed."
     GSettingsCfg="$GlibScemasDir/${GlibPriorityNum}_xed.gschema.override"
-    echo -e "$TEXT_XedGSettingsConfig" >> $GSettingsCfg
+    echo -e "$TEXT_XedGSettingsConfig" > $GSettingsCfg
     RunGlibCompileSchemas=true
 fi
 
@@ -2166,14 +2167,14 @@ geditPkgInstalled=$?
 if [ $geditPkgInstalled == 0 ]; then
     PRINTLOG "Configuring gedit text editor."
     GSettingsCfg="$GlibScemasDir/${GlibPriorityNum}_gedit.gschema.override"
-    echo -e "$TEXT_geditGSettingsConfig" >> $GSettingsCfg
+    echo -e "$TEXT_geditGSettingsConfig" > $GSettingsCfg
     RunGlibCompileSchemas=true
 fi
 
 if [ $nautilusPkgInstalled == 0 ]; then
     PRINTLOG "Configuring nautilus file manager."
     GSettingsCfg="$GlibScemasDir/${GlibPriorityNum}_nautilus.gschema.override"
-    echo -e "$TEXT_nautilusGSettingsConfig" >> $GSettingsCfg
+    echo -e "$TEXT_nautilusGSettingsConfig" > $GSettingsCfg
     RunGlibCompileSchemas=true
 fi
 
@@ -2197,15 +2198,15 @@ if [ $ubuntuInstalled == 0 ]; then
 
     PRINTLOG "Configuring Ubuntu desktop."
     GSettingsCfg="$GlibScemasDir/${GlibPriorityNum}_ubuntudesktop.gschema.override"
-    echo -e "$TEXT_UbuntuDesktopGSettingsConfigWithLaunchers" >> $GSettingsCfg
+    echo -e "$TEXT_UbuntuDesktopGSettingsConfigWithLaunchers" > $GSettingsCfg
 
     PRINTLOG "Configuring Ubuntu night light."
     GSettingsCfg="$GlibScemasDir/${GlibPriorityNum}_ubuntunightlight.gschema.override"
-    echo -e "$TEXT_UbuntuNightLightGSettingsConfig" >> $GSettingsCfg
+    echo -e "$TEXT_UbuntuNightLightGSettingsConfig" > $GSettingsCfg
 
     PRINTLOG "Configuring Ubuntu power."
     GSettingsCfg="$GlibScemasDir/${GlibPriorityNum}_ubuntupower.gschema.override"
-    echo -e "$TEXT_UbuntuPowerGSettingsConfig" >> $GSettingsCfg
+    echo -e "$TEXT_UbuntuPowerGSettingsConfig" > $GSettingsCfg
 
     RunGlibCompileSchemas=true
 
