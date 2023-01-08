@@ -505,6 +505,7 @@ read -r -d '' TEXT_CinnamonDesktopIfGSettingsConfig <<- EOTXT
 	clock-format='24h'
 
 	[org.cinnamon.desktop.interface]
+	cursor-theme='DMZ-White'
 	icon-theme='Mint-Y-Dark'
 	gtk-theme='Mint-Y-Dark'
 	clock-show-date=true
