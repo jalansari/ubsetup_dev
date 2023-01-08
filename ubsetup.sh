@@ -642,6 +642,16 @@ read -r -d '' TEXT_XedGSettingsConfig <<- EOTXT
 	minimap-visible=true
 EOTXT
 
+read -r -d '' TEXT_LinuxmintLightdmGreeterSettings <<- EOTXT
+	[Greeter]
+	background=/usr/share/backgrounds/linuxmint/edesigner_linuxmint.png
+	clock-format=%a %d %b %Y, %H:%M
+	draw-user-backgrounds=false
+	cursor-theme-name=DMZ-White
+	theme-name=Mint-Y-Dark
+	icon-theme-name=Mint-Y-Dark
+EOTXT
+
 
 ##### Ubuntu Configs ######
 
@@ -2209,6 +2219,15 @@ if [ $cinnamonInstalled == 0 ]; then
     fi
 
     RunGlibCompileSchemas=true
+
+
+    checkDebPkgInstalled "lightdm" # Login manager
+    lightdmInstalled=$?
+    if [ $lightdmInstalled == 0 ]; then
+        PRINTLOG "Configuring Lightdm."
+        LightdmCfg="/etc/lightdm/slick-greeter.conf"
+        echo -e "$TEXT_LinuxmintLightdmGreeterSettings" > $LightdmCfg
+    fi
 fi
 
 if [ $xedinstalled == 0 ]; then
