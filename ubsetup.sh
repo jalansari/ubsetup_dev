@@ -2144,6 +2144,14 @@ if [ $cinnamonInstalled == 0 ]; then
     sed -i.bak -r '/\"peek-at-desktop\"/,/^\s*}/{s|(\"default\"\s*:\s*)false(,?)|\1true\2|;};'\
 '/\"peek-blur\"/,/^\s*}/{s|(\"default\"\s*:\s*)false(,?)|\1true\2|;};' $showDTCfg
 
+    showDTCornerBarCfg="/usr/share/cinnamon/applets/cornerbar@cinnamon.org/settings-schema.json"
+    PRINTLOG "Updating file <$showDTCornerBarCfg>"
+    [ -e "$showDTCornerBarCfg" ] \
+        && sed -i.bak -r '/\"peek-at-desktop\"/,/^\s*}/{s|(\"default\"\s*:\s*)false(,?)|\1true\2|;};'\
+'/\"peek-blur\"/,/^\s*}/{s|(\"default\"\s*:\s*)false(,?)|\1true\2|;};'\
+'/\"peek-delay\"/,/^\s*}/{s|(\"default\"\s*:)\s*.*?(,?)|\1 400\2|;};'\
+'/\"peek-opacity\"/,/^\s*}/{s|(\"default\"\s*:)\s*.*?(,?)|\1 10\2|;};' $showDTCornerBarCfg
+
     launchersListStr=""
     for applauncher in "${LIST_OF_LAUNCHERS[@]}"
     do
@@ -2165,14 +2173,15 @@ if [ $cinnamonInstalled == 0 ]; then
     PRINTLOG "Updating file <$launchers_19_1_Cfg>, with list <$launchersListStr>"
     sed -i.bak -r '/\"pinned-apps\"/,/^\s*}/{s|(\"default\"\s*:\s*\[).*?(\],?)|\1'"$launchersListStr"'\2|;};' $launchers_19_1_Cfg
 
-    rm -rf "$userHomeDir/.cinnamon/configs/clock@cinnamon.org"
-    rm -rf "$userHomeDir/.cinnamon/configs/calendar@cinnamon.org"
-    rm -rf "$userHomeDir/.cinnamon/configs/menu@cinnamon.org"
-    rm -rf "$userHomeDir/.cinnamon/configs/notifications@cinnamon.org"
-    rm -rf "$userHomeDir/.cinnamon/configs/power@cinnamon.org"
-    rm -rf "$userHomeDir/.cinnamon/configs/show-desktop@cinnamon.org"
-    rm -rf "$userHomeDir/.cinnamon/configs/panel-launchers@cinnamon.org"
-    rm -rf "$userHomeDir/.cinnamon/configs/grouped-window-list@cinnamon.org"
+    rm -rf "$userHomeDir/.cinnamon/configs/clock@cinnamon.org"                "$userHomeDir/.config/cinnamon/spices/clock@cinnamon.org"
+    rm -rf "$userHomeDir/.cinnamon/configs/calendar@cinnamon.org"             "$userHomeDir/.config/cinnamon/spices/calendar@cinnamon.org"
+    rm -rf "$userHomeDir/.cinnamon/configs/menu@cinnamon.org"                 "$userHomeDir/.config/cinnamon/spices/menu@cinnamon.org"
+    rm -rf "$userHomeDir/.cinnamon/configs/notifications@cinnamon.org"        "$userHomeDir/.config/cinnamon/spices/notifications@cinnamon.org"
+    rm -rf "$userHomeDir/.cinnamon/configs/power@cinnamon.org"                "$userHomeDir/.config/cinnamon/spices/power@cinnamon.org"
+    rm -rf "$userHomeDir/.cinnamon/configs/show-desktop@cinnamon.org"         "$userHomeDir/.config/cinnamon/spices/show-desktop@cinnamon.org"
+    rm -rf "$userHomeDir/.cinnamon/configs/cornerbar@cinnamon.org"            "$userHomeDir/.config/cinnamon/spices/cornerbar@cinnamon.org"
+    rm -rf "$userHomeDir/.cinnamon/configs/panel-launchers@cinnamon.org"      "$userHomeDir/.config/cinnamon/spices/panel-launchers@cinnamon.org"
+    rm -rf "$userHomeDir/.cinnamon/configs/grouped-window-list@cinnamon.org"  "$userHomeDir/.config/cinnamon/spices/grouped-window-list@cinnamon.org"
 
     PRINTLOG "Configuring Desktop Interface options."
     PRINTLOG ".. dark theme."
