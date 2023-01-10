@@ -852,6 +852,10 @@ EOTXT
 read -r -d '' TEXT_VSCodeWorkspaceExample <<- EOTXT
 	{
 	    "folders": [
+	        // {
+	        //     "name": "name", // Name is optional
+	        //     "path": "path"
+	        // },
 	    ],
 	}
 EOTXT
