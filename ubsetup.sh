@@ -515,9 +515,88 @@ read -r -d '' TEXT_CinnamonDesktopIfGSettingsConfig <<- EOTXT
 	scaling-factor=uint32 0
 EOTXT
 
+read -r -d '' TEXT_CinnamonKeyboardShortCutsSchemaXML <<- EOTXT
+	<?xml version="1.0" encoding="UTF-8"?>
+	<schemalist>
+
+	  <schema id="org.cinnamon.desktop.keybindings.custom-keybindings.custom0" path="/org/cinnamon/desktop/keybindings/custom-keybindings/custom0/">
+	    <key name="name" type="s">
+	      <default>''</default>
+	      <summary>Name</summary>
+	      <description>Name of the custom binding</description>
+	    </key>
+	    <key name="binding" type="as">
+	      <default>[]</default>
+	      <summary>Binding</summary>
+	      <description>Binding for the custom binding</description>
+	    </key>
+	    <key name="command" type="s">
+	      <default>''</default>
+	      <summary>Command</summary>
+	      <description>Command to run when the binding is invoked</description>
+	    </key>
+	  </schema>
+
+	  <schema id="org.cinnamon.desktop.keybindings.custom-keybindings.custom1" path="/org/cinnamon/desktop/keybindings/custom-keybindings/custom1/">
+	    <key name="name" type="s">
+	      <default>''</default>
+	      <summary>Name</summary>
+	      <description>Name of the custom binding</description>
+	    </key>
+	    <key name="binding" type="as">
+	      <default>[]</default>
+	      <summary>Binding</summary>
+	      <description>Binding for the custom binding</description>
+	    </key>
+	    <key name="command" type="s">
+	      <default>''</default>
+	      <summary>Command</summary>
+	      <description>Command to run when the binding is invoked</description>
+	    </key>
+	  </schema>
+
+	  <schema id="org.cinnamon.desktop.keybindings.custom-keybindings.custom2" path="/org/cinnamon/desktop/keybindings/custom-keybindings/custom2/">
+	    <key name="name" type="s">
+	      <default>''</default>
+	      <summary>Name</summary>
+	      <description>Name of the custom binding</description>
+	    </key>
+	    <key name="binding" type="as">
+	      <default>[]</default>
+	      <summary>Binding</summary>
+	      <description>Binding for the custom binding</description>
+	    </key>
+	    <key name="command" type="s">
+	      <default>''</default>
+	      <summary>Command</summary>
+	      <description>Command to run when the binding is invoked</description>
+	    </key>
+	  </schema>
+
+	  <schema id="org.cinnamon.desktop.keybindings.custom-keybindings.custom3" path="/org/cinnamon/desktop/keybindings/custom-keybindings/custom3/">
+	    <key name="name" type="s">
+	      <default>''</default>
+	      <summary>Name</summary>
+	      <description>Name of the custom binding</description>
+	    </key>
+	    <key name="binding" type="as">
+	      <default>[]</default>
+	      <summary>Binding</summary>
+	      <description>Binding for the custom binding</description>
+	    </key>
+	    <key name="command" type="s">
+	      <default>''</default>
+	      <summary>Command</summary>
+	      <description>Command to run when the binding is invoked</description>
+	    </key>
+	  </schema>
+
+	</schemalist>
+EOTXT
+
 read -r -d '' TEXT_CinnamonKeyboardShortCutsConfig <<- EOTXT
 	[org.cinnamon.desktop.keybindings]
-	custom-list=['custom2', 'custom1', 'custom0', '__dummy__']
+	custom-list=['custom3', 'custom2', 'custom1', 'custom0', '__dummy__']
 
 	[org.cinnamon.desktop.keybindings.custom-keybindings.custom0]
 	binding=['$KeyboardShortcutVSCode']
@@ -534,9 +613,15 @@ read -r -d '' TEXT_CinnamonKeyboardShortCutsConfig <<- EOTXT
 	command='mintupdate'
 	name='Update Manager'
 
+	[org.cinnamon.desktop.keybindings.custom-keybindings.custom3]
+	binding=['<Shift>Print']
+	command='flameshot gui'
+	name='Flameshot'
+
 	[org.cinnamon.desktop.keybindings.media-keys]
 	home=['$KeyboardShortcutHome']
 	terminal=['$KeyboardShortcutTerminal']
+	area-screenshot=[]
 EOTXT
 
 read -r -d '' TEXT_CinnamonSoundsGSettingsConfig <<- EOTXT
@@ -2131,6 +2216,8 @@ if [ $cinnamonInstalled == 0 ]; then
     echo -e "$TEXT_CinnamonDesktopIfGSettingsConfig" > $DesktopIfGSettingsCfg
 
     PRINTLOG "Configuring Desktop Shortcuts."
+    KeyShortcutsGSettingsXML="$GlibScemasDir/${GlibPriorityNum}.keyshortcuts.gschema.xml"
+    echo -e "$TEXT_CinnamonKeyboardShortCutsSchemaXML" > $KeyShortcutsGSettingsXML
     KeyShortcutsGSettingsCfg="$GlibScemasDir/${GlibPriorityNum}_keyshortcuts.gschema.override"
     echo -e "$TEXT_CinnamonKeyboardShortCutsConfig" > $KeyShortcutsGSettingsCfg
 
