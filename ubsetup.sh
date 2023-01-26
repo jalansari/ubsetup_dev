@@ -10,7 +10,7 @@ DebPackages=(
              ["code"]="https://code.visualstudio.com/sha/download?build=stable&os=linux-deb-x64;mscode.deb"
              ["bcompare"]="https://www.scootersoftware.com/bcompare-4.4.4.27058_amd64.deb"
              ["dropbox"]="https://www.dropbox.com/download?dl=packages/ubuntu/dropbox_2020.03.04_amd64.deb"
-             ["draw.io"]="https://github.com/jgraph/drawio-desktop/releases/download/v20.7.4/drawio-amd64-20.7.4.deb"
+             ["draw.io"]="https://github.com/jgraph/drawio-desktop/releases/download/v20.8.10/drawio-amd64-20.8.10.deb"
              ["mysql-workbench-community"]="https://dev.mysql.com/get/Downloads/MySQLGUITools/mysql-workbench-community_8.0.29-1ubuntu20.04_amd64.deb"
              ["slack-desktop"]="https://downloads.slack-edge.com/releases/linux/4.29.149/prod/x64/slack-desktop-4.29.149-amd64.deb"
             )
@@ -27,7 +27,7 @@ FossilScmPkg="fossil-linux-x64-2.20.tar.gz"
 FossilScmUrl="https://fossil-scm.org/home/uv/$FossilScmPkg"
 FossilInstallDir="$InstallDir/fossilscm"
 
-GoLangPkg="go1.19.4.linux-amd64.tar.gz"
+GoLangPkg="go1.19.5.linux-amd64.tar.gz"
 GoLangUrl="https://go.dev/dl/$GoLangPkg"
 GoPath="$UsrLocalDir/go"
 
@@ -46,7 +46,7 @@ VeraCryptUrl="https://launchpad.net/veracrypt/trunk/1.25.9/+download/$VeraCryptP
 TerraformPkg="terraform_1.3.7_linux_amd64.zip"
 TerraformUrl="https://releases.hashicorp.com/terraform/1.3.7/$TerraformPkg"
 
-# TerragruntUrl="https://github.com/gruntwork-io/terragrunt/releases/download/v0.42.7/terragrunt_linux_amd64"
+# TerragruntUrl="https://github.com/gruntwork-io/terragrunt/releases/download/v0.43.0/terragrunt_linux_amd64"
 
 # ConfiglintPkg="config-lint_Linux_x86_64.tar.gz"
 # ConfiglintUrl="https://github.com/stelligent/config-lint/releases/download/v1.6.0/$ConfiglintPkg"
@@ -55,12 +55,12 @@ TerraformUrl="https://releases.hashicorp.com/terraform/1.3.7/$TerraformPkg"
 AwsCliPkg="awscli-exe-linux-x86_64.zip"
 AwsCliUrl="https://awscli.amazonaws.com/$AwsCliPkg"
 
-PlantUmlVer="1.2022.14"
+PlantUmlVer="1.2023.0"
 PlantUmlUrl="https://github.com/plantuml/plantuml/releases/download/v$PlantUmlVer/plantuml-$PlantUmlVer.jar"
 PlantumlTargetBin="/usr/local/bin/plantuml.jar"
 
-AndroidPkg="android-studio-2021.3.1.17-linux.tar.gz"
-AndroidUrl="https://dl.google.com/dl/android/studio/ide-zips/2021.3.1.17/$AndroidPkg"
+AndroidPkg="android-studio-2022.1.1.19-linux.tar.gz"
+AndroidUrl="https://dl.google.com/dl/android/studio/ide-zips/2022.1.1.19/$AndroidPkg"
 AndroidInstallDir="$InstallDir/androidstudio"
 
 FlutterPkg="flutter_linux_3.3.10-stable.tar.xz"
