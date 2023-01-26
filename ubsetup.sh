@@ -1829,6 +1829,11 @@ if [ $ubServerEnvironment != 0 ]; then
     do
         installDebPackageFromHttp ${DebPackages["$key"]} $key
     done
+    # Workaround to give slack its key in the new (non-legacy) folder.
+    checkDebPkgInstalled "slack-desktop"
+    if [[ $? == 0 ]]; then
+        apt-key export "038651BD" | sudo gpg --dearmour -o /etc/apt/trusted.gpg.d/slack.gpg
+    fi
 
     downloadAndUnpack "$VagrantUrl" "$VagrantPkg" "/usr/local/bin" "/usr/local/bin/vagrant"
 
