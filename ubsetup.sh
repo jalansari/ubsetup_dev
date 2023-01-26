@@ -286,6 +286,7 @@ INSTALL_COMP_LIST_DESKTOP=(
 INSTAL_PIP2n3_MAP_DESKTOP=(
                    "setuptools" # Installs easy_install, needed to install virtualenv.
                    "yolk3k" # Needed to query for latest version of pip packages (see "cpr" command in bashrc).
+                   "pre-commit"
                   )
 
 declare -A DebSources
@@ -908,6 +909,20 @@ read -r -d '' TEXT_BashGitAliases <<- "EOTXT"
 	alias gitlogs='____gititer____ log'
 	alias gitmerges='____gititer____ merge'
 	alias gitcommits='____gititer____ commit'
+	function ____git_clone_precommit_inst____() {
+	    repodir="$2"
+	    if [[ -z "$2" ]]; then
+	        repodir="${1##*/}"
+	        repodir="${repodir%.*}"
+	        git clone "$1"
+	    else
+	        git clone "$1" "$2"
+	    fi
+	    cd "$repodir"
+	        pre-commit install
+	    cd -
+	}
+	alias gitcp='____git_clone_precommit_inst____'
 EOTXT
 
 read -r -d '' TEXT_BashPythonToolAliases <<- "EOTXT"
@@ -1894,7 +1909,7 @@ sed -i.bak -r \
 '/^(# )?set -o/d;'\
 '/^(# )?bind /d;'\
 '/alias plantuml=/d;'\
-'/____gititer/,/^}$/{/.*/d};'\
+'/____git/,/^}$/{/.*/d};'\
 '/alias git/d;'\
 '/____check_py/,/^}$/{/.*/d};'\
 '/____cleanpy/,/^}$/{/.*/d};'\
