@@ -2392,6 +2392,11 @@ if [ -v UserInfo[@] ]; then
     done
 fi
 
+# Workaround, because somehow the current dir becomes owned by root.
+# And, most likely the current dir is in the home dir of the user executing this
+# script.
+chown -R $userOfThisScript:$groupOfUserOfThisScript .
+
 
 ########################################
 ##### Installations complete, just show
