@@ -118,6 +118,19 @@ FirefoxHomePage="https://www.google.co.uk"
 FirefoxSysPrefsConfig="/usr/lib/firefox/defaults/pref/local-settings.js"
 FirefoxSysUsersConfig="/usr/lib/firefox/mozilla.cfg"
 
+
+declare -A FirefoxAddons
+# Firefox addons must be downloaded into the global path, as a file name exactly
+# matching the addon "id", which can be found in the manifest.json of an already
+# installed/extracted addon.
+FirefoxAddons=(
+       ["uBlock0@raymondhill.net"]="https://github.com/gorhill/uBlock/releases/download/1.46.0/uBlock0_1.46.0.firefox.signed.xpi"
+       # ["{446900e4-71c2-419f-a6a7-df9c091e268b}"]="https://addons.mozilla.org/firefox/downloads/latest/bitwarden-password-manager/latest.xpi"
+       # ["{73a6fe31-595d-460b-a920-fcc0f8843232}"]="https://noscript.net/download/releases/noscript-11.4.14.xpi"
+      )
+FirefoxAddonsDir="/usr/lib/firefox/distribution/extensions"
+
+
 GlobalProfileFile="/etc/profile"
 TempFolderForDownloads="/tmp"
 
@@ -1547,6 +1560,21 @@ function updateExistingUser()
     test $? == 0 || return 9
 }
 
+function downloadFirefoxAddonIntoGlobalInstall()
+{   test -z "$1" && return 1
+    test -z "$2" && return 2
+    curl "$2" --retry 5 -L -f -o "$FirefoxAddonsDir/$1.xpi"
+    downloadCmdError=$?
+    if [[ $downloadCmdError != 0 ]]; then
+        PRINT_ERROR "Error <$downloadCmdError> downloading <"$2">"
+    fi
+}
+
+function addFirefoxAddonsGlobally()
+{   PRINTLOG "Installing Firefox Addons."
+    iterAssociativeArrAndCall "$1" downloadFirefoxAddonIntoGlobalInstall
+}
+
 function usage()
 {   BadArg=$1
     if [ "$BadArg" != "" ]; then
@@ -1959,6 +1987,7 @@ if [ $? == 0 ]; then
     PRINTLOG "Updating mozilla prefs: [$FirefoxSysPrefsConfig] [$FirefoxSysUsersConfig]"
     echo -e "$TEXT_FirefoxPrefs" > "$FirefoxSysPrefsConfig"
     echo -e "$TEXT_FirefoxCfg" > "$FirefoxSysUsersConfig"
+    addFirefoxAddonsGlobally "$(declare -p FirefoxAddons)"
     # Delete current user's .mozilla directory, if its size is small enough
     # (< 14MB) to be as it was from first use, with no changes by the owner.
     if [[ -d "$userHomeDir/.mozilla" ]]; then
