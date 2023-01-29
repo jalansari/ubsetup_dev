@@ -1,4 +1,4 @@
-name: master_change
+name: check
 on:
   push:
     branches:
