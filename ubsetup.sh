@@ -1268,16 +1268,20 @@ function iterAssociativeArrAndCall()
     # Param $1 will be passed in as "declare -A <name>=<map>"
     # so remove the first part using bash substring removal (#<pattern>) and
     # assign the <map> to a the new associative array.
-    declare -A mapOfRepos # Not necessary, but added for bitbucket pipeline to pass (without, the following eval will throw an error).
-    eval "declare -A mapOfRepos=${1#*=}"
-    if [ -v mapOfRepos[@] ]; then
-        PRINTLOG "  Callback <$2>, <${#mapOfRepos[@]}>"
-        for key in "${!mapOfRepos[@]}"
+    declare -A mapOfItems # Not necessary, but added for bitbucket pipeline to pass (without, the following eval will throw an error).
+    eval "declare -A mapOfItems=${1#*=}"
+    if [[ -v mapOfItems[@] ]]; then
+        PRINTLOG "  Callback <$2>, <${#mapOfItems[@]}>"
+        for key in "${!mapOfItems[@]}"
         do
-            assocValue="${mapOfRepos[$key]}"
+            assocValue="${mapOfItems[$key]}"
             PRINTLOG "    Key   <$key>,"
             PRINTLOG "    Value <$assocValue>"
             $2 "$key" "$assocValue"
+            callRet=$?
+            if [[ $callRet != 0 ]]; then
+                PRINT_ERROR "Return <$callRet> from <"$2">, on <$key> <$assocValue>"
+            fi
         done
     fi
 }
@@ -1564,10 +1568,7 @@ function downloadFirefoxAddonIntoGlobalInstall()
 {   test -z "$1" && return 1
     test -z "$2" && return 2
     curl "$2" --retry 5 -L -f -o "$FirefoxAddonsDir/$1.xpi"
-    downloadCmdError=$?
-    if [[ $downloadCmdError != 0 ]]; then
-        PRINT_ERROR "Error <$downloadCmdError> downloading <"$2">"
-    fi
+    return $?
 }
 
 function addFirefoxAddonsGlobally()
