@@ -470,7 +470,7 @@ read -r -d '' TEXT_LocalBookmarks <<- EOTXT
 EOTXT
 
 FMShowHiddenFilesVal="true"
-if [ $FileManagerShowHidden == $FileManagerShowHiddenNo ]; then
+if [[ $FileManagerShowHidden == $FileManagerShowHiddenNo ]]; then
     FMShowHiddenFilesVal="false"
 fi
 read -r -d '' TEXT_NemoGSettingsConfig <<- EOTXT
@@ -1079,7 +1079,7 @@ function installAptPackage()
 {   item=$1
     ret=0
     checkDebPkgInstalled $item
-    if [ $? != 0 ]; then
+    if [[ $? != 0 ]]; then
         apt-get install $item -y
         sleep $SLEEP_AFTER_INSTALL_REQUEST
         checkDebPkgInstalled $item
@@ -1091,7 +1091,7 @@ function installAptPackage()
 function installDebPackage()
 {   dpkg -i $2
     checkDebPkgInstalled $1
-    if [ $? == 0 ]; then
+    if [[ $? == 0 ]]; then
         PRINTLOG "Installation successful <$1>"
     else
         PRINT_ERROR "ERROR: Deb installation failed <$1>"
@@ -1109,11 +1109,11 @@ function installDebPackageFromHttp()
     PRINTLOG "Attempting to install <$packageName>, from:"
     PRINTLOG "    <$debFileHttpUrl>"
     checkDebPkgInstalled "$packageName"
-    if [ $? == 0 ]; then
+    if [[ $? == 0 ]]; then
         PRINTLOG "Deb package already installed <$packageName>"
     else
         tempDownloadDir="$TempFolderForDownloads/ubsetuptempdir"
-        if [ ${#URLnNAME[@]} == 1 ]; then
+        if [[ ${#URLnNAME[@]} == 1 ]]; then
             debfilename="tempdebfile.deb"
         else
             debfilename="${URLnNAME[1]}"
@@ -1123,7 +1123,7 @@ function installDebPackageFromHttp()
         mkdir -p "$tempDownloadDir"
         curl "$debFileHttpUrl" --retry 5 -L -f -o "$tempDownloadedFile"
         downloadCmdError=$?
-        if [ $downloadCmdError == 0 ]; then
+        if [[ $downloadCmdError == 0 ]]; then
             installDebPackage "$packageName" "$tempDownloadedFile"
         else
             PRINT_ERROR "Error <$downloadCmdError> downloading <"$debFileHttpUrl">"
@@ -1138,7 +1138,7 @@ function installDebPackageFromHttp()
 function removeAptPackage()
 {   item=$1
     checkDebPkgInstalled $item
-    if [ $? == 0 ]; then
+    if [[ $? == 0 ]]; then
         apt-get remove $item -y
         sleep $SLEEP_AFTER_INSTALL_REQUEST
     fi
@@ -1171,16 +1171,16 @@ function getAvailableFileName()
 function updatePathInFile()
 {   newPath=$1
     file="$2"
-    if [ ! -f "$file" ]; then
+    if [[ ! -f "$file" ]]; then
         return 9
     fi
     FOUND=0
     # Paths may contain $ sign to reference other variables, therefore, ensure $ signs are escaped.
     searchStrEscDollar=$( echo "$newPath" | sed -r 's|\$|\\$|g;' )
     grep -E "^(export)?\s*PATH=.*$searchStrEscDollar" "$file" > /dev/null 2>&1
-    if [ $? != $FOUND ]; then
+    if [[ $? != $FOUND ]]; then
         grep -E '^(export)?\s*PATH=.*' "$file" > /dev/null 2>&1
-        if [ $? == $FOUND ]; then
+        if [[ $? == $FOUND ]]; then
             sed -r -i 's|^((export)?\s*PATH=.*)$|\1:'"$newPath"':|;' "$file" > /dev/null 2>&1
         else
             echo "PATH=\$PATH:$newPath" >> "$file"
@@ -1201,10 +1201,10 @@ function updatePathGlobally()
 function removeFromPath()
 {   removeText="$1"
     file="$2"
-    if [ ! -f "$file" ]; then
+    if [[ ! -f "$file" ]]; then
         return 9
     fi
-    if [ -z "$removeText" ]; then
+    if [[ -z "$removeText" ]]; then
         return 8
     fi
     searchStrEscd="$( echo "$removeText" | sed -r 's|([/$])|\\\1|g;' )"
@@ -1220,7 +1220,7 @@ function removeFromPathGlobally()
 
 function addAptKeys()
 {   listOfKeys=("${!1}")
-    if [ ${#listOfKeys[@]} != 0 ]; then
+    if [[ ${#listOfKeys[@]} != 0 ]]; then
         PRINTLOG "APT Keys to be added into [$AptKeyringsDir]:"
         printf "        %s\n" "${listOfKeys[@]}"
         for item in "${listOfKeys[@]}"
@@ -1238,7 +1238,7 @@ function addDebSource()
 {   fileSrc="$2"
     FOUND=0
     grepped=`grep -rF "$1" $(dirname "$fileSrc")`
-    if [ $? == $FOUND ]; then
+    if [[ $? == $FOUND ]]; then
         PRINTLOG "    Deb source already set:\n<$grepped>"
     else
         echo "$1" >> "$fileSrc"
@@ -1294,7 +1294,7 @@ function removeDebSourcesIfDup()
 
 function addAptRepos()
 {   listOfRepos=("${!1}")
-    if [ ${#listOfRepos[@]} != 0 ]; then
+    if [[ ${#listOfRepos[@]} != 0 ]]; then
         PRINTLOG "PPA Repositories to be added:"
         printf "        %s\n" "${listOfRepos[@]}"
         for item in "${listOfRepos[@]}"
@@ -1307,7 +1307,7 @@ function addAptRepos()
 
 function addDebconfSettings()
 {   listOfSettings=("${!1}")
-    if [ ${#listOfSettings[@]} != 0 ]; then
+    if [[ ${#listOfSettings[@]} != 0 ]]; then
         PRINTLOG "Debconf settings to be added:"
         printf "        %s\n" "${listOfSettings[@]}"
         for item in "${listOfSettings[@]}"
@@ -1320,7 +1320,7 @@ function addDebconfSettings()
 
 function removeDebconfSettings()
 {   listOfSettings=("${!1}")
-    if [ ${#listOfSettings[@]} != 0 ]; then
+    if [[ ${#listOfSettings[@]} != 0 ]]; then
         PRINTLOG "Debconf settings to be removed:"
         printf "        %s\n" "${listOfSettings[@]}"
         for item in "${listOfSettings[@]}"
@@ -1358,7 +1358,7 @@ function installAptPackages()
 
 function installPythonPipPackages()
 {   listOfPips=("${!1}")
-    if [ ${#listOfPips[@]} != 0 ]; then
+    if [[ ${#listOfPips[@]} != 0 ]]; then
         PRINTLOG "Python packages to be INSTALLED:"
         printf "        %s\n" "${listOfPips[@]}"
         pips=()
@@ -1372,7 +1372,7 @@ function installPythonPipPackages()
                 $pipv install $item
                 sleep $SLEEP_AFTER_INSTALL_REQUEST
                 $pipv show $item
-                if [ $? != 0 ]; then
+                if [[ $? != 0 ]]; then
                     PRINT_ERROR "FAILED to install [$item]"
                 fi
             done
@@ -1393,10 +1393,10 @@ function installPythonPipPackages()
 #     3 There was a problem downloading archive.
 #     4 There was a problem decompressing the archive.
 function downloadAndUnpack()
-{   if [ -z "$1" ] || [ -z "$2" ] || [ -z "$3" ]; then
+{   if [[ -z "$1" ]] || [[ -z "$2" ]] || [[ -z "$3" ]]; then
         return 2
     fi
-    if [ -n "$4" ] && [ -e "$4" ]; then
+    if [[ -n "$4" ]] && [[ -e "$4" ]]; then
         PRINTLOG "Not downloading <$2>, as <$4> already exists."
         return 1
     fi
@@ -1405,7 +1405,7 @@ function downloadAndUnpack()
     tempDownload="$TempFolderForDownloads/$2"
     curl "$1" -L -f -o "$tempDownload"
     curlStatus=$?
-    if [ $curlStatus != 0 ]; then
+    if [[ $curlStatus != 0 ]]; then
         PRINT_ERROR "Download error <$curlStatus>."
         return 3
     fi
@@ -1420,7 +1420,7 @@ function downloadAndUnpack()
         decompStatus=$?
     fi
     rm "$tempDownload"
-    if [ $decompStatus != 0 ]; then
+    if [[ $decompStatus != 0 ]]; then
         PRINT_ERROR "Decompress error <$decompStatus>."
         return 4
     fi
@@ -1456,7 +1456,7 @@ EOBLOCK
 function addBCompToSysGitConfig()
 {   checkDebPkgInstalled "bcompare"
     bcompInstalled=$?
-    if [ $bcompInstalled == 0 ]; then
+    if [[ $bcompInstalled == 0 ]]; then
         diffTl="bc3"
         mergTl="bc3"
         PRINTLOG "Setting Git diff/merge tools: <$diffTl><$mergTl>"
@@ -1499,13 +1499,13 @@ function modifyUserDescriptor()
     userFullName="$2"
     userGroup="$3"
     userEmail="$4"
-    if [ -n "$userFullName" ]; then
+    if [[ -n "$userFullName" ]]; then
         userDesc=$( sed -r 's/[^;]*(;.*)/'"$userFullName"'\1/' <<< "$userDesc" )
     fi
-    if [ -n "$userGroup" ]; then
+    if [[ -n "$userGroup" ]]; then
         userDesc=$( sed -r 's/(.*;)[^;]*/\1'"$userGroup"'/' <<< "$userDesc" )
     fi
-    if [ -n "$userEmail" ]; then
+    if [[ -n "$userEmail" ]]; then
         userDesc=$( sed -r 's/([^;]*;)[^;]*(.*)/\1'"$userEmail"'\2/' <<< "$userDesc" )
     fi
     echo "$userDesc"
@@ -1550,7 +1550,7 @@ function updateExistingUser()
 {   test -z "$1" && return 1
     id -u $1 > /dev/null 2>&1
     test $? == 0 || return 2
-    if [ -n "$2" ]; then
+    if [[ -n "$2" ]]; then
         grep -E "^$2:" /etc/group > /dev/null 2>&1
         test $? == 0 || groupadd "$2" > /dev/null 2>&1
         test $? == 0 || return 8
@@ -1577,7 +1577,7 @@ function addFirefoxAddonsGlobally()
 
 function usage()
 {   BadArg=$1
-    if [ "$BadArg" != "" ]; then
+    if [[ "$BadArg" != "" ]]; then
         PRINT_ERROR "ERROR: Bad arg supplied <$BadArg>"
     fi
     PRINTLOG "$TEXT_Usage"
@@ -1609,7 +1609,7 @@ OPT_INSTAL=$((2#0001))
 OPT_REMOVE=$((2#0010))
 OPT_CONFIG=$((2#0100))
 
-while [ "$1" != "" ]; do
+while [[ "$1" != "" ]]; do
     case $1 in
         -a ) RequestOptions=$(( RequestOptions | OPT_INSTAL | OPT_REMOVE | OPT_CONFIG ))
              ;;
@@ -1660,7 +1660,7 @@ while [ "$1" != "" ]; do
 done
 
 # If no request options provided, set default behaviour to remove components.
-if [ $RequestOptions == 0 ]; then
+if [[ $RequestOptions == 0 ]]; then
     RequestOptions=$OPT_REMOVE
 fi
 
@@ -1677,7 +1677,7 @@ UserInfo[$currentUserNameKey]="$currentUserDescFromArray"
 
 checkDebPkgInstalled "ubuntu-server"
 ubServerEnvironment=$?
-if [ $ubServerEnvironment == 0 ]; then
+if [[ $ubServerEnvironment == 0 ]]; then
     PRINTLOG "******************** Ubuntu SERVER"
     INSTALL_COMP_LIST=( "${INSTALL_COMP_LIST[@]}" "${INSTALL_COMP_LIST_SERVER[@]}" )
     INSTAL_PIP2n3_MAP=( "${INSTAL_PIP2n3_MAP[@]}" "${INSTAL_PIP2n3_MAP_SERVER[@]}" )
@@ -1688,7 +1688,7 @@ else
     ADD_PPA_REPO_LIST=( "${ADD_PPA_REPO_LIST[@]}" "${ADD_PPA_REPO_LIST_DESKTOP[@]}" )
 fi
 
-if [ $TestMode == 1 ]; then
+if [[ $TestMode == 1 ]]; then
     PRINTLOG "TEST MODE"
     PRINTLOG "=====Request Options========="
     printBinaryVal $RequestOptions
@@ -1709,13 +1709,13 @@ fi
 ##### environment requested.
 ########################################
 
-if [ "$InstallRuby" == true ]; then
+if [[ "$InstallRuby" == true ]]; then
     INSTALL_COMP_LIST+=(
                         "gnupg"
                        )
 fi
 
-if [ "$InstallDocker" == true ]; then
+if [[ "$InstallDocker" == true ]]; then
     ADD_APT_KEYS_LIST+=(
                         "https://download.docker.com/linux/ubuntu/gpg;docker.gpg"
                        )
@@ -1729,7 +1729,7 @@ if [ "$InstallDocker" == true ]; then
                        )
 fi
 
-if [ "$InstallRabbitMq" == true ]; then
+if [[ "$InstallRabbitMq" == true ]]; then
     ADD_APT_KEYS_LIST+=(
                         "https://packages.erlang-solutions.com/ubuntu/erlang_solutions.asc;rabbitmq-erlang.gpg"
                         "https://dl.bintray.com/rabbitmq/Keys/rabbitmq-release-signing-key.asc;rabbitmq.gpg"
@@ -1742,7 +1742,7 @@ if [ "$InstallRabbitMq" == true ]; then
                        )
 fi
 
-if [ "$InstallTorDaemon" == true ]; then
+if [[ "$InstallTorDaemon" == true ]]; then
     ADD_APT_KEYS_LIST+=(
                         "https://deb.torproject.org/torproject.org/A3C4F0F979CAA22CDBA8F512EE8CBC9E886DDD89.asc;tor-archive-keyring.gpg"
                        )
@@ -1756,7 +1756,7 @@ if [ "$InstallTorDaemon" == true ]; then
                        )
 fi
 
-if [ "$InstallFlutterSDK" == true ]; then
+if [[ "$InstallFlutterSDK" == true ]]; then
     INSTALL_COMP_LIST+=(
                         "lib32stdc++6" # Required for flutter sdk.
                         "qemu-kvm" # Required for Android emulator.
@@ -1768,13 +1768,13 @@ fi
 ##### Applying un/installations.
 ########################################
 
-if [ $(( $RequestOptions & $OPT_REMOVE )) == $OPT_REMOVE ]; then
+if [[ $(( $RequestOptions & $OPT_REMOVE )) == $OPT_REMOVE ]]; then
     uninstallAptPackages REMOVE_COMP__LIST[@]
 fi
 
 
 # Nothin more to do if the install option has not been requested.
-if [ $(( $RequestOptions & $OPT_INSTAL )) != $OPT_INSTAL ]; then
+if [[ $(( $RequestOptions & $OPT_INSTAL )) != $OPT_INSTAL ]]; then
     exit 0
 fi
 
