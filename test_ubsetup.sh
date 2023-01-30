@@ -165,13 +165,13 @@ function test_getAvailableFN_fileExistsX3()
     touch "$newName1"
     runGetAvailableFNTest "$requestName" "$expected2"
 
-    assertTrue "File does NOT exist!" [ -e "$requestName" ]
-    assertTrue "File does NOT exist!" [ -e "$newName0" ]
-    assertTrue "File does NOT exist!" [ -e "$newName1" ]
+    assertTrue "File does NOT exist!" '[ -f "$requestName" ]'
+    assertTrue "File does NOT exist!" '[ -f "$newName0" ]'
+    assertTrue "File does NOT exist!" '[ -f "$newName1" ]'
     del3Files "$requestName" "$newName0" "$newName1"
-    assertFalse "File <$requestName> STILL exists!" [ -e "$requestName" ]
-    assertFalse "File <$newName0> STILL exists!" [ -e "$newName0" ]
-    assertFalse "File <$newName1> STILL exists!" [ -e "$newName1" ]
+    assertFalse "File <$requestName> STILL exists!" '[ -e "$requestName" ]'
+    assertFalse "File <$newName0> STILL exists!" '[ -e "$newName0" ]'
+    assertFalse "File <$newName1> STILL exists!" '[ -e "$newName1" ]'
 }
 
 ################################################################################

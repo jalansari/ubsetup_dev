@@ -24,4 +24,4 @@ jobs:
           sudo apt-get install -y shunit2
 
       - name: Run Tests
-        run: ./test_ubsetup.sh
+        run: sudo ./test_ubsetup.sh
