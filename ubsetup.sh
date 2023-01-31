@@ -124,9 +124,9 @@ declare -A FirefoxAddons
 # matching the addon "id", which can be found in the manifest.json of an already
 # installed/extracted addon.
 FirefoxAddons=(
-       ["uBlock0@raymondhill.net"]="https://github.com/gorhill/uBlock/releases/download/1.46.0/uBlock0_1.46.0.firefox.signed.xpi"
+       ["uBlock0@raymondhill.net"]="https://addons.mozilla.org/firefox/downloads/latest/ublock-origin/latest.xpi"
        # ["{446900e4-71c2-419f-a6a7-df9c091e268b}"]="https://addons.mozilla.org/firefox/downloads/latest/bitwarden-password-manager/latest.xpi"
-       # ["{73a6fe31-595d-460b-a920-fcc0f8843232}"]="https://noscript.net/download/releases/noscript-11.4.14.xpi"
+       # ["{73a6fe31-595d-460b-a920-fcc0f8843232}"]="https://addons.mozilla.org/firefox/downloads/latest/noscript/latest.xpi"
       )
 FirefoxAddonsDir="/usr/lib/firefox/distribution/extensions"
 
