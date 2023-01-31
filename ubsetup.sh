@@ -1809,7 +1809,7 @@ installPythonPipPackages INSTAL_PIP2n3_MAP[@]
 ##### applications.
 ########################################
 
-if [ "$InstallDocker" == true ]; then
+if [[ "$InstallDocker" == true ]]; then
     # dc_targetbin="/usr/libexec/docker/cli-plugins/docker-compose"
     # test -n "$DockerComposeUrl" \
     #     && curl "$DockerComposeUrl" -f -o "$dc_targetbin" \
@@ -1829,7 +1829,7 @@ if [ "$InstallDocker" == true ]; then
     fi
 fi
 
-if [ "$InstallRuby" == true ]; then
+if [[ "$InstallRuby" == true ]]; then
     PRINTLOG "Downloading RVM verification keys."
     gpg --keyserver hkp://pool.sks-keyservers.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 7D2BAF1CF37B13E2069D6956105BD0E739499BDB
     PRINTLOG "Install RVM."
@@ -2375,7 +2375,7 @@ fi
 ##### Adding users.
 ########################################
 
-if [ -v UserInfo[@] ]; then
+if [[ -v UserInfo[@] ]]; then
     for usern in "${!UserInfo[@]}"
     do
         PRINTLOG "User: username <$usern>"
@@ -2387,13 +2387,13 @@ if [ -v UserInfo[@] ]; then
         maingroup="${userInfoArray[3]}"
         test -z "$maingroup" && maingroup=$usern
         isUserConfigured=false
-        if [ "$usern" == "$currentUserNameKey" ]; then
+        if [[ "$usern" == "$currentUserNameKey" ]]; then
             usern=$userOfThisScript
             PRINTLOG "Updating current user : name <$fullname>, email <$email>, maingrp <$maingroup>, sshk <$sshkeyfile>"
             updateExistingUser "$usern" "$maingroup" "$fullname"
             isUserConfigured=true
             updateUserReturn=$?
-            if [ $updateUserReturn == 0 ]; then
+            if [[ $updateUserReturn == 0 ]]; then
                 isUserConfigured=true
             else
                 PRINT_ERROR "Update user failed <$updateUserReturn>"
@@ -2402,7 +2402,7 @@ if [ -v UserInfo[@] ]; then
             PRINTLOG "Adding new user : name <$fullname>, email <$email>, maingrp <$maingroup>, sshk <$sshkeyfile>"
             addNewUser "$usern" "$maingroup" "$fullname"
             addUserReturn=$?
-            if [ $addUserReturn == 0 ]; then
+            if [[ $addUserReturn == 0 ]]; then
                 isUserConfigured=true
             else
                 PRINT_ERROR "Adding new user failed <$addUserReturn>"
