@@ -917,14 +917,17 @@ read -r -d '' TEXT_BashToolAliases <<- "EOTXT"
 	alias ll='ls --time-style="long-iso" -alF'
 	alias hiss='history | grep'
 	alias trimws='find . -type f ! -path "*/.venv/*" ! -path "*/.git/*" ! -path "*/venv/*" | xargs -I fl bash -c '"'"'FILE="fl"; echo ">>>>>>>> $FILE"; sed -i -r "s/\s+$//;" "$FILE"; [[ $( tail -c 1 "$FILE" ) != "" ]] && echo >> "$FILE"'"'"
-	alias dnuke="docker system prune -af &&  docker system prune --volumes -f"
-	alias dlistall="docker ps -a && docker images -a"
-	alias dstopall="docker kill $(docker ps -q)"
 	alias cleantf='find . -type f -name ".terraform.lock*" | xargs -I fl bash -c "cd \$( dirname fl ) && pwd && rm -rf .terraform*"'
 	stty -ixon # Disable xon/off flow control, as it clashes with history search (Ctrl-s)
 	# set -o vi
 	# bind '\e[A:history-search-backward'
 	# bind '\e[B:history-search-forward'
+EOTXT
+
+read -r -d '' TEXT_BashDockerAliases <<- "EOTXT"
+	alias dnuke="docker system prune -af &&  docker system prune --volumes -f"
+	alias dlistall="docker ps -a && docker images -a"
+	alias dstopall="docker kill $(docker ps -q)"
 EOTXT
 
 read -r -d '' TEXT_BashToolAliases_Inter <<- EOTXT
@@ -2037,6 +2040,12 @@ $TEXT_BashGitAliases
 \n\
 $TEXT_BashPythonToolAliases\n" \
  >> $BashrcForAll
+
+if [[ "$InstallDocker" = true ]]; then
+echo -e "\
+$TEXT_BashDockerAliases\n" \
+ >> $BashrcForAll
+fi
 
 usersBashrc="$userHomeDir/.bashrc"
 cp $BashrcForAll $usersBashrc
