@@ -915,6 +915,49 @@ read -r -d '' TEXT_VSCodeWorkspaceExample <<- EOTXT
 	}
 EOTXT
 
+read -r -d '' TEXT_GromitMPXConfig <<- EOTXT
+	# Copy to "\$HOME/.config/gromit-mpx.cfg" for user specific customisation.
+
+	# DEFINITIONS
+	"red Pen" = PEN (size=5 color="red");
+	"green Pen" = PEN (size=5 color="green");
+	"blue Pen" = PEN (size=5 color="blue");
+	"yellow Pen" = PEN (size=5 color="yellow");
+
+	"red Highlighter" = "red Pen" (size=100);
+	"green Highlighter" = "green Pen" (size=100);
+	"blue Highlighter" = "blue Pen" (size=100);
+	"yellow Highlighter" = "yellow Pen" (size=100);
+
+	"red fixed Marker" = "red Pen" (minsize=5 maxsize=5);
+	"green fixed Marker" = "green Pen" (minsize=5 maxsize=5);
+	"blue fixed Marker" = "blue Pen" (minsize=5 maxsize=5);
+	"yellow fixed Marker" = "yellow Pen" (minsize=5 maxsize=5);
+
+	# "red Marker" = "red Pen" (arrowsize=5);
+	# "green Marker" = "green Pen" (arrowsize=5);
+	# "blue Marker" = "blue Pen" (arrowsize=5);
+	# "yellow Marker" =  "yellow Pen" (arrowsize=5);
+
+	"Eraser" = ERASER (size = 50);
+
+	# Regular pens and eraser
+	"default"[1] = "red fixed Marker";
+	"default"[ALT, 1] = "green fixed Marker";
+	"default"[CONTROL, 1] = "blue fixed Marker";
+	"default"[ALT, CONTROL, 1] = "yellow fixed Marker";
+	"default"[SHIFT, 1] = "Eraser";
+
+	# Wider pens
+	"default"[3] = "red Highlighter";
+	"default"[ALT, 3] = "green Highlighter";
+	"default"[CONTROL, 3] = "blue Highlighter";
+	"default"[ALT, CONTROL, 3] = "yellow Highlighter";
+
+	# Bigger eraser
+	"default"[CONTROL, SHIFT, ALT, 1] = "Eraser" (size = 400);
+EOTXT
+
 
 ##### Bash aliases ######
 
@@ -2147,6 +2190,12 @@ EOBLOCK
     [ "$isFlutterInstalled" = true ] \
         && installVSCodeExt "dart-code.dart-code" \
         && installVSCodeExt "dart-code.flutter"
+fi
+
+checkDebPkgInstalled "gromit-mpx"
+if [[ $? == 0 ]]; then
+    GromitMPXCfgFile="/etc/gromit-mpx/gromit-mpx.cfg"
+    echo -e "$TEXT_GromitMPXConfig" > $GromitMPXCfgFile
 fi
 
 
