@@ -529,7 +529,7 @@ EOTXT
 
 read -r -d '' TEXT_CinnamonKeyboardShortCutsConfig <<- EOTXT
 	[org.cinnamon.desktop.keybindings]
-	custom-list=['custom2', 'custom1', 'custom0', '__dummy__']
+	custom-list=['custom3', 'custom2', 'custom1', 'custom0', '__dummy__']
 
 	[org.cinnamon.desktop.keybindings.custom-keybindings.custom0]
 	binding=['$KeyboardShortcutVSCode']
@@ -545,6 +545,11 @@ read -r -d '' TEXT_CinnamonKeyboardShortCutsConfig <<- EOTXT
 	binding=['$KeyboardShortcutUpdateMan']
 	command='mintupdate'
 	name='Update Manager'
+
+	[org.cinnamon.desktop.keybindings.custom-keybindings.custom3]
+	binding=['<Shift>Print']
+	command='flameshot gui'
+	name='Flameshot'
 
 	[org.cinnamon.desktop.keybindings.media-keys]
 	home=['$KeyboardShortcutHome']
