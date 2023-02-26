@@ -962,6 +962,12 @@ EOTXT
 ##### Bash aliases ######
 
 read -r -d '' TEXT_BashToolAliases <<- "EOTXT"
+	function ffm540() {
+	    ffmpeg -i "$1" -c:v libx264 -crf 20 -preset slow -vf scale=960:540 -strict -2 "$1.540p.${1##*.}"
+	}
+	function ffm10secs() {
+	    ffmpeg -i "$1" -f segment -segment_time 10 -c copy "$1_%03d.${1##*.}"
+	}
 	alias ll='ls --time-style="long-iso" -alF'
 	alias hiss='history | grep'
 	alias trimws='find . -type f ! -path "*/.venv/*" ! -path "*/.git/*" ! -path "*/venv/*" | xargs -I fl bash -c '"'"'FILE="fl"; echo ">>>>>>>> $FILE"; sed -i -r "s/\s+$//;" "$FILE"; [[ $( tail -c 1 "$FILE" ) != "" ]] && echo >> "$FILE"'"'"
@@ -2076,6 +2082,8 @@ sed -i.bak -r \
 '/____cleanpy/,/^}$/{/.*/d};'\
 '/alias cpr=/d;'\
 '/alias cleanpyd/d;'\
+'/ffm540/,/^}$/{/.*/d};'\
+'/ffm10secs/,/^}$/{/.*/d};'\
 's/(HISTFILESIZE)=.*/\1=5000/; s/(HISTSIZE)=.*/\1=2000/;'\
  $BashrcForAll
 
