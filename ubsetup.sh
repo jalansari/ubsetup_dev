@@ -18,16 +18,16 @@ DebPackages=(
 InstallDir="/usr/share"
 UsrLocalDir="/usr/local"
 
-NodeJsVer="node-v18.14.0-linux-x64"
+NodeJsVer="node-v18.14.2-linux-x64"
 NodeJsPkg="$NodeJsVer.tar.xz"
-NodeJsUrl="https://nodejs.org/dist/v18.14.0/$NodeJsPkg"
+NodeJsUrl="https://nodejs.org/dist/v18.14.2/$NodeJsPkg"
 NodeInstallDir="$InstallDir/nodejs"
 
-FossilScmPkg="fossil-linux-x64-2.20.tar.gz"
+FossilScmPkg="fossil-linux-x64-2.21.tar.gz"
 FossilScmUrl="https://fossil-scm.org/home/uv/$FossilScmPkg"
 FossilInstallDir="$InstallDir/fossilscm"
 
-GoLangPkg="go1.20.linux-amd64.tar.gz"
+GoLangPkg="go1.20.1.linux-amd64.tar.gz"
 GoLangUrl="https://go.dev/dl/$GoLangPkg"
 GoPath="$UsrLocalDir/go"
 
@@ -46,7 +46,7 @@ VeraCryptUrl="https://launchpad.net/veracrypt/trunk/1.25.9/+download/$VeraCryptP
 TerraformPkg="terraform_1.3.8_linux_amd64.zip"
 TerraformUrl="https://releases.hashicorp.com/terraform/1.3.8/$TerraformPkg"
 
-# TerragruntUrl="https://github.com/gruntwork-io/terragrunt/releases/download/v0.43.2/terragrunt_linux_amd64"
+# TerragruntUrl="https://github.com/gruntwork-io/terragrunt/releases/download/v0.44.0/terragrunt_linux_amd64"
 
 # ConfiglintPkg="config-lint_Linux_x86_64.tar.gz"
 # ConfiglintUrl="https://github.com/stelligent/config-lint/releases/download/v1.6.0/$ConfiglintPkg"
@@ -63,7 +63,7 @@ AndroidPkg="android-studio-2022.1.1.20-linux.tar.gz"
 AndroidUrl="https://dl.google.com/dl/android/studio/ide-zips/2022.1.1.20/$AndroidPkg"
 AndroidInstallDir="$InstallDir/androidstudio"
 
-FlutterPkg="flutter_linux_3.7.3-stable.tar.xz"
+FlutterPkg="flutter_linux_3.7.5-stable.tar.xz"
 FlutterUrl="https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/$FlutterPkg"
 FlutterInstallDir="$InstallDir/flutterdev"
 
