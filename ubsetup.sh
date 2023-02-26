@@ -1061,7 +1061,10 @@ read -r -d '' TEXT_BashPythonToolAliases <<- "EOTXT"
 	    done
 	    test -f "$reqsFileTmp" && mv "$reqsFileTmp" "$reqsFile"
 	}
+	export -f ____check_py_requirements____
 	alias cpr='____check_py_requirements____'
+	alias cprall='for reqs in requirements*; do ____check_py_requirements____ $reqs; done'
+	alias cprallr="find -type f -name requirements*.txt | xargs -I {} bash -c 'echo; echo {}; echo =====; ____check_py_requirements____ {}; sleep 5'"
 
 	function ____cleanpydir____() {
 	    rm -rf testresults.xml .coverage .cache .pytest_cache htmlcov .hypothesis .benchmarks *.egg\-info
@@ -2079,8 +2082,9 @@ sed -i.bak -r \
 '/____git/,/^}$/{/.*/d};'\
 '/alias git/d;'\
 '/____check_py/,/^}$/{/.*/d};'\
+'/export -f ____check_py/d;'\
 '/____cleanpy/,/^}$/{/.*/d};'\
-'/alias cpr=/d;'\
+'/alias cpr/d;'\
 '/alias cleanpyd/d;'\
 '/ffm540/,/^}$/{/.*/d};'\
 '/ffm10secs/,/^}$/{/.*/d};'\
