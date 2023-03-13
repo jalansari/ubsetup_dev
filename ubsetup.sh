@@ -989,6 +989,19 @@ read -r -d '' TEXT_BashToolAliases_Inter <<- EOTXT
 EOTXT
 
 read -r -d '' TEXT_BashGitAliases <<- "EOTXT"
+	function ____git_get_branch() {
+	    branch=$(git branch 2> /dev/null | sed -e '/^[^*]/d; s/^* //;')
+	    if [[ -n $branch ]]; then
+	        branch_annotated="[$branch]\033[0m"
+	        test "$branch" == "master" \
+	            && branch_annotated="\033[1;31m$branch_annotated"\
+	            || branch_annotated="\033[0;36m$branch_annotated"
+	        echo -e "$branch_annotated"
+	    fi
+	}
+	export -f ____git_get_branch
+	PS1=$(echo $PS1 | sed 's/\\\$/ $(____git_get_branch)\\\$ /;')
+
 	function ____gititer____() {
 	    for d in ./*/; do
 	        pushd $d > /dev/null 2>&1
@@ -2081,7 +2094,7 @@ sed -i.bak -r \
 '/^(# )?bind /d;'\
 '/alias plantuml=/d;'\
 '/____git/,/^}$/{/.*/d};'\
-'/alias git/d;'\
+'/____git/d;'\
 '/____check_py/,/^}$/{/.*/d};'\
 '/export -f ____check_py/d;'\
 '/____cleanpy/,/^}$/{/.*/d};'\
