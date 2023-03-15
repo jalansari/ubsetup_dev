@@ -992,10 +992,10 @@ read -r -d '' TEXT_BashGitAliases <<- "EOTXT"
 	function ____git_get_branch() {
 	    branch=$(git branch 2> /dev/null | sed -e '/^[^*]/d; s/^* //;')
 	    if [[ -n $branch ]]; then
-	        branch_annotated="[$branch]\033[0m"
+	        branch_annotated="[$branch]\001\033[0m\002"
 	        test "$branch" == "master" \
-	            && branch_annotated="\033[1;31m$branch_annotated"\
-	            || branch_annotated="\033[0;36m$branch_annotated"
+	            && branch_annotated="\001\033[1;31m\002$branch_annotated"\
+	            || branch_annotated="\001\033[0;36m\002$branch_annotated"
 	        echo -e "$branch_annotated"
 	    fi
 	}
