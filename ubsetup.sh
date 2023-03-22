@@ -46,6 +46,8 @@ VeraCryptUrl="https://launchpad.net/veracrypt/trunk/1.25.9/+download/$VeraCryptP
 TerraformPkg="terraform_1.4.2_linux_amd64.zip"
 TerraformUrl="https://releases.hashicorp.com/terraform/1.4.2/$TerraformPkg"
 
+TflintPkg="tflint_linux_amd64.zip"
+TflintUrl="https://github.com/terraform-linters/tflint/releases/latest/download/$TflintPkg"
 
 # TerragruntUrl="https://github.com/gruntwork-io/terragrunt/releases/download/v0.45.0/terragrunt_linux_amd64"
 
@@ -1943,6 +1945,8 @@ if [ $ubServerEnvironment != 0 ]; then
     downloadAndUnpack "$VagrantUrl" "$VagrantPkg" "/usr/local/bin" "/usr/local/bin/vagrant"
 
     downloadAndUnpack "$TerraformUrl" "$TerraformPkg" "/usr/local/bin" "/usr/local/bin/terraform"
+
+    downloadAndUnpack "$TflintUrl" "$TflintPkg" "/usr/local/bin" "/usr/local/bin/tflint"
 
     [ -n "$TerragruntUrl" ] && [ ! -e "/usr/local/bin/terragrunt" ] \
         && curl "$TerragruntUrl" -L -f -o "/usr/local/bin/terragrunt" \
