@@ -2211,6 +2211,7 @@ EOBLOCK
     installVSCodeExt "yzhang.markdown-all-in-one"
     installVSCodeExt "ms-vscode.makefile-tools"
     installVSCodeExt "jebbs.plantuml"
+    installVSCodeExt "bierner.markdown-mermaid"
 
     vsCodeWorkspaceFileExample="$userHomeDir/Documents/devProjects.code-workspace"
     # vsCodeWorkspaceFileExample=$( getAvailableFileName "$vsCodeWorkspaceFileExample" )
