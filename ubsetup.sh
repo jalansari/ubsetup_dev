@@ -918,6 +918,21 @@ read -r -d '' TEXT_VSCodeWorkspaceExample <<- EOTXT
 	}
 EOTXT
 
+read -r -d '' TEXT_VSCodeNemoContextItem <<- EOTXT
+	[Nemo Action]
+	Active=true
+	Name=Open in VSCode
+	Comment=Open in VSCode
+	Exec=code -a %F
+	Icon-Name=com.visualstudio.code
+	Selection=notnone
+	Extensions=any;
+	Mimetypes=text/plain;
+	Quote=double
+	Dependencies=code;
+EOTXT
+
+
 read -r -d '' TEXT_GromitMPXConfig <<- EOTXT
 	# Copy to "\$HOME/.config/gromit-mpx.cfg" for user specific customisation.
 
@@ -2047,6 +2062,11 @@ if [ $ubServerEnvironment != 0 ]; then
 fi
 
 
+# Widely used installation checks.
+checkDebPkgInstalled "nemo" # File manager, as used in LinuxMint.
+isNemoinstalled=$?
+
+
 ########################################
 ##### Writing configuration files.
 ########################################
@@ -2222,6 +2242,11 @@ EOBLOCK
     [ "$isFlutterInstalled" = true ] \
         && installVSCodeExt "dart-code.dart-code" \
         && installVSCodeExt "dart-code.flutter"
+
+    if [ $isNemoinstalled == 0 ]; then
+        vsCodeNemoContextMenuCfg="/usr/share/nemo/actions/vscode.nemo_action"
+        echo -e "$TEXT_VSCodeNemoContextItem" > $vsCodeNemoContextMenuCfg
+    fi
 fi
 
 checkDebPkgInstalled "gromit-mpx"
@@ -2235,13 +2260,11 @@ fi
 ##### Writing dconf configurations.
 ########################################
 
-checkDebPkgInstalled "nemo" # File manager, as used in LinuxMint.
-nemoinstalled=$?
 checkDebPkgInstalled "cinnamon" # Cinnamon desktop environment, as used one of the LinuxMint variants
 cinnamonInstalled=$?
 checkDebPkgInstalled "xed" # Text editor, as used in LinuxMint.
 xedinstalled=$?
-if [ $nemoinstalled == 0 ] || [ $cinnamonInstalled == 0 ] || [ $xedinstalled == 0 ]; then
+if [ $isNemoinstalled == 0 ] || [ $cinnamonInstalled == 0 ] || [ $xedinstalled == 0 ]; then
     # Install dconf cli tools to set various cinnamon configurations.
     dconfcmdpkg="dconf-cli"
     PRINTLOG "INSTALLING [$dconfcmdpkg] for dconf configured components."
@@ -2256,7 +2279,7 @@ RunGlibCompileSchemas=false
 GlibScemasDir="/usr/share/glib-2.0/schemas"
 GlibPriorityNum="zzz" # This should be a number, but distros are not using priority numbers, so we have to try being higher priority by using lexicographical ordering.
 
-if [ $nemoinstalled == 0 ]; then
+if [ $isNemoinstalled == 0 ]; then
     PRINTLOG "Configuring Nemo file manager."
     NemoGSettingsCfg="$GlibScemasDir/${GlibPriorityNum}_nemo.gschema.override"
     echo -e "$TEXT_NemoGSettingsConfig" > $NemoGSettingsCfg
