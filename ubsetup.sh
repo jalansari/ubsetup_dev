@@ -909,6 +909,19 @@ read -r -d '' TEXT_VSCodeConfig <<- EOTXT
 	}
 EOTXT
 
+read -r -d '' TEXT_VSKeybindings <<- EOTXT
+	[
+	    {
+	        "key": "ctrl+tab",
+	        "command": "workbench.action.nextEditor"
+	    },
+	    {
+	        "key": "ctrl+shift+tab",
+	        "command": "workbench.action.previousEditor"
+	    }
+	]
+EOTXT
+
 read -r -d '' TEXT_VSCodeWorkspaceExample <<- EOTXT
 	{
 	    "folders": [
@@ -2216,6 +2229,8 @@ if [ $? == 0 ]; then
     mkdir -p $VSCodeUsrDir
     VSCodeCfg="$VSCodeUsrDir/settings.json"
     echo -e "$TEXT_VSCodeConfig" > $VSCodeCfg
+    VSCodeCfg="$VSCodeUsrDir/keybindings.json"
+    echo -e "$TEXT_VSKeybindings" > $VSCodeCfg
     chown -R $userOfThisScript:$groupOfUserOfThisScript $VSCodeDir
 
     function installVSCodeExt()
