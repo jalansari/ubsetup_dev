@@ -2030,7 +2030,7 @@ if [ $ubServerEnvironment != 0 ]; then
     fi
 
     if [ "$InstallOpenvpn24" == true ] && [ ! -d /usr/lib/openvpn.2.4 ]; then
-        curl http://archive.ubuntu.com/ubuntu/pool/main/o/openssl/libssl1.1_1.1.1f-1ubuntu2.16_amd64.deb -f -o package.deb \
+        curl http://archive.ubuntu.com/ubuntu/pool/main/o/openssl/libssl1.1_1.1.1f-1ubuntu2.18_amd64.deb -f -o package.deb \
             && ar x package.deb data.tar.xz \
             && tar xf data.tar.xz \
             && cp -r usr/lib/x86_64-linux-gnu/* /usr/lib/x86_64-linux-gnu/ \
