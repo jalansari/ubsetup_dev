@@ -2150,7 +2150,9 @@ sed -i.bak -r \
 '/alias cleanpyd/d;'\
 '/ffm540/,/^}$/{/.*/d};'\
 '/ffm10secs/,/^}$/{/.*/d};'\
-'s/(HISTFILESIZE)=.*/\1=5000/; s/(HISTSIZE)=.*/\1=2000/;'\
+'s/(HISTFILESIZE)=.*/\1=8000/; s/(HISTSIZE)=.*/\1=4000/;'\
+'/PROMPT_COMMAND/d;'\
+'s/(shopt -s histappend)/\1\nPROMPT_COMMAND="${PROMPT_COMMAND:+$PROMPT_COMMAND$\\n}history -a; history -c; history -r"/;'\
  $BashrcForAll
 
 echo -e "\
