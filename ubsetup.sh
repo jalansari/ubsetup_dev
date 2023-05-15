@@ -292,6 +292,7 @@ INSTALL_COMP_LIST_DESKTOP=(
                    "gromit-mpx"
                    "flameshot"
                    "screenkey"
+                   "neofetch"
                    "libcurl4-openssl-dev" # Needed by pycurl, in case it is required in any development.
                    "libssl-dev" # Needed by pycurl, in case it is required in any development.
                    "libpq-dev" #  Needed by psycopg2, in case it is required in any development.
