@@ -31,8 +31,8 @@ GoLangPkg="go1.20.4.linux-amd64.tar.gz"
 GoLangUrl="https://go.dev/dl/$GoLangPkg"
 GoPath="$UsrLocalDir/go"
 
-VagrantPkg="vagrant_2.3.4_linux_amd64.zip"
-VagrantUrl="https://releases.hashicorp.com/vagrant/2.3.4/$VagrantPkg"
+VagrantPkg="vagrant_2.3.5_linux_amd64.zip"
+VagrantUrl="https://releases.hashicorp.com/vagrant/2.3.5/$VagrantPkg"
 
 TelegramPackage="telegram_linux.tar.xz"
 TelegramPackageHttpURL="https://telegram.org/dl/desktop/linux"
