@@ -249,6 +249,7 @@ INSTALL_COMP_LIST_DESKTOP=(
                    "terminator"
                    "unrar"
                    "p7zip-full"
+                   "simplescreenrecorder"
                    "libreoffice"
                    "ttf-mscorefonts-installer"
                    "google-chrome-stable"
