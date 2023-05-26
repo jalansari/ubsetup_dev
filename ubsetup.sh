@@ -31,8 +31,8 @@ GoLangPkg="go1.20.4.linux-amd64.tar.gz"
 GoLangUrl="https://go.dev/dl/$GoLangPkg"
 GoPath="$UsrLocalDir/go"
 
-VagrantPkg="vagrant_2.3.5_linux_amd64.zip"
-VagrantUrl="https://releases.hashicorp.com/vagrant/2.3.5/$VagrantPkg"
+VagrantPkg="vagrant_2.3.6_linux_amd64.zip"
+VagrantUrl="https://releases.hashicorp.com/vagrant/2.3.6/$VagrantPkg"
 
 TelegramPackage="telegram_linux.tar.xz"
 TelegramPackageHttpURL="https://telegram.org/dl/desktop/linux"
@@ -49,7 +49,7 @@ TerraformUrl="https://releases.hashicorp.com/terraform/1.3.8/$TerraformPkg"
 TflintPkg="tflint_linux_amd64.zip"
 TflintUrl="https://github.com/terraform-linters/tflint/releases/latest/download/$TflintPkg"
 
-# TerragruntUrl="https://github.com/gruntwork-io/terragrunt/releases/download/v0.45.11/terragrunt_linux_amd64"
+# TerragruntUrl="https://github.com/gruntwork-io/terragrunt/releases/download/v0.45.16/terragrunt_linux_amd64"
 
 # ConfiglintPkg="config-lint_Linux_x86_64.tar.gz"
 # ConfiglintUrl="https://github.com/stelligent/config-lint/releases/download/v1.6.0/$ConfiglintPkg"
@@ -58,15 +58,15 @@ TflintUrl="https://github.com/terraform-linters/tflint/releases/latest/download/
 AwsCliPkg="awscli-exe-linux-x86_64.zip"
 AwsCliUrl="https://awscli.amazonaws.com/$AwsCliPkg"
 
-PlantUmlVer="1.2023.7"
+PlantUmlVer="1.2023.8"
 PlantUmlUrl="https://github.com/plantuml/plantuml/releases/download/v$PlantUmlVer/plantuml-$PlantUmlVer.jar"
 PlantumlTargetBin="/usr/local/bin/plantuml.jar"
 
-AndroidPkg="android-studio-2022.2.1.19-linux.tar.gz"
-AndroidUrl="https://dl.google.com/dl/android/studio/ide-zips/2022.2.1.19/$AndroidPkg"
+AndroidPkg="android-studio-2022.2.1.20-linux.tar.gz"
+AndroidUrl="https://dl.google.com/dl/android/studio/ide-zips/2022.2.1.20/$AndroidPkg"
 AndroidInstallDir="$InstallDir/androidstudio"
 
-FlutterPkg="flutter_linux_3.10.0-stable.tar.xz"
+FlutterPkg="flutter_linux_3.10.2-stable.tar.xz"
 FlutterUrl="https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/$FlutterPkg"
 FlutterInstallDir="$InstallDir/flutterdev"
 
