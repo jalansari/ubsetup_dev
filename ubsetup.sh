@@ -1017,7 +1017,7 @@ read -r -d '' TEXT_BashToolAliases <<- "EOTXT"
 EOTXT
 
 read -r -d '' TEXT_BashDockerAliases <<- "EOTXT"
-	alias dnuke="docker system prune -af &&  docker system prune --volumes -f"
+	alias dnuke="docker system prune -af &&  docker system prune --volumes -af"
 	alias dlistall="docker ps -a && docker images -a"
 	alias dstopall="docker kill $(docker ps -q)"
 EOTXT
