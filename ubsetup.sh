@@ -896,6 +896,7 @@ read -r -d '' TEXT_VSCodeConfig <<- EOTXT
 	    "scrollback",
 	    "secops",
 	    "sqlalchemy",
+	    "starlette",
 	    "templating",
 	    "tiering",
 	    "urldecode",
