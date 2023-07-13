@@ -1031,7 +1031,7 @@ read -r -d '' TEXT_BashGitAliases <<- "EOTXT"
 	function ____git_get_branch() {
 	    branch=$(git branch 2> /dev/null | sed -e '/^[^*]/d; s/^* //;')
 	    if [[ -n $branch ]]; then
-	        if [[ "$branch" == "master" ]]; then
+	        if [[ "$branch" =~ master|main ]]; then
 	            branch_clr="1;31m"
 	        elif [[ "$branch" == "staging" ]]; then
 	            branch_clr="1;33m"
