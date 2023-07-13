@@ -2261,6 +2261,7 @@ EOBLOCK
     installVSCodeExt "ms-vscode.makefile-tools"
     installVSCodeExt "jebbs.plantuml"
     installVSCodeExt "bierner.markdown-mermaid"
+    installVSCodeExt "ms-azuretools.vscode-docker"
 
     vsCodeWorkspaceFileExample="$userHomeDir/Documents/devProjects.code-workspace"
     # vsCodeWorkspaceFileExample=$( getAvailableFileName "$vsCodeWorkspaceFileExample" )
