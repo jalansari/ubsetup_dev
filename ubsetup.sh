@@ -1018,9 +1018,23 @@ read -r -d '' TEXT_BashToolAliases <<- "EOTXT"
 EOTXT
 
 read -r -d '' TEXT_BashDockerAliases <<- "EOTXT"
-	alias dnuke="docker system prune -af &&  docker system prune --volumes -af"
+	function docker_all_nuke() {
+	    docker system prune -af
+	    docker system prune --volumes -af
+	    docker_volumes_unused=( $(docker volume ls -qf dangling=true) )
+	    if [[ "${#docker_volumes_unused[@]}" != 0 ]]; then
+	        docker volume rm $docker_volumes_unused
+	    fi
+	}
+	function docker_all_stop() {
+	    docker_running_containers=( $(docker ps -q) )
+	    if [[ "${#docker_running_containers[@]}" != 0 ]]; then
+	        docker kill $docker_running_containers
+	    fi
+	}
+	alias dnuke="docker_all_nuke"
 	alias dlistall="docker ps -a && docker images -a"
-	alias dstopall="docker kill $(docker ps -q)"
+	alias dstopall="docker_all_stop"
 EOTXT
 
 read -r -d '' TEXT_BashToolAliases_Inter <<- EOTXT
