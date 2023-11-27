@@ -2307,12 +2307,30 @@ if [ $? == 0 ]; then
     sed -i.bak -r 's|(.*close_to_tray.*)false(.*)|\1true\2|;' $delugeCfg
 fi
 
-checkDebPkgInstalled "code"
-if [ $? == 0 ]; then
-    VSCodeDir="$userHomeDir/.config/Code"
+
+function installVSCodeExt()
+{   vscodeext="$1"
+    code_command="$2"
+    if [[ -z "$code_command" ]]; then
+        code_command="code"
+    fi
+    PRINTLOG "Installing VS$code_command Extension <$vscodeext>"
+sudo -u $userOfThisScript bash << EOBLOCK
+    $code_command --install-extension $vscodeext
+    if [ \$? != 0 ]; then echo -e "\\033[${ERRORCOLOUR}mFailed to install VS$code_command plugin <$vscodeext>.\\033[0m"; fi
+EOBLOCK
+}
+
+function installVSCodiumExt()
+{   installVSCodeExt "$1" "codium"
+}
+
+function createVScodeSettings()
+{   CodeDir="$1"
+    VSCodeDir="$userHomeDir/.config/$CodeDir"
     VSCodeUsrDir="$VSCodeDir/User"
 
-    PRINTLOG "Configuring VSCode editor."
+    PRINTLOG "Configuring $CodeDir editor."
 
     mkdir -p $VSCodeUsrDir
     VSCodeCfg="$VSCodeUsrDir/settings.json"
@@ -2320,16 +2338,31 @@ if [ $? == 0 ]; then
     VSCodeCfg="$VSCodeUsrDir/keybindings.json"
     echo -e "$TEXT_VSKeybindings" > $VSCodeCfg
     chown -R $userOfThisScript:$groupOfUserOfThisScript $VSCodeDir
+}
 
-    function installVSCodeExt()
-    {   vscodeext=$1
-        PRINTLOG "Installing VSCode Extension <$vscodeext>"
-sudo -u $userOfThisScript bash << EOBLOCK
-        code --install-extension $vscodeext
-        if [ \$? != 0 ]; then echo -e "\\033[${ERRORCOLOUR}mFailed to install VSCode plugin <$vscodeext>.\\033[0m"; fi
-EOBLOCK
-    }
+checkDebPkgInstalled "codium"
+if [ $? == 0 ]; then
+    createVScodeSettings "VSCodium"
+
+    installVSCodiumExt "ms-python.python"
+    installVSCodiumExt "ms-python.black-formatter"
+    installVSCodiumExt "ms-python.flake8"
+    installVSCodiumExt "ms-python.isort"
+    installVSCodiumExt "streetsidesoftware.code-spell-checker"
+    installVSCodiumExt "eamodio.gitlens"
+    installVSCodiumExt "yzhang.markdown-all-in-one"
+    installVSCodiumExt "ms-vscode.makefile-tools"
+    installVSCodiumExt "jebbs.plantuml"
+fi
+
+checkDebPkgInstalled "code"
+if [ $? == 0 ]; then
+    createVScodeSettings "Code"
+
     installVSCodeExt "ms-python.python"
+    installVSCodeExt "ms-python.black-formatter"
+    installVSCodeExt "ms-python.flake8"
+    installVSCodeExt "ms-python.isort"
     installVSCodeExt "streetsidesoftware.code-spell-checker"
     installVSCodeExt "hashicorp.terraform"
     installVSCodeExt "eamodio.gitlens"
