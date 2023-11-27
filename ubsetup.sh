@@ -1125,7 +1125,7 @@ read -r -d '' TEXT_BashGitAliases <<- "EOTXT"
 	        pushd $d > /dev/null 2>&1
 	        echo -e "\033[30;1;106m"
 	        pwd
-	        echo -e "\033[0m"
+	        echo -n -e "\033[0m"
 	        if [[ -n "$3" ]]; then
 	            git "$1" "$2" "$3"
 	        elif [[ -n "$2" ]]; then
