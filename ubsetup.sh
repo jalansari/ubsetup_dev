@@ -869,6 +869,17 @@ read -r -d '' TEXT_VSCodeConfig <<- EOTXT
 	  "[terraform]": {
 	    "editor.tabSize": 2
 	  },
+	  "[yaml]": {
+	    "editor.insertSpaces": true,
+	    "editor.tabSize": 2,
+	    "editor.detectIndentation" : false
+	  },
+	  "[json]": {
+	    "editor.insertSpaces": true,
+	    "editor.tabSize": 2,
+	    "editor.detectIndentation": false,
+	    "editor.defaultFormatter": "vscode.json-language-features"
+	  },
 	  "plantuml.render": "Local",
 	  "plantuml.jar": "$PlantumlTargetBin",
 	  "cSpell.userWords": [
