@@ -961,7 +961,31 @@ read -r -d '' TEXT_VSKeybindings <<- EOTXT
 	    {
 	        "key": "ctrl+shift+tab",
 	        "command": "workbench.action.previousEditor"
-	    }
+	    },
+	    // Following Ctrl-R / Ctrl-C key bindings are based on the following:
+	    // https://github.com/microsoft/vscode-docs/blob/vnext/release-notes/v1_70.md#run-recent-command-as-a-replacement-for-reverse-search
+	    // to maintain ability to use reverse search in the terminal.
+	    {
+	        "key": "ctrl+r",
+	        "command": "workbench.action.terminal.sendSequence",
+	        "args": { "text": "\u0012"/*^R*/ },
+	        "when": "terminalFocus"
+	    },
+	    {
+	        "key": "ctrl+alt+r",
+	        "command": "workbench.action.terminal.runRecentCommand",
+	        "when": "terminalFocus"
+	    },
+	    {
+	        "key": "ctrl+r",
+	        "command": "workbench.action.quickOpenNavigateNextInViewPicker",
+	        "when": "inQuickOpen && inTerminalRunCommandPicker"
+	    },
+	    {
+	        "key": "ctrl+c",
+	        "command": "workbench.action.closeQuickOpen",
+	        "when": "inQuickOpen && inTerminalRunCommandPicker"
+	    },
 	]
 EOTXT
 
