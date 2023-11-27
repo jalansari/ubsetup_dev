@@ -2225,6 +2225,7 @@ sed -i.bak -r \
 '/____cleanpy/,/^}$/{/.*/d};'\
 '/alias cpr/d;'\
 '/alias cleanpyd/d;'\
+'/docker_all/,/^}$/{/.*/d};'\
 '/ffm540/,/^}$/{/.*/d};'\
 '/ffm10secs/,/^}$/{/.*/d};'\
 's/(HISTFILESIZE)=.*/\1=8000/; s/(HISTSIZE)=.*/\1=4000/;'\
