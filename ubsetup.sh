@@ -83,6 +83,8 @@ Fonts=(
        ["source_code_p"]="https://fonts.google.com/download?family=Source%20Code%20Pro"
        ["mononoki"]="https://github.com/madmalik/mononoki/releases/download/1.2/mononoki.zip"
        ["jetbrains_mono"]="https://www.fontsquirrel.com/fonts/download/jetbrains-mono"
+       ["overpass"]="https://fonts.google.com/download?family=Overpass"
+       ["overpass_mono"]="https://fonts.google.com/download?family=Overpass%20Mono"
       )
 allFontsFolder="/usr/share/fonts/ubsetup_installed_fonts"
 
