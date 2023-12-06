@@ -2113,21 +2113,24 @@ if [ $ubServerEnvironment != 0 ]; then
     fi
 
     if [ "$InstallOpenvpn24" == true ] && [ ! -d /usr/lib/openvpn.2.4 ]; then
-        curl http://archive.ubuntu.com/ubuntu/pool/main/o/openssl/libssl1.1_1.1.1f-1ubuntu2.18_amd64.deb -f -o package.deb \
+        curl http://archive.ubuntu.com/ubuntu/pool/main/o/openssl/libssl1.1_1.1.1f-1ubuntu2.20_amd64.deb -f -o package.deb \
             && ar x package.deb data.tar.xz \
             && tar xf data.tar.xz \
             && cp -r usr/lib/x86_64-linux-gnu/* /usr/lib/x86_64-linux-gnu/ \
             && rm -rf package.deb data.tar.xz usr
 
-        curl http://archive.ubuntu.com/ubuntu/pool/main/o/openvpn/openvpn_2.4.7-1ubuntu2.20.04.4_amd64.deb -f -o package.deb \
+        curl http://archive.ubuntu.com/ubuntu/pool/main/o/openvpn/openvpn_2.4.12-0ubuntu0.20.04.1_amd64.deb -f -o package.deb \
             && ar x package.deb data.tar.xz \
             && tar xf data.tar.xz \
+            && rm -rf /usr/sbin/openvpn.2.4 /usr/lib/x86_64-linux-gnu/openvpn.2.4
+            && mkdir -p /usr/lib/x86_64-linux-gnu/openvpn.2.4
             && cp usr/sbin/openvpn /usr/sbin/openvpn.2.4 \
             && cp -r usr/lib/x86_64-linux-gnu/openvpn/* /usr/lib/x86_64-linux-gnu/openvpn.2.4/ \
             && rm -rf package.deb data.tar.xz etc lib usr var
 
         mv /usr/sbin/openvpn /usr/sbin/openvpn.2.5
         mv /usr/lib/openvpn /usr/lib/openvpn.2.5
+        rm -rf /usr/lib/openvpn.2.4
         mkdir -p /usr/lib/openvpn.2.4
         ln -sf /usr/lib/x86_64-linux-gnu/openvpn.2.4/plugins/openvpn-plugin-auth-pam.so /usr/lib/openvpn.2.4/
         ln -sf /usr/lib/x86_64-linux-gnu/openvpn.2.4/plugins/openvpn-plugin-down-root.so /usr/lib/openvpn.2.4/
