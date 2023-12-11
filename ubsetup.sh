@@ -1120,7 +1120,7 @@ read -r -d '' TEXT_BashGitAliases <<- "EOTXT"
 	    fi
 	}
 	export -f ____git_get_branch
-	PS1=$(echo $PS1 | sed 's/\\\$/ $(____git_get_branch)\\\$ /;')
+	PS1=$(echo $PS1 | sed 's/\\\\\\$/ $(____git_get_branch)\\\\\\$ /;')
 
 	function ____gititer____() {
 	    for d in ./*/; do
