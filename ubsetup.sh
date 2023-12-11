@@ -523,6 +523,7 @@ read -r -d '' TEXT_CinnamonDesktopIfGSettingsConfig <<- EOTXT
 	[org.cinnamon.desktop.wm.preferences]
 	num-workspaces=$WorkspacesNumberOf
 	mouse-button-modifier='<Super>'
+	min-window-opacity=30
 
 	[org.cinnamon.theme]
 	name='Mint-Y-Dark'
@@ -607,6 +608,8 @@ EOTXT
 
 read -r -d '' TEXT_CinnamonDesktopGSettingsConfig <<- EOTXT
 	[org.nemo.desktop]
+	computer-icon-visible=false
+	home-icon-visible=true
 	trash-icon-visible=true
 
 	[org.cinnamon.desktop.privacy]
@@ -617,7 +620,7 @@ read -r -d '' TEXT_CinnamonDesktopGSettingsConfig <<- EOTXT
 	picture-options='none'
 	primary-color='$DesktopBackgroundColor'
 
-	[org/cinnamon/desktop/session]
+	[org.cinnamon.desktop.session]
 	idle-delay=uint32 300
 
 	[org.cinnamon]
@@ -643,6 +646,10 @@ read -r -d '' TEXT_CinnamonDesktopGSettingsConfig <<- EOTXT
 
 	[org.cinnamon.desktop.a11y.keyboard]
 	togglekeys-enable-osd=true
+
+	[org.gnome.desktop.a11y.applications]
+	screen-keyboard-enabled=false
+	screen-reader-enabled=false
 
 	[org.cinnamon.desktop.notifications]
 	remove-old=false
