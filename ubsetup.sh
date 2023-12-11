@@ -2113,6 +2113,7 @@ if [ $ubServerEnvironment != 0 ]; then
     fi
 
     if [ "$InstallOpenvpn24" == true ] && [ ! -d /usr/lib/openvpn.2.4 ]; then
+        PRINTLOG "Installing OpenVPN 2.4, as an alternative."
         curl http://archive.ubuntu.com/ubuntu/pool/main/o/openssl/libssl1.1_1.1.1f-1ubuntu2.20_amd64.deb -f -o package.deb \
             && ar x package.deb data.tar.xz \
             && tar xf data.tar.xz \
@@ -2122,8 +2123,8 @@ if [ $ubServerEnvironment != 0 ]; then
         curl http://archive.ubuntu.com/ubuntu/pool/main/o/openvpn/openvpn_2.4.12-0ubuntu0.20.04.1_amd64.deb -f -o package.deb \
             && ar x package.deb data.tar.xz \
             && tar xf data.tar.xz \
-            && rm -rf /usr/sbin/openvpn.2.4 /usr/lib/x86_64-linux-gnu/openvpn.2.4
-            && mkdir -p /usr/lib/x86_64-linux-gnu/openvpn.2.4
+            && rm -rf /usr/sbin/openvpn.2.4 /usr/lib/x86_64-linux-gnu/openvpn.2.4 \
+            && mkdir -p /usr/lib/x86_64-linux-gnu/openvpn.2.4 \
             && cp usr/sbin/openvpn /usr/sbin/openvpn.2.4 \
             && cp -r usr/lib/x86_64-linux-gnu/openvpn/* /usr/lib/x86_64-linux-gnu/openvpn.2.4/ \
             && rm -rf package.deb data.tar.xz etc lib usr var
@@ -2137,6 +2138,7 @@ if [ $ubServerEnvironment != 0 ]; then
 
         update-alternatives --install /usr/sbin/openvpn openvpn /usr/sbin/openvpn.2.5 10 --slave /usr/lib/openvpn libopenvpn /usr/lib/openvpn.2.5
         update-alternatives --install /usr/sbin/openvpn openvpn /usr/sbin/openvpn.2.4 9 --slave /usr/lib/openvpn libopenvpn /usr/lib/openvpn.2.4
+        PRINTLOG "OpenVPN 2.4 install complete."
     fi
 
     VeraCryptBin="/usr/bin/veracrypt"
