@@ -9,12 +9,12 @@
 declare -A DebPackages
 DebPackages=(
              ["code"]="https://code.visualstudio.com/sha/download?build=stable&os=linux-deb-x64;mscode.deb"
-             ["vscodium"]="https://github.com/VSCodium/vscodium/releases/download/1.84.2.23319/codium_1.84.2.23319_amd64.deb"
+             ["vscodium"]="https://github.com/VSCodium/vscodium/releases/download/1.85.0.23343/codium_1.85.0.23343_amd64.deb"
              ["bcompare"]="https://www.scootersoftware.com/files/bcompare-4.4.7.28397_amd64.deb"
              ["dropbox"]="https://www.dropbox.com/download?dl=packages/ubuntu/dropbox_2020.03.04_amd64.deb"
              ["draw.io"]="https://github.com/jgraph/drawio-desktop/releases/download/v22.1.2/drawio-amd64-22.1.2.deb"
              ["mysql-workbench-community"]="https://dev.mysql.com/get/Downloads/MySQLGUITools/mysql-workbench-community_8.0.34-1ubuntu22.04_amd64.deb"
-             ["slack-desktop"]="https://downloads.slack-edge.com/releases/linux/4.35.126/prod/x64/slack-desktop-4.35.126-amd64.deb"
+             ["slack-desktop"]="https://downloads.slack-edge.com/releases/linux/4.35.131/prod/x64/slack-desktop-4.35.131-amd64.deb"
             )
 
 
@@ -31,7 +31,7 @@ FossilScmPkg="fossil-linux-x64-2.23.tar.gz"
 FossilScmUrl="https://fossil-scm.org/home/uv/$FossilScmPkg"
 FossilInstallDir="$InstallDir/fossilscm"
 
-GoLangPkg="go1.21.4.linux-amd64.tar.gz"
+GoLangPkg="go1.21.5.linux-amd64.tar.gz"
 GoLangUrl="https://go.dev/dl/$GoLangPkg"
 GoPath="$UsrLocalDir/go"
 
@@ -53,7 +53,7 @@ TerraformUrl="https://releases.hashicorp.com/terraform/1.5.5/$TerraformPkg"
 TflintPkg="tflint_linux_amd64.zip"
 TflintUrl="https://github.com/terraform-linters/tflint/releases/latest/download/$TflintPkg"
 
-# TerragruntUrl="https://github.com/gruntwork-io/terragrunt/releases/download/v0.53.7/terragrunt_linux_amd64"
+# TerragruntUrl="https://github.com/gruntwork-io/terragrunt/releases/download/v0.54.0/terragrunt_linux_amd64"
 
 # ConfiglintPkg="config-lint_Linux_x86_64.tar.gz"
 # ConfiglintUrl="https://github.com/stelligent/config-lint/releases/download/v1.6.0/$ConfiglintPkg"
@@ -66,11 +66,11 @@ PlantUmlVer="1.2023.12"
 PlantUmlUrl="https://github.com/plantuml/plantuml/releases/download/v$PlantUmlVer/plantuml-$PlantUmlVer.jar"
 PlantumlTargetBin="/usr/local/bin/plantuml.jar"
 
-AndroidPkg="android-studio-2022.3.1.22-linux.tar.gz"
-AndroidUrl="https://dl.google.com/dl/android/studio/ide-zips/2022.3.1.22/$AndroidPkg"
+AndroidPkg="android-studio-2023.1.1.26-linux.tar.gz"
+AndroidUrl="https://dl.google.com/dl/android/studio/ide-zips/2023.1.1.26/$AndroidPkg"
 AndroidInstallDir="$InstallDir/androidstudio"
 
-FlutterPkg="flutter_linux_3.16.0-stable.tar.xz"
+FlutterPkg="flutter_linux_3.16.3-stable.tar.xz"
 FlutterUrl="https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/$FlutterPkg"
 FlutterInstallDir="$InstallDir/flutterdev"
 
