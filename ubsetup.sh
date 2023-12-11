@@ -867,7 +867,7 @@ read -r -d '' TEXT_VSCodeConfig <<- EOTXT
 	//   "audioCues.taskFailed": "off",
 	//   "audioCues.terminalCommandFailed": "off",
 	//   "audioCues.terminalQuickFix": "off",
-	  "audioCues.volume": 0
+	  "audioCues.volume": 0,
 	  "[terraform]": {
 	    "editor.tabSize": 2
 	  },
