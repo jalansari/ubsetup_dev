@@ -528,12 +528,15 @@ read -r -d '' TEXT_CinnamonDesktopIfGSettingsConfig <<- EOTXT
 	[org.cinnamon.theme]
 	name='Mint-Y-Dark'
 
+	[org.x.apps.portal]
+	color-scheme='prefer-dark'
+
 	[org.gnome.desktop.interface]
 	clock-format='24h'
 
 	[org.cinnamon.desktop.interface]
 	cursor-theme='DMZ-White'
-	icon-theme='Mint-Y-Dark'
+	icon-theme='Mint-Y'
 	gtk-theme='Mint-Y-Dark'
 	clock-show-date=true
 	first-day-of-week=1
@@ -576,6 +579,9 @@ read -r -d '' TEXT_CinnamonSoundsGSettingsConfig <<- EOTXT
 	unplug-enabled=false
 	tile-enabled=false
 	switch-enabled=false
+
+	[org.cinnamon.desktop.sounds]
+	event-sounds=false
 EOTXT
 
 read -r -d '' TEXT_CinnamonMouseGSettingsConfig <<- EOTXT
@@ -585,6 +591,13 @@ read -r -d '' TEXT_CinnamonMouseGSettingsConfig <<- EOTXT
 	natural-scroll=false
 	speed=0.575
 	tap-to-click=true
+
+	[org.cinnamon.gestures]
+	enabled=true
+	pinch-in-2='MINIMIZE'
+	pinch-out-2='MAXIMIZE'
+	swipe-left-2='PUSH_TILE_LEFT'
+	tap-2='TOGGLE_OVERVIEW'
 
 	[org.cinnamon.desktop.peripherals.mouse]
 	middle-click-emulation=false
@@ -623,6 +636,9 @@ read -r -d '' TEXT_CinnamonDesktopGSettingsConfig <<- EOTXT
 	[org.cinnamon.desktop.session]
 	idle-delay=uint32 300
 
+	[org.cinnamon.muffin]
+	workspace-cycle=true
+
 	[org.cinnamon]
 	startup-animation=false
 	desklet-decorations=0
@@ -631,6 +647,12 @@ read -r -d '' TEXT_CinnamonDesktopGSettingsConfig <<- EOTXT
 	enabled-desklets=['clock@cinnamon.org:0:170:10']
 	panels-height=['1:$CinnamonPanelHeight']
 	panels-autohide=['1:$CinnamonPanelAutohide']
+	desktop-effects-workspace=false
+	alttab-switcher-delay=100
+	alttab-switcher-enforce-primary-monitor=true
+	alttab-switcher-show-all-workspaces=true
+	alttab-switcher-style='coverflow'
+	alttab-switcher-warp-mouse-pointer=true
 
 	[org.cinnamon.desktop.screensaver]
 	use-custom-format=true
