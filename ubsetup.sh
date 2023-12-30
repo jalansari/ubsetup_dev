@@ -1120,9 +1120,11 @@ read -r -d '' TEXT_BashDockerAliases <<- "EOTXT"
 	}
 	function docker_all_stop() {
 	    docker_running_containers=( $(docker ps -q) )
-	    if [[ "${#docker_running_containers[@]}" != 0 ]]; then
-	        docker kill $docker_running_containers
-	    fi
+	    for container_id in "${docker_running_containers[@]}"
+	    do
+	        echo "Killing container ID <$container_id>"
+	        docker kill $container_id
+	    done
 	}
 	alias dnuke="docker_all_nuke"
 	alias dlistall="docker ps -a && docker images -a"
