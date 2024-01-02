@@ -2456,7 +2456,10 @@ fi
 
 RunGlibCompileSchemas=false
 GlibScemasDir="/usr/share/glib-2.0/schemas"
-GlibPriorityNum="zzz" # This should be a number, but distros are not using priority numbers, so we have to try being higher priority by using lexicographical ordering.
+
+# This should be a number, but distros are not using priority numbers, so we
+# have to try being higher priority by using lexicographical ordering.
+GlibPriorityNum="zzz"
 
 if [ $isNemoinstalled == 0 ]; then
     PRINTLOG "Configuring Nemo file manager."
