@@ -580,6 +580,7 @@ read -r -d '' TEXT_CinnamonSoundsGSettingsConfig <<- EOTXT
 	unplug-enabled=false
 	tile-enabled=false
 	switch-enabled=false
+	notification-enabled=false
 
 	[org.cinnamon.desktop.sounds]
 	event-sounds=false
