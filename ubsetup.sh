@@ -135,6 +135,7 @@ declare -A FirefoxAddons
 FirefoxAddons=(
        ["uBlock0@raymondhill.net"]="https://addons.mozilla.org/firefox/downloads/latest/ublock-origin/latest.xpi"
        ["{446900e4-71c2-419f-a6a7-df9c091e268b}"]="https://addons.mozilla.org/firefox/downloads/latest/bitwarden-password-manager/latest.xpi"
+       ["firefox@tampermonkey.net"]="https://addons.mozilla.org/firefox/downloads/latest/tampermonkey/latest.xpi"
        # ["{73a6fe31-595d-460b-a920-fcc0f8843232}"]="https://addons.mozilla.org/firefox/downloads/latest/noscript/latest.xpi"
       )
 FirefoxAddonsDir="/usr/lib/firefox/distribution/extensions"
