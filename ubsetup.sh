@@ -2660,12 +2660,12 @@ if [ $ubuntuInstalled == 0 ]; then
 
     PRINTLOG "Configuring Gnome to ignore lid close."
     sed -i -r 's/#?(HandleLidSwitch\w*)=.*/\1=ignore/;' /etc/systemd/logind.conf
-
-    rm -rf "$userHomeDir/.config/dconf"
 fi
 
 
 if [ "$RunGlibCompileSchemas" == true ]; then
+    rm -rf "$userHomeDir/.config/dconf"
+
     PRINTLOG "GSettings compiling schemas."
     glib-compile-schemas "$GlibScemasDir/"
 fi
