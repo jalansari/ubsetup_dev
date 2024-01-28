@@ -11,7 +11,6 @@ DebPackages=(
              ["code"]="https://code.visualstudio.com/sha/download?build=stable&os=linux-deb-x64;mscode.deb"
              ["vscodium"]="https://github.com/VSCodium/vscodium/releases/download/1.85.2.24019/codium_1.85.2.24019_amd64.deb"
              ["bcompare"]="https://www.scootersoftware.com/files/bcompare-4.4.7.28397_amd64.deb"
-             ["dropbox"]="https://www.dropbox.com/download?dl=packages/ubuntu/dropbox_2020.03.04_amd64.deb"
              ["draw.io"]="https://github.com/jgraph/drawio-desktop/releases/download/v23.0.2/drawio-amd64-23.0.2.deb"
              ["mysql-workbench-community"]="https://dev.mysql.com/get/Downloads/MySQLGUITools/mysql-workbench-community_8.0.36-1ubuntu22.04_amd64.deb"
              ["slack-desktop"]="https://downloads.slack-edge.com/releases/linux/4.36.138/prod/x64/slack-desktop-4.36.138-amd64.deb"
