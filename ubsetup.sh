@@ -2299,8 +2299,8 @@ $TEXT_BashPythonToolAliases\n" \
 
 if [[ "$InstallDocker" = true ]]; then
 echo "\
-$TEXT_BashDockerAliases\n" \
- >> $BashrcForAll
+$TEXT_BashDockerAliases\
+" >> $BashrcForAll
 fi
 
 usersBashrc="$userHomeDir/.bashrc"
