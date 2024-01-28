@@ -9,12 +9,12 @@
 declare -A DebPackages
 DebPackages=(
              ["code"]="https://code.visualstudio.com/sha/download?build=stable&os=linux-deb-x64;mscode.deb"
-             ["vscodium"]="https://github.com/VSCodium/vscodium/releases/download/1.85.1.23348/codium_1.85.1.23348_amd64.deb"
+             ["vscodium"]="https://github.com/VSCodium/vscodium/releases/download/1.85.2.24019/codium_1.85.2.24019_amd64.deb"
              ["bcompare"]="https://www.scootersoftware.com/files/bcompare-4.4.7.28397_amd64.deb"
              ["dropbox"]="https://www.dropbox.com/download?dl=packages/ubuntu/dropbox_2020.03.04_amd64.deb"
-             ["draw.io"]="https://github.com/jgraph/drawio-desktop/releases/download/v22.1.16/drawio-amd64-22.1.16.deb"
-             ["mysql-workbench-community"]="https://dev.mysql.com/get/Downloads/MySQLGUITools/mysql-workbench-community_8.0.34-1ubuntu22.04_amd64.deb"
-             ["slack-desktop"]="https://downloads.slack-edge.com/releases/linux/4.35.131/prod/x64/slack-desktop-4.35.131-amd64.deb"
+             ["draw.io"]="https://github.com/jgraph/drawio-desktop/releases/download/v23.0.2/drawio-amd64-23.0.2.deb"
+             ["mysql-workbench-community"]="https://dev.mysql.com/get/Downloads/MySQLGUITools/mysql-workbench-community_8.0.36-1ubuntu22.04_amd64.deb"
+             ["slack-desktop"]="https://downloads.slack-edge.com/releases/linux/4.36.138/prod/x64/slack-desktop-4.36.138-amd64.deb"
             )
 
 
@@ -22,21 +22,21 @@ InstallDir="/usr/share"
 UsrLocalDir="/usr/local"
 
 
-NodeJsVer="node-v20.10.0-linux-x64"
+NodeJsVer="node-v20.11.0-linux-x64"
 NodeJsPkg="$NodeJsVer.tar.xz"
-NodeJsUrl="https://nodejs.org/dist/v20.10.0/$NodeJsPkg"
+NodeJsUrl="https://nodejs.org/dist/v20.11.0/$NodeJsPkg"
 NodeInstallDir="$InstallDir/nodejs"
 
 FossilScmPkg="fossil-linux-x64-2.23.tar.gz"
 FossilScmUrl="https://fossil-scm.org/home/uv/$FossilScmPkg"
 FossilInstallDir="$InstallDir/fossilscm"
 
-GoLangPkg="go1.21.5.linux-amd64.tar.gz"
+GoLangPkg="go1.21.6.linux-amd64.tar.gz"
 GoLangUrl="https://go.dev/dl/$GoLangPkg"
 GoPath="$UsrLocalDir/go"
 
-VagrantPkg="vagrant_2.4.0_linux_amd64.zip"
-VagrantUrl="https://releases.hashicorp.com/vagrant/2.4.0/$VagrantPkg"
+VagrantPkg="vagrant_2.4.1_linux_amd64.zip"
+VagrantUrl="https://releases.hashicorp.com/vagrant/2.4.1/$VagrantPkg"
 
 TelegramPackage="telegram_linux.tar.xz"
 TelegramPackageHttpURL="https://telegram.org/dl/desktop/linux"
@@ -53,7 +53,7 @@ TerraformUrl="https://releases.hashicorp.com/terraform/1.5.5/$TerraformPkg"
 TflintPkg="tflint_linux_amd64.zip"
 TflintUrl="https://github.com/terraform-linters/tflint/releases/latest/download/$TflintPkg"
 
-# TerragruntUrl="https://github.com/gruntwork-io/terragrunt/releases/download/v0.54.12/terragrunt_linux_amd64"
+# TerragruntUrl="https://github.com/gruntwork-io/terragrunt/releases/download/v0.54.22/terragrunt_linux_amd64"
 
 # ConfiglintPkg="config-lint_Linux_x86_64.tar.gz"
 # ConfiglintUrl="https://github.com/stelligent/config-lint/releases/download/v1.6.0/$ConfiglintPkg"
@@ -66,11 +66,11 @@ PlantUmlVer="1.2023.13"
 PlantUmlUrl="https://github.com/plantuml/plantuml/releases/download/v$PlantUmlVer/plantuml-$PlantUmlVer.jar"
 PlantumlTargetBin="/usr/local/bin/plantuml.jar"
 
-AndroidPkg="android-studio-2023.1.1.26-linux.tar.gz"
-AndroidUrl="https://dl.google.com/dl/android/studio/ide-zips/2023.1.1.26/$AndroidPkg"
+AndroidPkg="android-studio-2023.1.1.28-linux.tar.gz"
+AndroidUrl="https://dl.google.com/dl/android/studio/ide-zips/2023.1.1.28/$AndroidPkg"
 AndroidInstallDir="$InstallDir/androidstudio"
 
-FlutterPkg="flutter_linux_3.16.5-stable.tar.xz"
+FlutterPkg="flutter_linux_3.16.9-stable.tar.xz"
 FlutterUrl="https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/$FlutterPkg"
 FlutterInstallDir="$InstallDir/flutterdev"
 
