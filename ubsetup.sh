@@ -955,7 +955,7 @@ read -r -d '' TEXT_VSCodeConfig <<- EOTXT
 	    "plugins",
 	    "postgres",
 	    "proxysql",
-        "psql",
+	    "psql",
 	    "pydantic",
 	    "pyspark",
 	    "pytest",
