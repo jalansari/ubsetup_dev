@@ -2388,9 +2388,9 @@ function createVScodeSettings()
 
     mkdir -p $VSCodeUsrDir
     VSCodeCfg="$VSCodeUsrDir/settings.json"
-    echo -e "$TEXT_VSCodeConfig" > $VSCodeCfg
+    echo "$TEXT_VSCodeConfig" > $VSCodeCfg
     VSCodeCfg="$VSCodeUsrDir/keybindings.json"
-    echo -e "$TEXT_VSKeybindings" > $VSCodeCfg
+    echo "$TEXT_VSKeybindings" > $VSCodeCfg
     chown -R $userOfThisScript:$groupOfUserOfThisScript $VSCodeDir
 }
 
