@@ -1467,7 +1467,8 @@ function addAptKeys()
             keyUrl="${keyUrlDestArray[0]}"
             keyDest="${keyUrlDestArray[1]}"
             PRINTLOG "ADDING KEY: [$keyUrl] -> [$keyDest]"
-            wget -q -O - "$keyUrl" | gpg --dearmor --yes -o "$AptKeyringsDir/$keyDest"
+            curl -sSL "$keyUrl" | gpg --dearmor --yes -o "$AptKeyringsDir/$keyDest"
+            PRINTLOG "KEY ADDED: [$keyDest]"
         done
     fi
 }
