@@ -1118,8 +1118,12 @@ read -r -d '' TEXT_BashDockerAliases <<- "EOTXT"
 	    docker container rm -fv $(docker ps -qa)
 	}
 	function docker_all_nuke() {
+	    docker_all_stop
+	    echo -e "${clrS}Wiping Docker contianers and images${clrE}"
 	    docker system prune -af
+	    echo -e "${clrS}Wiping Docker volumes${clrE}"
 	    docker system prune --volumes -af
+	    echo -e "${clrS}Wiping Docker unused volumes, if any exist${clrE}"
 	    docker_volumes_unused=( $(docker volume ls -qf dangling=true) )
 	    if [[ "${#docker_volumes_unused[@]}" != 0 ]]; then
 	        docker volume rm $docker_volumes_unused
@@ -1127,9 +1131,10 @@ read -r -d '' TEXT_BashDockerAliases <<- "EOTXT"
 	}
 	function docker_all_stop() {
 	    docker_running_containers=( $(docker ps -q) )
+	    echo -e "${clrS}Found running containers${clrE} <${docker_running_containers[@]}>"
 	    for container_id in "${docker_running_containers[@]}"
 	    do
-	        echo "Killing container ID <$container_id>"
+	        echo -e "${clrS}Killing container ID${clrE} <$container_id>"
 	        docker kill $container_id
 	    done
 	}
