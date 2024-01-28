@@ -1111,6 +1111,12 @@ read -r -d '' TEXT_BashToolAliases <<- "EOTXT"
 EOTXT
 
 read -r -d '' TEXT_BashDockerAliases <<- "EOTXT"
+	clrS="\033[0;33m"
+	clrE="\033[0m"
+	function docker_all_clean_containers() {
+	    echo -e "${clrS}Wiping Docker contianers${clrE}"
+	    docker container rm -fv $(docker ps -qa)
+	}
 	function docker_all_nuke() {
 	    docker system prune -af
 	    docker system prune --volumes -af
@@ -1127,6 +1133,7 @@ read -r -d '' TEXT_BashDockerAliases <<- "EOTXT"
 	        docker kill $container_id
 	    done
 	}
+	alias dclean="docker_all_clean_containers"
 	alias dnuke="docker_all_nuke"
 	alias dlistall="docker ps -a && docker images -a"
 	alias dstopall="docker_all_stop"
@@ -2246,9 +2253,11 @@ PRINTLOG "Adding BashRC aliases."
 BashrcForAll="/etc/skel/.bashrc"
 
 sed -i.bak -r \
+'/clr[SE]=/d;'\
 '/alias[[:space:]]+ll=/d;'\
 '/alias hiss=/d;'\
 '/alias trimws=/d;'\
+'/alias dclean=/d;'\
 '/alias dnuke=/d;'\
 '/alias dlistall=/d;'\
 '/alias dstopall=/d;'\
@@ -2283,7 +2292,7 @@ $TEXT_BashPythonToolAliases\n" \
  >> $BashrcForAll
 
 if [[ "$InstallDocker" = true ]]; then
-echo -e "\
+echo "\
 $TEXT_BashDockerAliases\n" \
  >> $BashrcForAll
 fi
