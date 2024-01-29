@@ -1240,8 +1240,8 @@ read -r -d '' TEXT_BashPythonToolAliases <<- "EOTXT"
 	}
 	export -f ____check_py_requirements____
 	alias cpr='____check_py_requirements____'
-	alias cprall='for reqs in requirements*; do ____check_py_requirements____ $reqs; done'
-	alias cprallr="find -type f -name 'requirements*.txt' | xargs -I {} bash -c 'echo; echo {}; echo =====; ____check_py_requirements____ {}; sleep 5'"
+	alias cprall='for reqs in requirements*; do echo $reqs; echo =====; ____check_py_requirements____ $reqs; echo; done'
+	alias cprallr="find -type f -name 'requirements*.txt' | xargs -I {} bash -c 'echo {}; echo =====; ____check_py_requirements____ {}; echo; sleep 5'"
 
 	function ____cleanpydir____() {
 	    rm -rf testresults.xml .coverage .cache .pytest_cache .mypy_cache htmlcov .hypothesis .benchmarks *.egg\-info
