@@ -1100,7 +1100,7 @@ read -r -d '' TEXT_BashToolAliases <<- "EOTXT"
 	function ffm10secs() {
 	    ffmpeg -i "$1" -f segment -segment_time 10 -c copy "$1_%03d.${1##*.}"
 	}
-	alias ll='ls --time-style="long-iso" -alF'
+	alias ll='ls --time-style="long-iso" -alF --group-directories-first'
 	alias hiss='history | grep'
 	alias trimws='find . -type f ! -path "*/.venv/*" ! -path "*/.git/*" ! -path "*/venv/*" | xargs -I fl bash -c '"'"'FILE="fl"; echo ">>>>>>>> $FILE"; sed -i -r "s/\s+$//;" "$FILE"; [[ $( tail -c 1 "$FILE" ) != "" ]] && echo >> "$FILE"'"'"
 	alias cleantf='find . -type f -name ".terraform.lock*" | xargs -I fl bash -c "cd \$( dirname fl ) && pwd && rm -rf .terraform*"'
