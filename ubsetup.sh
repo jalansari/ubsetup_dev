@@ -1206,6 +1206,24 @@ read -r -d '' TEXT_BashGitAliases <<- "EOTXT"
 	    cd -
 	}
 	alias gitcp='____git_clone_precommit_inst____'
+	function ____github_actions_updater____() {
+	    plugin_list=( $( find .github -type f -name *.yml -exec sed -En 's|.*\s+uses:\s+([[:alnum:]\-]+\/[[:alnum:]\-]+)\@v[[:digit:]].*|\1|p' {} + | sort -u ) )
+	    for a_plugin_path in "${plugin_list[@]}"
+	    do
+	        latest_release_json=$( curl -s -w '%{http_code}' "https://api.github.com/repos/$a_plugin_path/releases/latest" )
+	        code="${latest_release_json:${#latest_release_json}-3}"
+	        body="${latest_release_json:0:${#latest_release_json}-3}"
+	        echo "Latest release for $a_plugin_path: CODE: $code"
+	        if [[ "$code" != "200" ]]; then
+	            echo "Error fetching latest release for $a_plugin_path"
+	            continue
+	        fi
+	        latest_version=$( echo $body | jq -r .tag_name | sed -En "s|v([0-9]).*|\1|p" )
+	        echo "Latest version of $a_plugin_path is $latest_version"
+	        find .github -type f -name *.yml -exec sed -Ei "s|uses:\s+$a_plugin_path@v[[:digit:]\.]+|uses: $a_plugin_path@v$latest_version|g" {} +
+	    done
+	}
+	alias gha_up="____github_actions_updater____"
 EOTXT
 
 read -r -d '' TEXT_BashPythonToolAliases <<- "EOTXT"
