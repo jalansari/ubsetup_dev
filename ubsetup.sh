@@ -1210,12 +1210,12 @@ read -r -d '' TEXT_BashGitAliases <<- "EOTXT"
 	    plugin_list=( $( find .github -type f -name *.yml -exec sed -En 's|.*\s+uses:\s+([[:alnum:]\-]+\/[[:alnum:]\-]+)\@v[[:digit:]].*|\1|p' {} + | sort -u ) )
 	    for a_plugin_path in "${plugin_list[@]}"
 	    do
-	        latest_release_json=$( curl -s -w '%{http_code}' "https://api.github.com/repos/$a_plugin_path/releases/latest" )
+	        github_latest_api_url="https://api.github.com/repos/$a_plugin_path/releases/latest"
+	        latest_release_json=$( curl -s -w '%{http_code}' "$github_latest_api_url" )
 	        code="${latest_release_json:${#latest_release_json}-3}"
 	        body="${latest_release_json:0:${#latest_release_json}-3}"
-	        echo "Latest release for $a_plugin_path: CODE: $code"
 	        if [[ "$code" != "200" ]]; then
-	            echo "Error fetching latest release for $a_plugin_path"
+	            echo "Error fetching latest release for $a_plugin_path [$code] [$github_latest_api_url]"
 	            continue
 	        fi
 	        latest_version=$( echo $body | jq -r .tag_name | sed -En "s|v([0-9]).*|\1|p" )
