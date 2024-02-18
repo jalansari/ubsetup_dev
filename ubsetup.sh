@@ -2417,6 +2417,7 @@ if [ $? == 0 ]; then
     createVScodeSettings "VSCodium"
 
     installVSCodiumExt "ms-python.python"
+    installVSCodiumExt "ms-python.debugpy"
     installVSCodiumExt "ms-python.black-formatter"
     installVSCodiumExt "ms-python.flake8"
     installVSCodiumExt "ms-python.isort"
@@ -2432,6 +2433,7 @@ if [ $? == 0 ]; then
     createVScodeSettings "Code"
 
     installVSCodeExt "ms-python.python"
+    installVSCodeExt "ms-python.debugpy"
     installVSCodeExt "ms-python.black-formatter"
     installVSCodeExt "ms-python.flake8"
     installVSCodeExt "ms-python.isort"
