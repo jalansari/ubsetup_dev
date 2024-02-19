@@ -1226,6 +1226,42 @@ read -r -d '' TEXT_BashGitAliases_2 <<- "EOTXT"
 	    done
 	}
 	alias gha_up="____github_actions_updater____"
+	function ____github_precommit_updater____() {
+	    precommitfile_name_pattern="*pre-commit*.y*ml"
+	    plugin_list=( $( find . -type f -name "$precommitfile_name_pattern" -exec \
+	        sed -En '/repo:/{
+	            $!{
+	                N
+	                s|^\s*- repo: https://github.com/([[:alnum:]/\-]+)\n\s+rev: (\S+).*|\1,\2|p;
+	            }
+	        }' {} + | \
+	        sort -u ) )
+	    echo "Found ${#plugin_list[@]} pre-commit plugins"
+	    for a_plugin_ver in "${plugin_list[@]}"
+	    do
+	        IFS=',' read -ra pluginVerArray <<< "$a_plugin_ver"
+	        a_plugin_path="${pluginVerArray[0]}"
+	        echo -ne "Updating $a_plugin_path / ${pluginVerArray[1]}\n\t"
+	        github_latest_api_url="https://api.github.com/repos/$a_plugin_path/releases/latest"
+	        latest_release_json=$( curl -s -w '%{http_code}' "$github_latest_api_url" )
+	        code="${latest_release_json:${#latest_release_json}-3}"
+	        body="${latest_release_json:0:${#latest_release_json}-3}"
+	        if [[ "$code" != "200" ]]; then
+	            echo -e "\033[1;31mError for https://github.com/$a_plugin_path [$code] [$github_latest_api_url]\033[0m"
+	            continue
+	        fi
+	        latest_version=$( echo $body | jq -r .tag_name )
+	        echo -e "\033[1;33mLatest version: $a_plugin_path -> $latest_version\033[0m"
+	        find . -type f -name "$precommitfile_name_pattern" -exec \
+	            sed -Ei "/repo:/{
+	                $!{
+	                    N
+	                    s|^(\s*- repo: https://github.com/$a_plugin_path\n\s+rev: )\S+(.*)|\1$latest_version\2|g;
+	                }
+	            }" {} +
+	    done
+	}
+	alias pc_up="____github_precommit_updater____"
 EOTXT
 
 read -r -d '' TEXT_BashPythonToolAliases <<- "EOTXT"
