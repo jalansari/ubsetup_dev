@@ -1217,11 +1217,11 @@ read -r -d '' TEXT_BashGitAliases_2 <<- "EOTXT"
 	        code="${latest_release_json:${#latest_release_json}-3}"
 	        body="${latest_release_json:0:${#latest_release_json}-3}"
 	        if [[ "$code" != "200" ]]; then
-	            echo "Error fetching latest release for $a_plugin_path [$code] [$github_latest_api_url]"
+	            echo -e "\033[1;31mError fetching latest release for $a_plugin_path [$code] [$github_latest_api_url]\033[0m"
 	            continue
 	        fi
 	        latest_version=$( echo $body | jq -r .tag_name | sed -En "s|v([0-9]).*|\1|p" )
-	        echo "Latest version of $a_plugin_path is $latest_version"
+	        echo -e "\033[1;33mLatest version of $a_plugin_path is $latest_version\033[0m"
 	        find .github -type f -name *.yml -exec sed -Ei "s|uses:\s+$a_plugin_path@v[[:digit:]\.]+|uses: $a_plugin_path@v$latest_version|g" {} +
 	    done
 	}
