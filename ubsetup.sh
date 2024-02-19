@@ -1192,6 +1192,8 @@ read -r -d '' TEXT_BashGitAliases <<- "EOTXT"
 	alias gitlogs='____gititer____ log'
 	alias gitmerges='____gititer____ merge'
 	alias gitcommits='____gititer____ commit'
+EOTXT
+read -r -d '' TEXT_BashGitAliases_2 <<- "EOTXT"
 	function ____git_clone_precommit_inst____() {
 	    repodir="$2"
 	    if [[ -z "$2" ]]; then
@@ -2310,10 +2312,14 @@ $TEXT_BashToolAliases
 \n\
 $TEXT_BashToolAliases_Inter
 \n\
-$TEXT_BashGitAliases
+$TEXT_BashPythonToolAliases
 \n\
-$TEXT_BashPythonToolAliases\n" \
+$TEXT_BashGitAliases\n" \
  >> $BashrcForAll
+
+echo "\
+$TEXT_BashGitAliases_2\
+" >> $BashrcForAll
 
 if [[ "$InstallDocker" = true ]]; then
 echo "\
