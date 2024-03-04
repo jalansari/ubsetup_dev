@@ -2198,7 +2198,7 @@ if [ $ubServerEnvironment != 0 ]; then
 
     if [ "$InstallOpenvpn24" == true ]; then
         PRINTLOG "Installing OpenVPN 2.4, as an alternative."
-        curl http://archive.ubuntu.com/ubuntu/pool/main/o/openssl/libssl1.1_1.1.1f-1ubuntu2.20_amd64.deb -f -o package.deb \
+        curl http://archive.ubuntu.com/ubuntu/pool/main/o/openssl/libssl1.1_1.1.1f-1ubuntu2.22_amd64.deb -f -o package.deb \
             && ar x package.deb data.tar.xz \
             && tar xf data.tar.xz \
             && cp -r usr/lib/x86_64-linux-gnu/* /usr/lib/x86_64-linux-gnu/ \
