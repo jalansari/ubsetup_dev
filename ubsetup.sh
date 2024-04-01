@@ -84,6 +84,7 @@ Fonts=(
        ["jetbrains_mono"]="https://www.fontsquirrel.com/fonts/download/jetbrains-mono"
        ["overpass"]="https://fonts.google.com/download?family=Overpass"
        ["overpass_mono"]="https://fonts.google.com/download?family=Overpass%20Mono"
+       ["inter"]="https://fonts.google.com/download?family=Inter"
       )
 allFontsFolder="/usr/share/fonts/ubsetup_installed_fonts"
 
