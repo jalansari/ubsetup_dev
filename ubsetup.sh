@@ -903,6 +903,8 @@ read -r -d '' TEXT_VSCodeConfig <<- EOTXT
 	    "aioresponses",
 	    "asyncio",
 	    "boto",
+	    "boto3",
+	    "botocore",
 	    "creds",
 	    "dataclasses",
 	    "dearmour",
