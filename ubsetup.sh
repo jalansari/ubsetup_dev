@@ -908,6 +908,7 @@ read -r -d '' TEXT_VSCodeConfig <<- EOTXT
 	    "boto3",
 	    "botocore",
 	    "creds",
+	    "debugpy",
 	    "dataclasses",
 	    "dearmour",
 	    "dockerignore",
@@ -968,7 +969,7 @@ read -r -d '' TEXT_VSCodeConfig <<- EOTXT
 	    "xargs",
 	  ],
 	  "cSpell.language": "en-GB",
-	  "cSpell.enabled": true,
+	  "cSpell.enabled": true
 	}
 EOTXT
 
