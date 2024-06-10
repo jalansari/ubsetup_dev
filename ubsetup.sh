@@ -2164,6 +2164,10 @@ if [ $ubServerEnvironment != 0 ]; then
     downloadAndUnpack "$ConfiglintUrl" "$ConfiglintPkg" "$ConfiglintInstallDir" "$ConfiglintInstallDir" \
         && updatePathGlobally "$ConfiglintInstallDir"
 
+    [ -n "$YqUrl" ] && [ ! -e "/usr/local/bin/yq" ] \
+        && curl "$YqUrl" -L -f -o "/usr/local/bin/yq" \
+        && chmod +rx "/usr/local/bin/yq"
+
     awscliUnpackTo="$TempFolderForDownloads"
     awscliDir="$awscliUnpackTo/aws"
     awsCredsDir="$userHomeDir/.aws"
