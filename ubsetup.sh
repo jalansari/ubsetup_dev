@@ -1263,22 +1263,24 @@ read -r -d '' TEXT_BashPythonToolAliases <<- "EOTXT"
 	    fi
 	    reqsFileTmp="$reqsFile.cprtmp"
 	    cat "$reqsFile" | while IFS='' read -r line; do
-	        pckg=$( echo "$line" | awk -F'(\\\\[.+\\\\])?[=~><]=' '{ print $1 }' )
+	        pckg=$( echo "$line" | awk -F'(\\[.+\\])?[=~><]=' '{ print $1 }' )
 	        vers=$( echo "$line" | awk -F'[=~><]='                '{ print $2 }' )
 	        if [[ "$pckg" == "" ]] || [[ "$vers" == "" ]]; then
 	            echo "$line" >> "$reqsFileTmp"
 	            continue
 	        fi
 	        pckg_no_spaces=$( echo $pckg )
-	        echo -n "$pckg_no_spaces : $vers"
-	        ver_found=$( yolk -V $pckg_no_spaces | awk -v envvar="$pckg_no_spaces" '{ if ($1==envvar) { print $2 } }' )
+	        pckg_clean=$( echo "$pckg_no_spaces" | sed -e 's/"//' )
+	        vers_clean=$( echo "$vers" | sed -r 's/(.*[[:digit:]])[," ].*/\1/' )
+	        echo -n "$pckg_clean : $vers_clean"
+	        ver_found=$( yolk -V $pckg_clean | awk -v envvar="$pckg_clean" '{ if ($1==envvar) { print $2 } }' )
 	        if [[ "$ver_found" == "" ]]; then
-	            echo -e " - \033[1;31mNOT FOUND (try https://pypi.org/search/?q=$pckg_no_spaces)\033[0m"
+	            echo -e " - \033[1;31mNOT FOUND (try https://pypi.org/search/?q=$pckg_clean)\033[0m"
 	            echo "$line" >> "$reqsFileTmp"
 	        else
 	            echo -n " - Latest version: $ver_found"
-	            test "$ver_found" != "$vers" && echo -e " - \033[1;33mNOT EQUAL\033[0m" || echo ""
-	            newLine="${line/$vers/$ver_found}"
+	            test "$ver_found" != "$vers_clean" && echo -e " - \033[1;33mNOT EQUAL\033[0m" || echo ""
+	            newLine="${line/$vers_clean/$ver_found}"
 	            echo "$newLine" >> "$reqsFileTmp"
 	        fi
 	        sleep 0.2
@@ -2343,14 +2345,18 @@ $TEXT_BashToolAliases
 \n\
 $TEXT_BashToolAliases_Inter
 \n\
-$TEXT_BashPythonToolAliases
-\n\
 $TEXT_BashGitAliases\n" \
  >> $BashrcForAll
 
-echo "\
-$TEXT_BashGitAliases_2\
+
+
+echo -n "
+$TEXT_BashGitAliases_2
+
+$TEXT_BashPythonToolAliases
 " >> $BashrcForAll
+
+
 
 if [[ "$InstallDocker" = true ]]; then
 echo "\
