@@ -78,15 +78,15 @@ FlutterInstallDir="$InstallDir/flutterdev"
 
 declare -A Fonts
 Fonts=(
-       ["open_sans"]="https://fonts.google.com/download?family=Open%20Sans"
-       ["roboto_mono"]="https://fonts.google.com/download?family=Roboto%20Mono"
-       ["inconsolata"]="https://fonts.google.com/download?family=Inconsolata"
-       ["source_code_p"]="https://fonts.google.com/download?family=Source%20Code%20Pro"
-       ["mononoki"]="https://github.com/madmalik/mononoki/releases/download/1.2/mononoki.zip"
+       ["open_sans"]="https://al-ansari.co.uk/j/fonts/Open_Sans.zip"
+       ["roboto_mono"]="https://al-ansari.co.uk/j/fonts/Roboto_Mono.zip"
+       ["inconsolata"]="https://al-ansari.co.uk/j/fonts/Inconsolata.zip"
+       ["source_code_p"]="https://al-ansari.co.uk/j/fonts/Source_Code_Pro.zip"
+       ["mononoki"]="https://github.com/madmalik/mononoki/releases/latest/download/mononoki.zip"
        ["jetbrains_mono"]="https://www.fontsquirrel.com/fonts/download/jetbrains-mono"
-       ["overpass"]="https://fonts.google.com/download?family=Overpass"
-       ["overpass_mono"]="https://fonts.google.com/download?family=Overpass%20Mono"
-       ["inter"]="https://fonts.google.com/download?family=Inter"
+       ["overpass"]="https://al-ansari.co.uk/j/fonts/Overpass.zip"
+       ["overpass_mono"]="https://al-ansari.co.uk/j/fonts/Overpass_Mono.zip"
+       ["inter"]="https://al-ansari.co.uk/j/fonts/Inter.zip"
       )
 allFontsFolder="/usr/share/fonts/ubsetup_installed_fonts"
 
