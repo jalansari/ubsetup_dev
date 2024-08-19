@@ -1740,7 +1740,7 @@ function installPythonPipPackages()
             for item in "${listOfPips[@]}"
             do
                 PRINTLOG "INSTALLING $pipv: [$item]"
-                $pipv install $item
+                $pipv install --break-system-packages $item
                 sleep $SLEEP_AFTER_INSTALL_REQUEST
                 $pipv show $item
                 if [[ $? != 0 ]]; then
