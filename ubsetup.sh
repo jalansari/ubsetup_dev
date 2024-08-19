@@ -9,7 +9,7 @@
 declare -A DebPackages
 DebPackages=(
              ["code"]="https://code.visualstudio.com/sha/download?build=stable&os=linux-deb-x64;mscode.deb"
-             ["vscodium"]="https://github.com/VSCodium/vscodium/releases/download/1.92.2.24228/codium_1.92.2.24228_amd64.deb"
+             ["codium"]="https://github.com/VSCodium/vscodium/releases/download/1.92.2.24228/codium_1.92.2.24228_amd64.deb"
              ["bcompare"]="https://www.scootersoftware.com/files/bcompare-4.4.7.28397_amd64.deb"
              ["draw.io"]="https://github.com/jgraph/drawio-desktop/releases/download/v24.7.5/drawio-amd64-24.7.5.deb"
              ["mysql-workbench-community"]="https://dev.mysql.com/get/Downloads/MySQLGUITools/mysql-workbench-community_8.0.36-1ubuntu22.04_amd64.deb"
