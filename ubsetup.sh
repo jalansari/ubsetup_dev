@@ -1568,7 +1568,7 @@ function iterAssociativeArrAndCall()
     # assign the <map> to a the new associative array.
     declare -A mapOfItems # Not necessary, but added for bitbucket pipeline to pass (without, the following eval will throw an error).
     eval "declare -A mapOfItems=${1#*=}"
-    if [[ -v mapOfItems[@] ]]; then
+    if [[ ${#mapOfItems[@]} -gt 0 ]]; then
         PRINTLOG "  Callback <$2>, <${#mapOfItems[@]}>"
         for key in "${!mapOfItems[@]}"
         do
@@ -2763,7 +2763,7 @@ fi
 ##### Adding users.
 ########################################
 
-if [[ -v UserInfo[@] ]]; then
+if [[ ${#UserInfo[@]} -gt 0 ]]; then
     for usern in "${!UserInfo[@]}"
     do
         PRINTLOG "User: username <$usern>"
