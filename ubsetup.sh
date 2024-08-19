@@ -313,6 +313,8 @@ INSTALL_COMP_LIST_DESKTOP=(
                    "flameshot"
                    "screenkey"
                    "neofetch"
+                   "postgresql-client"
+                   "mysql-client"
                    "libcurl4-openssl-dev" # Needed by pycurl, in case it is required in any development.
                    "libssl-dev" # Needed by pycurl, in case it is required in any development.
                    "libpq-dev" #  Needed by psycopg2, in case it is required in any development.
