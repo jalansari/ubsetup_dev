@@ -222,6 +222,16 @@ REMOVE_COMP__LIST=(
                    "pix-data"
                    "pix"
                    "gnome-disk-utility"
+                   "docker.io"
+                   "docker-buildx"
+                   "docker-clean"
+                   "docker-compose"
+                   "docker-compose-v2"
+                   "docker-doc"
+                   "docker-registry"
+                   "podman-docker"
+                   "containerd"
+                   "runc"
                   )
 
 # List of components to be installed prior to running apt update.
