@@ -255,7 +255,6 @@ INSTALL_COMP_LIST=(
                   )
 
 INSTAL_PIP2n3_MAP=(
-                   "virtualenv"
                   )
 
 INSTALL_COMP_LIST_SERVER=(
@@ -328,7 +327,6 @@ INSTALL_COMP_LIST_DESKTOP=(
                   )
 
 INSTAL_PIP2n3_MAP_DESKTOP=(
-                   "setuptools" # Installs easy_install, needed to install virtualenv.
                    "pre-commit"
                   )
 
