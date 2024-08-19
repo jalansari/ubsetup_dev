@@ -12,7 +12,7 @@ DebPackages=(
              ["codium"]="https://github.com/VSCodium/vscodium/releases/download/1.96.2.24355/codium_1.96.2.24355_amd64.deb"
              ["bcompare"]="https://www.scootersoftware.com/files/bcompare-4.4.7.28397_amd64.deb"
              ["draw.io"]="https://github.com/jgraph/drawio-desktop/releases/download/v25.0.2/drawio-amd64-25.0.2.deb"
-             ["mysql-workbench-community"]="https://dev.mysql.com/get/Downloads/MySQLGUITools/mysql-workbench-community_8.0.36-1ubuntu22.04_amd64.deb"
+             ["mysql-workbench-community"]="https://dev.mysql.com/get/Downloads/MySQLGUITools/mysql-workbench-community_8.0.40-1ubuntu24.04_amd64.deb"
              ["slack-desktop"]="https://downloads.slack-edge.com/desktop-releases/linux/x64/4.41.105/slack-desktop-4.41.105-amd64.deb"
             )
 
@@ -302,9 +302,8 @@ INSTALL_COMP_LIST_DESKTOP=(
                    "jq"
                    "ssh"
                    "libpango-1.0-0" # Needed by Dropbox installer.
-                   "libpango1.0-0" # Needed by Dropbox installer.
                    "libzip4"
-                   "libproj22" # Needed by mysql-workbench (ubuntu 22.04)
+                   "libproj25" # Needed by mysql-workbench (ubuntu 22.04)
                    "proj-data" # Needed by mysql-workbench
                    "libopengl0" # Needed by mysql-workbench
                    "libpcrecpp0v5" # Needed by mysql-workbench
