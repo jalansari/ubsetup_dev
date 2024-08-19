@@ -303,10 +303,11 @@ INSTALL_COMP_LIST_DESKTOP=(
                    "ssh"
                    "libpango-1.0-0" # Needed by Dropbox installer.
                    "libzip4"
-                   "libproj25" # Needed by mysql-workbench (ubuntu 22.04)
+                   "libproj25" # Needed by mysql-workbench
                    "proj-data" # Needed by mysql-workbench
                    "libopengl0" # Needed by mysql-workbench
                    "libpcrecpp0v5" # Needed by mysql-workbench
+                   "libodbc2" # Needed by mysql-workbench
                    "ipython3"
                    "python3-tk" # Toolkit required for matplotlib graphics.
                    "ncdu"
