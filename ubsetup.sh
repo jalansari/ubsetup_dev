@@ -2014,6 +2014,7 @@ if [[ "$InstallDocker" == true ]]; then
                         "docker-ce"
                         "docker-ce-cli"
                         "containerd.io"
+                        "docker-buildx-plugin"
                         "docker-compose-plugin"
                        )
 fi
