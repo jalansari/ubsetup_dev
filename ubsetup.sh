@@ -677,7 +677,7 @@ read -r -d '' TEXT_CinnamonDesktopGSettingsConfig <<- EOTXT
 	font-date='Ubuntu 30'
 	font-time='Ubuntu 60'
 	lock-enabled=true
-	lock-delay=uint32 2
+	lock-delay=uint32 5
 
 	[org.cinnamon.settings-daemon.peripherals.touchscreen]
 	orientation-lock=false
