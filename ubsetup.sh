@@ -11,7 +11,7 @@ DebPackages=(
              ["code"]="https://code.visualstudio.com/sha/download?build=stable&os=linux-deb-x64;mscode.deb"
              ["codium"]="https://github.com/VSCodium/vscodium/releases/download/1.92.2.24228/codium_1.92.2.24228_amd64.deb"
              ["bcompare"]="https://www.scootersoftware.com/files/bcompare-4.4.7.28397_amd64.deb"
-             ["draw.io"]="https://github.com/jgraph/drawio-desktop/releases/download/v24.7.5/drawio-amd64-24.7.5.deb"
+             ["draw.io"]="https://github.com/jgraph/drawio-desktop/releases/download/v24.7.8/drawio-amd64-24.7.8.deb"
              ["mysql-workbench-community"]="https://dev.mysql.com/get/Downloads/MySQLGUITools/mysql-workbench-community_8.0.36-1ubuntu22.04_amd64.deb"
              ["slack-desktop"]="https://downloads.slack-edge.com/desktop-releases/linux/x64/4.39.95/slack-desktop-4.39.95-amd64.deb"
             )
@@ -21,9 +21,9 @@ InstallDir="/usr/share"
 UsrLocalDir="/usr/local"
 
 
-NodeJsVer="node-v20.16.0-linux-x64"
+NodeJsVer="node-v20.17.0-linux-x64"
 NodeJsPkg="$NodeJsVer.tar.xz"
-NodeJsUrl="https://nodejs.org/dist/v20.16.0/$NodeJsPkg"
+NodeJsUrl="https://nodejs.org/dist/v20.17.0/$NodeJsPkg"
 NodeInstallDir="$InstallDir/nodejs"
 
 FossilScmPkg="fossil-linux-x64-2.24.tar.gz"
@@ -40,8 +40,8 @@ VagrantUrl="https://releases.hashicorp.com/vagrant/2.4.1/$VagrantPkg"
 TelegramPackage="telegram_linux.tar.xz"
 TelegramPackageHttpURL="https://telegram.org/dl/desktop/linux"
 
-VeraCryptPkg="veracrypt-1.26.7-setup.tar.bz2"
-VeraCryptUrl="https://launchpad.net/veracrypt/trunk/1.26.7/+download/$VeraCryptPkg"
+VeraCryptPkg="veracrypt-1.26.14-setup.tar.bz2"
+VeraCryptUrl="https://launchpad.net/veracrypt/trunk/1.26.14/+download/$VeraCryptPkg"
 
 # DockerComposeUrl="https://github.com/docker/compose/releases/latest/download/docker-compose-Linux-x86_64"
 # DockerComposeUrl="https://github.com/docker/compose/releases/download/1.29.2/docker-compose-Linux-x86_64"
@@ -54,7 +54,7 @@ TflintUrl="https://github.com/terraform-linters/tflint/releases/latest/download/
 
 YqUrl="https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64"
 
-# TerragruntUrl="https://github.com/gruntwork-io/terragrunt/releases/download/v0.66.8/terragrunt_linux_amd64"
+# TerragruntUrl="https://github.com/gruntwork-io/terragrunt/releases/download/v0.67.1/terragrunt_linux_amd64"
 
 # ConfiglintPkg="config-lint_Linux_x86_64.tar.gz"
 # ConfiglintUrl="https://github.com/stelligent/config-lint/releases/download/v1.6.0/$ConfiglintPkg"
@@ -67,11 +67,11 @@ PlantUmlVer="1.2024.6"
 PlantUmlUrl="https://github.com/plantuml/plantuml/releases/download/v$PlantUmlVer/plantuml-$PlantUmlVer.jar"
 PlantumlTargetBin="/usr/local/bin/plantuml.jar"
 
-AndroidPkg="android-studio-2024.1.1.13-linux.tar.gz"
-AndroidUrl="https://dl.google.com/dl/android/studio/ide-zips/2024.1.1.13/$AndroidPkg"
+AndroidPkg="android-studio-2024.1.2.12-linux.tar.gz"
+AndroidUrl="https://dl.google.com/dl/android/studio/ide-zips/2024.1.2.12/$AndroidPkg"
 AndroidInstallDir="$InstallDir/androidstudio"
 
-FlutterPkg="flutter_linux_3.24.0-stable.tar.xz"
+FlutterPkg="flutter_linux_3.24.1-stable.tar.xz"
 FlutterUrl="https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/$FlutterPkg"
 FlutterInstallDir="$InstallDir/flutterdev"
 
