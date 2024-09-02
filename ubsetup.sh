@@ -1095,6 +1095,29 @@ EOTXT
 ##### Bash aliases ######
 
 read -r -d '' TEXT_BashToolAliases <<- "EOTXT"
+	function ____save____() {
+	    prefix="$1"
+	    folder_loc="$2"
+	    target_loc="$HOME/Downloads/"
+	    save_filename="$prefix$(date '+%Y%m%dT%H%M%S').tgz"
+	    cd "$folder_loc"
+	    tar czf "$save_filename" *
+	    mv "$save_filename" "$target_loc"
+	    cd -
+	}
+	function ____restore____() {
+	    prefix="$1"
+	    folder_loc="$2"
+	    target_loc="$HOME/Downloads/"
+	    mkdir -p "$folder_loc"
+	    rm -rf "$folder_loc"/*
+	    latest_save=$( ls -t "$target_loc$prefix"* | head -1 )
+	    echo "=============================="
+	    echo "===== Restoring $latest_save"
+	    echo "===== To        $folder_loc"
+	    echo "=============================="
+	    tar -C "$folder_loc" -xvf "$latest_save"
+	}
 	function ffm540() {
 	    ffmpeg -i "$1" -c:v libx264 -crf 20 -preset slow -vf scale=960:540 -strict -2 "$1.540p.${1##*.}"
 	}
@@ -1165,7 +1188,7 @@ read -r -d '' TEXT_BashGitAliases <<- "EOTXT"
 	    fi
 	}
 	export -f ____git_get_branch
-	PS1=$(echo $PS1 | sed 's/\\\\\\$/ $(____git_get_branch)\\\\\\$ /;')
+	PS1=$(echo $PS1 | sed 's/\\\$/ $(____git_get_branch)\\\$ /;')
 
 	function ____gititer____() {
 	    for d in ./*/; do
@@ -2338,6 +2361,8 @@ sed -i.bak -r \
 '/^(# )?set -o/d;'\
 '/^(# )?bind /d;'\
 '/alias plantuml=/d;'\
+'/____save____/,/^}$/{/.*/d};'\
+'/____restore____/,/^}$/{/.*/d};'\
 '/____git/,/^}$/{/.*/d};'\
 '/____git/d;'\
 '/____check_py/,/^}$/{/.*/d};'\
@@ -2353,27 +2378,21 @@ sed -i.bak -r \
 's/(shopt -s histappend)/\1\nPROMPT_COMMAND="${PROMPT_COMMAND:+$PROMPT_COMMAND$\\n}history -a; history -c; history -r"/;'\
  $BashrcForAll
 
-echo -e "\
-$TEXT_BashToolAliases
-\n\
-$TEXT_BashToolAliases_Inter
-\n\
-$TEXT_BashGitAliases\n" \
- >> $BashrcForAll
-
-
-
 echo -n "
+$TEXT_BashToolAliases
+
+$TEXT_BashToolAliases_Inter
+
+$TEXT_BashGitAliases
+
 $TEXT_BashGitAliases_2
 
 $TEXT_BashPythonToolAliases
 " >> $BashrcForAll
 
-
-
 if [[ "$InstallDocker" = true ]]; then
-echo "\
-$TEXT_BashDockerAliases\
+echo -n "
+$TEXT_BashDockerAliases
 " >> $BashrcForAll
 fi
 
