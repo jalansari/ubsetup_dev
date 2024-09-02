@@ -1193,9 +1193,7 @@ read -r -d '' TEXT_BashGitAliases <<- "EOTXT"
 	function ____gititer____() {
 	    for d in ./*/; do
 	        pushd $d > /dev/null 2>&1
-	        echo -e "\033[30;1;106m"
-	        pwd
-	        echo -n -e "\033[0m"
+	        echo -e "\033[30;1;106m$(pwd)\033[0m"
 	        if [[ -n "$3" ]]; then
 	            git "$1" "$2" "$3"
 	        elif [[ -n "$2" ]]; then
