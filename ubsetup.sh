@@ -1095,6 +1095,32 @@ EOTXT
 
 ##### Bash aliases ######
 
+read -r -d '' TEXT_BashSetCinnamonKeybindings <<- EOTXT
+	function ____keybindings_custom____() {
+	    keybindings_custom_list=\$(dconf read /org/cinnamon/desktop/keybindings/custom-list)
+	    if [[ -z \$keybindings_custom_list ]]; then
+	        dconf write /org/cinnamon/desktop/keybindings/custom-list "['custom3', 'custom2', 'custom1', 'custom0', '__dummy__']"
+
+	        dconf write /org/cinnamon/desktop/keybindings/custom-keybindings/custom0/binding "['$KeyboardShortcutVSCode']"
+	        dconf write /org/cinnamon/desktop/keybindings/custom-keybindings/custom0/command "'code'"
+	        dconf write /org/cinnamon/desktop/keybindings/custom-keybindings/custom0/name "'VSCode'"
+
+	        dconf write /org/cinnamon/desktop/keybindings/custom-keybindings/custom1/binding "['$KeyboardShortcutChrome']"
+	        dconf write /org/cinnamon/desktop/keybindings/custom-keybindings/custom1/command "'google-chrome'"
+	        dconf write /org/cinnamon/desktop/keybindings/custom-keybindings/custom1/name "'Chrome'"
+
+	        dconf write /org/cinnamon/desktop/keybindings/custom-keybindings/custom2/binding "['$KeyboardShortcutUpdateMan']"
+	        dconf write /org/cinnamon/desktop/keybindings/custom-keybindings/custom2/command "'mintupdate'"
+	        dconf write /org/cinnamon/desktop/keybindings/custom-keybindings/custom2/name "'Update Manager'"
+
+	        dconf write /org/cinnamon/desktop/keybindings/custom-keybindings/custom3/binding "['$KeyboardScreenShotSelect']"
+	        dconf write /org/cinnamon/desktop/keybindings/custom-keybindings/custom3/command "'flameshot gui'"
+	        dconf write /org/cinnamon/desktop/keybindings/custom-keybindings/custom3/name "'Flameshot screenshot'"
+	    fi
+	}
+	____keybindings_custom____
+EOTXT
+
 read -r -d '' TEXT_BashToolAliases <<- "EOTXT"
 	function ____save____() {
 	    prefix="$1"
@@ -2367,6 +2393,8 @@ sed -i.bak -r \
 '/____check_py/,/^}$/{/.*/d};'\
 '/export -f ____check_py/d;'\
 '/____cleanpy/,/^}$/{/.*/d};'\
+'/____keybindings_custom/,/^}$/{/.*/d};'\
+'/____keybindings_custom/d;'\
 '/alias cpr/d;'\
 '/alias cleanpyd/d;'\
 '/docker_all/,/^}$/{/.*/d};'\
@@ -2703,6 +2731,9 @@ if [ $cinnamonInstalled == 0 ]; then
         LightdmCfg="/etc/lightdm/slick-greeter.conf"
         echo -e "$TEXT_LinuxmintLightdmGreeterSettings" > $LightdmCfg
     fi
+
+
+    echo "$TEXT_BashSetCinnamonKeybindings" >> "$BashrcForAll"
 fi
 
 if [ $xedinstalled == 0 ]; then
