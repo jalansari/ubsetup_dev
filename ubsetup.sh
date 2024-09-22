@@ -9,7 +9,7 @@
 declare -A DebPackages
 DebPackages=(
              ["code"]="https://code.visualstudio.com/sha/download?build=stable&os=linux-deb-x64;mscode.deb"
-             ["codium"]="https://github.com/VSCodium/vscodium/releases/download/1.92.2.24228/codium_1.92.2.24228_amd64.deb"
+             ["codium"]="https://github.com/VSCodium/vscodium/releases/download/1.93.1.24256/codium_1.93.1.24256_amd64.deb"
              ["bcompare"]="https://www.scootersoftware.com/files/bcompare-4.4.7.28397_amd64.deb"
              ["draw.io"]="https://github.com/jgraph/drawio-desktop/releases/download/v24.7.8/drawio-amd64-24.7.8.deb"
              ["mysql-workbench-community"]="https://dev.mysql.com/get/Downloads/MySQLGUITools/mysql-workbench-community_8.0.36-1ubuntu22.04_amd64.deb"
@@ -30,7 +30,7 @@ FossilScmPkg="fossil-linux-x64-2.24.tar.gz"
 FossilScmUrl="https://fossil-scm.org/home/uv/$FossilScmPkg"
 FossilInstallDir="$InstallDir/fossilscm"
 
-GoLangPkg="go1.23.0.linux-amd64.tar.gz"
+GoLangPkg="go1.23.1.linux-amd64.tar.gz"
 GoLangUrl="https://go.dev/dl/$GoLangPkg"
 GoPath="$UsrLocalDir/go"
 
@@ -54,7 +54,7 @@ TflintUrl="https://github.com/terraform-linters/tflint/releases/latest/download/
 
 YqUrl="https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64"
 
-# TerragruntUrl="https://github.com/gruntwork-io/terragrunt/releases/download/v0.67.1/terragrunt_linux_amd64"
+# TerragruntUrl="https://github.com/gruntwork-io/terragrunt/releases/download/v0.67.10/terragrunt_linux_amd64"
 
 # ConfiglintPkg="config-lint_Linux_x86_64.tar.gz"
 # ConfiglintUrl="https://github.com/stelligent/config-lint/releases/download/v1.6.0/$ConfiglintPkg"
@@ -63,15 +63,15 @@ YqUrl="https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64"
 AwsCliPkg="awscli-exe-linux-x86_64.zip"
 AwsCliUrl="https://awscli.amazonaws.com/$AwsCliPkg"
 
-PlantUmlVer="1.2024.6"
+PlantUmlVer="1.2024.7"
 PlantUmlUrl="https://github.com/plantuml/plantuml/releases/download/v$PlantUmlVer/plantuml-$PlantUmlVer.jar"
 PlantumlTargetBin="/usr/local/bin/plantuml.jar"
 
-AndroidPkg="android-studio-2024.1.2.12-linux.tar.gz"
-AndroidUrl="https://dl.google.com/dl/android/studio/ide-zips/2024.1.2.12/$AndroidPkg"
+AndroidPkg="android-studio-2024.1.2.13-linux.tar.gz"
+AndroidUrl="https://dl.google.com/dl/android/studio/ide-zips/2024.1.2.13/$AndroidPkg"
 AndroidInstallDir="$InstallDir/androidstudio"
 
-FlutterPkg="flutter_linux_3.24.1-stable.tar.xz"
+FlutterPkg="flutter_linux_3.24.3-stable.tar.xz"
 FlutterUrl="https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/$FlutterPkg"
 FlutterInstallDir="$InstallDir/flutterdev"
 
