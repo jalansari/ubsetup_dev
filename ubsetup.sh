@@ -102,6 +102,7 @@ KeyboardShortcutChrome="<Alt><Super>b"
 KeyboardShortcutUpdateMan="<Alt><Super>u"
 KeyboardShortcutHome="<Super>h"
 KeyboardShortcutTerminal="<Super>Return"
+KeyboardScreenShotSelect="<Shift>Print"
 
 FileManagerShowHiddenYes=1
 FileManagerShowHiddenNo=0
@@ -577,7 +578,7 @@ read -r -d '' TEXT_CinnamonKeyboardShortCutsConfig <<- EOTXT
 	name='Update Manager'
 
 	[org.cinnamon.desktop.keybindings.custom-keybindings.custom3]
-	binding=['<Shift>Print']
+	binding=['$KeyboardScreenShotSelect']
 	command='flameshot gui'
 	name='Flameshot'
 
