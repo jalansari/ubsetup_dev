@@ -2142,7 +2142,7 @@ if [[ "$InstallDocker" == true ]]; then
     echo 'docker compose "$@"' > "$DockerComposeOldCommand" \
         && chmod a+x "$DockerComposeOldCommand"
 
-    if [ "$InstallGitlabRunner" == true ]; then
+    if [[ "$InstallGitlabRunner" == true ]]; then
         GitLabRunnerPath="/usr/local/bin/gitlab-runner"
         curl https://gitlab-runner-downloads.s3.amazonaws.com/latest/binaries/gitlab-runner-linux-amd64 -L -f -o "$GitLabRunnerPath" \
             && chmod a+x "$GitLabRunnerPath" \
@@ -2237,7 +2237,7 @@ if [ $ubServerEnvironment != 0 ]; then
         fi
     fi
 
-    if [ "$InstallFlutterSDK" == true ]; then
+    if [[ "$InstallFlutterSDK" == true ]]; then
         downloadAndUnpack "$FlutterUrl" "$FlutterPkg" "$FlutterInstallDir" "$FlutterInstallDir" \
             && updatePathGlobally "$FlutterInstallDir/flutter/bin" \
             && source $GlobalProfileFile \
@@ -2245,7 +2245,7 @@ if [ $ubServerEnvironment != 0 ]; then
         downloadAndUnpack "$AndroidUrl" "$AndroidPkg" "$AndroidInstallDir" "$AndroidInstallDir"
     fi
 
-    if [ "$InstallOpenvpn24" == true ]; then
+    if [[ "$InstallOpenvpn24" == true ]]; then
         PRINTLOG "Installing OpenVPN 2.4, as an alternative."
         curl http://archive.ubuntu.com/ubuntu/pool/main/o/openssl/libssl1.1_1.1.1f-1ubuntu2.23_amd64.deb -f -o package.deb \
             && ar x package.deb data.tar.xz \
