@@ -1098,7 +1098,7 @@ EOTXT
 read -r -d '' TEXT_BashSetCinnamonKeybindings <<- EOTXT
 	function ____keybindings_custom____() {
 	    keybindings_custom_list=\$(dconf read /org/cinnamon/desktop/keybindings/custom-list)
-	    if [[ -z \$keybindings_custom_list ]]; then
+	    if [ -z "\$keybindings_custom_list" ]; then
 	        dconf write /org/cinnamon/desktop/keybindings/custom-list "['custom3', 'custom2', 'custom1', 'custom0', '__dummy__']"
 
 	        dconf write /org/cinnamon/desktop/keybindings/custom-keybindings/custom0/binding "['$KeyboardShortcutVSCode']"
@@ -2393,8 +2393,6 @@ sed -i.bak -r \
 '/____check_py/,/^}$/{/.*/d};'\
 '/export -f ____check_py/d;'\
 '/____cleanpy/,/^}$/{/.*/d};'\
-'/____keybindings_custom/,/^}$/{/.*/d};'\
-'/____keybindings_custom/d;'\
 '/alias cpr/d;'\
 '/alias cleanpyd/d;'\
 '/docker_all/,/^}$/{/.*/d};'\
@@ -2733,7 +2731,11 @@ if [ $cinnamonInstalled == 0 ]; then
     fi
 
 
-    echo "$TEXT_BashSetCinnamonKeybindings" >> "$BashrcForAll"
+    grep "function ____keybindings_custom" $GlobalProfileFile > /dev/null 2>&1
+    if [ $? != 0 ]; then
+        PRINTLOG "Adding Cinnamon custom keybindings settings to startup profile file."
+        echo "$TEXT_BashSetCinnamonKeybindings" >> "$GlobalProfileFile"
+    fi
 fi
 
 if [ $xedinstalled == 0 ]; then
