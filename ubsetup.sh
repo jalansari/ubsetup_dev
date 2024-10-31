@@ -489,6 +489,11 @@ read -r -d '' TEXT_TerminatorCfg <<- EOTXT
 	[plugins]
 EOTXT
 
+read -r -d '' TEXT_TerraformCfg <<- "EOTXT"
+	plugin_cache_dir   = "$HOME/.terraform.d/plugin-cache"
+	disable_checkpoint = true
+EOTXT
+
 
 ##### Cinnamon Configs ######
 
@@ -1119,6 +1124,10 @@ read -r -d '' TEXT_BashSetCinnamonKeybindings <<- EOTXT
 	    fi
 	}
 	____keybindings_custom____
+EOTXT
+
+read -r -d '' TEXT_CreateTerraformCacheDir <<- "EOTXT"
+	mkdir -p "$HOME/.terraform.d/plugin-cache"
 EOTXT
 
 read -r -d '' TEXT_BashToolAliases <<- "EOTXT"
@@ -2216,7 +2225,8 @@ if [ $ubServerEnvironment != 0 ]; then
 
     downloadAndUnpack "$VagrantUrl" "$VagrantPkg" "/usr/local/bin" "/usr/local/bin/vagrant"
 
-    downloadAndUnpack "$TerraformUrl" "$TerraformPkg" "/usr/local/bin" "/usr/local/bin/terraform"
+    downloadAndUnpack "$TerraformUrl" "$TerraformPkg" "/usr/local/bin" "/usr/local/bin/terraform" \
+        && echo "$TEXT_TerraformCfg" >> /etc/skel/.terraformrc
 
     downloadAndUnpack "$TflintUrl" "$TflintPkg" "/usr/local/bin" "/usr/local/bin/tflint"
 
@@ -2732,9 +2742,14 @@ if [ $cinnamonInstalled == 0 ]; then
 
 
     grep "function ____keybindings_custom" $GlobalProfileFile > /dev/null 2>&1
-    if [ $? != 0 ]; then
+    if [[ $? != 0 ]]; then
         PRINTLOG "Adding Cinnamon custom keybindings settings to startup profile file."
         echo "$TEXT_BashSetCinnamonKeybindings" >> "$GlobalProfileFile"
+    fi
+    grep "terraform.d/plugin-cache" $GlobalProfileFile > /dev/null 2>&1
+    if [[ $? != 0 ]] && [[ -f /usr/local/bin/terraform ]]; then
+        PRINTLOG "Adding Terraform plugin cache dir creation to startup profile file."
+        echo "$TEXT_CreateTerraformCacheDir" >> "$GlobalProfileFile"
     fi
 fi
 
