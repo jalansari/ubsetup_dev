@@ -9,11 +9,11 @@
 declare -A DebPackages
 DebPackages=(
              ["code"]="https://code.visualstudio.com/sha/download?build=stable&os=linux-deb-x64;mscode.deb"
-             ["codium"]="https://github.com/VSCodium/vscodium/releases/download/1.94.2.24286/codium_1.94.2.24286_amd64.deb"
+             ["codium"]="https://github.com/VSCodium/vscodium/releases/download/1.95.3.24321/codium_1.95.3.24321_amd64.deb"
              ["bcompare"]="https://www.scootersoftware.com/files/bcompare-4.4.7.28397_amd64.deb"
-             ["draw.io"]="https://github.com/jgraph/drawio-desktop/releases/download/v24.7.17/drawio-amd64-24.7.17.deb"
-             ["mysql-workbench-community"]="https://cdn.mysql.com//Downloads/MySQLGUITools/mysql-workbench-community_8.0.38-1ubuntu24.04_amd64.deb"
-             ["slack-desktop"]="https://downloads.slack-edge.com/desktop-releases/linux/x64/4.41.96/slack-desktop-4.41.96-amd64.deb"
+             ["draw.io"]="https://github.com/jgraph/drawio-desktop/releases/download/v25.0.1/drawio-amd64-25.0.1.deb"
+             ["mysql-workbench-community"]="https://dev.mysql.com/get/Downloads/MySQLGUITools/mysql-workbench-community_8.0.40-1ubuntu24.04_amd64.deb"
+             ["slack-desktop"]="https://downloads.slack-edge.com/desktop-releases/linux/x64/4.41.98/slack-desktop-4.41.98-amd64.deb"
             )
 
 
@@ -21,21 +21,21 @@ InstallDir="/usr/share"
 UsrLocalDir="/usr/local"
 
 
-NodeJsVer="node-v20.18.0-linux-x64"
+NodeJsVer="node-v22.11.0-linux-x64"
 NodeJsPkg="$NodeJsVer.tar.xz"
-NodeJsUrl="https://nodejs.org/dist/v20.18.0/$NodeJsPkg"
+NodeJsUrl="https://nodejs.org/dist/v22.11.0/$NodeJsPkg"
 NodeInstallDir="$InstallDir/nodejs"
 
-FossilScmPkg="fossil-linux-x64-2.24.tar.gz"
+FossilScmPkg="fossil-linux-x64-2.25.tar.gz"
 FossilScmUrl="https://fossil-scm.org/home/uv/$FossilScmPkg"
 FossilInstallDir="$InstallDir/fossilscm"
 
-GoLangPkg="go1.23.2.linux-amd64.tar.gz"
+GoLangPkg="go1.23.3.linux-amd64.tar.gz"
 GoLangUrl="https://go.dev/dl/$GoLangPkg"
 GoPath="$UsrLocalDir/go"
 
-VagrantPkg="vagrant_2.4.1_linux_amd64.zip"
-VagrantUrl="https://releases.hashicorp.com/vagrant/2.4.1/$VagrantPkg"
+VagrantPkg="vagrant_2.4.3_linux_amd64.zip"
+VagrantUrl="https://releases.hashicorp.com/vagrant/2.4.3/$VagrantPkg"
 
 TelegramPackage="telegram_linux.tar.xz"
 TelegramPackageHttpURL="https://telegram.org/dl/desktop/linux"
@@ -48,6 +48,7 @@ VeraCryptUrl="https://launchpad.net/veracrypt/trunk/1.26.14/+download/$VeraCrypt
 
 TerraformPkg="terraform_1.5.5_linux_amd64.zip"
 TerraformUrl="https://releases.hashicorp.com/terraform/1.5.5/$TerraformPkg"
+TerraformRCGlobal="/etc/skel/.terraformrc"
 
 TflintPkg="tflint_linux_amd64.zip"
 TflintUrl="https://github.com/terraform-linters/tflint/releases/latest/download/$TflintPkg"
@@ -63,15 +64,15 @@ YqUrl="https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64"
 AwsCliPkg="awscli-exe-linux-x86_64.zip"
 AwsCliUrl="https://awscli.amazonaws.com/$AwsCliPkg"
 
-PlantUmlVer="1.2024.7"
+PlantUmlVer="1.2024.8"
 PlantUmlUrl="https://github.com/plantuml/plantuml/releases/download/v$PlantUmlVer/plantuml-$PlantUmlVer.jar"
 PlantumlTargetBin="/usr/local/bin/plantuml.jar"
 
-AndroidPkg="android-studio-2024.2.1.10-linux.tar.gz"
-AndroidUrl="https://dl.google.com/dl/android/studio/ide-zips/2024.2.1.10/$AndroidPkg"
+AndroidPkg="android-studio-2024.2.1.12-linux.tar.gz"
+AndroidUrl="https://dl.google.com/dl/android/studio/ide-zips/2024.2.1.12/$AndroidPkg"
 AndroidInstallDir="$InstallDir/androidstudio"
 
-FlutterPkg="flutter_linux_3.24.4-stable.tar.xz"
+FlutterPkg="flutter_linux_3.24.5-stable.tar.xz"
 FlutterUrl="https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/$FlutterPkg"
 FlutterInstallDir="$InstallDir/flutterdev"
 
@@ -671,7 +672,7 @@ read -r -d '' TEXT_CinnamonDesktopGSettingsConfig <<- EOTXT
 	alttab-switcher-delay=100
 	alttab-switcher-enforce-primary-monitor=true
 	alttab-switcher-show-all-workspaces=true
-	alttab-switcher-style='coverflow'
+	alttab-switcher-style='icons+thumbnails'
 	alttab-switcher-warp-mouse-pointer=true
 
 	[org.cinnamon.desktop.screensaver]
@@ -2224,7 +2225,7 @@ if [ $ubServerEnvironment != 0 ]; then
     downloadAndUnpack "$VagrantUrl" "$VagrantPkg" "/usr/local/bin" "/usr/local/bin/vagrant"
 
     downloadAndUnpack "$TerraformUrl" "$TerraformPkg" "/usr/local/bin" "/usr/local/bin/terraform" \
-        && echo "$TEXT_TerraformCfg" >> /etc/skel/.terraformrc
+        && echo "$TEXT_TerraformCfg" >> "$TerraformRCGlobal"
 
     downloadAndUnpack "$TflintUrl" "$TflintPkg" "/usr/local/bin" "/usr/local/bin/tflint"
 
@@ -2748,6 +2749,11 @@ if [ $cinnamonInstalled == 0 ]; then
     if [[ $? != 0 ]] && [[ -f /usr/local/bin/terraform ]]; then
         PRINTLOG "Adding Terraform plugin cache dir creation to startup profile file."
         echo "$TEXT_CreateTerraformCacheDir" >> "$GlobalProfileFile"
+        # Copy terraform RC for current user, all future users created will
+        # automatically have this (skel) file copied to their home directory.
+        usersTerraformrc="$userHomeDir/.terraformrc"
+        cp "$TerraformRCGlobal" $usersTerraformrc
+        chown $userOfThisScript:$groupOfUserOfThisScript $usersTerraformrc
     fi
 fi
 
