@@ -674,7 +674,7 @@ read -r -d '' TEXT_CinnamonDesktopGSettingsConfig <<- EOTXT
 	alttab-switcher-delay=100
 	alttab-switcher-enforce-primary-monitor=true
 	alttab-switcher-show-all-workspaces=true
-	alttab-switcher-style='coverflow'
+	alttab-switcher-style='icons+thumbnails'
 	alttab-switcher-warp-mouse-pointer=true
 
 	[org.cinnamon.desktop.screensaver]
