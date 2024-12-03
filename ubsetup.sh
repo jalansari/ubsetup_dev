@@ -48,6 +48,7 @@ VeraCryptUrl="https://launchpad.net/veracrypt/trunk/1.26.14/+download/$VeraCrypt
 
 TerraformPkg="terraform_1.5.5_linux_amd64.zip"
 TerraformUrl="https://releases.hashicorp.com/terraform/1.5.5/$TerraformPkg"
+TerraformRCGlobal="/etc/skel/.terraformrc"
 
 TflintPkg="tflint_linux_amd64.zip"
 TflintUrl="https://github.com/terraform-linters/tflint/releases/latest/download/$TflintPkg"
@@ -2226,7 +2227,7 @@ if [ $ubServerEnvironment != 0 ]; then
     downloadAndUnpack "$VagrantUrl" "$VagrantPkg" "/usr/local/bin" "/usr/local/bin/vagrant"
 
     downloadAndUnpack "$TerraformUrl" "$TerraformPkg" "/usr/local/bin" "/usr/local/bin/terraform" \
-        && echo "$TEXT_TerraformCfg" >> /etc/skel/.terraformrc
+        && echo "$TEXT_TerraformCfg" >> "$TerraformRCGlobal"
 
     downloadAndUnpack "$TflintUrl" "$TflintPkg" "/usr/local/bin" "/usr/local/bin/tflint"
 
@@ -2750,6 +2751,11 @@ if [ $cinnamonInstalled == 0 ]; then
     if [[ $? != 0 ]] && [[ -f /usr/local/bin/terraform ]]; then
         PRINTLOG "Adding Terraform plugin cache dir creation to startup profile file."
         echo "$TEXT_CreateTerraformCacheDir" >> "$GlobalProfileFile"
+        # Copy terraform RC for current user, all future users created will
+        # automatically have this (skel) file copied to their home directory.
+        usersTerraformrc="$userHomeDir/.terraformrc"
+        cp "$TerraformRCGlobal" $usersTerraformrc
+        chown $userOfThisScript:$groupOfUserOfThisScript $usersTerraformrc
     fi
 fi
 
