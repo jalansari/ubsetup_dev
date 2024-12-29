@@ -324,7 +324,6 @@ INSTALL_COMP_LIST_DESKTOP=(
 
 INSTAL_PIP2n3_MAP_DESKTOP=(
                    "setuptools" # Installs easy_install, needed to install virtualenv.
-                   "yolk3k" # Needed to query for latest version of pip packages (see "cpr" command in bashrc).
                    "pre-commit"
                   )
 
@@ -1344,7 +1343,7 @@ read -r -d '' TEXT_BashPythonToolAliases <<- "EOTXT"
 	        pckg_clean=$( echo "$pckg_no_spaces" | sed -e 's/"//' )
 	        vers_clean=$( echo "$vers" | sed -r 's/(.*[[:digit:]])[," ].*/\1/' )
 	        echo -n "$pckg_clean : $vers_clean"
-	        ver_found=$( yolk -V $pckg_clean | awk -v envvar="$pckg_clean" '{ if ($1==envvar) { print $2 } }' )
+	        ver_found=$( curl -s https://pypi.org/pypi/$pckg_clean/json | jq -r 'select(.info != null) | .info.version' )
 	        if [[ "$ver_found" == "" ]]; then
 	            echo -e " - \033[1;31mNOT FOUND (try https://pypi.org/search/?q=$pckg_clean)\033[0m"
 	            echo "$line" >> "$reqsFileTmp"
