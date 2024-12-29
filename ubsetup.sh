@@ -314,7 +314,7 @@ INSTALL_COMP_LIST_DESKTOP=(
                    "gromit-mpx"
                    "flameshot"
                    "screenkey"
-                   "neofetch"
+                   "fastfetch"
                    "postgresql-client"
                    "mysql-client"
                    "libcurl4-openssl-dev" # Needed by pycurl, in case it is required in any development.
@@ -342,6 +342,7 @@ ADD_PPA_REPO_LIST=(
                   )
 
 ADD_PPA_REPO_LIST_DESKTOP=(
+                   "ppa:zhangsongcui3371/fastfetch"
                   )
 
 DEBCONF_SET_ITEMS=(
