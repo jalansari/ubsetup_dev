@@ -2245,7 +2245,7 @@ if [ $ubServerEnvironment != 0 ]; then
     downloadAndUnpack "$TerraformUrl" "$TerraformPkg" "/usr/local/bin" "/usr/local/bin/terraform" \
         && echo "$TEXT_TerraformCfg" >> "$TerraformRCGlobal"
 
-    downloadAndUnpack "$TofuUrl" "$TofuPkg" "/usr/local/bin" "/usr/local/bin/tofu" "tofu"
+    downloadAndUnpack "$TofuUrl" "$TofuPkg" "/usr/local/bin" "/usr/local/bin/tofu" "tofu" \
         && echo "$TEXT_TofuCfg" >> "$TofuRCGlobal"
 
     downloadAndUnpack "$TflintUrl" "$TflintPkg" "/usr/local/bin" "/usr/local/bin/tflint"
