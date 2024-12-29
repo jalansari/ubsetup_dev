@@ -55,7 +55,7 @@ TflintUrl="https://github.com/terraform-linters/tflint/releases/latest/download/
 
 YqUrl="https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64"
 
-# TerragruntUrl="https://github.com/gruntwork-io/terragrunt/releases/download/v0.68.6/terragrunt_linux_amd64"
+# TerragruntUrl="https://github.com/gruntwork-io/terragrunt/releases/latest/download/terragrunt_linux_amd64"
 
 # ConfiglintPkg="config-lint_Linux_x86_64.tar.gz"
 # ConfiglintUrl="https://github.com/stelligent/config-lint/releases/download/v1.6.0/$ConfiglintPkg"
@@ -381,8 +381,8 @@ Requests:
 -r       : Remove unnecessary components.  (Default.)
 -i       : Install components and configs.
 -a       : Same and i and r combined.
---ruby   : Intall RVM for Ruby installation.  (Not required if using '--rubyv').
---rubyv  : Intall RVM, AND install a specific Ruby version.
+--ruby   : Install RVM for Ruby installation.  (Not required if using '--rubyv').
+--rubyv  : Install RVM, AND install a specific Ruby version.
 --docker : Install Docker Engine - Community.
 --gitlabr: Install Gitlab Runner (needs --docker for this to work).
 --rabbit : Install RabbitMq, with its Erlang dependency.
