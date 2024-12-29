@@ -50,6 +50,11 @@ TerraformPkg="terraform_1.5.5_linux_amd64.zip"
 TerraformUrl="https://releases.hashicorp.com/terraform/1.5.5/$TerraformPkg"
 TerraformRCGlobal="/etc/skel/.terraformrc"
 
+TofuVer="1.8.8"
+TofuPkg="tofu_${TofuVer}_linux_amd64.tar.gz"
+TofuUrl="https://github.com/opentofu/opentofu/releases/download/v$TofuVer/$TofuPkg"
+TofuRCGlobal="/etc/skel/.tofurc"
+
 TflintPkg="tflint_linux_amd64.zip"
 TflintUrl="https://github.com/terraform-linters/tflint/releases/latest/download/$TflintPkg"
 
@@ -491,6 +496,11 @@ read -r -d '' TEXT_TerminatorCfg <<- EOTXT
 EOTXT
 
 read -r -d '' TEXT_TerraformCfg <<- "EOTXT"
+	plugin_cache_dir   = "$HOME/.terraform.d/plugin-cache"
+	disable_checkpoint = true
+EOTXT
+
+read -r -d '' TEXT_TofuCfg <<- "EOTXT"
 	plugin_cache_dir   = "$HOME/.terraform.d/plugin-cache"
 	disable_checkpoint = true
 EOTXT
@@ -1748,6 +1758,7 @@ function installPythonPipPackages()
 #     $2 : Name of compressed package that will be downloaded.
 #     $3 : Location to which the package should be unpacked.
 #     $4 : Optional.  Path, which if exists, means nothing needs to be done.
+#     $5 : Optional.  Path to a specific file to be extracted from the tarball.
 # Returns:
 #     0 Successfully downloaded and unpacked.
 #     1 The path $4 already exists.
@@ -1778,8 +1789,13 @@ function downloadAndUnpack()
         decompStatus=$?
     else
         PRINTLOG "Untarball file <$tempDownload> to <$3>."
-        tar -C "$3" -xf "$tempDownload"
-        decompStatus=$?
+        if [[ -n "$5" ]]; then
+            tar -C "$3" -xf "$tempDownload" "$5"
+            decompStatus=$?
+        else
+            tar -C "$3" -xf "$tempDownload"
+            decompStatus=$?
+        fi
     fi
     rm "$tempDownload"
     if [[ $decompStatus != 0 ]]; then
@@ -2228,6 +2244,9 @@ if [ $ubServerEnvironment != 0 ]; then
 
     downloadAndUnpack "$TerraformUrl" "$TerraformPkg" "/usr/local/bin" "/usr/local/bin/terraform" \
         && echo "$TEXT_TerraformCfg" >> "$TerraformRCGlobal"
+
+    downloadAndUnpack "$TofuUrl" "$TofuPkg" "/usr/local/bin" "/usr/local/bin/tofu" "tofu"
+        && echo "$TEXT_TofuCfg" >> "$TofuRCGlobal"
 
     downloadAndUnpack "$TflintUrl" "$TflintPkg" "/usr/local/bin" "/usr/local/bin/tflint"
 
@@ -2748,14 +2767,17 @@ if [ $cinnamonInstalled == 0 ]; then
         echo "$TEXT_BashSetCinnamonKeybindings" >> "$GlobalProfileFile"
     fi
     grep "terraform.d/plugin-cache" $GlobalProfileFile > /dev/null 2>&1
-    if [[ $? != 0 ]] && [[ -f /usr/local/bin/terraform ]]; then
-        PRINTLOG "Adding Terraform plugin cache dir creation to startup profile file."
+    if [[ $? != 0 ]] && [[ -f /usr/local/bin/terraform ]] && [[ -f /usr/local/bin/tofu ]]; then
+        PRINTLOG "Adding Terraform and OpenTofu plugin cache dir creation to startup profile file."
         echo "$TEXT_CreateTerraformCacheDir" >> "$GlobalProfileFile"
-        # Copy terraform RC for current user, all future users created will
-        # automatically have this (skel) file copied to their home directory.
+        # Copy RC files for current user, all future users created will
+        # automatically have these (skel) files copied to their home directory.
         usersTerraformrc="$userHomeDir/.terraformrc"
         cp "$TerraformRCGlobal" $usersTerraformrc
         chown $userOfThisScript:$groupOfUserOfThisScript $usersTerraformrc
+        usersTofurc="$userHomeDir/.tofurc"
+        cp "$TerraformRCGlobal" $usersTofurc
+        chown $userOfThisScript:$groupOfUserOfThisScript $usersTofurc
     fi
 fi
 
