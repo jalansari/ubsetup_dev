@@ -10,8 +10,8 @@ declare -A DebPackages
 DebPackages=(
              ["code"]="https://code.visualstudio.com/sha/download?build=stable&os=linux-deb-x64;mscode.deb"
              ["codium"]="https://github.com/VSCodium/vscodium/releases/download/1.97.2.25045/codium_1.97.2.25045_amd64.deb"
-             ["bcompare"]="https://www.scootersoftware.com/files/bcompare-4.4.7.28397_amd64.deb"
-             ["draw.io"]="https://github.com/jgraph/drawio-desktop/releases/download/v26.0.9/drawio-amd64-26.0.9.deb"
+             ["bcompare"]="https://www.scootersoftware.com/files/bcompare-5.0.5.30614_amd64.deb"
+             ["draw.io"]="https://github.com/jgraph/drawio-desktop/releases/download/v26.0.15/drawio-amd64-26.0.15.deb"
              ["mysql-workbench-community"]="https://dev.mysql.com/get/Downloads/MySQLGUITools/mysql-workbench-community_8.0.41-1ubuntu24.04_amd64.deb"
              ["slack-desktop"]="https://downloads.slack-edge.com/desktop-releases/linux/x64/4.41.105/slack-desktop-4.41.105-amd64.deb"
             )
