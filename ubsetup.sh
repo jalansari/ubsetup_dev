@@ -686,6 +686,13 @@ read -r -d '' TEXT_CinnamonDesktopGSettingsConfig <<- EOTXT
 	alttab-switcher-style='icons+thumbnails'
 	alttab-switcher-warp-mouse-pointer=true
 
+	[org.cinnamon.settings-daemon.plugins.color]
+	night-light-enabled=true
+	night-light-schedule-from=22.0
+	night-light-schedule-mode='manual'
+	night-light-schedule-to=7.0
+	night-light-temperature=uint32 2700
+
 	[org.cinnamon.desktop.screensaver]
 	use-custom-format=true
 	date-format='%a %d %b %Y'
@@ -707,6 +714,7 @@ read -r -d '' TEXT_CinnamonDesktopGSettingsConfig <<- EOTXT
 
 	[org.cinnamon.desktop.notifications]
 	remove-old=false
+	notification-duration=5
 
 	[com.linuxmint.report]
 	ignored-reports=['install-language-packs', 'install-media-codecs', 'timeshift-no-setup']
