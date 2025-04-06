@@ -9,9 +9,9 @@
 declare -A DebPackages
 DebPackages=(
              ["code"]="https://code.visualstudio.com/sha/download?build=stable&os=linux-deb-x64;mscode.deb"
-             ["codium"]="https://github.com/VSCodium/vscodium/releases/download/1.97.2.25045/codium_1.97.2.25045_amd64.deb"
-             ["bcompare"]="https://www.scootersoftware.com/files/bcompare-5.0.5.30614_amd64.deb"
-             ["draw.io"]="https://github.com/jgraph/drawio-desktop/releases/download/v26.0.15/drawio-amd64-26.0.15.deb"
+             ["codium"]="https://github.com/VSCodium/vscodium/releases/download/1.99.02289/codium_1.99.02289_amd64.deb"
+             ["bcompare"]="https://www.scootersoftware.com/files/bcompare-5.0.6.30713_amd64.deb"
+             ["draw.io"]="https://github.com/jgraph/drawio-desktop/releases/download/v26.2.2/drawio-amd64-26.2.2.deb"
              ["mysql-workbench-community"]="https://dev.mysql.com/get/Downloads/MySQLGUITools/mysql-workbench-community_8.0.41-1ubuntu24.04_amd64.deb"
              ["slack-desktop"]="https://downloads.slack-edge.com/desktop-releases/linux/x64/4.41.105/slack-desktop-4.41.105-amd64.deb"
             )
@@ -30,7 +30,7 @@ FossilScmPkg="fossil-linux-x64-2.25.tar.gz"
 FossilScmUrl="https://fossil-scm.org/home/uv/$FossilScmPkg"
 FossilInstallDir="$InstallDir/fossilscm"
 
-GoLangPkg="go1.24.0.linux-amd64.tar.gz"
+GoLangPkg="go1.24.2.linux-amd64.tar.gz"
 GoLangUrl="https://go.dev/dl/$GoLangPkg"
 GoPath="$UsrLocalDir/go"
 
@@ -69,15 +69,15 @@ YqUrl="https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64"
 AwsCliPkg="awscli-exe-linux-x86_64.zip"
 AwsCliUrl="https://awscli.amazonaws.com/$AwsCliPkg"
 
-PlantUmlVer="1.2025.1"
+PlantUmlVer="1.2025.2"
 PlantUmlUrl="https://github.com/plantuml/plantuml/releases/download/v$PlantUmlVer/plantuml-$PlantUmlVer.jar"
 PlantumlTargetBin="/usr/local/bin/plantuml.jar"
 
-AndroidPkg="android-studio-2024.2.2.14-linux.tar.gz"
-AndroidUrl="https://dl.google.com/dl/android/studio/ide-zips/2024.2.2.14/$AndroidPkg"
+AndroidPkg="android-studio-2024.3.1.14-linux.tar.gz"
+AndroidUrl="https://dl.google.com/dl/android/studio/ide-zips/2024.3.1.14/$AndroidPkg"
 AndroidInstallDir="$InstallDir/androidstudio"
 
-FlutterPkg="flutter_linux_3.29.0-stable.tar.xz"
+FlutterPkg="flutter_linux_3.29.2-stable.tar.xz"
 FlutterUrl="https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/$FlutterPkg"
 FlutterInstallDir="$InstallDir/flutterdev"
 
