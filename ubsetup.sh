@@ -312,6 +312,7 @@ INSTALL_COMP_LIST_DESKTOP=(
                    "ncdu"
                    "libimage-exiftool-perl" # To read and modify/remove exif tags from photos.
                    "ifmetric" # Used to set priority interface for VPN connections.
+                   "ipcalc" # Used to calculate subnet/cidr information.
                    "ffmpeg"
                    "mkvtoolnix"
                    "subtitleeditor"
