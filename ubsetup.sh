@@ -953,6 +953,8 @@ read -r -d '' TEXT_VSCodeConfig <<- EOTXT
 	    "gunicorn",
 	    "hadoop",
 	    "itertools",
+	    "ifmetric",
+	    "ipcalc",
 	    "jinja",
 	    "jwks",
 	    "kanban",
