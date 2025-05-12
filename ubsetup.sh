@@ -151,6 +151,9 @@ FirefoxAddonsDir="/usr/lib/firefox/distribution/extensions"
 
 
 GlobalProfileFile="/etc/profile"
+KeyboardShortcutsProfileFile="/etc/profile.d/zzz_ubsetup_keyboard_shortcuts.sh"
+TerraformHomeFolderProfileFile="/etc/profile.d/zzz_ubsetup_terraform.sh"
+
 TempFolderForDownloads="/tmp"
 
 
@@ -1141,6 +1144,9 @@ read -r -d '' TEXT_BashSetCinnamonKeybindings <<- EOTXT
 	        dconf write /org/cinnamon/desktop/keybindings/custom-keybindings/custom3/binding "['$KeyboardScreenShotSelect']"
 	        dconf write /org/cinnamon/desktop/keybindings/custom-keybindings/custom3/command "'flameshot gui'"
 	        dconf write /org/cinnamon/desktop/keybindings/custom-keybindings/custom3/name "'Flameshot screenshot'"
+
+	        # Remove area-screenshot, so it doesn't conflict with Shift-Print
+	        dconf write /org/cinnamon/desktop/keybindings/media-keys/area-screenshot "@as []"
 	    fi
 	}
 	____keybindings_custom____
@@ -2769,16 +2775,12 @@ if [ $cinnamonInstalled == 0 ]; then
         echo -e "$TEXT_LinuxmintLightdmGreeterSettings" > $LightdmCfg
     fi
 
+    PRINTLOG "Adding Cinnamon custom keybindings settings to startup profile file."
+    echo "$TEXT_BashSetCinnamonKeybindings" > "$KeyboardShortcutsProfileFile"
 
-    grep "function ____keybindings_custom" $GlobalProfileFile > /dev/null 2>&1
-    if [[ $? != 0 ]]; then
-        PRINTLOG "Adding Cinnamon custom keybindings settings to startup profile file."
-        echo "$TEXT_BashSetCinnamonKeybindings" >> "$GlobalProfileFile"
-    fi
-    grep "terraform.d/plugin-cache" $GlobalProfileFile > /dev/null 2>&1
-    if [[ $? != 0 ]] && [[ -f /usr/local/bin/terraform ]] && [[ -f /usr/local/bin/tofu ]]; then
+    if [[ -f /usr/local/bin/terraform ]] && [[ -f /usr/local/bin/tofu ]]; then
         PRINTLOG "Adding Terraform and OpenTofu plugin cache dir creation to startup profile file."
-        echo "$TEXT_CreateTerraformCacheDir" >> "$GlobalProfileFile"
+        echo "$TEXT_CreateTerraformCacheDir" > "$TerraformHomeFolderProfileFile"
         # Copy RC files for current user, all future users created will
         # automatically have these (skel) files copied to their home directory.
         usersTerraformrc="$userHomeDir/.terraformrc"
