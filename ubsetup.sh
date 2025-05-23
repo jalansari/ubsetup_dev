@@ -304,6 +304,7 @@ INSTALL_COMP_LIST_DESKTOP=(
                    "jq"
                    "ssh"
                    "libpango-1.0-0" # Needed by Dropbox installer.
+                   "gir1.2-gtk-4.0" # Needed by Dropbox installer.
                    "libzip4"
                    "libproj25" # Needed by mysql-workbench
                    "proj-data" # Needed by mysql-workbench
