@@ -2946,12 +2946,13 @@ PRINTLOG "  *  Enable OpenVPN2.4: \`sudo update-alternatives --config openvpn\`"
 fi
 PRINTLOG "Installations to be completed manually, optional and if required:"
 PRINTLOG "  *  Veracrypt"
-PRINTLOG "  *  Dropbox"
+if [[ "$InstallFlutterSDK" == true ]]; then
 PRINTLOG "  *  Complete Android Studio setup, run:"
 PRINTLOG "         $AndroidInstallDir/android-studio/bin/studio.sh"
 PRINTLOG "  *  Install Android Studio plugins:"
 PRINTLOG "         File > Settings > Plugins : Browse repositories"
 PRINTLOG "         Install Flutter and Dart plugins."
+fi
 PRINTLOG "******************************"
 PRINTLOG ""
 PRINTLOG "******************************"
