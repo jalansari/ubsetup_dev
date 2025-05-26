@@ -568,6 +568,10 @@ read -r -d '' TEXT_CinnamonDesktopIfGSettingsConfig <<- EOTXT
 
 	[org.gnome.desktop.interface]
 	clock-format='24h'
+	cursor-theme='DMZ-White'
+	icon-theme='Mint-Y'
+	gtk-theme='Mint-Y-Dark'
+	enable-animations=false
 
 	[org.cinnamon.desktop.interface]
 	cursor-theme='DMZ-White'
