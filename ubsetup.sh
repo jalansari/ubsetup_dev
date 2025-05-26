@@ -608,6 +608,7 @@ read -r -d '' TEXT_CinnamonKeyboardShortCutsConfig <<- EOTXT
 	[org.cinnamon.desktop.keybindings.media-keys]
 	home=['$KeyboardShortcutHome']
 	terminal=['$KeyboardShortcutTerminal']
+	area-screenshot=[]
 EOTXT
 
 read -r -d '' TEXT_CinnamonSoundsGSettingsConfig <<- EOTXT
@@ -1149,9 +1150,6 @@ read -r -d '' TEXT_BashSetCinnamonKeybindings <<- EOTXT
 	        dconf write /org/cinnamon/desktop/keybindings/custom-keybindings/custom3/binding "['$KeyboardScreenShotSelect']"
 	        dconf write /org/cinnamon/desktop/keybindings/custom-keybindings/custom3/command "'flameshot gui'"
 	        dconf write /org/cinnamon/desktop/keybindings/custom-keybindings/custom3/name "'Flameshot screenshot'"
-
-	        # Remove area-screenshot, so it doesn't conflict with Shift-Print
-	        dconf write /org/cinnamon/desktop/keybindings/media-keys/area-screenshot "@as []"
 	    fi
 	}
 	____keybindings_custom____
