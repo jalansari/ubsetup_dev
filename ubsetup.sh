@@ -927,10 +927,12 @@ read -r -d '' TEXT_VSCodeConfig <<- EOTXT
 	  "diffEditor.ignoreTrimWhitespace": false,
 	  "editor.detectIndentation": false,
 	  "terminal.integrated.scrollback": 20000,
+	  "python.terminal.activateEnvironment": false,
 	  "editor.accessibilitySupport": "off",
 	  "accessibility.signals.sounds.volume": 0,
 	  "[terraform]": {
 	    "editor.tabSize": 2
+	    "editor.defaultFormatter": "hashicorp.terraform"
 	  },
 	  "[yaml]": {
 	    "editor.insertSpaces": true,
@@ -941,7 +943,13 @@ read -r -d '' TEXT_VSCodeConfig <<- EOTXT
 	    "editor.insertSpaces": true,
 	    "editor.tabSize": 2,
 	    "editor.detectIndentation": false,
-	    "editor.defaultFormatter": "vscode.json-language-features"
+	    "editor.defaultFormatter": "esbenp.prettier-vscode"
+	  },
+	  "[jsonc]": {
+	    "editor.insertSpaces": true,
+	    "editor.tabSize": 2,
+	    "editor.detectIndentation": false,
+	    "editor.defaultFormatter": "esbenp.prettier-vscode"
 	  },
 	  "plantuml.render": "Local",
 	  "plantuml.jar": "$PlantumlTargetBin",
@@ -2574,6 +2582,7 @@ if [ $? == 0 ]; then
     installVSCodiumExt "yzhang.markdown-all-in-one"
     installVSCodiumExt "ms-vscode.makefile-tools"
     installVSCodiumExt "jebbs.plantuml"
+    installVSCodiumExt "esbenp.prettier-vscode"
 fi
 
 checkDebPkgInstalled "code"
@@ -2593,6 +2602,7 @@ if [ $? == 0 ]; then
     installVSCodeExt "jebbs.plantuml"
     installVSCodeExt "bierner.markdown-mermaid"
     installVSCodeExt "ms-azuretools.vscode-docker"
+    installVSCodeExt "esbenp.prettier-vscode"
 
     vsCodeWorkspaceFileExample="$userHomeDir/Documents/devProjects.code-workspace"
     # vsCodeWorkspaceFileExample=$( getAvailableFileName "$vsCodeWorkspaceFileExample" )
