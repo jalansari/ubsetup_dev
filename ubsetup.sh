@@ -281,6 +281,7 @@ INSTALL_COMP_LIST_DESKTOP=(
                    "libreoffice"
                    "ttf-mscorefonts-installer"
                    "google-chrome-stable"
+                   "brave-browser"
                    "meld"
                    "rar"
                    "dia"
@@ -338,10 +339,12 @@ INSTAL_PIP2n3_MAP_DESKTOP=(
 declare -A DebSources
 DebSources=(
             ["deb [arch=$(dpkg --print-architecture) signed-by=$AptKeyringsDir/chrome.gpg] https://dl.google.com/linux/chrome/deb/ stable main"]="/etc/apt/sources.list.d/google.list" # google-chrome
+            ["deb [signed-by=$AptKeyringsDir/brave.gpg] https://brave-browser-apt-release.s3.brave.com/ stable main"]="/etc/apt/sources.list.d/brave-browser-release.list"
            )
 
 ADD_APT_KEYS_LIST=(
                    "https://dl.google.com/linux/linux_signing_key.pub;chrome.gpg" # google-chrome
+                   "https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg;brave.gpg"
                   )
 
 # List of PPA repositories to be added.
