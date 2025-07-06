@@ -1206,6 +1206,7 @@ read -r -d '' TEXT_BashToolAliases <<- "EOTXT"
 	alias ll='ls --time-style="long-iso" -alF --group-directories-first'
 	alias hiss='history | grep'
 	alias trimws='find . -type f ! -path "*/.venv/*" ! -path "*/.git/*" ! -path "*/venv/*" | xargs -I fl bash -c '"'"'FILE="fl"; echo ">>>>>>>> $FILE"; sed -i -r "s/\s+$//;" "$FILE"; [[ $( tail -c 1 "$FILE" ) != "" ]] && echo >> "$FILE"'"'"
+	alias remcolors='sed -r "s/\x1b\[[0-9;]+m//g"'
 	alias cleantf='find . -type f -name ".terraform.lock*" | xargs -I fl bash -c "cd \$( dirname fl ) && pwd && rm -rf .terraform*"'
 	alias starship_start='eval $(starship init bash)'
 	stty -ixon # Disable xon/off flow control, as it clashes with history search (Ctrl-s)
@@ -2446,6 +2447,7 @@ sed -i.bak -r \
 '/alias dnuke=/d;'\
 '/alias dlistall=/d;'\
 '/alias dstopall=/d;'\
+'/alias remcolors=/d;'\
 '/alias cleantf=/d;'\
 '/alias starship_start=/d;'\
 '/^stty /d;'\
