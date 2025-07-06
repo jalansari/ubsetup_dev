@@ -60,6 +60,8 @@ TflintUrl="https://github.com/terraform-linters/tflint/releases/latest/download/
 
 YqUrl="https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64"
 
+StarshipUrl="https://github.com/starship/starship/releases/latest/download/starship-x86_64-unknown-linux-gnu.tar.gz"
+
 # TerragruntUrl="https://github.com/gruntwork-io/terragrunt/releases/latest/download/terragrunt_linux_amd64"
 
 # ConfiglintPkg="config-lint_Linux_x86_64.tar.gz"
@@ -93,6 +95,7 @@ Fonts=(
        ["overpass"]="https://al-ansari.co.uk/j/fonts/Overpass.zip"
        ["overpass_mono"]="https://al-ansari.co.uk/j/fonts/Overpass_Mono.zip"
        ["inter"]="https://al-ansari.co.uk/j/fonts/Inter.zip"
+       ["fira_code_nerd"]="https://github.com/ryanoasis/nerd-fonts/releases/latest/download/FiraCode.zip"
       )
 allFontsFolder="/usr/share/fonts/ubsetup_installed_fonts"
 
@@ -1204,6 +1207,7 @@ read -r -d '' TEXT_BashToolAliases <<- "EOTXT"
 	alias hiss='history | grep'
 	alias trimws='find . -type f ! -path "*/.venv/*" ! -path "*/.git/*" ! -path "*/venv/*" | xargs -I fl bash -c '"'"'FILE="fl"; echo ">>>>>>>> $FILE"; sed -i -r "s/\s+$//;" "$FILE"; [[ $( tail -c 1 "$FILE" ) != "" ]] && echo >> "$FILE"'"'"
 	alias cleantf='find . -type f -name ".terraform.lock*" | xargs -I fl bash -c "cd \$( dirname fl ) && pwd && rm -rf .terraform*"'
+	alias starship_start='eval $(starship init bash)'
 	stty -ixon # Disable xon/off flow control, as it clashes with history search (Ctrl-s)
 	# set -o vi
 	# bind '\e[A:history-search-backward'
@@ -2290,6 +2294,8 @@ if [ $ubServerEnvironment != 0 ]; then
         && curl "$YqUrl" -L -f -o "/usr/local/bin/yq" \
         && chmod +rx "/usr/local/bin/yq"
 
+    downloadAndUnpack "$StarshipUrl" "$(basename $StarshipUrl)" "/usr/local/bin" "/usr/local/bin/starship"
+
     awscliUnpackTo="$TempFolderForDownloads"
     awscliDir="$awscliUnpackTo/aws"
     awsCredsDir="$userHomeDir/.aws"
@@ -2441,6 +2447,7 @@ sed -i.bak -r \
 '/alias dlistall=/d;'\
 '/alias dstopall=/d;'\
 '/alias cleantf=/d;'\
+'/alias starship_start=/d;'\
 '/^stty /d;'\
 '/^(# )?set -o/d;'\
 '/^(# )?bind /d;'\
