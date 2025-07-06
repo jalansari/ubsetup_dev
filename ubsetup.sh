@@ -9,7 +9,7 @@
 declare -A DebPackages
 DebPackages=(
              ["code"]="https://code.visualstudio.com/sha/download?build=stable&os=linux-deb-x64;mscode.deb"
-             ["codium"]="https://github.com/VSCodium/vscodium/releases/download/1.100.33714/codium_1.100.33714_amd64.deb"
+             ["codium"]="https://github.com/VSCodium/vscodium/releases/download/1.101.24242/codium_1.101.24242_amd64.deb"
              ["bcompare"]="https://www.scootersoftware.com/files/bcompare-5.1.0.31016_amd64.deb"
              ["draw.io"]="https://github.com/jgraph/drawio-desktop/releases/download/v27.0.9/drawio-amd64-27.0.9.deb"
              ["mysql-workbench-community"]="https://dev.mysql.com/get/Downloads/MySQLGUITools/mysql-workbench-community_8.0.42-1ubuntu24.04_amd64.deb"
@@ -21,9 +21,9 @@ InstallDir="/usr/share"
 UsrLocalDir="/usr/local"
 
 
-NodeJsVer="node-v22.16.0-linux-x64"
+NodeJsVer="node-v22.17.0-linux-x64"
 NodeJsPkg="$NodeJsVer.tar.xz"
-NodeJsUrl="https://nodejs.org/dist/v22.16.0/$NodeJsPkg"
+NodeJsUrl="https://nodejs.org/dist/v22.17.0/$NodeJsPkg"
 NodeInstallDir="$InstallDir/nodejs"
 
 FossilScmPkg="fossil-linux-x64-2.26.tar.gz"
@@ -34,8 +34,8 @@ GoLangPkg="go1.24.4.linux-amd64.tar.gz"
 GoLangUrl="https://go.dev/dl/$GoLangPkg"
 GoPath="$UsrLocalDir/go"
 
-VagrantPkg="vagrant_2.4.6_linux_amd64.zip"
-VagrantUrl="https://releases.hashicorp.com/vagrant/2.4.6/$VagrantPkg"
+VagrantPkg="vagrant_2.4.7_linux_amd64.zip"
+VagrantUrl="https://releases.hashicorp.com/vagrant/2.4.7/$VagrantPkg"
 
 TelegramPackage="telegram_linux.tar.xz"
 TelegramPackageHttpURL="https://telegram.org/dl/desktop/linux"
@@ -50,7 +50,7 @@ TerraformPkg="terraform_1.5.5_linux_amd64.zip"
 TerraformUrl="https://releases.hashicorp.com/terraform/1.5.5/$TerraformPkg"
 TerraformRCGlobal="/etc/skel/.terraformrc"
 
-TofuVer="1.9.0"
+TofuVer="1.10.2"
 TofuPkg="tofu_${TofuVer}_linux_amd64.tar.gz"
 TofuUrl="https://github.com/opentofu/opentofu/releases/download/v$TofuVer/$TofuPkg"
 TofuRCGlobal="/etc/skel/.tofurc"
@@ -69,15 +69,15 @@ YqUrl="https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64"
 AwsCliPkg="awscli-exe-linux-x86_64.zip"
 AwsCliUrl="https://awscli.amazonaws.com/$AwsCliPkg"
 
-PlantUmlVer="1.2025.3"
+PlantUmlVer="1.2025.4"
 PlantUmlUrl="https://github.com/plantuml/plantuml/releases/download/v$PlantUmlVer/plantuml-$PlantUmlVer.jar"
 PlantumlTargetBin="/usr/local/bin/plantuml.jar"
 
-AndroidPkg="android-studio-2024.3.2.15-linux.tar.gz"
-AndroidUrl="https://dl.google.com/dl/android/studio/ide-zips/2024.3.2.15/$AndroidPkg"
+AndroidPkg="android-studio-2025.1.1.13-linux.tar.gz"
+AndroidUrl="https://dl.google.com/dl/android/studio/ide-zips/2025.1.1.13/$AndroidPkg"
 AndroidInstallDir="$InstallDir/androidstudio"
 
-FlutterPkg="flutter_linux_3.32.3-stable.tar.xz"
+FlutterPkg="flutter_linux_3.32.5-stable.tar.xz"
 FlutterUrl="https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/$FlutterPkg"
 FlutterInstallDir="$InstallDir/flutterdev"
 
