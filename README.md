@@ -86,10 +86,13 @@ tools.
   - `ffm10secs` : Split video into 10 second clips.
 - Other tools:
   - `cleantf` : clean Terraform source directory.
+  - `gha_up` : Update GitHub Actions.
   - `git<cmd>s` : Various git commands to run on all repos in a directory.
   - `gitcp` : Git clone and install pre-commit (`gitcp <REPO> [dirname]`).
+  - `hiss` : Search shell history.
   - `pc_up` : Update pre-commit plugins.
-  - `gha_up` : Update GitHub Actions.
+  - `remcolors` : Remove color codes from shell output.
+  - `starship_start` : Start Starship prompt.
 
 ## Keyboard Shorecuts
 
