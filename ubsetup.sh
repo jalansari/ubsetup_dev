@@ -936,9 +936,10 @@ read -r -d '' TEXT_VSCodeConfig <<- EOTXT
 	  "python.terminal.activateEnvironment": false,
 	  "editor.accessibilitySupport": "off",
 	  "accessibility.signals.sounds.volume": 0,
-	  "[terraform]": {
-	    "editor.tabSize": 2
-	    "editor.defaultFormatter": "hashicorp.terraform"
+	  "[opentofu]": {
+	    "editor.tabSize": 2,
+	    "editor.defaultFormatter": "opentofu.vscode-opentofu",
+	    "editor.formatOnSave": true
 	  },
 	  "[yaml]": {
 	    "editor.insertSpaces": true,
@@ -2590,6 +2591,7 @@ if [ $? == 0 ]; then
     installVSCodiumExt "ms-python.flake8"
     installVSCodiumExt "ms-python.isort"
     installVSCodiumExt "streetsidesoftware.code-spell-checker"
+    installVSCodiumExt "opentofu.vscode-opentofu"
     installVSCodiumExt "eamodio.gitlens"
     installVSCodiumExt "yzhang.markdown-all-in-one"
     installVSCodiumExt "ms-vscode.makefile-tools"
@@ -2607,7 +2609,7 @@ if [ $? == 0 ]; then
     installVSCodeExt "ms-python.flake8"
     installVSCodeExt "ms-python.isort"
     installVSCodeExt "streetsidesoftware.code-spell-checker"
-    installVSCodeExt "hashicorp.terraform"
+    installVSCodeExt "opentofu.vscode-opentofu"
     installVSCodeExt "eamodio.gitlens"
     installVSCodeExt "yzhang.markdown-all-in-one"
     installVSCodeExt "ms-vscode.makefile-tools"
