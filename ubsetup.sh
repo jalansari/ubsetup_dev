@@ -1002,6 +1002,7 @@ read -r -d '' TEXT_VSCodeConfig <<- EOTXT
 	    "numpy",
 	    "opensearch",
 	    "opensource",
+	    "opentofu",
 	    "plantuml",
 	    "plugins",
 	    "postgres",
