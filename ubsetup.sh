@@ -1221,12 +1221,12 @@ read -r -d '' TEXT_BashDockerAliases <<- "EOTXT"
 	clrS="\033[0;33m"
 	clrE="\033[0m"
 	function docker_all_clean_containers() {
-	    echo -e "${clrS}Wiping Docker contianers${clrE}"
+	    echo -e "${clrS}Wiping Docker containers${clrE}"
 	    docker container rm -fv $(docker ps -qa)
 	}
 	function docker_all_nuke() {
 	    docker_all_stop
-	    echo -e "${clrS}Wiping Docker contianers and images${clrE}"
+	    echo -e "${clrS}Wiping Docker containers and images${clrE}"
 	    docker system prune -af
 	    echo -e "${clrS}Wiping Docker volumes${clrE}"
 	    docker system prune --volumes -af
