@@ -9,10 +9,10 @@
 declare -A DebPackages
 DebPackages=(
              ["code"]="https://code.visualstudio.com/sha/download?build=stable&os=linux-deb-x64;mscode.deb"
-             ["codium"]="https://github.com/VSCodium/vscodium/releases/download/1.101.24242/codium_1.101.24242_amd64.deb"
-             ["bcompare"]="https://www.scootersoftware.com/files/bcompare-5.1.0.31016_amd64.deb"
-             ["draw.io"]="https://github.com/jgraph/drawio-desktop/releases/download/v27.0.9/drawio-amd64-27.0.9.deb"
-             ["mysql-workbench-community"]="https://dev.mysql.com/get/Downloads/MySQLGUITools/mysql-workbench-community_8.0.42-1ubuntu24.04_amd64.deb"
+             ["codium"]="https://github.com/VSCodium/vscodium/releases/download/1.102.14746/codium_1.102.14746_amd64.deb"
+             ["bcompare"]="https://www.scootersoftware.com/files/bcompare-5.1.1.31157_amd64.deb"
+             ["draw.io"]="https://github.com/jgraph/drawio-desktop/releases/download/v28.0.4/drawio-amd64-28.0.4.deb"
+             ["mysql-workbench-community"]="https://dev.mysql.com/get/Downloads/MySQLGUITools/mysql-workbench-community_8.0.43-1ubuntu24.04_amd64.deb"
              ["slack-desktop"]="https://downloads.slack-edge.com/desktop-releases/linux/x64/4.43.51/slack-desktop-4.43.51-amd64.deb"
             )
 
@@ -21,16 +21,16 @@ InstallDir="/usr/share"
 UsrLocalDir="/usr/local"
 
 
-NodeJsVer="node-v22.17.0-linux-x64"
+NodeJsVer="node-v22.17.1-linux-x64"
 NodeJsPkg="$NodeJsVer.tar.xz"
-NodeJsUrl="https://nodejs.org/dist/v22.17.0/$NodeJsPkg"
+NodeJsUrl="https://nodejs.org/dist/v22.17.1/$NodeJsPkg"
 NodeInstallDir="$InstallDir/nodejs"
 
 FossilScmPkg="fossil-linux-x64-2.26.tar.gz"
 FossilScmUrl="https://fossil-scm.org/home/uv/$FossilScmPkg"
 FossilInstallDir="$InstallDir/fossilscm"
 
-GoLangPkg="go1.24.4.linux-amd64.tar.gz"
+GoLangPkg="go1.24.5.linux-amd64.tar.gz"
 GoLangUrl="https://go.dev/dl/$GoLangPkg"
 GoPath="$UsrLocalDir/go"
 
@@ -50,7 +50,7 @@ TerraformPkg="terraform_1.5.5_linux_amd64.zip"
 TerraformUrl="https://releases.hashicorp.com/terraform/1.5.5/$TerraformPkg"
 TerraformRCGlobal="/etc/skel/.terraformrc"
 
-TofuVer="1.10.2"
+TofuVer="1.10.3"
 TofuPkg="tofu_${TofuVer}_linux_amd64.tar.gz"
 TofuUrl="https://github.com/opentofu/opentofu/releases/download/v$TofuVer/$TofuPkg"
 TofuRCGlobal="/etc/skel/.tofurc"
@@ -75,11 +75,11 @@ PlantUmlVer="1.2025.4"
 PlantUmlUrl="https://github.com/plantuml/plantuml/releases/download/v$PlantUmlVer/plantuml-$PlantUmlVer.jar"
 PlantumlTargetBin="/usr/local/bin/plantuml.jar"
 
-AndroidPkg="android-studio-2025.1.1.13-linux.tar.gz"
-AndroidUrl="https://dl.google.com/dl/android/studio/ide-zips/2025.1.1.13/$AndroidPkg"
+AndroidPkg="android-studio-2025.1.1.14-linux.tar.gz"
+AndroidUrl="https://dl.google.com/dl/android/studio/ide-zips/2025.1.1.14/$AndroidPkg"
 AndroidInstallDir="$InstallDir/androidstudio"
 
-FlutterPkg="flutter_linux_3.32.5-stable.tar.xz"
+FlutterPkg="flutter_linux_3.32.7-stable.tar.xz"
 FlutterUrl="https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/$FlutterPkg"
 FlutterInstallDir="$InstallDir/flutterdev"
 
