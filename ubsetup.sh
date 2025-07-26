@@ -9,11 +9,11 @@
 declare -A DebPackages
 DebPackages=(
              ["code"]="https://code.visualstudio.com/sha/download?build=stable&os=linux-deb-x64;mscode.deb"
-             ["codium"]="https://github.com/VSCodium/vscodium/releases/download/1.102.14746/codium_1.102.14746_amd64.deb"
-             ["bcompare"]="https://www.scootersoftware.com/files/bcompare-5.1.1.31157_amd64.deb"
-             ["draw.io"]="https://github.com/jgraph/drawio-desktop/releases/download/v28.0.4/drawio-amd64-28.0.4.deb"
+             ["codium"]="https://github.com/VSCodium/vscodium/releases/download/1.102.24914/codium_1.102.24914_amd64.deb"
+             ["bcompare"]="https://www.scootersoftware.com/files/bcompare-5.1.2.31185_amd64.deb"
+             ["draw.io"]="https://github.com/jgraph/drawio-desktop/releases/download/v28.0.6/drawio-amd64-28.0.6.deb"
              ["mysql-workbench-community"]="https://dev.mysql.com/get/Downloads/MySQLGUITools/mysql-workbench-community_8.0.43-1ubuntu24.04_amd64.deb"
-             ["slack-desktop"]="https://downloads.slack-edge.com/desktop-releases/linux/x64/4.43.51/slack-desktop-4.43.51-amd64.deb"
+             ["slack-desktop"]="https://downloads.slack-edge.com/desktop-releases/linux/x64/4.45.64/slack-desktop-4.45.64-amd64.deb"
             )
 
 
@@ -47,7 +47,7 @@ VeraCryptUrl="https://launchpad.net/veracrypt/trunk/1.26.24/+download/$VeraCrypt
 # DockerComposeUrl="https://github.com/docker/compose/releases/download/1.29.2/docker-compose-Linux-x86_64"
 
 TerraformPkg="terraform_1.5.5_linux_amd64.zip"
-TerraformUrl="https://releases.hashicorp.com/terraform/1.5.5/$TerraformPkg"
+TerraformUrl="" # "https://releases.hashicorp.com/terraform/1.5.5/$TerraformPkg"
 TerraformRCGlobal="/etc/skel/.terraformrc"
 
 TofuVer="1.10.3"
@@ -79,7 +79,7 @@ AndroidPkg="android-studio-2025.1.1.14-linux.tar.gz"
 AndroidUrl="https://dl.google.com/dl/android/studio/ide-zips/2025.1.1.14/$AndroidPkg"
 AndroidInstallDir="$InstallDir/androidstudio"
 
-FlutterPkg="flutter_linux_3.32.7-stable.tar.xz"
+FlutterPkg="flutter_linux_3.32.8-stable.tar.xz"
 FlutterUrl="https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/$FlutterPkg"
 FlutterInstallDir="$InstallDir/flutterdev"
 
