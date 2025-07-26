@@ -706,7 +706,7 @@ read -r -d '' TEXT_CinnamonDesktopGSettingsConfig <<- EOTXT
 	night-light-schedule-from=22.0
 	night-light-schedule-mode='manual'
 	night-light-schedule-to=7.0
-	night-light-temperature=uint32 2700
+	night-light-temperature=uint32 4000
 
 	[org.cinnamon.desktop.screensaver]
 	use-custom-format=true
