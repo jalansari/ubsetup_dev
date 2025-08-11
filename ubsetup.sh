@@ -1409,8 +1409,8 @@ read -r -d '' TEXT_BashPythonToolAliases <<- "EOTXT"
 	alias cprallr="find -type f -name 'requirements*.txt' | xargs -I {} bash -c 'echo -e \"\033[30;1;106m{}\n=====\033[0m\"; ____check_py_requirements____ {}; echo; sleep 5'"
 
 	function ____cleanpydir____() {
-	    rm -rf testresults.xml .coverage .cache .pytest_cache .mypy_cache htmlcov .hypothesis .benchmarks *.egg\-info
-	    find . -name "__pycache__" -type d \
+	    rm -rf testresults.xml .coverage .cache .pytest_cache .mypy_cache htmlcov .hypothesis .benchmarks
+	    find . -name "__pycache__" -or -name *".egg-info" -type d \
 	        -not -path "*/.venv/*" \
 	        -not -path "*/.git/*" \
 	        -not -path "*/venv/*" | xargs rm -rf
