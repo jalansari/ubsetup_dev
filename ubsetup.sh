@@ -303,6 +303,7 @@ INSTALL_COMP_LIST_DESKTOP=(
                    "shunit2" # Shell script unit test framework.
                    "pv"
                    "jq"
+                   "tree"
                    "ssh"
                    "libpango-1.0-0" # Needed by Dropbox installer.
                    "gir1.2-gtk-4.0" # Needed by Dropbox installer.
