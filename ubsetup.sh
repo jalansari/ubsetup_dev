@@ -80,6 +80,8 @@ FlutterPkg="flutter_linux_3.38.9-stable.tar.xz"
 FlutterUrl="https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/$FlutterPkg"
 FlutterInstallDir="$InstallDir/flutterdev"
 
+ClaudeCodeUrl="https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/2.1.37/linux-x64/claude"
+
 
 declare -A Fonts
 Fonts=(
@@ -381,8 +383,9 @@ LIST_OF_LAUNCHERS=(
 ########################################
 
 read -r -d '' TEXT_Usage << EOTXT
-Usage $0 [-a] [-i] [-r]
-      [--ruby | --rubyv <version>] [--docker] [--gitlabr] [--rabbit] [--tor] [--flutter]
+Usage $0 [-a] [-i] [-r] [--docker]
+      [--ai]
+      [--ruby | --rubyv <version>] [--gitlabr] [--rabbit] [--tor] [--flutter]
       [-un <FullName>] [-ug <GroupName>] [-ue <Email>]
       [-h]
 
@@ -392,9 +395,10 @@ Requests:
 -r       : Remove unnecessary components.  (Default.)
 -i       : Install components and configs.
 -a       : Same and i and r combined.
+--docker : Install Docker Engine - Community.
+--ai     : Install AI tools, including Claude Code.
 --ruby   : Install RVM for Ruby installation.  (Not required if using '--rubyv').
 --rubyv  : Install RVM, AND install a specific Ruby version.
---docker : Install Docker Engine - Community.
 --gitlabr: Install Gitlab Runner (needs --docker for this to work).
 --rabbit : Install RabbitMq, with its Erlang dependency.
 --tor    : Install Tor Daemon, which listens on port 9050.
@@ -415,7 +419,7 @@ If no options are specified, default behaviour is to remove components
 (i.e. same as using -r option alone).
 
 Example command:
-sudo ./ubsetup.sh -a --docker -un "<FULL_NAME>" -ue "<EMAIL>" -ug $( id -g -n $SUDO_USER ) 2>&1 | tee ubsetup.sh.log
+sudo ./ubsetup.sh -a --docker --ai -un "<FULL_NAME>" -ue "<EMAIL>" -ug $( id -g -n $SUDO_USER ) 2>&1 | tee ubsetup.sh.log
 EOTXT
 
 
@@ -2000,6 +2004,7 @@ function usage()
 
 InstallRuby=false
 InstallDocker=false
+InstallAIUtils=false
 InstallGitlabRunner=false
 InstallRabbitMq=false
 InstallTorDaemon=false
@@ -2039,6 +2044,8 @@ while [[ "$1" != "" ]]; do
              RubyVersion="$1"
              ;;
         --docker ) InstallDocker=true
+             ;;
+        --ai ) InstallAIUtils=true
              ;;
         --gitlabr ) InstallGitlabRunner=true;
              ;;
@@ -2102,8 +2109,9 @@ if [[ $TestMode == 1 ]]; then
     PRINTLOG "=====Request Options========="
     printBinaryVal $RequestOptions
     PRINTLOG "=====Environment Options====="
-    PRINTLOG "Ruby Install      : $InstallRuby, RubyVersion: <$RubyVersion>"
     PRINTLOG "Docker Install    : $InstallDocker"
+    PRINTLOG "AI Utils Install  : $InstallAIUtils"
+    PRINTLOG "Ruby Install      : $InstallRuby, RubyVersion: <$RubyVersion>"
     PRINTLOG "RabbitMq Install  : $InstallRabbitMq"
     PRINTLOG "Tor Daemon Install: $InstallTorDaemon"
     PRINTLOG "FlutterSDK Install: $InstallFlutterSDK"
@@ -2296,6 +2304,15 @@ if [ $ubServerEnvironment != 0 ]; then
         && chmod +rx "/usr/local/bin/yq"
 
     downloadAndUnpack "$StarshipUrl" "$(basename $StarshipUrl)" "/usr/local/bin" "/usr/local/bin/starship"
+
+    if [[ "$InstallAIUtils" == true ]]; then
+        claudeCodeBinLocation="/usr/local/bin/claude"
+        [[ ! -e "$claudeCodeBinLocation" ]] \
+            && curl "$ClaudeCodeUrl" -L -f -o "$claudeCodeBinLocation" \
+            && chown root:adm "$claudeCodeBinLocation" \
+            && chmod a+rx "$claudeCodeBinLocation" \
+            && chmod g+w "$claudeCodeBinLocation"
+    fi
 
     awscliUnpackTo="$TempFolderForDownloads"
     awscliDir="$awscliUnpackTo/aws"
