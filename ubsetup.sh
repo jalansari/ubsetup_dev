@@ -1425,6 +1425,21 @@ read -r -d '' TEXT_BashPythonToolAliases <<- "EOTXT"
 	alias cleanpyds='sudo bash -c "$(declare -f ____cleanpydir____); ____cleanpydir____"'
 EOTXT
 
+read -r -d '' TEXT_BashXorgAliases <<- "EOTXT"
+	function ____xinput_maplist____() {
+	    echo "===== DISPLAYS ====="
+	    xrandr | grep -E '\bconnected'
+	    echo
+	    echo "===== INPUTS ====="
+	    xinput | grep -E 'slave\s+pointer'
+	    echo
+	    echo "===== CURRENT mappen ====="
+	    type -a xmappen
+	}
+	alias xmaplist="____xinput_maplist____"
+	alias xmappen="xinput map-to-output 24 DP-3 && xinput map-to-output 26 DP-2"
+EOTXT
+
 
 ########################################
 ##### Helper functions.
@@ -2483,6 +2498,8 @@ sed -i.bak -r \
 '/docker_all/,/^}$/{/.*/d};'\
 '/ffm540/,/^}$/{/.*/d};'\
 '/ffm10secs/,/^}$/{/.*/d};'\
+'/____xinput_maplist/,/^}$/{/.*/d};'\
+'/alias xmap/d;'\
 's/(HISTFILESIZE)=.*/\1=8000/; s/(HISTSIZE)=.*/\1=4000/;'\
 '/PROMPT_COMMAND/d;'\
 's/(shopt -s histappend)/\1\nPROMPT_COMMAND="${PROMPT_COMMAND:+$PROMPT_COMMAND$\\n}history -a; history -c; history -r"/;'\
@@ -2503,6 +2520,12 @@ $TEXT_BashPythonToolAliases
 if [[ "$InstallDocker" = true ]]; then
 echo -n "
 $TEXT_BashDockerAliases
+" >> $BashrcForAll
+fi
+
+if [[ "$XDG_SESSION_TYPE" == "x11" ]]; then
+echo -n "
+$TEXT_BashXorgAliases
 " >> $BashrcForAll
 fi
 
