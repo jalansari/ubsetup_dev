@@ -1072,6 +1072,43 @@ read -r -d '' TEXT_VSKeybindings <<- EOTXT
 	        "command": "workbench.action.closeQuickOpen",
 	        "when": "inQuickOpen && inTerminalRunCommandPicker"
 	    },
+	    // "ctrl+shift+n" keybinding for next change.
+	    // Remove the default "alt+f5" keybinding for next change.
+        // And remove the default "ctrl+shift+n" keybinding for new window.
+	    {
+	      "key": "ctrl+shift+n",
+	      "command": "workbench.action.editor.nextChange",
+	      "when": "editorTextFocus && !textCompareEditorActive && quickDiffDecorationCount != '0'"
+	    },
+	    {
+	      "key": "alt+f5",
+	      "command": "-workbench.action.editor.nextChange",
+	      "when": "editorTextFocus && !textCompareEditorActive && quickDiffDecorationCount != '0'"
+	    },
+	    {
+	      "key": "ctrl+shift+n",
+	      "command": "workbench.action.compareEditor.nextChange",
+	      "when": "textCompareEditorVisible"
+	    },
+	    {
+	      "key": "alt+f5",
+	      "command": "-workbench.action.compareEditor.nextChange",
+	      "when": "textCompareEditorVisible"
+	    },
+	    {
+	      "key": "ctrl+shift+n",
+	      "command": "multiDiffEditor.goToNextChange",
+	      "when": "activeEditor == 'multiDiffEditor'"
+	    },
+	    {
+	      "key": "alt+f5",
+	      "command": "-multiDiffEditor.goToNextChange",
+	      "when": "activeEditor == 'multiDiffEditor'"
+	    },
+	    {
+	      "key": "ctrl+shift+n",
+	      "command": "-workbench.action.newWindow"
+	    },
 	]
 EOTXT
 
