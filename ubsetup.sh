@@ -9,11 +9,11 @@
 declare -A DebPackages
 DebPackages=(
              ["code"]="https://code.visualstudio.com/sha/download?build=stable&os=linux-deb-x64;mscode.deb"
-             ["codium"]="https://github.com/VSCodium/vscodium/releases/download/1.104.16282/codium_1.104.16282_amd64.deb"
-             ["bcompare"]="https://www.scootersoftware.com/files/bcompare-5.1.5.31310_amd64.deb"
-             ["draw.io"]="https://github.com/jgraph/drawio-desktop/releases/download/v28.1.2/drawio-amd64-28.1.2.deb"
-             ["mysql-workbench-community"]="https://dev.mysql.com/get/Downloads/MySQLGUITools/mysql-workbench-community_8.0.43-1ubuntu24.04_amd64.deb"
-             ["slack-desktop"]="https://downloads.slack-edge.com/desktop-releases/linux/x64/4.46.96/slack-desktop-4.46.96-amd64.deb"
+             ["codium"]="https://github.com/VSCodium/vscodium/releases/download/1.108.20787/codium_1.108.20787_amd64.deb"
+             ["bcompare"]="https://www.scootersoftware.com/files/bcompare-5.1.7.31736_amd64.deb"
+             ["draw.io"]="https://github.com/jgraph/drawio-desktop/releases/download/v29.3.6/drawio-amd64-29.3.6.deb"
+             ["mysql-workbench-community"]="https://dev.mysql.com/get/Downloads/MySQLGUITools/mysql-workbench-community_8.0.46-1ubuntu24.04_amd64.deb"
+             ["slack-desktop"]="https://downloads.slack-edge.com/desktop-releases/linux/x64/4.47.69/slack-desktop-4.47.69-amd64.deb"
             )
 
 
@@ -21,16 +21,16 @@ InstallDir="/usr/share"
 UsrLocalDir="/usr/local"
 
 
-NodeJsVer="node-v22.19.0-linux-x64"
+NodeJsVer="node-v24.13.0-linux-x64"
 NodeJsPkg="$NodeJsVer.tar.xz"
-NodeJsUrl="https://nodejs.org/dist/v22.19.0/$NodeJsPkg"
+NodeJsUrl="https://nodejs.org/dist/v24.13.0/$NodeJsPkg"
 NodeInstallDir="$InstallDir/nodejs"
 
-FossilScmPkg="fossil-linux-x64-2.26.tar.gz"
+FossilScmPkg="fossil-linux-x64-2.27.tar.gz"
 FossilScmUrl="https://fossil-scm.org/home/uv/$FossilScmPkg"
 FossilInstallDir="$InstallDir/fossilscm"
 
-GoLangPkg="go1.25.1.linux-amd64.tar.gz"
+GoLangPkg="go1.25.7.linux-amd64.tar.gz"
 GoLangUrl="https://go.dev/dl/$GoLangPkg"
 GoPath="$UsrLocalDir/go"
 
@@ -43,14 +43,11 @@ TelegramPackageHttpURL="https://telegram.org/dl/desktop/linux"
 VeraCryptPkg="veracrypt-1.26.24-setup.tar.bz2"
 VeraCryptUrl="https://launchpad.net/veracrypt/trunk/1.26.24/+download/$VeraCryptPkg"
 
-# DockerComposeUrl="https://github.com/docker/compose/releases/latest/download/docker-compose-Linux-x86_64"
-# DockerComposeUrl="https://github.com/docker/compose/releases/download/1.29.2/docker-compose-Linux-x86_64"
-
 TerraformPkg="terraform_1.5.5_linux_amd64.zip"
 TerraformUrl="" # "https://releases.hashicorp.com/terraform/1.5.5/$TerraformPkg"
 TerraformRCGlobal="/etc/skel/.terraformrc"
 
-TofuVer="1.10.3"
+TofuVer="1.11.4"
 TofuPkg="tofu_${TofuVer}_linux_amd64.tar.gz"
 TofuUrl="https://github.com/opentofu/opentofu/releases/download/v$TofuVer/$TofuPkg"
 TofuRCGlobal="/etc/skel/.tofurc"
@@ -65,21 +62,21 @@ StarshipUrl="https://github.com/starship/starship/releases/latest/download/stars
 # TerragruntUrl="https://github.com/gruntwork-io/terragrunt/releases/latest/download/terragrunt_linux_amd64"
 
 # ConfiglintPkg="config-lint_Linux_x86_64.tar.gz"
-# ConfiglintUrl="https://github.com/stelligent/config-lint/releases/download/v1.6.0/$ConfiglintPkg"
+# ConfiglintUrl="https://github.com/stelligent/config-lint/releases/latest/download/$ConfiglintPkg"
 # ConfiglintInstallDir="$InstallDir/configlint"
 
 AwsCliPkg="awscli-exe-linux-x86_64.zip"
 AwsCliUrl="https://awscli.amazonaws.com/$AwsCliPkg"
 
-PlantUmlVer="1.2025.7"
+PlantUmlVer="1.2026.1"
 PlantUmlUrl="https://github.com/plantuml/plantuml/releases/download/v$PlantUmlVer/plantuml-$PlantUmlVer.jar"
 PlantumlTargetBin="/usr/local/bin/plantuml.jar"
 
-AndroidPkg="android-studio-2025.1.3.7-linux.tar.gz"
-AndroidUrl="https://dl.google.com/dl/android/studio/ide-zips/2025.1.3.7/$AndroidPkg"
+AndroidPkg="android-studio-2025.2.3.9-linux.tar.gz"
+AndroidUrl="https://edgedl.me.gvt1.com/android/studio/ide-zips/2025.2.3.9/$AndroidPkg"
 AndroidInstallDir="$InstallDir/androidstudio"
 
-FlutterPkg="flutter_linux_3.35.4-stable.tar.xz"
+FlutterPkg="flutter_linux_3.38.9-stable.tar.xz"
 FlutterUrl="https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/$FlutterPkg"
 FlutterInstallDir="$InstallDir/flutterdev"
 
