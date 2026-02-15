@@ -165,6 +165,7 @@ DevGroupName="adm" # This group applies to development tools where users need wr
 
 
 # UserHomeBin="$userHomeDir/bin"
+TmuxCfgFile="/etc/tmux.conf"
 TerminatorCfgDir="$userHomeDir/.config/terminator"
 TerminatorCfgFile="$TerminatorCfgDir/config"
 GoWorkspacePath="$userHomeDir/goworkspace"
@@ -275,6 +276,10 @@ INSTALL_COMP_LIST_DESKTOP=(
                    "firefox"
                    "qbittorrent"
                    "terminator"
+                   "tmux"
+                   "xclip"
+                   "libsecret-tools" # Used to list and delete stored secrets in gnome keyring.
+                   "ripgrep"
                    "unrar"
                    "p7zip-full"
                    "simplescreenrecorder"
@@ -328,6 +333,8 @@ INSTALL_COMP_LIST_DESKTOP=(
                    "fastfetch"
                    "postgresql-client"
                    "mysql-client"
+                   "gh"
+                   "acli"
                    "libcurl4-openssl-dev" # Needed by pycurl, in case it is required in any development.
                    "libssl-dev" # Needed by pycurl, in case it is required in any development.
                    "libpq-dev" #  Needed by psycopg2, in case it is required in any development.
@@ -341,11 +348,15 @@ declare -A DebSources
 DebSources=(
             ["deb [arch=$(dpkg --print-architecture) signed-by=$AptKeyringsDir/chrome.gpg] https://dl.google.com/linux/chrome/deb/ stable main"]="/etc/apt/sources.list.d/google.list" # google-chrome
             ["deb [signed-by=$AptKeyringsDir/brave.gpg] https://brave-browser-apt-release.s3.brave.com/ stable main"]="/etc/apt/sources.list.d/brave-browser-release.list"
+            ["deb [arch=$(dpkg --print-architecture) signed-by=$AptKeyringsDir/githubcli.gpg] https://cli.github.com/packages stable main"]="/etc/apt/sources.list.d/github-cli.list"
+            ["deb [arch=$(dpkg --print-architecture) signed-by=$AptKeyringsDir/atlassian.gpg] https://acli.atlassian.com/linux/deb stable main"]="/etc/apt/sources.list.d/atlassian.list"
            )
 
 ADD_APT_KEYS_LIST=(
                    "https://dl.google.com/linux/linux_signing_key.pub;chrome.gpg" # google-chrome
                    "https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg;brave.gpg"
+                   "https://cli.github.com/packages/githubcli-archive-keyring.gpg;githubcli.gpg"
+                   "https://acli.atlassian.com/gpg/public-key.asc;atlassian.gpg"
                   )
 
 # List of PPA repositories to be added.
@@ -476,6 +487,10 @@ read -r -d '' TEXT_FirefoxCfg <<- EOTXT
 
 	pref("datareporting.healthreport.uploadEnabled", false);
 	pref("app.shield.optoutstudies.enabled", false);
+EOTXT
+
+read -r -d '' TEXT_TmuxCfg <<- EOTXT
+	set -g mouse on
 EOTXT
 
 read -r -d '' TEXT_TerminatorCfg <<- EOTXT
@@ -920,6 +935,17 @@ read -r -d '' TEXT_VSCodeConfig <<- EOTXT
 	  "editor.lineHeight": 21,
 	  "editor.renderWhitespace": "all",
 	  "editor.rulers": [80, 100],
+	  "terminal.integrated.profiles.linux": {
+	    "tmux": {
+	      "path": "bash",
+	      "args": [
+	        "-c",
+	        "SESSION=\"vsc_\${PWD##*/}_\$(date +%Y%m%d_%H%M%S)\"; trap 'tmux kill-session -t \"\$SESSION\" 2>/dev/null' EXIT; tmux new-session -s \"\$SESSION\""
+	      ],
+	      "icon": "terminal-tmux"
+	    }
+	  },
+	  "terminal.integrated.defaultProfile.linux": "tmux",
 	  "editor.quickSuggestions": {
 	    "other": true,
 	    "comments": true,
@@ -1406,6 +1432,15 @@ read -r -d '' TEXT_BashGitAliases_2 <<- "EOTXT"
 	    done
 	}
 	alias pc_up="____github_precommit_updater____"
+	function ____clean_github_cli____() {
+	    secret-tool clear service gh:github.com
+	    if [[ $? == 0 ]]; then
+	        echo "Cleared GitHub CLI credentials"
+	    else
+	        echo -e "\033[1;31mFailed to clear GitHub CLI credentials\033[0m"
+	    fi
+	}
+	alias cleangh='____clean_github_cli____'
 EOTXT
 
 read -r -d '' TEXT_BashPythonToolAliases <<- "EOTXT"
@@ -1458,6 +1493,29 @@ read -r -d '' TEXT_BashPythonToolAliases <<- "EOTXT"
 	}
 	alias cleanpyd='____cleanpydir____'
 	alias cleanpyds='sudo bash -c "$(declare -f ____cleanpydir____); ____cleanpydir____"'
+EOTXT
+
+read -r -d '' TEXT_ClaudeCodeAliases <<- "EOTXT"
+	function ____clean_claude_code____() {
+	    code --uninstall-extension "anthropic.claude-code"
+	    claude_files_n_dirs=(
+	        "$HOME/.claude"
+	        "$HOME/.claude.json*"
+	        "$HOME/.cache/claude*"
+	        "$HOME/.local/bin/claude"
+	        "$HOME/.local/share/claude"
+	        "$HOME/.local/state/claude"
+	    )
+	    claude_settings="${claude_files_n_dirs[0]}/settings.json"
+	    echo "Copying : $claude_settings"
+	    cp "$claude_settings" "$HOME/"
+	    for fd in "${claude_files_n_dirs[@]}"
+	    do
+	        echo "Deleting : $fd"
+	        rm -rf $fd
+	    done
+	}
+	alias cleancc='____clean_claude_code____'
 EOTXT
 
 read -r -d '' TEXT_BashXorgAliases <<- "EOTXT"
@@ -2530,6 +2588,10 @@ sed -i.bak -r \
 '/____cleanpy/,/^}$/{/.*/d};'\
 '/alias cpr/d;'\
 '/alias cleanpyd/d;'\
+'/____clean_claude_code____/,/^}$/{/.*/d};'\
+'/alias cleancc/d;'\
+'/____clean_github_cli____/,/^}$/{/.*/d};'\
+'/alias cleangh/d;'\
 '/docker_all/,/^}$/{/.*/d};'\
 '/ffm540/,/^}$/{/.*/d};'\
 '/ffm10secs/,/^}$/{/.*/d};'\
@@ -2564,6 +2626,12 @@ $TEXT_BashXorgAliases
 " >> $BashrcForAll
 fi
 
+if [[ "$InstallAIUtils" == true ]]; then
+echo -n "
+$TEXT_ClaudeCodeAliases
+" >> $BashrcForAll
+fi
+
 usersBashrc="$userHomeDir/.bashrc"
 cp $BashrcForAll $usersBashrc
 chown $userOfThisScript:$groupOfUserOfThisScript $usersBashrc
@@ -2592,13 +2660,20 @@ fs.inotify.max_user_watches = $NumiNotifyWatches\n"\
 ##### Continue desktop configuration.
 ########################################
 
+checkDebPkgInstalled "tmux"
+tmuxInstalled=$?
+if [ $terminatorinstalled == 0 ]; then
+    PRINTLOG "WRITING TMUXCONFIG: [$TmuxCfgFile]"
+    echo -e "$TEXT_TmuxCfg" > "$TmuxCfgFile"
+fi
+
 checkDebPkgInstalled "terminator"
 terminatorinstalled=$?
 if [ $terminatorinstalled == 0 ]; then
     PRINTLOG "WRITING TEMINATORCONFIG: [$TerminatorCfgFile]"
     mkdir -p $TerminatorCfgDir
-    echo -e "$TEXT_TerminatorCfg" > $TerminatorCfgFile
-    chown -R $userOfThisScript:$groupOfUserOfThisScript $TerminatorCfgDir
+    echo -e "$TEXT_TerminatorCfg" > "$TerminatorCfgFile"
+    chown -R $userOfThisScript:$groupOfUserOfThisScript "$TerminatorCfgDir"
 fi
 
 # In the following, libgtk-3-common doesn't actually own the bookmarks, and
