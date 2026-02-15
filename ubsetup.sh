@@ -81,6 +81,14 @@ FlutterInstallDir="$InstallDir/flutterdev"
 ClaudeCodeUrl="https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/2.1.42/linux-x64/claude"
 
 
+NpmGlobalPackagesAI=(
+                     "@github/copilot"
+                     "claude-limitline"
+                     "@beads/bd"
+                     "@playwright/cli"
+                    )
+
+
 declare -A Fonts
 Fonts=(
        ["open_sans"]="https://al-ansari.co.uk/j/fonts/Open_Sans.zip"
@@ -2425,6 +2433,15 @@ if [ $ubServerEnvironment != 0 ]; then
             && chown root:adm "$claudeCodeBinLocation" \
             && chmod a+rx "$claudeCodeBinLocation" \
             && chmod g+w "$claudeCodeBinLocation"
+
+        npmBin="$NodeInstallDir/$NodeJsVer/bin/npm"
+        if [[ -x "$npmBin" ]]; then
+            PRINTLOG "Installing npm global AI packages."
+            for pkg in "${NpmGlobalPackagesAI[@]}"
+            do
+                "$npmBin" install -g "$pkg"
+            done
+        fi
     fi
 
     awscliUnpackTo="$TempFolderForDownloads"
