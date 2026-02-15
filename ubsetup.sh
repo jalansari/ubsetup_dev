@@ -489,8 +489,13 @@ read -r -d '' TEXT_FirefoxCfg <<- EOTXT
 	pref("app.shield.optoutstudies.enabled", false);
 EOTXT
 
+# Tmux mouse mode, so scroll with mouse wheel.
 read -r -d '' TEXT_TmuxCfg <<- EOTXT
 	set -g mouse on
+EOTXT
+# Tmux mouse select and copy to clipboard, but only for X11 sessions.
+read -r -d '' TEXT_TmuxCfgX11 <<- EOTXT
+    bind -T copy-mode MouseDragEnd1Pane send-keys -X copy-pipe-and-cancel "xclip -selection clipboard"
 EOTXT
 
 read -r -d '' TEXT_TerminatorCfg <<- EOTXT
@@ -2662,9 +2667,12 @@ fs.inotify.max_user_watches = $NumiNotifyWatches\n"\
 
 checkDebPkgInstalled "tmux"
 tmuxInstalled=$?
-if [ $terminatorinstalled == 0 ]; then
+if [ $tmuxInstalled == 0 ]; then
     PRINTLOG "WRITING TMUXCONFIG: [$TmuxCfgFile]"
     echo -e "$TEXT_TmuxCfg" > "$TmuxCfgFile"
+    if [[ "$XDG_SESSION_TYPE" == "x11" ]]; then
+        echo -e "$TEXT_TmuxCfgX11" >> "$TmuxCfgFile"
+    fi
 fi
 
 checkDebPkgInstalled "terminator"
