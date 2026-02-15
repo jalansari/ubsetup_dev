@@ -9,7 +9,7 @@
 declare -A DebPackages
 DebPackages=(
              ["code"]="https://code.visualstudio.com/sha/download?build=stable&os=linux-deb-x64;mscode.deb"
-             ["codium"]="https://github.com/VSCodium/vscodium/releases/download/1.108.20787/codium_1.108.20787_amd64.deb"
+             ["codium"]="https://github.com/VSCodium/vscodium/releases/download/1.109.31074/codium_1.109.31074_amd64.deb"
              ["bcompare"]="https://www.scootersoftware.com/files/bcompare-5.1.7.31736_amd64.deb"
              ["draw.io"]="https://github.com/jgraph/drawio-desktop/releases/download/v29.3.6/drawio-amd64-29.3.6.deb"
              ["mysql-workbench-community"]="https://dev.mysql.com/get/Downloads/MySQLGUITools/mysql-workbench-community_8.0.46-1ubuntu24.04_amd64.deb"
@@ -21,39 +21,38 @@ InstallDir="/usr/share"
 UsrLocalDir="/usr/local"
 
 
-NodeJsVer="node-v24.13.0-linux-x64"
-NodeJsPkg="$NodeJsVer.tar.xz"
-NodeJsUrl="https://nodejs.org/dist/v24.13.0/$NodeJsPkg"
+NodeJsUrl="https://nodejs.org/dist/v24.13.1/node-v24.13.1-linux-x64.tar.xz"
+NodeJsPkg="$(basename "$NodeJsUrl")"
+NodeJsVer="${NodeJsPkg%.tar.xz}"
 NodeInstallDir="$InstallDir/nodejs"
 
-FossilScmPkg="fossil-linux-x64-2.27.tar.gz"
-FossilScmUrl="https://fossil-scm.org/home/uv/$FossilScmPkg"
+FossilScmUrl="https://fossil-scm.org/home/uv/fossil-linux-x64-2.27.tar.gz"
+FossilScmPkg="$(basename "$FossilScmUrl")"
 FossilInstallDir="$InstallDir/fossilscm"
 
-GoLangPkg="go1.25.7.linux-amd64.tar.gz"
-GoLangUrl="https://go.dev/dl/$GoLangPkg"
+GoLangUrl="https://go.dev/dl/go1.26.0.linux-amd64.tar.gz"
+GoLangPkg="$(basename "$GoLangUrl")"
 GoPath="$UsrLocalDir/go"
 
-VagrantPkg="vagrant_2.4.9_linux_amd64.zip"
-VagrantUrl="https://releases.hashicorp.com/vagrant/2.4.9/$VagrantPkg"
+VagrantUrl="https://releases.hashicorp.com/vagrant/2.4.9/vagrant_2.4.9_linux_amd64.zip"
+VagrantPkg="$(basename "$VagrantUrl")"
 
 TelegramPackage="telegram_linux.tar.xz"
-TelegramPackageHttpURL="https://telegram.org/dl/desktop/linux"
+TelegramPackageHttpUrl="https://telegram.org/dl/desktop/linux"
 
-VeraCryptPkg="veracrypt-1.26.24-setup.tar.bz2"
-VeraCryptUrl="https://launchpad.net/veracrypt/trunk/1.26.24/+download/$VeraCryptPkg"
+VeraCryptUrl="https://launchpad.net/veracrypt/trunk/1.26.24/+download/veracrypt-1.26.24-setup.tar.bz2"
+VeraCryptPkg="$(basename "$VeraCryptUrl")"
 
-TerraformPkg="terraform_1.5.5_linux_amd64.zip"
-TerraformUrl="" # "https://releases.hashicorp.com/terraform/1.5.5/$TerraformPkg"
+TerraformUrl="" # "https://releases.hashicorp.com/terraform/1.5.5/terraform_1.5.5_linux_amd64.zip"
+TerraformPkg="$(basename "$TerraformUrl")"
 TerraformRCGlobal="/etc/skel/.terraformrc"
 
-TofuVer="1.11.4"
-TofuPkg="tofu_${TofuVer}_linux_amd64.tar.gz"
-TofuUrl="https://github.com/opentofu/opentofu/releases/download/v$TofuVer/$TofuPkg"
+TofuUrl="https://github.com/opentofu/opentofu/releases/download/v1.11.5/tofu_1.11.5_linux_amd64.tar.gz"
+TofuPkg="$(basename "$TofuUrl")"
 TofuRCGlobal="/etc/skel/.tofurc"
 
-TflintPkg="tflint_linux_amd64.zip"
-TflintUrl="https://github.com/terraform-linters/tflint/releases/latest/download/$TflintPkg"
+TflintUrl="https://github.com/terraform-linters/tflint/releases/latest/download/tflint_linux_amd64.zip"
+TflintPkg="$(basename "$TflintUrl")"
 
 YqUrl="https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64"
 
@@ -65,22 +64,21 @@ StarshipUrl="https://github.com/starship/starship/releases/latest/download/stars
 # ConfiglintUrl="https://github.com/stelligent/config-lint/releases/latest/download/$ConfiglintPkg"
 # ConfiglintInstallDir="$InstallDir/configlint"
 
-AwsCliPkg="awscli-exe-linux-x86_64.zip"
-AwsCliUrl="https://awscli.amazonaws.com/$AwsCliPkg"
+AwsCliUrl="https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip"
+AwsCliPkg="$(basename "$AwsCliUrl")"
 
-PlantUmlVer="1.2026.1"
-PlantUmlUrl="https://github.com/plantuml/plantuml/releases/download/v$PlantUmlVer/plantuml-$PlantUmlVer.jar"
+PlantUmlUrl="https://github.com/plantuml/plantuml/releases/download/v1.2026.1/plantuml-1.2026.1.jar"
 PlantumlTargetBin="/usr/local/bin/plantuml.jar"
 
-AndroidPkg="android-studio-2025.2.3.9-linux.tar.gz"
-AndroidUrl="https://edgedl.me.gvt1.com/android/studio/ide-zips/2025.2.3.9/$AndroidPkg"
+AndroidUrl="https://edgedl.me.gvt1.com/android/studio/ide-zips/2025.3.1.8/android-studio-panda1-patch1-linux.tar.gz"
+AndroidPkg="$(basename "$AndroidUrl")"
 AndroidInstallDir="$InstallDir/androidstudio"
 
-FlutterPkg="flutter_linux_3.38.9-stable.tar.xz"
-FlutterUrl="https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/$FlutterPkg"
+FlutterUrl="https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.38.9-stable.tar.xz"
+FlutterPkg="$(basename "$FlutterUrl")"
 FlutterInstallDir="$InstallDir/flutterdev"
 
-ClaudeCodeUrl="https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/2.1.37/linux-x64/claude"
+ClaudeCodeUrl="https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/2.1.42/linux-x64/claude"
 
 
 declare -A Fonts
@@ -2443,7 +2441,7 @@ if [ $ubServerEnvironment != 0 ]; then
 
     telegramUnpackTo="$UnpackDirForIncompletePckgs"
     telegramBin="$telegramUnpackTo/Telegram/Telegram"
-    downloadAndUnpack "$TelegramPackageHttpURL" "$TelegramPackage" "$telegramUnpackTo" "$telegramBin" \
+    downloadAndUnpack "$TelegramPackageHttpUrl" "$TelegramPackage" "$telegramUnpackTo" "$telegramBin" \
         && chown -R $userOfThisScript:$groupOfUserOfThisScript "$telegramUnpackTo"
 
     PRINTLOG "Installing fonts."
