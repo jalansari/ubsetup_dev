@@ -2782,6 +2782,7 @@ if [ $? == 0 ]; then
     installVSCodeExt "ms-python.black-formatter"
     installVSCodeExt "ms-python.flake8"
     installVSCodeExt "ms-python.isort"
+    installVSCodeExt "ms-python.mypy-type-checker"
     installVSCodeExt "streetsidesoftware.code-spell-checker"
     installVSCodeExt "opentofu.vscode-opentofu"
     installVSCodeExt "eamodio.gitlens"
