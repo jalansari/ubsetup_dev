@@ -2437,8 +2437,10 @@ if [ $ubServerEnvironment != 0 ]; then
         npmBin="$NodeInstallDir/$NodeJsVer/bin/npm"
         if [[ -x "$npmBin" ]]; then
             PRINTLOG "Installing npm global AI packages."
+            export PATH="$NodeInstallDir/$NodeJsVer/bin:$PATH"
             for pkg in "${NpmGlobalPackagesAI[@]}"
             do
+                PRINTLOG "Installing npm package: <$pkg>"
                 "$npmBin" install -g "$pkg"
             done
         fi
