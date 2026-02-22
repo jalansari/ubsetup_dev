@@ -9,9 +9,9 @@
 declare -A DebPackages
 DebPackages=(
              ["code"]="https://code.visualstudio.com/sha/download?build=stable&os=linux-deb-x64;mscode.deb"
-             ["codium"]="https://github.com/VSCodium/vscodium/releases/download/1.109.31074/codium_1.109.31074_amd64.deb"
+             ["codium"]="https://github.com/VSCodium/vscodium/releases/download/1.109.51242/codium_1.109.51242_amd64.deb"
              ["bcompare"]="https://www.scootersoftware.com/files/bcompare-5.1.7.31736_amd64.deb"
-             ["draw.io"]="https://github.com/jgraph/drawio-desktop/releases/download/v29.3.6/drawio-amd64-29.3.6.deb"
+             ["draw.io"]="https://github.com/jgraph/drawio-desktop/releases/download/v29.5.2/drawio-amd64-29.5.2.deb"
              ["mysql-workbench-community"]="https://dev.mysql.com/get/Downloads/MySQLGUITools/mysql-workbench-community_8.0.46-1ubuntu24.04_amd64.deb"
              ["slack-desktop"]="https://downloads.slack-edge.com/desktop-releases/linux/x64/4.47.69/slack-desktop-4.47.69-amd64.deb"
             )
@@ -74,11 +74,11 @@ AndroidUrl="https://edgedl.me.gvt1.com/android/studio/ide-zips/2025.3.1.8/androi
 AndroidPkg="$(basename "$AndroidUrl")"
 AndroidInstallDir="$InstallDir/androidstudio"
 
-FlutterUrl="https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.38.9-stable.tar.xz"
+FlutterUrl="https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.41.2-stable.tar.xz"
 FlutterPkg="$(basename "$FlutterUrl")"
 FlutterInstallDir="$InstallDir/flutterdev"
 
-ClaudeCodeUrl="https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/2.1.42/linux-x64/claude"
+ClaudeCodeUrl="https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/2.1.50/linux-x64/claude"
 
 
 NpmGlobalPackagesAI=(
