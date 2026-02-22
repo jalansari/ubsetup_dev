@@ -500,6 +500,8 @@ EOTXT
 # Tmux mouse mode, so scroll with mouse wheel.
 read -r -d '' TEXT_TmuxCfg <<- EOTXT
 	set -g mouse on
+	set -sg escape-time 50
+	set -g history-limit 5000
 EOTXT
 # Tmux mouse select and copy to clipboard, but only for X11 sessions.
 read -r -d '' TEXT_TmuxCfgX11 <<- EOTXT
