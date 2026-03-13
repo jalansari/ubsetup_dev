@@ -102,6 +102,8 @@ Fonts=(
        ["overpass_mono"]="https://al-ansari.co.uk/j/fonts/Overpass_Mono.zip"
        ["inter"]="https://al-ansari.co.uk/j/fonts/Inter.zip"
        ["fira_code_nerd"]="https://github.com/ryanoasis/nerd-fonts/releases/latest/download/FiraCode.zip"
+       ["jetbrains_mono_nerd"]="https://github.com/ryanoasis/nerd-fonts/releases/latest/download/JetBrainsMono.zip"
+       ["sourcecode_pro_nerd"]="https://github.com/ryanoasis/nerd-fonts/releases/latest/download/SourceCodePro.zip"
       )
 allFontsFolder="/usr/share/fonts/ubsetup_installed_fonts"
 
