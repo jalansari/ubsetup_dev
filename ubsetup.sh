@@ -1537,6 +1537,10 @@ read -r -d '' TEXT_ClaudeCodeAliases <<- "EOTXT"
 	    done
 	}
 	alias cleancc='____clean_claude_code____'
+	function ____claude_dangerous____() {
+	    CLAUDE_SKIP_PERMISSIONS=true claude --dangerously-skip-permissions "$@"
+	}
+	alias claudedanger='____claude_dangerous____'
 EOTXT
 
 read -r -d '' TEXT_BashXorgAliases <<- "EOTXT"
@@ -2626,6 +2630,8 @@ sed -i.bak -r \
 '/alias cleanpyd/d;'\
 '/____clean_claude_code____/,/^}$/{/.*/d};'\
 '/alias cleancc/d;'\
+'/____claude_dangerous____/,/^}$/{/.*/d};'\
+'/alias claudedanger/d;'\
 '/____clean_github_cli____/,/^}$/{/.*/d};'\
 '/alias cleangh/d;'\
 '/docker_all/,/^}$/{/.*/d};'\
