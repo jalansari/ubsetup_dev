@@ -509,6 +509,7 @@ EOTXT
 read -r -d '' TEXT_TmuxCfg <<- EOTXT
 	set -g mouse on
 	set -sg escape-time 50
+	set -g prefix2 C-Space
 	set -g history-limit 5000
 EOTXT
 # Tmux mouse select and copy to clipboard, but only for X11 sessions.
