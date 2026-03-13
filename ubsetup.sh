@@ -34,6 +34,11 @@ GoLangUrl="https://go.dev/dl/go1.26.1.linux-amd64.tar.gz"
 GoLangPkg="$(basename "$GoLangUrl")"
 GoPath="$UsrLocalDir/go"
 
+RustUrl="https://static.rust-lang.org/dist/rust-1.94.0-x86_64-unknown-linux-gnu.tar.xz"
+RustPkg="$(basename "$RustUrl")"
+RustVer="${RustPkg%.tar.xz}"
+RustInstallDir="$InstallDir/rust"
+
 VagrantUrl="https://releases.hashicorp.com/vagrant/2.4.9/vagrant_2.4.9_linux_amd64.zip"
 VagrantPkg="$(basename "$VagrantUrl")"
 
@@ -2392,6 +2397,11 @@ if [ $ubServerEnvironment != 0 ]; then
     # Give developer group permissions to write, so we can npm install globally.
     chmod -R g+rw $nodeJsDir/lib/node_modules
     chmod -R g+rw $nodeJsDir/bin
+
+    rustDir="$RustInstallDir/$RustVer"
+    downloadAndUnpack "$RustUrl" "$RustPkg" "$RustInstallDir" "$rustDir" \
+        && updatePathGlobally "$rustDir/cargo/bin" \
+        && updatePathGlobally "$rustDir/rustc/bin"
 
     PRINTLOG "Installing debian packages from web:"
     for key in "${!DebPackages[@]}"
