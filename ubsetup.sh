@@ -414,7 +414,7 @@ Usage $0 [-a] [-i] [-r] [--docker]
 Requests:
 -r       : Remove unnecessary components.  (Default.)
 -i       : Install components and configs.
--a       : Same and i and r combined.
+-a       : Same as i and r combined.
 --docker : Install Docker Engine - Community.
 --ai     : Install AI tools, including Claude Code.
 --ruby   : Install RVM for Ruby installation.  (Not required if using '--rubyv').
@@ -865,9 +865,6 @@ read -r -d '' TEXT_UbuntuDesktopGSettingsConfig <<- EOTXT
 
 	[org.gnome.desktop.peripherals.touchpad]
 	two-finger-scrolling-enabled=true
-
-	[org.gnome.settings-daemon.plugins.media-keys]
-	home=['<Primary><Alt>h']
 
 	[org.gnome.settings-daemon.plugins.media-keys]
 	custom-keybindings=['/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/']
@@ -1690,7 +1687,7 @@ function getAvailableFileName()
     do
         if [[ -e $tempname ]]; then
             tempname="$outputfile.$uniquefilenum"
-            uniquefilenum=`expr $uniquefilenum + 1`
+            uniquefilenum=$((uniquefilenum + 1))
         else
             outputfile="$tempname"
             break
@@ -2436,8 +2433,7 @@ if [ $ubServerEnvironment != 0 ]; then
         [[ ! -e "$claudeCodeBinLocation" ]] \
             && curl "$ClaudeCodeUrl" -L -f -o "$claudeCodeBinLocation" \
             && chown root:adm "$claudeCodeBinLocation" \
-            && chmod a+rx "$claudeCodeBinLocation" \
-            && chmod g+w "$claudeCodeBinLocation"
+            && chmod a+rx "$claudeCodeBinLocation"
 
         npmBin="$NodeInstallDir/$NodeJsVer/bin/npm"
         if [[ -x "$npmBin" ]]; then
@@ -2470,7 +2466,7 @@ if [ $ubServerEnvironment != 0 ]; then
     if [ $? == 0 ]; then
         updatePathGlobally "$GoPath/bin"
 
-        # TODO user workspace should be seperated when all configuration is seperated.
+        # TODO user workspace should be separated when all configuration is separated.
         PRINTLOG "Creating GoLang workspace for <$userOfThisScript>, which will be used to download any dependencies when building projects, such as modules from github."
         mkdir -p $GoWorkspacePath
         chown -R $userOfThisScript:$groupOfUserOfThisScript $GoWorkspacePath
@@ -2579,7 +2575,7 @@ if [ $? == 0 ]; then
     # (< 14MB) to be as it was from first use, with no changes by the owner.
     if [[ -d "$userHomeDir/.mozilla" ]]; then
         sizeOfCurrentUsersMozillaDir=$(du -sb $userHomeDir/.mozilla | awk '{print $1;}')
-        [[ $sizeOfCurrentUsersMozillaDir < 14000000 ]] && rm -rf "$userHomeDir/.mozilla"
+        [[ $sizeOfCurrentUsersMozillaDir -lt 14000000 ]] && rm -rf "$userHomeDir/.mozilla"
     fi
 fi
 
@@ -2996,7 +2992,7 @@ if [ $cinnamonInstalled == 0 ]; then
         cp "$TerraformRCGlobal" $usersTerraformrc
         chown $userOfThisScript:$groupOfUserOfThisScript $usersTerraformrc
         usersTofurc="$userHomeDir/.tofurc"
-        cp "$TerraformRCGlobal" $usersTofurc
+        cp "$TofuRCGlobal" $usersTofurc
         chown $userOfThisScript:$groupOfUserOfThisScript $usersTofurc
     fi
 fi
@@ -3095,7 +3091,6 @@ if [[ ${#UserInfo[@]} -gt 0 ]]; then
             usern=$userOfThisScript
             PRINTLOG "Updating current user : name <$fullname>, email <$email>, maingrp <$maingroup>, sshk <$sshkeyfile>"
             updateExistingUser "$usern" "$maingroup" "$fullname"
-            isUserConfigured=true
             updateUserReturn=$?
             if [[ $updateUserReturn == 0 ]]; then
                 isUserConfigured=true
