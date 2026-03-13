@@ -9,9 +9,9 @@
 declare -A DebPackages
 DebPackages=(
              ["code"]="https://code.visualstudio.com/sha/download?build=stable&os=linux-deb-x64;mscode.deb"
-             ["codium"]="https://github.com/VSCodium/vscodium/releases/download/1.109.51242/codium_1.109.51242_amd64.deb"
-             ["bcompare"]="https://www.scootersoftware.com/files/bcompare-5.1.7.31736_amd64.deb"
-             ["draw.io"]="https://github.com/jgraph/drawio-desktop/releases/download/v29.5.2/drawio-amd64-29.5.2.deb"
+             ["codium"]="https://github.com/VSCodium/vscodium/releases/download/1.110.11631/codium_1.110.11631_amd64.deb"
+             ["bcompare"]="https://www.scootersoftware.com/files/bcompare-5.2.0.31950_amd64.deb"
+             ["draw.io"]="https://github.com/jgraph/drawio-desktop/releases/download/v29.6.1/drawio-amd64-29.6.1.deb"
              ["mysql-workbench-community"]="https://dev.mysql.com/get/Downloads/MySQLGUITools/mysql-workbench-community_8.0.46-1ubuntu24.04_amd64.deb"
              ["slack-desktop"]="https://downloads.slack-edge.com/desktop-releases/linux/x64/4.47.69/slack-desktop-4.47.69-amd64.deb"
             )
@@ -21,16 +21,16 @@ InstallDir="/usr/share"
 UsrLocalDir="/usr/local"
 
 
-NodeJsUrl="https://nodejs.org/dist/v24.13.1/node-v24.13.1-linux-x64.tar.xz"
+NodeJsUrl="https://nodejs.org/dist/v24.14.0/node-v24.14.0-linux-x64.tar.xz"
 NodeJsPkg="$(basename "$NodeJsUrl")"
 NodeJsVer="${NodeJsPkg%.tar.xz}"
 NodeInstallDir="$InstallDir/nodejs"
 
-FossilScmUrl="https://fossil-scm.org/home/uv/fossil-linux-x64-2.27.tar.gz"
+FossilScmUrl="https://fossil-scm.org/home/uv/fossil-linux-x64-2.28.tar.gz"
 FossilScmPkg="$(basename "$FossilScmUrl")"
 FossilInstallDir="$InstallDir/fossilscm"
 
-GoLangUrl="https://go.dev/dl/go1.26.0.linux-amd64.tar.gz"
+GoLangUrl="https://go.dev/dl/go1.26.1.linux-amd64.tar.gz"
 GoLangPkg="$(basename "$GoLangUrl")"
 GoPath="$UsrLocalDir/go"
 
@@ -67,18 +67,18 @@ StarshipUrl="https://github.com/starship/starship/releases/latest/download/stars
 AwsCliUrl="https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip"
 AwsCliPkg="$(basename "$AwsCliUrl")"
 
-PlantUmlUrl="https://github.com/plantuml/plantuml/releases/download/v1.2026.1/plantuml-1.2026.1.jar"
+PlantUmlUrl="https://github.com/plantuml/plantuml/releases/download/v1.2026.2/plantuml-1.2026.2.jar"
 PlantumlTargetBin="/usr/local/bin/plantuml.jar"
 
-AndroidUrl="https://edgedl.me.gvt1.com/android/studio/ide-zips/2025.3.1.8/android-studio-panda1-patch1-linux.tar.gz"
+AndroidUrl="https://edgedl.me.gvt1.com/android/studio/ide-zips/2025.3.2.6/android-studio-panda2-linux.tar.gz"
 AndroidPkg="$(basename "$AndroidUrl")"
 AndroidInstallDir="$InstallDir/androidstudio"
 
-FlutterUrl="https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.41.2-stable.tar.xz"
+FlutterUrl="https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.41.4-stable.tar.xz"
 FlutterPkg="$(basename "$FlutterUrl")"
 FlutterInstallDir="$InstallDir/flutterdev"
 
-ClaudeCodeUrl="https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/2.1.50/linux-x64/claude"
+ClaudeCodeUrl="https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/2.1.74/linux-x64/claude"
 
 
 NpmGlobalPackagesAI=(
