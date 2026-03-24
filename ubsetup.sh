@@ -1504,7 +1504,7 @@ read -r -d '' TEXT_BashPythonToolAliases <<- "EOTXT"
 
 	function ____cleanpydir____() {
 	    rm -rf testresults.xml .coverage .cache .pytest_cache .mypy_cache htmlcov .hypothesis .benchmarks
-	    find . -name "__pycache__" -or -name *".egg-info" -type d \
+	    find . -name "__pycache__" -or -name *".egg-info" -or -name ".pytest_cache" -type d \
 	        -not -path "*/.venv/*" \
 	        -not -path "*/.git/*" \
 	        -not -path "*/venv/*" | xargs rm -rf
