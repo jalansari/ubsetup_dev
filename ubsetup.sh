@@ -700,7 +700,8 @@ read -r -d '' TEXT_CinnamonPowerGSettingsConfig <<- EOTXT
 	sleep-display-ac=600
 	button-power='interactive'
 	lid-close-ac-action='nothing'
-	lid-close-battery-action='nothing'
+	lid-close-battery-action='suspend'
+	lid-close-suspend-with-external-monitor=false
 	idle-dim-time=90
 	idle-brightness=10
 EOTXT
@@ -1300,6 +1301,31 @@ read -r -d '' TEXT_BashToolAliases <<- "EOTXT"
 	# set -o vi
 	# bind '\e[A:history-search-backward'
 	# bind '\e[B:history-search-forward'
+
+	function ____audio_mic_record_list____() {
+	    echo -e "\033[1;33mListing audio sinks...\033[0m"
+	    pactl list sinks short
+	}
+	function ____audio_mic_record____() {
+	    ____audio_mic_record_list____
+	    echo -e "\033[1;33mSetting combined sink for mic + speaker...\033[0m"
+	    pactl load-module module-null-sink sink_name=both sink_properties=device.description=mic-and-speakers
+	    pactl load-module module-loopback source="$(pactl list short sources | grep -E "bluez.*monitor" | head -1 | cut -f2)" sink=both
+	    pactl load-module module-loopback sink=both
+	    echo ""
+	    ____audio_mic_record_list____
+	}
+	function ____audio_mic_record_rem____() {
+	    ____audio_mic_record_list____
+	    echo -e "\033[1;33mUnloading combined audio sink...\033[0m"
+	    pactl unload-module module-loopback
+	    pactl unload-module module-null-sink
+	    echo ""
+	    ____audio_mic_record_list____
+	}
+	alias audiomicrec_list='____audio_mic_record_list____'
+	alias audiomicrec='____audio_mic_record____'
+	alias audiomicrec_rem='____audio_mic_record_rem____'
 EOTXT
 
 read -r -d '' TEXT_BashDockerAliases <<- "EOTXT"
@@ -2638,6 +2664,8 @@ sed -i.bak -r \
 '/docker_all/,/^}$/{/.*/d};'\
 '/ffm540/,/^}$/{/.*/d};'\
 '/ffm10secs/,/^}$/{/.*/d};'\
+'/____audio_mic_/,/^}$/{/.*/d};'\
+'/alias audiomicrec/d;'\
 '/____xinput_maplist/,/^}$/{/.*/d};'\
 '/alias xmap/d;'\
 's/(HISTFILESIZE)=.*/\1=8000/; s/(HISTSIZE)=.*/\1=4000/;'\
