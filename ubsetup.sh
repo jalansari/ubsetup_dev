@@ -11,7 +11,7 @@ DebPackages=(
              ["code"]="https://code.visualstudio.com/sha/download?build=stable&os=linux-deb-x64;mscode.deb"
              ["codium"]="https://github.com/VSCodium/vscodium/releases/download/1.112.01907/codium_1.112.01907_amd64.deb"
              ["bcompare"]="https://www.scootersoftware.com/files/bcompare-5.2.1.32035_amd64.deb"
-             ["draw.io"]="https://github.com/jgraph/drawio-desktop/releases/download/v29.6.1/drawio-amd64-29.6.1.deb"
+             ["draw.io"]="https://github.com/jgraph/drawio-desktop/releases/download/v29.6.6/drawio-amd64-29.6.6.deb"
              ["mysql-workbench-community"]="https://dev.mysql.com/get/Downloads/MySQLGUITools/mysql-workbench-community_8.0.46-1ubuntu24.04_amd64.deb"
              ["slack-desktop"]="https://downloads.slack-edge.com/desktop-releases/linux/x64/4.47.69/slack-desktop-4.47.69-amd64.deb"
             )
@@ -34,7 +34,7 @@ GoLangUrl="https://go.dev/dl/go1.26.1.linux-amd64.tar.gz"
 GoLangPkg="$(basename "$GoLangUrl")"
 GoPath="$UsrLocalDir/go"
 
-RustUrl="https://static.rust-lang.org/dist/rust-1.94.0-x86_64-unknown-linux-gnu.tar.xz"
+RustUrl="https://static.rust-lang.org/dist/rust-1.94.1-x86_64-unknown-linux-gnu.tar.xz"
 RustPkg="$(basename "$RustUrl")"
 RustVer="${RustPkg%.tar.xz}"
 RustInstallDir="$InstallDir/rust"
@@ -79,11 +79,11 @@ AndroidUrl="https://edgedl.me.gvt1.com/android/studio/ide-zips/2025.3.2.6/androi
 AndroidPkg="$(basename "$AndroidUrl")"
 AndroidInstallDir="$InstallDir/androidstudio"
 
-FlutterUrl="https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.41.5-stable.tar.xz"
+FlutterUrl="https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.41.6-stable.tar.xz"
 FlutterPkg="$(basename "$FlutterUrl")"
 FlutterInstallDir="$InstallDir/flutterdev"
 
-ClaudeCodeUrl="https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/2.1.81/linux-x64/claude"
+ClaudeCodeUrl="https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/2.1.87/linux-x64/claude"
 
 
 NpmGlobalPackagesAI=(
