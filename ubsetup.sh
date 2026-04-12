@@ -1059,6 +1059,7 @@ read -r -d '' TEXT_VSCodeConfig <<- EOTXT
 	    "proxysql",
 	    "psql",
 	    "pydantic",
+	    "pypi",
 	    "pyspark",
 	    "pytest",
 	    "roadmap",
