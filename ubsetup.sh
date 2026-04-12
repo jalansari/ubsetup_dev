@@ -532,7 +532,7 @@ read -r -d '' TEXT_TerminatorCfg <<- EOTXT
 	        background_type = transparent
 	        background_image = None
 	        use_system_font = False
-	        font = FiraCode Nerd Font 12
+	        font = JetBrainsMono NFM 12
 	[layouts]
 	    [[default]]
 	        [[[child1]]]
@@ -954,7 +954,7 @@ EOTXT
 
 read -r -d '' TEXT_VSCodeConfig <<- EOTXT
 	{
-	  "editor.fontFamily": "'Ubuntu Mono'",
+	  "editor.fontFamily": "'JetBrainsMono NFM'",
 	  "editor.fontSize": 14,
 	  "editor.lineHeight": 21,
 	  "editor.renderWhitespace": "all",
@@ -982,7 +982,7 @@ read -r -d '' TEXT_VSCodeConfig <<- EOTXT
 	  "files.autoSave": "onWindowChange",
 	  "diffEditor.ignoreTrimWhitespace": false,
 	  "editor.detectIndentation": false,
-	  "terminal.integrated.fontFamily": "'FiraCode Nerd Font'",
+	  "terminal.integrated.fontFamily": "'JetBrainsMono NFM'",
 	  "terminal.integrated.scrollback": 20000,
 	  "python.terminal.activateEnvironment": false,
 	  "editor.accessibilitySupport": "off",
