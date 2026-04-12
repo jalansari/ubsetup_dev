@@ -87,6 +87,7 @@ ClaudeCodeUrl="https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42a
 
 
 NpmGlobalPackagesAI=(
+                     "@mermaid-js/mermaid-cli"
                      "@github/copilot"
                      "@google/gemini-cli"
                      "claude-limitline"
