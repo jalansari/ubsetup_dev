@@ -30,7 +30,7 @@ FossilScmUrl="https://fossil-scm.org/home/uv/fossil-linux-x64-2.28.tar.gz"
 FossilScmPkg="$(basename "$FossilScmUrl")"
 FossilInstallDir="$InstallDir/fossilscm"
 
-GoLangUrl="https://go.dev/dl/go1.26.1.linux-amd64.tar.gz"
+GoLangUrl="https://go.dev/dl/go1.26.2.linux-amd64.tar.gz"
 GoLangPkg="$(basename "$GoLangUrl")"
 GoPath="$UsrLocalDir/go"
 
@@ -75,7 +75,7 @@ AwsCliPkg="$(basename "$AwsCliUrl")"
 PlantUmlUrl="https://github.com/plantuml/plantuml/releases/download/v1.2026.2/plantuml-1.2026.2.jar"
 PlantumlTargetBin="/usr/local/bin/plantuml.jar"
 
-AndroidUrl="https://edgedl.me.gvt1.com/android/studio/ide-zips/2025.3.2.6/android-studio-panda2-linux.tar.gz"
+AndroidUrl="https://edgedl.me.gvt1.com/android/studio/ide-zips/2025.3.3.6/android-studio-panda3-linux.tar.gz"
 AndroidPkg="$(basename "$AndroidUrl")"
 AndroidInstallDir="$InstallDir/androidstudio"
 
@@ -83,7 +83,7 @@ FlutterUrl="https://storage.googleapis.com/flutter_infra_release/releases/stable
 FlutterPkg="$(basename "$FlutterUrl")"
 FlutterInstallDir="$InstallDir/flutterdev"
 
-ClaudeCodeUrl="https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/2.1.87/linux-x64/claude"
+ClaudeCodeUrl="https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/2.1.104/linux-x64/claude"
 
 
 NpmGlobalPackagesAI=(
