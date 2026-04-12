@@ -359,6 +359,7 @@ INSTALL_COMP_LIST_DESKTOP=(
 
 INSTAL_PIP2n3_MAP_DESKTOP=(
                    "pre-commit"
+                   "cc-statusline"
                   )
 
 declare -A DebSources
